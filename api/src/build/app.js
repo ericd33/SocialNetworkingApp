@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv = __importStar(require("dotenv"));
 const database_1 = require("./database");
+const user_routes_1 = __importDefault(require("./routes/user.routes"));
 dotenv.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -37,3 +38,4 @@ app.listen(app.get('port'), () => {
     console.log(`Server listening on port ${app.get('port')}`);
     (0, database_1.connectDB)();
 });
+app.use(user_routes_1.default);
