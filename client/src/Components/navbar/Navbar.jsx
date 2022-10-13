@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Avatar from '@mui/material/Avatar';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import { IconButton } from "@mui/material";
+import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
+import { yellow } from "@mui/material/colors";
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -55,7 +59,7 @@ const NavBar = () => {
   return (
   
 
-      <AppBar position="static">
+      <AppBar sx={{bgcolor:yellow[500]}}position="static">
         <Toolbar
           sx={{
             display: "flex",
@@ -80,22 +84,17 @@ const NavBar = () => {
           </Toolbar>
 
           <Toolbar>
-            <Button color="inherit" component={Link} to='/home'>
-              Landing
-            </Button>
+            <IconButton color="inherit" component={Link} to='/home'>
+              <NotificationsNoneIcon/>
+            </IconButton>
 
-            <Button color="inherit" component={Link}>
-              Publicaciones
-            </Button>
+            <IconButton color="inherit" component={Link}>
+              <ChatOutlinedIcon/>
+            </IconButton>
 
-            <Button color="inherit" component={Link}>
-              Mi perfil
+            <Button component={Link}>
+              <Avatar sx={{marginLeft:5}}>H</Avatar>
             </Button>
-
-            <Button color="inherit" component={Link} sx={{}}>
-              LOGIN
-            </Button>
-            <Avatar sx={{marginLeft:5}}>H</Avatar>
           </Toolbar>
         </Toolbar>
       </AppBar>
