@@ -3,7 +3,7 @@ import userSchema from "./user";
 
 export interface Ipost extends Document {
   enabled: boolean,
-  IDauthor: object,
+  author: object,
   likes?: number,
   postType: string,
   content: string,
