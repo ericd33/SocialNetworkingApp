@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
+import { useDispatch } from "react-redux";
+import { postUser } from "../../../Redux/actions.js"
+
 
 const LandingRegister = () => {
-  const [input, setInput] = useState({
-		name:"",
-		email:"",
-		password: "",
+	const dispatch = useDispatch()
+
+    const [input, setInput] = useState({
+			name:"",
+			email:"",
+			password: "",
 	});
 
 	const [errors, setErrors] = useState({});
@@ -38,8 +43,9 @@ const LandingRegister = () => {
 	}
 
 	function handleSubmit(e) {
+		console.log(input)
 		e.preventDefault();
-		// dispatch(postVideogame(input));
+		dispatch(postUser(input));
 		setInput({
 			name:"",
 			email:"",
@@ -51,7 +57,6 @@ const LandingRegister = () => {
 		<div>
 			<h1>Register</h1>
 				<br />
-				<form>
 				<div>
 					<label>Name :</label>
 					<input
@@ -88,13 +93,12 @@ const LandingRegister = () => {
 					) : null}
 					<br/>
 					{Object.entries(errors).length > 0 ? (
-						<button className="falso">login</button>
+						<button className="falso">RegisterM</button>
 					) : (
 						<button onClick={(e) => handleSubmit(e)} className="bueno">
-							login
+							RegisterB
 						</button>
 					)}
-					</form>
 		</div>
 	)
 }

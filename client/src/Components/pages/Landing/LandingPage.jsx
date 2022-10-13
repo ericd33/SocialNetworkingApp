@@ -16,8 +16,7 @@ const LandingPage = () => {
   return(
     <div>
       {login_register ? (<LandingLogin />) : <LandingRegister/> }
-
-      <button onClick={(e) => loginOrRegister(e)}>Register</button>
+      {login_register ? <button onClick={(e) => loginOrRegister(e)}>Register</button> : <button onClick={(e) => loginOrRegister(e)}>Login</button>}
     </div>
   )
 }

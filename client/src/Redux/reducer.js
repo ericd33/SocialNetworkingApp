@@ -1,5 +1,5 @@
 // Importa las action types acá
-import {  } from "./actions";
+import { CREATE_USER } from "./actions";
 
 const initialState = {
   x: [],
@@ -8,6 +8,10 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CREATE_USER:
+      return{
+        ...state
+      }
     default:
       return state;
   }
