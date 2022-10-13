@@ -24,10 +24,6 @@ const postSchema = new Schema({
     type: Number,
     required: false,
   },
-  postType: {
-    type: String,
-    required: true,
-  },
   content: {
     type: String,
     required: true,
