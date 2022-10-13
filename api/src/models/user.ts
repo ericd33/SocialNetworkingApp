@@ -1,5 +1,5 @@
 import { Document, model, Schema } from "mongoose";
-// const mongoose = require('mongoose');
+
 
 export interface Iuser extends Document{
     name: string,

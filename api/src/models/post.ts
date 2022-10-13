@@ -1,5 +1,4 @@
 import { Document, model, Schema, Types } from "mongoose";
-// import IDauthor from "./user";
 
 export interface Ipost extends Document {
   enabled: boolean,
@@ -16,13 +15,11 @@ const postSchema = new Schema({
     type: Boolean,
     required: true,
   },
-
   author: {
     type: Types.ObjectId,
     ref: 'users',
     require: true
   },
-
   likes: {
     type: Number,
     required: false,

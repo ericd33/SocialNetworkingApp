@@ -15,19 +15,16 @@ const commentSchema = new Schema({
         type:Boolean,
         required:true
     },
-
     author: {
         type: Types.ObjectId,
         ref: 'users',
         require: true
     },
-
     IDpost: {
         type: Types.ObjectId,
         ref: 'post',
         require: true
     },
-//borrame
     like:{
         type:Array,
         required:false
