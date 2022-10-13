@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 import { connectDB } from './database';
 import userRoutes from './routes/user.routes'
 import comment from './routes/comment.router'
-
+import event from './routes/events.routes'
 
 dotenv.config()
 const app = express();
@@ -17,3 +17,4 @@ app.listen(app.get('port'),() => {
 
 app.use('/newcomment',comment)
 app.use(userRoutes)
+app.use('/newEvent',event)

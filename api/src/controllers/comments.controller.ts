@@ -9,7 +9,6 @@ export const addComment = async (req: Request, res: Response) => {
         comment.text = text
         comment.image = image
         comment.enabled = false
-    }
     await comment.save(function (err:any, comment:any) {
         if (err) {
             res.send(err);
@@ -17,6 +16,8 @@ export const addComment = async (req: Request, res: Response) => {
             console.log(comment);
         });
     res.send("new comment");
+    }
+    
 }
 
 //GET
