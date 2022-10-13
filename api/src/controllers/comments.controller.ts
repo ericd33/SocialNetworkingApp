@@ -23,9 +23,12 @@ export const addComment = async (req: Request, res: Response) => {
 //GET
 
 export const GetComment = async(_req: Request, res: Response) => {
-    const comentario = await commentSchema.find({});
-    res.send(comentario);
-
+    try{
+        const comentario = await commentSchema.find({});
+        res.send(comentario);
+    }catch(e){
+        res.status(400).send('sin comentarios'+e)
+    }
 }
 
 
