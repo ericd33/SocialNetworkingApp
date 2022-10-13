@@ -8,6 +8,7 @@ import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 export default function Post({photoperfil,text,name,image}) {
 
         return (
+            
             <Card sx={{width: 600, bgcolor: grey[300], fontFamily: 'Nunito', color:grey[900]}}>
                 <CardHeader
                     sx={{pt: 0, pb: 0, mt:2}}
