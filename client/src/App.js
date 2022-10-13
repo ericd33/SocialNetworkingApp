@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import LandingPage from "./Componets/Landing/LandingPage.jsx"
+import LandingPage from "./Components/pages/LandingPage.jsx"
 
 function App() {
   return (
