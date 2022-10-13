@@ -33,5 +33,30 @@ export const addEvent = async (req: Request, res: Response) => {
     }}catch(e){
         res.status(400).send(e)
     }
+}
 
+
+
+export const findEvent = async(req: Request, res: Response) => {
+    const { name } = req.query
+    try{
+        if(name){
+        const event = await eventSchema.find({name: name});
+        if(event.length){
+            res.status(200).send(event);
+            return
+        }
+        res.status(201).send('el evento no existe')
+        return
+    }
+    else{
+        const events = await eventSchema.find({})
+        events.length
+            ? res.status(200).send(events)
+            : res.status(400).send('sin eventos')
+    }
+    }catch(e){
+        res.status(400).send(e)
+        return
+    }
 }

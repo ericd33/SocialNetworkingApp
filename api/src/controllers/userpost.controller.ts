@@ -5,6 +5,12 @@ export const addUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   var user = await new userSchema();
 
+
+  if (!name.length && !email.length && !password.length) {
+    res.send("error");
+    return
+  }
+
   const checkIfPropertyExist = (property: any) => {
     if (property) {
       return property;
@@ -12,6 +18,7 @@ export const addUser = async (req: Request, res: Response) => {
 
     return null;
   };
+
 
   user.name = checkIfPropertyExist(name);
   user.role = "user";
@@ -29,6 +36,26 @@ export const addUser = async (req: Request, res: Response) => {
   res.send("signUp");
 };
 
-export const getUser = (_req: Request, res: Response) => {
-  res.send("signIn");
-};
+export const findUserAndGetAllUser = async(req: Request, res: Response) => {
+  const { name } = req.query
+  try{
+      if(name){
+      const user = await userSchema.find({name: name});
+      if(user.length){
+          res.status(200).send(user);
+          return
+      }
+      res.status(201).send('el evento no existe')
+      return
+  }
+  else{
+      const users = await userSchema.find({})
+      users.length
+          ? res.status(200).send(users)
+          : res.status(400).send('sin eventos')
+  }
+  }catch(e){
+      res.status(400).send(e)
+      return
+  }
+}
