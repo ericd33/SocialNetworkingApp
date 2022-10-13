@@ -1,0 +1,42 @@
+.Home {
+    max-width: 100vw;
+    height: auto;
+}
+
+.navbar {
+    background-color: yellow;
+    border-bottom: 1px solid grey;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.media-part {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(177, 177, 177);
+}
+
+.media-part .leftHome {
+    width: 300px;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 20px;
+}
+.media-part .rightHome {
+    width: 300px;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 20px;
+}
+.media-part .centerHome {
+    background-color: transparent;
+}
