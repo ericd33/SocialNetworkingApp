@@ -1,6 +1,6 @@
 import NavBar from "../../navbar/Navbar";
-import EventsMenu from "../Home-Components/EventsMenu";
-import PostList from "../Posts/PostList";
+import EventsMenu from "../../Home-Components/EventsMenu";
+import PostList from "../../Posts/PostList";
 import './Home.css';
 
 export default function Home() {
