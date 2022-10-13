@@ -27,7 +27,6 @@ const commentSchema = new Schema({
         ref: 'post',
         require: true
     },
-//borrame
     like:{
         type:Array,
         required:false

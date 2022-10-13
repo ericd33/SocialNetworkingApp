@@ -18,3 +18,13 @@ export const addComment = async (req: Request, res: Response) => {
         });
     res.send("new comment");
 }
+
+//GET
+
+export const GetComment = async(_req: Request, res: Response) => {
+    const comentario = await commentSchema.find({});
+    res.send(comentario);
+
+}
+
+
