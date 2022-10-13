@@ -1,5 +1,5 @@
 // Importa las action types acá
-import {  } from "./acctions";
+import {  } from "./actions";
 
 const initialState = {
   x: [],
