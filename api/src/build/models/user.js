@@ -32,5 +32,4 @@ const userSchema = new mongoose_1.Schema({
         required: false
     }
 });
-//ESTO ES UN CAMBIO
 exports.default = (0, mongoose_1.model)('user', userSchema);

@@ -5,8 +5,8 @@ const IDpost = require('./post')
 
 export interface Icomment extends Document{
     enabled: boolean,
-    IDauthor: ,
-    IDpost: ,
+    IDauthor: object,
+    IDpost: object,
     upVotes?:string[],
     content:string,
 }

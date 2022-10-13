@@ -2,13 +2,13 @@ import { Document, model, Schema } from "mongoose";
 import userSchema from "./user";
 
 export interface Ipost extends Document {
-  enabled: boolean;
-  IDauthor: string;
-  likes?: number;
-  postType: string;
-  content: string;
-  image: string;
-  comments?: string;
+  enabled: boolean,
+  IDauthor: object,
+  likes?: number,
+  postType: string,
+  content: string,
+  image: string,
+  comments?: string,
 }
 
 const postSchema = new Schema({
