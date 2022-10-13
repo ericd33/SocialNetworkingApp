@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import userSchema from "../models/user";
+const userSchema =  require ("../models/user")
 
-export const addUser = (req: Request, res: Response) => {
+export const addUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
-  var user = new userSchema();
+  var user = await new userSchema();
 
-  if (!name.length && !email.length && !password.length) {
-    res.send("error");
-    return
-  }
+  // if (!name.length && !email.length && !password.length) {
+  //   res.send("error");
+  //   return
+  // }
 
   user.name = name;
   user.role = "user";
@@ -16,7 +16,7 @@ export const addUser = (req: Request, res: Response) => {
   user.email = email;
   user.password = password;
 
-  user.save(function (err, user) {
+  await user.save(function (err: any, user:any) {
     if (err) {
       res.send(err);
     }

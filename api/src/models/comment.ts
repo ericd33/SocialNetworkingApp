@@ -1,35 +1,45 @@
-import { Document, model, Schema } from "mongoose";
-// const mongoose = require('mongoose');
-const IDauthor = require('./user')
-const IDpost = require('./post')
+import { Document, model, Schema, Types } from "mongoose";
+
 
 export interface Icomment extends Document{
     enabled: boolean,
-    IDauthor: object,
+    author: object,
     IDpost: object,
-    upVotes?:string[],
-    content:string,
+    like?:string[],
+    text:string,
+    image?:string
 }
 const commentSchema = new Schema({
-   
+
     enabled:{
         type:Boolean,
         required:true
     },
 
-    IDauthor: [IDauthor],
+    author: {
+        type: Types.ObjectId,
+        ref: 'users',
+        require: true
+    },
 
-    IDpost: [IDpost],
-    
-    upVotes:{
+    IDpost: {
+        type: Types.ObjectId,
+        ref: 'post',
+        require: true
+    },
+//borrame
+    like:{
         type:Array,
         required:false
     },
-    content:{
+    text:{
         type:String,
         required:true
+    },
+    image:{
+        type:String,
     }
-    
 });
 
-export default model<Icomment>('comment', commentSchema);
+const Comment = model<Icomment>('comment', commentSchema);
+module.exports = Comment

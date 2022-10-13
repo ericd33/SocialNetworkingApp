@@ -2,6 +2,7 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 import { connectDB } from './database';
 import userRoutes from './routes/user.routes'
+import comment from './routes/comment.router'
 
 
 dotenv.config()
@@ -14,5 +15,5 @@ app.listen(app.get('port'),() => {
     connectDB()
 });
 
-
+app.use('/newcomment',comment)
 app.use(userRoutes)
