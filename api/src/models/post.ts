@@ -1,5 +1,5 @@
-import { Document, model, Schema } from "mongoose";
-import userSchema from "./user";
+import { Document, model, Schema, Types } from "mongoose";
+// import IDauthor from "./user";
 
 export interface Ipost extends Document {
   enabled: boolean,
@@ -16,7 +16,13 @@ const postSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  author: userSchema,
+
+  author: {
+    type: Types.ObjectId,
+    ref: 'users',
+    require: true
+  },
+
   likes: {
     type: Number,
     required: false,
@@ -34,9 +40,10 @@ const postSchema = new Schema({
     required: true,
   },
   comments: {
-    Array,
+    type: Array,
     required: false,
-  },
+  },//sacarlo y hacer la relacion una vez se crea el comentario 
 });
 
-export default model<Ipost>('post', postSchema);
+const Post = model<Ipost>('post', postSchema);
+module.exports = Post

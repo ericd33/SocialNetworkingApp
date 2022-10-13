@@ -48,6 +48,8 @@ const userSchema = new Schema({
     
 });
 
-export default model<Iuser>('users', userSchema);
+const User = model<Iuser>('users', userSchema);
+module.exports = User
+
 
 
