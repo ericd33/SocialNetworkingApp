@@ -2,15 +2,20 @@ import { Document, model, Schema } from "mongoose";
 // const mongoose = require('mongoose');
 
 export interface Iuser extends Document{
+    name: string,
     email: string,
     role: string,
     enabled: boolean,
     password: string,
     friends?: string[],
-    post?:string[],
-    like?:string[],
+    posts?:string[],
+    liked?:string[],
 }
 const userSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     role:{
         type: String,
         required: true,
@@ -36,13 +41,13 @@ const userSchema = new Schema({
         type:Array,
         required:false
     },
-    like:{
+    liked:{
         type:Array,
         required:false
     }
     
 });
 
-export default model<Iuser>('user', userSchema);
+export default model<Iuser>('users', userSchema);
 
 
