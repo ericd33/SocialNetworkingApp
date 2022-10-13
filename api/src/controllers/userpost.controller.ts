@@ -1,22 +1,32 @@
 import { Request, Response } from "express";
-const userSchema =  require ("../models/user")
+const userSchema = require("../models/user");
 
 export const addUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   var user = await new userSchema();
+
 
   if (!name.length && !email.length && !password.length) {
     res.send("error");
     return
   }
 
-  user.name = name;
+  const checkIfPropertyExist = (property: any) => {
+    if (property) {
+      return property;
+    }
+
+    return null;
+  };
+
+
+  user.name = checkIfPropertyExist(name);
   user.role = "user";
   user.enabled = true;
-  user.email = email;
-  user.password = password;
+  user.email = checkIfPropertyExist(email);
+  user.password = checkIfPropertyExist(password);
 
-  await user.save(function (err: any, user:any) {
+  await user.save(function (err: any, user: any) {
     if (err) {
       res.send(err);
     }

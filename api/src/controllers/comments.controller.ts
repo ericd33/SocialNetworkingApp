@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-const commentSchema = require('../models/comment')
+const commentSchema = require("../models/comment");
 
 export const addComment = async (req: Request, res: Response) => {
+
     const { text, image } = req.body
     console.log('atoy')
     let comment = await new commentSchema()
@@ -30,5 +31,9 @@ export const GetComment = async(_req: Request, res: Response) => {
         res.status(400).send('sin comentarios'+e)
     }
 }
+
+
+
+ 
 
 
