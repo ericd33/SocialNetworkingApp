@@ -52,7 +52,6 @@ const LandingLogin = () => {
       <div>
         <h1>login</h1>
           <br />
-          <form>
           <div>
             <label>E-mail :</label>
             <input
@@ -83,7 +82,6 @@ const LandingLogin = () => {
                 login
               </button>
             )}
-            </form>
       </div>
     )
 }
