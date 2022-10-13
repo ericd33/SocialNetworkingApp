@@ -1,7 +1,5 @@
 import { Document, model, Schema, Types } from "mongoose";
-// const mongoose = require('mongoose');
-// const IDauthor = require('./user')
-// const IDpost = require('./post')
+
 
 export interface Icomment extends Document{
     enabled: boolean,
@@ -29,7 +27,7 @@ const commentSchema = new Schema({
         ref: 'post',
         require: true
     },
-    
+    //borrame
     like:{
         type:Array,
         required:false
