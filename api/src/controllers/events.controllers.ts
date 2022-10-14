@@ -78,7 +78,6 @@ export const updateEvent = async(req: Request, res: Response) => {
         }
         if(isNaN(hour) || (hour>=0 && hour<=24)){ 
             await eventSchema.findOneAndUpdate({ _id: id},{hour:hour})
-
         }
         if(enabled){ 
             await eventSchema.findOneAndUpdate({ _id: id},{enabled:true},{new: true})
@@ -94,6 +93,6 @@ export const updateEvent = async(req: Request, res: Response) => {
         }
         res.status(200).send('datos actualizados')
     }catch(e){
-        res.status(400).send(e)
+        res.status(400).send(e) 
     }
 }
