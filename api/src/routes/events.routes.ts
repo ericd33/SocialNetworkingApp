@@ -3,7 +3,7 @@ import { addEvent, deleteEvent, findEvent, updateEvent, } from "../controllers/e
 
 const router = Router()
 
-router.route('/event')
+router.route('')
     .post(addEvent)
     .get(findEvent)
     .put(updateEvent)
