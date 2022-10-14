@@ -10,7 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { IconButton } from "@mui/material";
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-import { yellow } from "@mui/material/colors";
+import { grey, yellow } from "@mui/material/colors";
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -36,10 +36,13 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  zIndex: 1,
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: grey[700],
+  backgroundColor: grey[200],
+  borderRadius: 25,
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -59,7 +62,7 @@ const NavBar = () => {
   return (
   
 
-      <AppBar sx={{bgcolor:yellow[500]}}position="static">
+      <AppBar sx={{bgcolor:yellow[500], color:grey[800]}} position="fixed">
         <Toolbar
           sx={{
             display: "flex",
@@ -69,7 +72,7 @@ const NavBar = () => {
         >
           <Toolbar>
           <div>
-            <h2>ConCatUs</h2>
+            <a href="/home"><h2>ConCatUs</h2></a>
           </div>
 
           <Search sx={{marginLeft:5}}>
@@ -92,8 +95,8 @@ const NavBar = () => {
               <ChatOutlinedIcon/>
             </IconButton>
 
-            <Button component={Link}>
-              <Avatar sx={{marginLeft:5}}>H</Avatar>
+            <Button sx={{ml:'35px', borderRadius:'25px', height:50}} component={Link}>
+              <Avatar>H</Avatar>
             </Button>
           </Toolbar>
         </Toolbar>
