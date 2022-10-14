@@ -1,6 +1,7 @@
+import { Button, FormControl, FormHelperText, Grid, Input, InputLabel } from '@mui/material';
 import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
-import { postUser } from "../../../Redux/actions.js"
+import { postUser } from "../../../../Redux/actions.js"
 
 
 const LandingRegister = () => {
@@ -31,7 +32,7 @@ const LandingRegister = () => {
 		// No espacios en blanco
 		// Al menos 1 caracter especial
 		if (!input.password || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#@$!%*?&])([A-Za-z\d$@$!%*?&]|[^]){8,15}$/.test(input.password)){
-			errors.password = "invalid e-mail: -8 a 15 characters is necessary -At least one capital letter -At least one digit -Not espaces -At least one special character";
+			errors.password = '-8 to 15 characters -At least one capital letter -At least one digit -Not spaces -At least one special character';
 		}
 		return errors;
 	}
@@ -62,52 +63,68 @@ const LandingRegister = () => {
 	}
 
 	return (
-		<div>
+		<Grid>
 			<h1>Register</h1>
 				<br />
-				<div>
-					<label>Name :</label>
-					<input
-						type="text"
-						value={input.name}
-						name="name"
-						onChange={(e) => handleChange(e)}
-					/>
+				<Grid item md={12}>
+					<FormControl>
+					<InputLabel htmlFor='name'>Name</InputLabel>
+					<Input 
+					type='text'
+					id='name'
+					value={input.name}
+					name="name"
+					onChange={(e) => handleChange(e)}
+					aria-describedby='name-helper'/>
+					<FormHelperText id='name-helper'>Your name</FormHelperText>
+					</FormControl>
 					{errors.hasOwnProperty("name") ? (
-						<p>{errors.name}</p>
+					<p>{errors.name}</p>
 					) : null}
-				</div>
-				<div>
-					<label>E-mail :</label>
-					<input
-						type="text"
+				</Grid>
+				
+				<Grid item md={12}>
+					<FormControl>
+						<InputLabel htmlFor='email'>E-mail</InputLabel>
+						<Input 
+						type='text'
+						id='email'
 						value={input.email}
 						name="email"
 						onChange={(e) => handleChange(e)}
-					/>
+						aria-describedby='email-helper'/>
+						<FormHelperText id='email-helper'>Your email</FormHelperText>
+					</FormControl>
 					{errors.hasOwnProperty("email") ? (
-						<p>{errors.email}</p>
+					<p>{errors.email}</p>
 					) : null}
-				</div>
-				<label>Password :</label>
-					<input
-						type="text"
+				</Grid>
+
+				<Grid item md={12}>
+					<FormControl>
+						<InputLabel htmlFor='pwd'>Password</InputLabel>
+						<Input 
+						type='password'
+						id='pwd'
 						value={input.password}
 						name="password"
 						onChange={(e) => handleChange(e)}
-					/>
+						aria-describedby='password-helper'/>
+						<FormHelperText id='password-helper'>Your password</FormHelperText>
+					</FormControl>
 					{errors.hasOwnProperty("password") ? (
-						<p>{errors.password}</p>
+					<p>{errors.password}</p>
 					) : null}
+				</Grid>
 					<br/>
-					{Object.entries(errors).length > 0 ? (
-						<button className="falso">RegisterM</button>
+					{Object.entries(errors).length > 0 || (input.email === '' && input.password === '') ? (
+						<Button variant='outlined' disabled={true}>Register</Button>
 					) : (
-						<button onClick={(e) => handleSubmit(e)} className="bueno">
-							RegisterB
-						</button>
+						<Button variant='contained' onClick={(e) => handleSubmit(e)}>
+						Register
+						</Button>
 					)}
-		</div>
+		</Grid>
 	)
 }
 
