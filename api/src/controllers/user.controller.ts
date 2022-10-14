@@ -43,7 +43,7 @@ export const addUser = async (req: Request, res: Response) => {
   }
 };
 
-export const findUserAndGetAllUser = async (req: Request, res: Response) => {
+export const findUserByName = async (req: Request, res: Response) => {
   const { name } = req.query;
   try {
     if (name) {
@@ -68,6 +68,8 @@ export const findUserAndGetAllUser = async (req: Request, res: Response) => {
   }
 };
 
+export const findUserById = async (req: Request, res: Response) => {
+  const { id } = req.params;
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { id, action } = req.query;
@@ -103,3 +105,19 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.status(404).send(err);
   }
 }
+  try {
+    if (id) {
+      const user = await userSchema.findOne({ "_id": id });
+
+      if (user) {
+        res.status(200).send(user)
+        return
+      }
+      res.status(404).send('User id not found.')
+    }
+  } catch (e) {
+    res.status(400).send(e);
+    return;
+  }
+};
+
