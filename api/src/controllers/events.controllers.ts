@@ -62,8 +62,7 @@ export const findEvent = async(req: Request, res: Response) => {
 }
 
 export const updateEvent = async(req: Request, res: Response) => {
-    // const {id} = req.query
-    const id = "63486473bd327de76940bdd5"
+    const {id} = req.query
     const {
         date,
         hour,
