@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 const eventSchema = require("../models/event");
+const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, date, hour, enabled, content, image, location } = req.body;
+  const { name, date, hour, enabled, content, image, location, idUser } = req.body;
   try {
+  const user = await userSchema.find({_id:idUser})
     let event = await new eventSchema();
+    console.log(user)
     if (name.length && date.length && content.length && location.length) {
+      event.author= user[0]._id
       event.name = name;
       event.date = date;
       event.hour = hour;
@@ -14,12 +18,13 @@ export const addEvent = async (req: Request, res: Response) => {
       event.image = image;
       event.location = location;
       event.enabled = false;
-      await event.save(function (err: any, event: any) {
-        if (err) {
-          res.send(err);
-        }
-        console.log(event);
-      });
+      const newEvent = await event.save();
+      user[0].events = user[0].events.concat(newEvent)
+      console.log(user[0])
+        
+      await user[0].save()
+
+      console.log(event);
       res.status(200).send("new comment");
     }
   } catch (e) {
