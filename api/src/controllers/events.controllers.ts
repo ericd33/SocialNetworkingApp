@@ -60,3 +60,40 @@ export const findEvent = async(req: Request, res: Response) => {
         return
     }
 }
+
+export const updateEvent = async(req: Request, res: Response) => {
+    // const {id} = req.query
+    const id = "63486473bd327de76940bdd5"
+    const {
+        date,
+        hour,
+        enabled,
+        content,
+        image,
+        location
+    } = req.body
+    try{
+        if(date.length){ 
+            await eventSchema.findOneAndUpdate({ _id: id},{date:date},{new: true})
+        }
+        if(isNaN(hour) || (hour>=0 && hour<=24)){ 
+            await eventSchema.findOneAndUpdate({ _id: id},{hour:hour})
+
+        }
+        if(enabled){ 
+            await eventSchema.findOneAndUpdate({ _id: id},{enabled:true},{new: true})
+        }
+        if(content?.length){ 
+            await eventSchema.findOneAndUpdate({ _id: id},{content:content},{new: true})
+        }
+        if(image?.length){ 
+            await eventSchema.findOneAndUpdate({ _id: id},{image:image},{new: true})
+        }
+        if(location?.length){ 
+            await eventSchema.findOneAndUpdate({ _id: id},{location:location},{new: true})
+        }
+        res.status(200).send('datos actualizados')
+    }catch(e){
+        res.status(400).send(e)
+    }
+}
