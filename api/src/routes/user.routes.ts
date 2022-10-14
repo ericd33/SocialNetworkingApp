@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { addUser, findUserAndGetAllUser,  } from "../controllers/userpost.controller";
+import { addUser, findUserAndGetAllUser,  } from "../controllers/user.controller";
 const router = Router()
 
-router.route('/user')
+router.route('')
     .post(addUser)
     .get(findUserAndGetAllUser)
 
