@@ -75,7 +75,6 @@ export const deleteUser = async (req: Request, res: Response) => {
   try {
     if (id) {
       const user = await userSchema.findOne({ _id: id });
-
       switch (action) {
         case "disable":
           if (user.enabled) {
