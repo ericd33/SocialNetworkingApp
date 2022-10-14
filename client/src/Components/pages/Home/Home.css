@@ -1,13 +1,10 @@
 .Home {
     max-width: 100vw;
-    height: auto;
+    min-height: 100vh;
 }
 
 .navbar {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    height: 67px;
 }
 
 .media-part {

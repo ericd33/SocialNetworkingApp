@@ -7,8 +7,9 @@ export default function Home() {
     return (
         <div className='Home'>
             <div className="navbar">
-                <NavBar/>
+                <span></span>
             </div>
+            <NavBar/>
             <div className="media-part">
                 <div className="leftHome">
                     <EventsMenu/>   
@@ -17,7 +18,7 @@ export default function Home() {
                     <PostList/>
                 </div>
                 <div className="rightHome">
-                    
+
                 </div>
             </div>
         </div>
