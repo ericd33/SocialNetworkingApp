@@ -1,17 +1,14 @@
 import axios from "axios";
 
-export const CREATE_USER = "CREATE_USER";
-
-export function postUser(payload) {
-    return async function (dispatch) {
-      const post = await axios.post(
-        "http://localhost:3001/user",
-        payload
-      );
-      return dispatch({
-        type: CREATE_USER,
-        payload: post,
-      });
+export function postUser({name,email,password}) {
+    return function () {
+      axios.post("http://localhost:3001/user", {
+          name,
+          email,
+          password
+        })
+      .then(function(response) {console.log(response)})
+      .catch(function(err) {console.log(err)});
     };
   }
 
