@@ -4,7 +4,13 @@ const userSchema = require("../models/user");
 export const addUser = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
   var user = await new userSchema();
-
+  try{
+  
+  let checkingUserExist = await userSchema.find({email: email})
+  if(checkingUserExist.length){
+    res.status(200).send('el email ya esta usado')
+    return
+  }
 
   if (!name.length && !email.length && !password.length) {
     res.send("error");
@@ -33,19 +39,24 @@ export const addUser = async (req: Request, res: Response) => {
     console.log(user);
   });
 
-  res.send("signUp");
+  res.status(200).send("signUp");
+  }catch(e){
+    res.status(400).send(e)
+  }
 };
 
 export const findUserAndGetAllUser = async(req: Request, res: Response) => {
-  const { name } = req.query
+    const { name } = req.query
+    const regex:any = new RegExp("","")
   try{
       if(name){
-      const user = await userSchema.find({name: name});
+      const user = await userSchema.find(regex(name,"ig"));
+      console.log(user)
       if(user.length){
           res.status(200).send(user);
           return
       }
-      res.status(201).send('el evento no existe')
+      res.status(201).send('el usuario no existe')
       return
   }
   else{

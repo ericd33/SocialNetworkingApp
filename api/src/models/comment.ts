@@ -25,10 +25,11 @@ const commentSchema = new Schema({
         ref: 'post',
         require: true
     },
-    like:{
-        type:Array,
+    like:[{
+        type:Types.ObjectId,
+        ref: 'users',
         required:false
-    },
+    }],
     text:{
         type:String,
         required:true
