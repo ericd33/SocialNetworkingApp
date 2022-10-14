@@ -1,9 +1,9 @@
-import { Document, model, Schema, Types } from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
 export interface Icomment extends Document {
   enabled: boolean;
   author: object;
-  IDpost: object;
+  IdPost: object;
   like?: string[];
   text: string;
   image?: string;
@@ -13,23 +13,9 @@ const commentSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  author: {
-    type: Types.ObjectId,
-    ref: "users",
-    require: true,
-  },
-  IDpost: {
-    type: Types.ObjectId,
-    ref: "post",
-    require: true,
-  },
-  like: [
-    {
-      type: Types.ObjectId,
-      ref: "users",
-      required: false,
-    },
-  ],
+  author: {},
+  IdPost: {},
+  like: [],
   text: {
     type: String,
     required: true,

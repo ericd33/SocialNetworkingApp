@@ -1,4 +1,4 @@
-import { Document, model, Schema, Types } from "mongoose";
+import { Document, model, Schema} from "mongoose";
 
 
 export interface Ievent extends Document {
@@ -29,11 +29,7 @@ const eventSchema = new Schema({
         type: Boolean,
         required: true,
     },
-    author: {
-        type: Types.ObjectId,
-        ref: 'users',
-        require: true
-    },
+    author: {},
     content: {
         type: String,
         required: true,

@@ -1,20 +1,30 @@
 import { Request, Response } from "express";
+const userSchema = require("../models/user");
 const postSchema = require("../models/post");
-
+const commentSchema = require("../models/comment");
 export const addPost = async (req: Request, res: Response) => {
-  const { image, content } = req.body;
+  const { image, content, idUser,idComment } = req.body;
   let post = await new postSchema();
-  if (content.length || image.length) {
+  const user = await userSchema.find({_id:idUser})
+  if(idComment?.length){
+    const comment = await commentSchema.find({_id:idComment})
+    console.log(comment)
+    post.comments = comment[0]._id
+  }
+  try{
+  if ((content.length || image.length) && idUser.length) {
+    post.author= user[0]._id
     post.image = image;
     post.content = content;
-    post.enabled = true;
-    await post.save(function (err: any, post: any) {
-      if (err) {
-        res.send(err);
-      }
-      console.log(post);
-    });
-    res.send("new post");
+    post.enabled = false;
+    const savePost = await post.save();
+    console.log(user[0].posts)
+    user[0].posts = user[0].posts.concat(savePost)
+    console.log(user[0])
+    await user[0].save()
+    res.status(200).send("new post");
+  }}catch(e){
+    res.status(400).send(e)
   }
 };
 
