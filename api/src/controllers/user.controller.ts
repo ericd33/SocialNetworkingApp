@@ -71,6 +71,40 @@ export const findUserByName = async (req: Request, res: Response) => {
 export const findUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
 
+export const deleteUser = async (req: Request, res: Response) => {
+  const { id, action } = req.query;
+
+  try {
+    if (id) {
+      const user = await userSchema.findOne({ _id: id });
+      switch (action) {
+        case "disable":
+          if (user.enabled) {
+            await userSchema.updateOne({ _id: id },{ enabled: false }
+            );
+            res.status(200).send("User deleted successfully.");
+          } else {
+            res.status(400).send("User is already deleted.");
+          }
+          break;
+          case "enable":
+            if (!user.enabled) {
+              await userSchema.updateOne({ _id: id },{ enabled: true }
+              );
+              res.status(200).send("User re-enabled successfully.");
+            } else {
+              res.status(400).send("User is already deleted.");
+            }
+          break;
+        default:
+          res.status(400).send('Invalid action request.')
+          break;
+      }
+    }
+  } catch (err) {
+    res.status(404).send(err);
+  }
+}
   try {
     if (id) {
       const user = await userSchema.findOne({ "_id": id });
@@ -86,3 +120,4 @@ export const findUserById = async (req: Request, res: Response) => {
     return;
   }
 };
+
