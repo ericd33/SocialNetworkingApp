@@ -16,14 +16,22 @@ const LandingRegister = () => {
 
 	function validate(input) {
 		let errors = {};
-		if (!input.name) {
+		if (!input.name ) {
 			errors.name = "The name is requiered";
 		}
-		if (!input.email) {
-			errors.email = "The email is required";
+		if (!input.email || !/^[^@]+@[^@]+\.[a-zA-Z]{3,}$/.test(input.email)) {
+			errors.email = "invalid e-mail example: example@example.com";
 		}
-		if (!input.password) {
-			errors.password = "The password is requiered";
+		// contrasena asi:
+		// Minimo 8 caracteres
+		// Maximo 15
+		// Al menos una letra mayúscula
+		// Al menos una letra minucula
+		// Al menos un dígito
+		// No espacios en blanco
+		// Al menos 1 caracter especial
+		if (!input.password || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#@$!%*?&])([A-Za-z\d$@$!%*?&]|[^]){8,15}$/.test(input.password)){
+			errors.password = "invalid e-mail: -8 a 15 characters is necessary -At least one capital letter -At least one digit -Not espaces -At least one special character";
 		}
 		return errors;
 	}
