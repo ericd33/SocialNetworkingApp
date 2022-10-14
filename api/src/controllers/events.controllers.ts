@@ -99,3 +99,13 @@ export const updateEvent = async (req: Request, res: Response) => {
     res.status(400).send(e);
   }
 };
+
+export const deleteEvent = async (req: Request, res: Response) => {
+    const { id } = req.query
+    try{
+        await eventSchema.findByIdAndDelete(id)
+        res.status(200).send('event delete successfully')
+    }catch(e){
+        res.status(400).send(e)
+    }
+}
