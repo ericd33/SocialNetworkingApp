@@ -19,7 +19,7 @@ const LandingLogin = () => {
       if (!input.email || !/^[^@]+@[^@]+\.[a-zA-Z]{3,}$/.test(input.email)) {
         errors.email = "invalid e-mail ";
       }
-      if (!input.password) {
+      if (!input.password ||!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(input.password)){
         errors.password = "invalid password";
       }
       return errors;
@@ -76,10 +76,10 @@ const LandingLogin = () => {
             ) : null}
             <br/>
             {Object.entries(errors).length > 0 ? (
-              <button className="falso">login</button>
+              <button className="falso">loginV</button>
             ) : (
               <button onClick={(e) => handleSubmit(e)} className="bueno">
-                login
+                loginV
               </button>
             )}
       </div>
