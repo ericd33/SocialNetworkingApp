@@ -41,7 +41,7 @@ export const findEvent = async(req: Request, res: Response) => {
     const { name } = req.query
     try{
         if(name){
-        const event = await eventSchema.find({name: name});
+        const event = await eventSchema.find({ name: { $regex: name, $options: 'ig'}});
         if(event.length){
             res.status(200).send(event);
             return
