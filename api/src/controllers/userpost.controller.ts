@@ -47,11 +47,9 @@ export const addUser = async (req: Request, res: Response) => {
 
 export const findUserAndGetAllUser = async(req: Request, res: Response) => {
     const { name } = req.query
-    const regex:any = new RegExp("","")
   try{
       if(name){
-      const user = await userSchema.find(regex(name,"ig"));
-      console.log(user)
+      const user = await userSchema.find({ name: { $regex: name, $options: 'ig'}});
       if(user.length){
           res.status(200).send(user);
           return
