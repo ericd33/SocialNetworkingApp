@@ -22,7 +22,7 @@ const corsOptions: CorsOptions = {};
 
 app.use(cors(corsOptions));
 
-app.use("/comment", comment);
-app.use("/user", userRoutes);
-app.use("/event", event);
-app.use("/post", post);
+app.use("/comments", comment);
+app.use("/users", userRoutes);
+app.use("/events", event);
+app.use("/posts", post);
