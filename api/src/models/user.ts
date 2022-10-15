@@ -10,12 +10,17 @@ export interface Iuser extends Document{
     friends?: string[],
     posts?:string[],
     liked?:string[],
-    events?:string[]
+    events?:string[],
+    image?: string
 }
 const userSchema = new Schema({
     name: {
         type: String,
         required: true
+    },
+    image: {
+        type:String,
+        required:false
     },
     role:{
         type: String,

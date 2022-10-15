@@ -7,5 +7,5 @@ router.route('')
     .post(addEvent)
     .get(findEvent)
     .put(updateEvent)
-    .delete(deleteEvent)
+    .patch(deleteEvent)
 export default router;

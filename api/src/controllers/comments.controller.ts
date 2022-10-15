@@ -5,23 +5,20 @@ const postSchema = require("../models/post");
 
 export const addComment = async (req: Request, res: Response) => {
   const { text, image, idUser,idPost} = req.body;
-  const user = await userSchema.find({_id:idUser})
-  const post = await postSchema.find({_id:idPost})
-  console.log("atoy");
+  const user = await userSchema.findOne({_id:idUser})
+  const post = await postSchema.findOne({_id:idPost})
   let comment = await new commentSchema();
-  console.log(comment)
   try{
   if (text.length && idUser.length && idPost.length) {
-    comment.author = user[0]._id
-    comment.IdPost = post[0]._id
+    comment.author = user._id
+    comment.IdPost = post._id
     comment.text = text;
     comment.image = image;
     comment.enabled = false;
     const newComent = await comment.save();
-    console.log(post)
-    post[0].comments = post[0].comments.concat(newComent)
-    await post[0].save()
-    console.log(comment);
+    console.log(newComent)
+    post.comments = post.comments.concat(newComent)
+    await post.save()
     res.status(200).send("new comment");
   }}catch(e){
     res.status(400).send(e)

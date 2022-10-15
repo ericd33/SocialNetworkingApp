@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { addUser, findUserByName, findUserById , deleteUser } from "../controllers/user.controller";
+import { addUser, findUserByName, findUserById , deleteUser, addFriend } from "../controllers/user.controller";
 
 const router = Router()
 
@@ -10,5 +10,6 @@ router.route('')
     .get(findUserByName)
 
 router.route('/:id').get(findUserById)
-
+router.route('/follow')
+    .post(addFriend)
 export default router;

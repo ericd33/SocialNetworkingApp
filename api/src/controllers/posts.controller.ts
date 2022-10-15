@@ -72,3 +72,19 @@ export const putPostById = async (req: Request, res: Response) => {
     res.status(404).send(e);
   }
 };
+
+
+// export const like = async (req: Request, res: Response) => {
+//   const { idLiker, idPost } = req.body
+//   const liker = await userSchema.findOne({_id:idLiker})
+//   const post = await postSchema.findOne({_id:idPost})
+//   console.log(liker._id)
+//   console.log(post.likes)
+//   try{
+//     post.likes = [...new Set([...post.likes,liker._id])]
+//     post.save()
+//     res.status(200).send('successfully')
+//   }catch(e){
+//     res.status(400).send(e)
+//   }
+// }
