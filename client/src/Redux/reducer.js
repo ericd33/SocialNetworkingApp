@@ -16,11 +16,18 @@ const rootReducer = (state = initialState, action) => {
         posts: action.payload,
         filtered_posts: action.payload
       }
+
+      // case 'POST_POST':
+      //   return {
+      //     ...state,
+      //   }
+
       case GET_EVENTS:
         return{
           ...state,
           events: action.payload
         }
+
     default:
       return state;
   }

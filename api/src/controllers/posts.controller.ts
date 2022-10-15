@@ -5,14 +5,15 @@ const commentSchema = require("../models/comment");
 
 
 export const addPost = async (req: Request, res: Response) => {
-  const { image, content, idUser,idComment } = req.body;
+  const { image, content, idUser, idComment } = req.body;
   let post = await new postSchema();
-  const user = await userSchema.find({_id:idUser})
-  if(idComment?.length){
-    const comment = await commentSchema.find({_id:idComment})
-    console.log(comment)
-    post.comments = comment[0]._id
+  const user = await userSchema.find({ _id: idUser });
+  if (idComment?.length) {
+    const comment = await commentSchema.find({ _id: idComment });
+    console.log(comment);
+    post.comments = comment[0]._id;
   }
+
   try{
   if ((content.length || image.length) && idUser.length) {
     post.author= user[0]._id
@@ -27,6 +28,7 @@ export const addPost = async (req: Request, res: Response) => {
     res.status(200).send("new post");
   }}catch(e){
     res.status(400).send(e)
+
   }
 };
 
@@ -49,24 +51,22 @@ export const putPostById = async (req: Request, res: Response) => {
       switch (action) {
         case "disable":
           if (post.enabled) {
-            await postSchema.updateOne({ _id: id },{ enabled: false }
-            );
+            await postSchema.updateOne({ _id: id }, { enabled: false });
             res.status(200).send("Post deleted successfully.");
           } else {
             res.status(400).send("Post is already deleted.");
           }
           break;
-          case "enable":
-            if (!post.enabled) {
-              await postSchema.updateOne({ _id: id },{ enabled: true }
-              );
-              res.status(200).send("Post re-enabled successfully.");
-            } else {
-              res.status(400).send("Post is already deleted.");
-            }
+        case "enable":
+          if (!post.enabled) {
+            await postSchema.updateOne({ _id: id }, { enabled: true });
+            res.status(200).send("Post re-enabled successfully.");
+          } else {
+            res.status(400).send("Post is already deleted.");
+          }
           break;
         default:
-          res.status(400).send('Invalid action request.')
+          res.status(400).send("Invalid action request.");
           break;
       }
     }
@@ -74,7 +74,6 @@ export const putPostById = async (req: Request, res: Response) => {
     res.status(404).send(e);
   }
 };
-
 
 // export const like = async (req: Request, res: Response) => {
 //   const { idLiker, idPost } = req.body

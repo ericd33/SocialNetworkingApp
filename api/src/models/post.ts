@@ -1,12 +1,14 @@
-import { Document, model, Schema} from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
 export interface Ipost extends Document {
+
   enabled: boolean,
   author: object,
   likes?: string[],
   content?: string,
   image?: string,
   comments?: string[],
+
 }
 
 const postSchema = new Schema({
@@ -25,5 +27,5 @@ const postSchema = new Schema({
   comments: [],
 });
 
-const Post = model<Ipost>('post', postSchema);
-module.exports = Post
+const Post = model<Ipost>("post", postSchema);
+module.exports = Post;
