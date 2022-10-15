@@ -46,11 +46,10 @@ export default function EventDetail({location,title,creator,text,image,photoperf
                     </Typography>
 
                     <div className="right-namephoto">
-                        <Avatar sx={{ bgcolor: yellow[500] }} src={photoperfil}></Avatar>
+                        <Avatar sx={{ bgcolor: yellow[500] }} src={detail?.avatar}></Avatar>
 
                         <Typography id="h5" sx={{fontFamily: 'Nunito', fontSize: 16,color:grey[800]}} gutterBottom variant="h5" component="div">
-                            {user?.name}
-                            {console.log(user)}
+                            {detail?.nameAuthor}
                         </Typography>
                     </div>
 

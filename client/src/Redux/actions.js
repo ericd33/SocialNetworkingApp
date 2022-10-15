@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DETAILS_EVENT,POST_POST, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID, GET_MY_ID } from './action-types.js';
+import { DETAILS_EVENT, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID, GET_MY_ID } from './action-types.js';
 
 export function postUser(payload) {
     return function () {

@@ -7,7 +7,7 @@ const initialState = {
   posts: [],
   filtered_posts: [],
   events:[],
-  idUser: ''
+  idUser: '',
   details:[],
   findUserId:[],
 };
