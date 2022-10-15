@@ -1,28 +1,29 @@
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, IconButton } from '@mui/material';
 import { yellow, grey } from '@mui/material/colors';
-import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import ReplyIcon from '@mui/icons-material/Reply';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import CommentsModal from './Modals/CommentsModal';
+import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 
 export default function Post({text,author,comments,likes,image}) {
 
-        const [user, setUser] = useState({name:''});
+        const [User, setUser] = useState({name:''});
 
         useEffect(() => {
             axios.get(`http://localhost:3001/users/${author}`)
             .then((user) => {
                 setUser({
-                    name: user.name
+                    name: user.data.name,
                 });
             })
             .catch(function(err) {console.log(err)});
         },[])
 
+
         return (
-            
             <Card sx={{width: 600, bgcolor: grey[300], fontFamily: 'Nunito', color:grey[900]}}>
                 <CardHeader
                     sx={{pt: 0, pb: 0, mt:2}}
@@ -31,7 +32,7 @@ export default function Post({text,author,comments,likes,image}) {
                     </Avatar>
                     }
                     // src={photoperfil} propiedad del objeto avatar
-                    title={user.name}
+                    title={User.name}
                     subheader="1h"
                 />
                 <CardContent sx={{pb:1}}>
@@ -51,7 +52,7 @@ export default function Post({text,author,comments,likes,image}) {
                     <IconButton>
                         <ThumbUpOffAltIcon/>
                     </IconButton>
-                    {/* <p>{likes} likes</p> */}
+                    <p>{likes.length} likes</p>
 
 
                     {/* ----Dislikes para un FUTURO---- */}
@@ -60,10 +61,14 @@ export default function Post({text,author,comments,likes,image}) {
                         <ThumbDownOffAltIcon/>
                     </IconButton>
                     <p>6 dislikes</p> */}
-    
-                    <IconButton>
-                        <ChatBubbleOutlineRoundedIcon/>
-                    </IconButton>
+                    {
+                        comments.length !== 0 ?
+                        <CommentsModal comments={comments}/>
+                        :
+                        <IconButton>
+                            <ChatBubbleOutlineRoundedIcon/>
+                        </IconButton>
+                    }
                     <p>{comments.length} comments</p>
     
                     {/* --- Shares para FUTURO --- */}
