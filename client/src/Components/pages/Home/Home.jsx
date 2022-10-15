@@ -4,21 +4,20 @@ import PostList from "../../Posts/PostList";
 import "./Home.css";
 import CreatePost from "../../Posts/CreatePost";
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
-import { GET_MY_ID } from '../../../Redux/action-types';
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getMyID } from "../../../Redux/actions";
+// import axios from "axios";
+// import { useDispatch } from "react-redux";
+// import { useEffect } from "react";
+// import { getMyID } from "../../../Redux/actions";
 
 export default function Home() {
   const { user } = useAuth0();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(async() => {
-    let id = await axios.get(`http://localhost:3000/users/email/${user.email}`);
-    console.log(id.data);
-    dispatch(getMyID(id.data))
-  },[])
+  // useEffect(async() => {
+  //   let id = await axios.get(`http://localhost:3000/users/email/${user.email}`);
+  //   console.log(id.data);
+  //   dispatch(getMyID(id.data))
+  // },[dispatch])
 
   console.log(user);
 

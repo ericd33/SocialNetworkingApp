@@ -4,7 +4,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { grey, yellow } from '@mui/material/colors';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import '../CreatePost.css';
-import axios from 'axios';
 
 export default function CommentsModal(comments) {
     const [modal, setModal] = useState(false);
@@ -26,6 +25,7 @@ export default function CommentsModal(comments) {
                     comments.comments.map(c => {
                         return (
                             <div>
+                                {console.log(c.avatar)}
                                 <Card sx={{width: 500, bgcolor: grey[300], fontFamily: 'Nunito', color:grey[900]}}>
                                     <CardHeader
                                         sx={{pt: 0, pb: 0, mt:2}}
@@ -41,7 +41,6 @@ export default function CommentsModal(comments) {
                                         {c.text}
                                     </CardContent>
                                 </Card>
-                                <br/>
                             </div>
                         )
                     })
