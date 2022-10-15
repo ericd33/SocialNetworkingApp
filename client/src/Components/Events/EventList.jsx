@@ -25,6 +25,7 @@ export default function EventList() {
                             title={e.title}
                             text={e.content}
                             image={e.image}
+                            id={e._id}
                         />
                     )
                 })

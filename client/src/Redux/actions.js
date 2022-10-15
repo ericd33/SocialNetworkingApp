@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_EVENTS, GET_POSTS } from './action-types.js';
+import { DETAILS_FOOD, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID } from './action-types.js';
 
 export function postUser(payload) {
     return function () {
@@ -33,4 +33,28 @@ export function getEvents() {
     
   }
 }
+export function details(id){
+  return async function(dispatch){
+      var json = await axios.get(`http://localhost:3001/events/${id}`)
+      return dispatch({
+          type: GET_DETAILS,
+          payload:json.data
+      })
+  }
+}
 
+export function deleteDetails(){
+  return{
+      type: DETAILS_FOOD
+  }
+}
+
+export default function getUser(id){
+  return async function(dispatch){
+    var json = await axios.get(`http://localhost:3001/users/${id}`)
+    return dispatch({
+        type: GET_USER_FOR_ID,
+        payload:json.data
+    })
+}
+}
