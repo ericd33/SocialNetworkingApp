@@ -1,19 +1,35 @@
 import PostEvent from "./PostEvent";
-import image from '../../resources/imagen.jpg';
 import { Container } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getEvents } from "../../Redux/actions";
 
 export default function EventList() {
+    const events = useSelector(e=>e.events)
+
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(getEvents())
+    },[getEvents])
+
     return (
         <Container>
-            <PostEvent date='10/10/2022' hour='21' location='Santiago del Estero' title='Encuentro Gamer' text='La Electronic Entertainment Expo, más conocida por su abreviatura E3, es la convención de videojuegos más importante de la industria, en la que diversas compañías de videojuegos hablan de sus próximos lanzamientos, y algunas veces de su software y hardware.' image={image}/>
-            <br/>
-            <PostEvent date='10/10/2022' hour='21' location='Santiago del Estero' title='Encuentro Gamer' text='La Electronic Entertainment Expo, más conocida por su abreviatura E3, es la convención de videojuegos más importante de la industria, en la que diversas compañías de videojuegos hablan de sus próximos lanzamientos, y algunas veces de su software y hardware.' image={image}/>
-            <br/>
-            <PostEvent date='10/10/2022' hour='21' location='Santiago del Estero' title='Encuentro Gamer' text='La Electronic Entertainment Expo, más conocida por su abreviatura E3, es la convención de videojuegos más importante de la industria, en la que diversas compañías de videojuegos hablan de sus próximos lanzamientos, y algunas veces de su software y hardware.' image={image}/>
-            <br/>
-            <PostEvent date='10/10/2022' hour='21' location='Santiago del Estero' title='Encuentro Gamer' text='La Electronic Entertainment Expo, más conocida por su abreviatura E3, es la convención de videojuegos más importante de la industria, en la que diversas compañías de videojuegos hablan de sus próximos lanzamientos, y algunas veces de su software y hardware.' image={image}/>
-            <br/>
-            <PostEvent date='10/10/2022' hour='21' location='Santiago del Estero' title='Encuentro Gamer' text='La Electronic Entertainment Expo, más conocida por su abreviatura E3, es la convención de videojuegos más importante de la industria, en la que diversas compañías de videojuegos hablan de sus próximos lanzamientos, y algunas veces de su software y hardware.' image={image}/>
+            {
+                events?.map(e=>{
+                    return (
+                        <PostEvent
+                            key={e.author+e.date} 
+                            date={e.date}
+                            hour={e.hour}
+                            location={e.location}
+                            title={e.title}
+                            text={e.content}
+                            image={e.image}
+                            id={e._id}
+                        />
+                    )
+                })
+            }
             <br/>
         </Container>
     )

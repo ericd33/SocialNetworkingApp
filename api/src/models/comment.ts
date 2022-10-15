@@ -5,7 +5,7 @@ export interface Icomment extends Document {
   author: object;
   IdPost: object;
   like?: string[];
-  text: string;
+  text?: string;
   image?: string;
 }
 const commentSchema = new Schema({
@@ -18,7 +18,6 @@ const commentSchema = new Schema({
   like: [],
   text: {
     type: String,
-    required: true,
   },
   image: {
     type: String,

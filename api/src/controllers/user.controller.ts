@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 const userSchema = require("../models/user");
 
 export const addUser = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, image } = req.body;
   var user = await new userSchema();
   try {
     let checkingUserExist = await userSchema.find({ email: email });
@@ -22,6 +22,7 @@ export const addUser = async (req: Request, res: Response) => {
       }
       return null;
     }; 
+    user.image = image
     user.name = checkIfPropertyExist(name);
     user.role = "user";
     user.enabled = true;
