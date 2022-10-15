@@ -1,10 +1,11 @@
 // Importa las action types acá
 
-import { GET_POSTS } from "./action-types";
+import { GET_EVENTS, GET_POSTS } from "./action-types";
 
 const initialState = {
   posts: [],
   filtered_posts: [],
+  events:[]
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -15,6 +16,11 @@ const rootReducer = (state = initialState, action) => {
         posts: action.payload,
         filtered_posts: action.payload
       }
+      case GET_EVENTS:
+        return{
+          ...state,
+          events: action.payload
+        }
     default:
       return state;
   }

@@ -4,7 +4,7 @@ export interface Ipost extends Document {
   enabled: boolean,
   author: object,
   likes?: string[],
-  content: string,
+  content?: string,
   image?: string,
   comments?: string[],
 }
@@ -18,11 +18,9 @@ const postSchema = new Schema({
   likes: [],
   content: {
     type: String,
-    required: true,
   },
   image: {
     type: String,
-    required: true,
   },
   comments: [],
 });
