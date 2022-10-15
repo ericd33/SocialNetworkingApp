@@ -6,12 +6,12 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import Avatar from '@mui/material/Avatar';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import Avatar from "@mui/material/Avatar";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { IconButton } from "@mui/material";
-import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
+import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
-
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,23 +59,33 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
-  return (
-  
+  const LogoutButton = () => {
+    const { logout } = useAuth0();
 
-      <AppBar sx={{bgcolor:yellow[500], color:grey[800]}} position="fixed">
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Toolbar>
+    return (
+      <button onClick={() => logout({ returnTo: window.location.origin })}>
+        Log Out
+      </button>
+    );
+  };
+  return (
+    <AppBar sx={{ bgcolor: yellow[500], color: grey[800] }} position="fixed">
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        {LogoutButton()}
+        <Toolbar>
           <div>
-            <a href="/home"><h2>ConCatUs</h2></a>
+            <a href="/home">
+              <h2>ConCatUs</h2>
+            </a>
           </div>
 
-          <Search sx={{marginLeft:5}}>
+          <Search sx={{ marginLeft: 5 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -84,25 +94,26 @@ const NavBar = () => {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          </Toolbar>
-
-          <Toolbar>
-            <IconButton color="inherit" component={Link} to='/home'>
-              <NotificationsNoneIcon/>
-            </IconButton>
-
-            <IconButton color="inherit" component={Link}>
-              <ChatOutlinedIcon/>
-            </IconButton>
-
-            <Button sx={{ml:'35px', borderRadius:'25px', height:50}} component={Link}>
-              <Avatar>H</Avatar>
-            </Button>
-          </Toolbar>
         </Toolbar>
-      </AppBar>
-  
-  
+
+        <Toolbar>
+          <IconButton color="inherit" component={Link} to="/home">
+            <NotificationsNoneIcon />
+          </IconButton>
+
+          <IconButton color="inherit" component={Link}>
+            <ChatOutlinedIcon />
+          </IconButton>
+
+          <Button
+            sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
+            component={Link}
+          >
+            <Avatar>H</Avatar>
+          </Button>
+        </Toolbar>
+      </Toolbar>
+    </AppBar>
   );
 };
 
