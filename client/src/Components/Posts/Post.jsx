@@ -4,8 +4,22 @@ import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineR
 import ReplyIcon from '@mui/icons-material/Reply';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-export default function Post({photoperfil,text,name,image}) {
+export default function Post({text,author,comments,likes,image}) {
+
+        const [user, setUser] = useState({name:''});
+
+        useEffect(() => {
+            axios.get(`http://localhost:3001/users/${author}`)
+            .then((user) => {
+                setUser({
+                    name: user.name
+                });
+            })
+            .catch(function(err) {console.log(err)});
+        },[])
 
         return (
             
@@ -13,18 +27,19 @@ export default function Post({photoperfil,text,name,image}) {
                 <CardHeader
                     sx={{pt: 0, pb: 0, mt:2}}
                     avatar={
-                    <Avatar sx={{ bgcolor: yellow[500]}} src={photoperfil}>
+                    <Avatar sx={{ bgcolor: yellow[500]}}>
                     </Avatar>
                     }
-                    title={name}
+                    // src={photoperfil} propiedad del objeto avatar
+                    title={user.name}
                     subheader="1h"
                 />
                 <CardContent sx={{pb:1}}>
                     {text}
                 </CardContent>
-
+                
                 {
-                    image? <CardMedia
+                    image ? <CardMedia
                     component="img"
                     alt="image"
                     height='400'
@@ -36,22 +51,27 @@ export default function Post({photoperfil,text,name,image}) {
                     <IconButton>
                         <ThumbUpOffAltIcon/>
                     </IconButton>
-                    <p>25 likes</p>
+                    {/* <p>{likes} likes</p> */}
 
-                    <IconButton>
+
+                    {/* ----Dislikes para un FUTURO---- */}
+                    
+                    {/* <IconButton>
                         <ThumbDownOffAltIcon/>
                     </IconButton>
-                    <p>6 dislikes</p>
+                    <p>6 dislikes</p> */}
     
                     <IconButton>
                         <ChatBubbleOutlineRoundedIcon/>
                     </IconButton>
-                    <p>12 comments</p>
+                    <p>{comments.length} comments</p>
     
-                    <IconButton>
+                    {/* --- Shares para FUTURO --- */}
+
+                    {/* <IconButton>
                         <ReplyIcon />
                     </IconButton>
-                    <p>3 shares</p>
+                    <p>3 shares</p> */}
                 </CardActions>
             </Card>
         )
