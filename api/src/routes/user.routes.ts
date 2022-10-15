@@ -9,7 +9,8 @@ router.route('')
     .put(deleteUser)
     .get(findUserByName)
 
-router.route('/:id').get(findUserById)
+router.route('/:id')
+    .get(findUserById)
 router.route('/follow')
     .post(addFriend)
 export default router;

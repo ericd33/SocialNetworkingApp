@@ -8,7 +8,6 @@ import axios from 'axios';
 
 export default function CommentsModal(comments) {
     const [modal, setModal] = useState(false);
-
     const opencloseModal = () => {
         setModal(!modal);
     }
@@ -27,6 +26,7 @@ export default function CommentsModal(comments) {
                     comments.comments.map(c => {
                         return (
                             <div>
+                                {console.log(c.avatar)}
                                 <Card sx={{width: 500, bgcolor: grey[300], fontFamily: 'Nunito', color:grey[900]}}>
                                     <CardHeader
                                         sx={{pt: 0, pb: 0, mt:2}}
@@ -34,7 +34,7 @@ export default function CommentsModal(comments) {
                                         <Avatar sx={{ bgcolor: yellow[500]}}>
                                         </Avatar>
                                         }
-                                        src={c.avatar}
+                                        src={'https://static8.depositphotos.com/1052928/952/i/950/depositphotos_9520406-stock-photo-duck-white.jpg'}
                                         title={c.name}
                                         subheader="1h"
                                     />
