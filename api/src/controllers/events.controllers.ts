@@ -11,6 +11,8 @@ export const addEvent = async (req: Request, res: Response) => {
     console.log(user)
     if (name.length && date.length && content.length && location.length) {
       event.author= user._id
+      event.avatar = user.image
+      event.name = user.name
       event.name = name;
       event.date = date;
       event.hour = hour;
@@ -56,6 +58,17 @@ export const findEvent = async (req: Request, res: Response) => {
     return;
   }
 };
+
+export const findEventById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try{
+    const event = await eventSchema.findOne({_id:id})
+    console.log(event)
+    res.status(200).send(event)
+  }catch(e){
+    res.status(400).send(e)
+  }
+}
 
 export const updateEvent = async (req: Request, res: Response) => {
   const { id } = req.query;

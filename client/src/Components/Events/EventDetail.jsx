@@ -1,23 +1,43 @@
 import { Avatar, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { grey, yellow } from "@mui/material/colors";
 import './EventDetail.css';
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from "react";
+import getUser, { details, deleteDetails  } from "../../Redux/actions.js";
+import { useParams } from 'react-router-dom'
+import React from 'react'
+
+
 
 export default function EventDetail({location,title,creator,text,image,photoperfil,participants,date,hour}) {
+    const detail = useSelector(d=>d.details)
+    const user = useSelector(u=>u.findUserId)
+    const dispatch = useDispatch()
+    const { id }= useParams()
+    console.log(user)
+    useEffect(()=>{
+        dispatch(details(id))
+        dispatch(getUser(detail.author))
+        return()=>{
+            dispatch(deleteDetails())
+        }
+    },[])
     return (
-        <Card sx={{width:800}}>
-            <CardMedia
+        
+            <Card sx={{width:800}}>
+                <CardMedia
                 component="img"
                 alt="image"
                 height="140"
-                image={image}
+                image={detail?.image}
             />
             <CardContent className="infoEvent">
                 <div className="left">
                     <Typography sx={{fontFamily: 'Nunito', fontSize: 27,color:grey[900]}} gutterBottom variant="h5" component="div">
-                        {title}
+                        {detail?.title}
                     </Typography>
                     <Typography sx={{fontFamily: 'Nunito', fontSize: 18,color:grey[700]}} gutterBottom variant="h5" component="div">
-                        {location}
+                        {detail?.location}
                     </Typography>
                 </div>
                 <div className="right">
@@ -29,7 +49,8 @@ export default function EventDetail({location,title,creator,text,image,photoperf
                         <Avatar sx={{ bgcolor: yellow[500] }} src={photoperfil}></Avatar>
 
                         <Typography id="h5" sx={{fontFamily: 'Nunito', fontSize: 16,color:grey[800]}} gutterBottom variant="h5" component="div">
-                            {creator}
+                            {user?.name}
+                            {console.log(user)}
                         </Typography>
                     </div>
 
@@ -39,7 +60,7 @@ export default function EventDetail({location,title,creator,text,image,photoperf
 
             <CardContent sx={{fontFamily: 'Nunito'}}>
                 <div className="text">
-                    {text}
+                    {detail?.content}
                 </div>
             </CardContent>
 
@@ -49,12 +70,12 @@ export default function EventDetail({location,title,creator,text,image,photoperf
                     
                     <div className="date-hour-part">
                         <span>Participants: {participants}</span>
-                        <span>Date: {date}</span>
-                        <span>Hour: {hour} hs.</span>
+                        <span>Date: {detail?.date}</span>
+                        <span>Hour: {detail?.hour} hs.</span>
                     </div>
                 </div>
             </CardContent>
-
         </Card>
+    
     )
 }

@@ -7,11 +7,19 @@ export interface Icomment extends Document {
   like?: string[];
   text?: string;
   image?: string;
+  name: string;
+  avatar: string
 }
 const commentSchema = new Schema({
   enabled: {
     type: Boolean,
     required: true,
+  },
+  avatar:{
+    type:String
+  },
+  name:{
+    type:String
   },
   author: {},
   IdPost: {},
