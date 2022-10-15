@@ -57,6 +57,17 @@ export const findEvent = async (req: Request, res: Response) => {
   }
 };
 
+export const findEventById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try{
+    const event = await eventSchema.findOne({_id:id})
+    console.log(event)
+    res.status(200).send(event)
+  }catch(e){
+    res.status(400).send(e)
+  }
+}
+
 export const updateEvent = async (req: Request, res: Response) => {
   const { id } = req.query;
   const { date, hour, enabled, content, image, location } = req.body;

@@ -1,8 +1,9 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Icon, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Link } from "react-router-dom";
 
-export default function PostEvent({location,title,creator,text,image,photoperfil,date,hour}) {
+export default function PostEvent({location,title,creator,text,image,photoperfil,date,hour,id}) {
     return (
         <Card sx={{ width: 600, bgcolor: grey[300], color:grey[900]}}>
         <Typography sx={{fontSize: 14, fontFamily: 'Nunito', mt: '1px', ml:1, color:grey[800], pb:'1px'}} color="text.secondary" gutterBottom>
@@ -28,7 +29,7 @@ export default function PostEvent({location,title,creator,text,image,photoperfil
         </CardContent>
         <CardActions sx={{mt:0}}>
             <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
+            <Link to={`/detail/${id}`}><Button size="small">Learn More</Button></Link>
         </CardActions>
         </Card>
     )

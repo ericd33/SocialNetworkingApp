@@ -1,5 +1,7 @@
 import axios from "axios";
-import { GET_EVENTS, GET_POSTS, POST_POST } from './action-types.js';
+
+import { DETAILS_FOOD,POST_POST, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID } from './action-types.js';
+
 
 export function postUser(payload) {
     return function () {
@@ -31,21 +33,6 @@ export function postPost(payload) {
 }
 
 
-// export function postPost(payload) {
-//   return async function (dispatch) {
-//     try {
-//       const response = await axios.post('http://localhost:3001/posts');
-//       console.log(response);
-//       return dispatch({
-//         type: POST_POST,
-//         payload: response.data,
-//       });
-//     } catch (error) {
-//         alert('An error ocurred');
-//         console.log(error);
-//     }
-//   }};
-
 export function getEvents() {
   return async function(dispatch) {
     let json = await axios.get('http://localhost:3001/events')
@@ -58,4 +45,28 @@ export function getEvents() {
   }
 
 }
+export function details(id){
+  return async function(dispatch){
+      var json = await axios.get(`http://localhost:3001/events/${id}`)
+      return dispatch({
+          type: GET_DETAILS,
+          payload:json.data
+      })
+  }
+}
 
+export function deleteDetails(){
+  return{
+      type: DETAILS_FOOD
+  }
+}
+
+export default function getUser(id){
+  return async function(dispatch){
+    var json = await axios.get(`http://localhost:3001/users/${id}`)
+    return dispatch({
+        type: GET_USER_FOR_ID,
+        payload:json.data
+    })
+}
+}
