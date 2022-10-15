@@ -102,6 +102,24 @@ export const findUserById = async (req: Request, res: Response) => {
   }
 };
 
+export const findUserByEmail = async (req: Request, res: Response) => {
+  const { email } = req.params;
+  try {
+    if (email) {
+      const user = await userSchema.findOne({ "email": email });
+
+      if (user) {
+        res.status(200).send(user._id)
+        return
+      }
+      res.status(404).send('User id not found.')
+    }
+  } catch (e) {
+    res.status(400).send(e);
+    return;
+  }
+};
+
 export const deleteUser = async (req: Request, res: Response) => {
   const { id, action } = req.query;
 
