@@ -57,8 +57,8 @@ const LandingPage = () => {
         />
         <Grid className='form' item component={Paper} elevation={6} square>
         {login_register ? (<LandingLogin />) : <LandingRegister/> }
-        <p>Or</p>
-        {login_register ? <Button onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button onClick={(e) => loginOrRegister(e)}>Login</Button>}
+        <p id='or'>Or</p>
+        {login_register ? <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Login</Button>}
         </Grid>
       </Grid>
     </ThemeProvider>

@@ -1,7 +1,9 @@
 import { Button, FormControl, FormHelperText, Grid, Input, InputLabel } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
-import { postUser } from "../../../../Redux/actions.js"
+import { postUser } from "../../../../Redux/actions.js";
+import './LandingRegister.css';
 
 
 const LandingRegister = () => {
@@ -18,10 +20,10 @@ const LandingRegister = () => {
 	function validate(input) {
 		let errors = {};
 		if (!input.name ) {
-			errors.name = "The name is requiered";
+			errors.name = "The name is required";
 		}
 		if (!input.email || !/^[^@]+@[^@]+\.[a-zA-Z]{3,}$/.test(input.email)) {
-			errors.email = "invalid e-mail example: example@example.com";
+			errors.email = "Invalid E-mail <br> Example: example@example.com";
 		}
 		// contrasena asi:
 		// Minimo 8 caracteres
@@ -32,7 +34,8 @@ const LandingRegister = () => {
 		// No espacios en blanco
 		// Al menos 1 caracter especial
 		if (!input.password || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#@$!%*?&])([A-Za-z\d$@$!%*?&]|[^]){8,15}$/.test(input.password)){
-			errors.password = '-8 to 15 characters -At least one capital letter -At least one digit -Not spaces -At least one special character';
+			errors.password =
+			'8 to 15 characters - At least one capital letter - At least one digit - Not spaces - At least one special character';
 		}
 		return errors;
 	}
@@ -63,7 +66,7 @@ const LandingRegister = () => {
 	}
 
 	return (
-		<Grid>
+		<Grid className='registerForm' sx={{fontFamily:'Nunito'}}>
 			<h1>Register</h1>
 				<br />
 				<Grid item md={12}>
@@ -76,10 +79,10 @@ const LandingRegister = () => {
 					name="name"
 					onChange={(e) => handleChange(e)}
 					aria-describedby='name-helper'/>
-					<FormHelperText id='name-helper'>Your name</FormHelperText>
+					<FormHelperText sx={{mb:2, color:grey[400]}} id='name-helper'>Your name</FormHelperText>
 					</FormControl>
 					{errors.hasOwnProperty("name") ? (
-					<p>{errors.name}</p>
+					<p className='error'>{errors.name}</p>
 					) : null}
 				</Grid>
 				
@@ -93,10 +96,10 @@ const LandingRegister = () => {
 						name="email"
 						onChange={(e) => handleChange(e)}
 						aria-describedby='email-helper'/>
-						<FormHelperText id='email-helper'>Your email</FormHelperText>
+						<FormHelperText sx={{mb:2, color:grey[400]}} id='email-helper'>Your email</FormHelperText>
 					</FormControl>
 					{errors.hasOwnProperty("email") ? (
-					<p>{errors.email}</p>
+					<p className='error'>{errors.email}</p>
 					) : null}
 				</Grid>
 
@@ -110,10 +113,10 @@ const LandingRegister = () => {
 						name="password"
 						onChange={(e) => handleChange(e)}
 						aria-describedby='password-helper'/>
-						<FormHelperText id='password-helper'>Your password</FormHelperText>
+						<FormHelperText sx={{mb:2, color:grey[400]}} id='password-helper'>Your password</FormHelperText>
 					</FormControl>
 					{errors.hasOwnProperty("password") ? (
-					<p>{errors.password}</p>
+					<p className='error'>{errors.password}</p>
 					) : null}
 				</Grid>
 					<br/>

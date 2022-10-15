@@ -13,3 +13,11 @@
     background-color: gainsboro;
     border: 1px solid rgb(194, 194, 194);
 }
+
+#or {
+    margin-left: 30px;
+}
+
+#changeForm {
+    width: 80px;
+}
