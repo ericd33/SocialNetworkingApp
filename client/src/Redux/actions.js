@@ -1,5 +1,7 @@
 import axios from "axios";
-import { DETAILS_FOOD, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID } from './action-types.js';
+
+import { DETAILS_FOOD,POST_POST, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID } from './action-types.js';
+
 
 export function postUser(payload) {
     return function () {
@@ -22,6 +24,15 @@ export function getPosts() {
   }
 }
 
+export function postPost(payload) {
+  return function () {
+    axios.post("http://localhost:3001/posts", payload)
+    .then(function(response) {console.log(response)})
+    .catch(function(err) {alert('An error ocurred')});
+  };
+}
+
+
 export function getEvents() {
   return async function(dispatch) {
     let json = await axios.get('http://localhost:3001/events')
@@ -32,6 +43,7 @@ export function getEvents() {
     })
     
   }
+
 }
 export function details(id){
   return async function(dispatch){
