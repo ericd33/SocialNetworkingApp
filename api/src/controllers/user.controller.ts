@@ -20,10 +20,8 @@ export const addUser = async (req: Request, res: Response) => {
       if (property) {
         return property;
       }
-
       return null;
-    };
-
+    }; 
     user.name = checkIfPropertyExist(name);
     user.role = "user";
     user.enabled = true;
@@ -42,6 +40,23 @@ export const addUser = async (req: Request, res: Response) => {
     res.status(400).send(e);
   }
 };
+
+export const addFriend = async (req: Request, res: Response) => {
+  const { idFollowed, idFollow } = req.body
+  const followed = await userSchema.findOne({_id:idFollowed})
+  const follow = await userSchema.findOne({_id:idFollow})
+  try{
+    if(followed){
+      followed.friends = follow._id
+    }
+    followed.save()
+    res.status(200).send('successfolly')
+  }catch(e){
+    res.status(400).send(e)
+  }
+}
+
+
 
 export const findUserByName = async (req: Request, res: Response) => {
   const { name } = req.query;
