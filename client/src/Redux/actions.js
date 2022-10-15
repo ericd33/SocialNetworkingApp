@@ -22,3 +22,19 @@ export function getPosts() {
   }
 }
 
+export function postPost(payload) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post('http://localhost:3001/posts');
+      console.log(response);
+      return dispatch({
+        type: "POST_POST",
+        payload: response.data,
+      });
+    } catch (error) {
+        alert('An error ocurred');
+        console.log(error);
+    }
+  };
+}
+
