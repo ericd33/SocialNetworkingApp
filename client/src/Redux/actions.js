@@ -1,7 +1,5 @@
 import axios from "axios";
-
-import { DETAILS_FOOD,POST_POST, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID } from './action-types.js';
-
+import { DETAILS_EVENT,POST_POST, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID, GET_MY_ID } from './action-types.js';
 
 export function postUser(payload) {
     return function () {
@@ -40,10 +38,17 @@ export function getEvents() {
     return dispatch({
       type : GET_EVENTS,
       payload: json.data
-    })
-    
+    }) 
   }
+}
 
+export function getMyID(data) {
+  return function(dispatch) {
+    dispatch({
+      type: GET_MY_ID,
+      payload: data
+    })
+  }
 }
 export function details(id){
   return async function(dispatch){
@@ -57,7 +62,7 @@ export function details(id){
 
 export function deleteDetails(){
   return{
-      type: DETAILS_FOOD
+      type: DETAILS_EVENT
   }
 }
 
