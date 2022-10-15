@@ -2,7 +2,7 @@ import { Document, model, Schema } from "mongoose";
 
 export interface Ipost extends Document {
   enabled: boolean;
-  author: object;
+  author?: object;
   likes?: string[];
   content: string;
   image?: string;

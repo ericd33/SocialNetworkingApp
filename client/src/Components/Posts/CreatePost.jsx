@@ -24,24 +24,20 @@ export default function CreatePost() {
     setModal(!modal);
   };
   const [formState, setFormState] = useState({
-    text: {
-      value: "",
-    },
+    content: "",
   });
 
   const handleChange = (e) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      [e.target.text]: {
-        value: e.target.value,
-      },
-    }));
+    setFormState({
+      [e.target.content]: e.target.value,
+    });
     console.log(e.target.value);
   };
+
   const handleSubmit = (e) => {
     // e.peventDefault();
     dispatch(postPost(formState));
-    navigate("/");
+    // navigate("/");
   };
 
   const body = (
@@ -70,8 +66,8 @@ export default function CreatePost() {
           label="¿Que estas pensando?"
           multiline
           rows={4}
-          value={formState.text}
-          name="text"
+          value={formState.content}
+          name="content"
           className="textField"
           onChange={handleChange}
         />

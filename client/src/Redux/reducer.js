@@ -15,10 +15,10 @@ const rootReducer = (state = initialState, action) => {
         posts: action.payload,
         filtered_posts: action.payload
       }
-      case 'POST_POST':
-        return {
-          ...state,
-        }
+      // case 'POST_POST':
+      //   return {
+      //     ...state,
+      //   }
     default:
       return state;
   }
