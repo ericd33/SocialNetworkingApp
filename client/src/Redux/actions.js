@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_EVENTS, GET_POSTS, POST_POST } from './action-types.js';
+import { GET_EVENTS, GET_POSTS, POST_POST, GET_MY_ID } from './action-types.js';
 
 export function postUser(payload) {
     return function () {
@@ -53,9 +53,16 @@ export function getEvents() {
     return dispatch({
       type : GET_EVENTS,
       payload: json.data
-    })
-    
+    }) 
   }
+}
 
+export function getMyID(data) {
+  return function(dispatch) {
+    dispatch({
+      type: GET_MY_ID,
+      payload: data
+    })
+  }
 }
 
