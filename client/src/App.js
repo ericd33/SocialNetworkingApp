@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./Components/pages/Home/Home.jsx";
+// import Home from "./Components/pages/Home/Home.jsx";
 import LandingPage from "./Components/pages/Landing/LandingPage.jsx";
 import './App.css'
 
@@ -9,7 +9,6 @@ function App() {
     <>
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/home" element={<Home />} />
     </Routes>
     </>
   )
