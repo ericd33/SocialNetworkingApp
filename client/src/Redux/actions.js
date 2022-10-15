@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_POSTS } from './action-types.js';
+import { GET_EVENTS, GET_POSTS } from './action-types.js';
 
 export function postUser(payload) {
     return function () {
@@ -19,6 +19,18 @@ export function getPosts() {
       })
     })
     .catch(function(err) {console.log(err)});
+  }
+}
+
+export function getEvents() {
+  return async function(dispatch) {
+    let json = await axios.get('http://localhost:3001/events')
+    console.log(json)
+    return dispatch({
+      type : GET_EVENTS,
+      payload: json.data
+    })
+    
   }
 }
 

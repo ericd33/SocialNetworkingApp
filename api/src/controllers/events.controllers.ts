@@ -14,6 +14,7 @@ export const addEvent = async (req: Request, res: Response) => {
       event.name = name;
       event.date = date;
       event.hour = hour;
+      event.content = content;
       event.image = image;
       event.location = location;
       event.enabled = true;
