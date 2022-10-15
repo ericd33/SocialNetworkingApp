@@ -10,12 +10,20 @@ export interface Ievent extends Document {
     location: string,
     image?: string,
     enabled: string,
+    nameAuthor:string,
+    avatar:string
 }
 
 const eventSchema = new Schema({
     name:{
         type: String,
         required: true,
+    },
+    nameAuthor:{
+        type: String,
+    },
+    avatar:{
+        type:String
     },
     date:{
         type: String,

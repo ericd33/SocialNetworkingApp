@@ -11,6 +11,8 @@ export const addEvent = async (req: Request, res: Response) => {
     console.log(user)
     if (name.length && date.length && content.length && location.length) {
       event.author= user._id
+      event.avatar = user.image
+      event.name = user.name
       event.name = name;
       event.date = date;
       event.hour = hour;

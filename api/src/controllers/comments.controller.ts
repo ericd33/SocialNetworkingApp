@@ -11,6 +11,8 @@ export const addComment = async (req: Request, res: Response) => {
   try{
   if ((text.length || image.length) && idUser.length && idPost.length) {
     comment.author = user._id
+    comment.avatar = user.image
+    comment.name = user.name
     comment.IdPost = post._id
     comment.text = text;
     comment.image = image;

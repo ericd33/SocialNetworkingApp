@@ -10,8 +10,11 @@ router.route('')
     .put(deleteUser)
     .get(findUserByName)
 
-router.route('/:id').get(findUserById)
-router.route('/email/:email').get(findUserByEmail)
+
+router.route('/:id')
+    .get(findUserById)
+router.route('/email/:email')
+  .get(findUserByEmail)
 router.route('/follow')
     .post(addFriend)
 export default router;
