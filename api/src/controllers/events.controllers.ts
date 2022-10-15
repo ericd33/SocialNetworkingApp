@@ -3,7 +3,7 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, date, hour, enabled, content, image, location, idUser } = req.body;
+  const { name, date, hour, content, image, location, idUser } = req.body;
 
   try {
   const user = await userSchema.findOne({_id:idUser})
@@ -14,11 +14,9 @@ export const addEvent = async (req: Request, res: Response) => {
       event.name = name;
       event.date = date;
       event.hour = hour;
-      event.enabled = enabled;
-      event.content = content;
       event.image = image;
       event.location = location;
-      event.enabled = false;
+      event.enabled = true;
       const newEvent = await event.save();
       user.events = user.events.concat(newEvent)
       console.log(user)

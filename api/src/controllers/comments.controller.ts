@@ -9,12 +9,12 @@ export const addComment = async (req: Request, res: Response) => {
   const post = await postSchema.findOne({_id:idPost})
   let comment = await new commentSchema();
   try{
-  if (text.length && idUser.length && idPost.length) {
+  if ((text.length || image.length) && idUser.length && idPost.length) {
     comment.author = user._id
     comment.IdPost = post._id
     comment.text = text;
     comment.image = image;
-    comment.enabled = false;
+    comment.enabled = true;
     const newComent = await comment.save();
     console.log(newComent)
     post.comments = post.comments.concat(newComent)

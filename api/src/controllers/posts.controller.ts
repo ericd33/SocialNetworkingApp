@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 const userSchema = require("../models/user");
 const postSchema = require("../models/post");
 const commentSchema = require("../models/comment");
+
+
 export const addPost = async (req: Request, res: Response) => {
   const { image, content, idUser,idComment } = req.body;
   let post = await new postSchema();
@@ -16,7 +18,7 @@ export const addPost = async (req: Request, res: Response) => {
     post.author= user[0]._id
     post.image = image;
     post.content = content;
-    post.enabled = false;
+    post.enabled = true;
     const savePost = await post.save();
     console.log(user[0].posts)
     user[0].posts = user[0].posts.concat(savePost)
