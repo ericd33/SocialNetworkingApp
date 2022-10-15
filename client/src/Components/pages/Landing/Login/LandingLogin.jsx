@@ -51,7 +51,7 @@ const LandingLogin = () => {
     }
   
     return (
-      <Grid container sx={{fontFamily: 'Nunito'}}>
+      <Grid className='loginForm' container sx={{fontFamily: 'Nunito'}}>
           <h1>Login</h1>
           <br />
           <Grid item md={12}>
