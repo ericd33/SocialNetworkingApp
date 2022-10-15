@@ -14,16 +14,16 @@ export default function PostEvent({location,title,creator,text,image,photoperfil
         </Typography>
         <CardMedia
             component="img"
-            alt="image"
+            alt={image ?? "events"}
             height="140"
-            image={image}
+            image={image ?? 'https://images.squarespace-cdn.com/content/v1/5ca4ccae8dfc8c3d55b30c4b/1554485986869-KXBAG4G64H3FCQT7RYPJ/Events.jpg?format=2500w'}
         />
         <CardContent>
             <Typography sx={{fontFamily: 'Nunito', color:grey[900]}} gutterBottom variant="h5" component="div">
             {title}
             </Typography>
             <Typography sx={{fontFamily: 'Nunito', color:grey[800]}} variant="body2" color="text.secondary">
-            {text.substring(0,100)+'...'}
+            {text?.substring(0,100)+'...'}
             </Typography>
         </CardContent>
         <CardActions sx={{mt:0}}>

@@ -1,7 +1,5 @@
 import React,{ useState } from 'react'
-import LandingLogin from './Login/LandingLogin';
-import LandingRegister from './Register/LandingRegister';
-
+import { useAuth0 } from "@auth0/auth0-react";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
@@ -9,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import Home from "../Home/Home";
 import './LandingPage.css'
 
 function Copyright(props) {
@@ -25,17 +23,34 @@ function Copyright(props) {
   );
 }
 
+const LoginButton = () => {
+    const { loginWithRedirect } = useAuth0();
+
+    return (
+      <button
+        onClick={async () =>
+          await loginWithRedirect({
+            redirect_uri: "http://localhost:3000/home",
+          })
+        }
+      >
+        Log In
+      </button>
+    );
+  };
+
 const theme = createTheme();
 
 const LandingPage = () => {
-
-  const[ login_register, setLogin_register] = useState(true)
+    const { isAuthenticated } = useAuth0();
+    const[ login_register, setLogin_register] = useState(true)
 
   const loginOrRegister = (e) =>{
     e.preventDefault();
     setLogin_register(!login_register)
   }
 
+  if (isAuthenticated) return <Home/>
   return (
     <ThemeProvider theme={theme}>
       <Grid className='landing' container component="main" sx={{ height: '100vh' }}>
@@ -56,9 +71,7 @@ const LandingPage = () => {
           }}
         />
         <Grid className='form' item component={Paper} elevation={6} square>
-        {login_register ? (<LandingLogin />) : <LandingRegister/> }
-        <p id='or'>Or</p>
-        {login_register ? <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Login</Button>}
+            {LoginButton()}
         </Grid>
       </Grid>
     </ThemeProvider>
@@ -81,3 +94,8 @@ export default LandingPage
   //     {login_register ? <button onClick={(e) => loginOrRegister(e)}>Register</button> : <button onClick={(e) => loginOrRegister(e)}>Login</button>}
   //   </div>
   // )
+
+  //{login_register ? (<LandingLogin />) : <LandingRegister/> }
+   //     <p id='or'>Or</p>
+    //    {login_register ? <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Login</Button>}
+        
