@@ -3,28 +3,26 @@ import { grey, yellow } from "@mui/material/colors";
 import './EventDetail.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from "react";
-import getUser, { details, deleteDetails  } from "../../Redux/actions.js";
-import { useParams } from 'react-router-dom'
+import { details, deleteDetails  } from "../../Redux/actions.js";
+import { Link, useParams } from 'react-router-dom'
 import React from 'react'
 
 
 
-export default function EventDetail({location,title,creator,text,image,photoperfil,participants,date,hour}) {
+export default function EventDetail({participants}) {
     const detail = useSelector(d=>d.details)
-    const user = useSelector(u=>u.findUserId)
     const dispatch = useDispatch()
     const { id }= useParams()
-    console.log(user)
     useEffect(()=>{
         dispatch(details(id))
-        dispatch(getUser(detail.author))
         return()=>{
             dispatch(deleteDetails())
         }
-    },[])
+    },[dispatch,id])
     return (
         
             <Card sx={{width:800}}>
+                <Link to={'/event'}><button>events</button></Link>
                 <CardMedia
                 component="img"
                 alt="image"
