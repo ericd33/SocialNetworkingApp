@@ -106,7 +106,7 @@ const NavBar = () => {
               <SearchIcon />
             </SearchIconWrapper>
             {
-              window.location.href === `${process.env.REACT_APP_MY_API_URL}/events` 
+              window.location.href === `https://concatus.vercel.app/events` 
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
