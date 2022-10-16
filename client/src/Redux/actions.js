@@ -3,7 +3,7 @@ import { DETAILS_EVENT, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID, GET
 
 export function postUser(payload) {
     return function () {
-      axios.post("http://localhost:3001/user", payload)
+      axios.post(`${process.env.REACT_APP_MY_API_URL}/user`, payload)
       .then(function(response) {console.log(response)})
       .catch(function(err) {console.log(err)});
     };
@@ -11,7 +11,7 @@ export function postUser(payload) {
 
 export function getPosts() {
   return function(dispatch) {
-    axios.get('http://localhost:3001/posts')
+    axios.get(`${process.env.REACT_APP_MY_API_URL}/posts`)
     .then((posts) => {
       dispatch({
         type: GET_POSTS,
@@ -24,7 +24,7 @@ export function getPosts() {
 
 export function postPost(payload) {
   return function () {
-    axios.post("http://localhost:3001/posts", payload)
+    axios.post(`${process.env.REACT_APP_MY_API_URL}/posts`, payload)
     .then(function(response) {console.log(response)})
     .catch(function(err) {alert('An error ocurred')});
   };
@@ -33,7 +33,7 @@ export function postPost(payload) {
 
 export function getEvents() {
   return async function(dispatch) {
-    let json = await axios.get('http://localhost:3001/events')
+    let json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/events`)
     console.log(json)
     return dispatch({
       type : GET_EVENTS,
@@ -53,7 +53,7 @@ export function getMyID(data) {
 
 export function details(id){
   return async function(dispatch){
-      var json = await axios.get(`http://localhost:3001/events/${id}`)
+      var json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/events/${id}`)
       return dispatch({
           type: GET_DETAILS,
           payload:json.data
@@ -69,7 +69,7 @@ export function deleteDetails(){
 
 export default function getUser(id){
   return async function(dispatch){
-    var json = await axios.get(`http://localhost:3001/users/${id}`)
+    var json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/users/${id}`)
     return dispatch({
         type: GET_USER_FOR_ID,
         payload:json.data
@@ -78,7 +78,7 @@ export default function getUser(id){
 
 export function searchUsersByName(name){
   return async function(dispatch){
-    var json = await axios.get(`http://localhost:3001/users?name=${name}`)
+    var json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/users?name=${name}`)
     console.log(json)
     return dispatch({
         type: SEARCH_BY_NAME,
