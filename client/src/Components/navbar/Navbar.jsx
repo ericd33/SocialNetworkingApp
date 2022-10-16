@@ -106,7 +106,7 @@ const NavBar = () => {
               <SearchIcon />
             </SearchIconWrapper>
             {
-              window.location.href === 'http://localhost:3000/events' 
+              window.location.href === `${process.env.REACT_APP_MY_API_URL}/events` 
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
