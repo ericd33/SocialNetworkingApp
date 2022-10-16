@@ -42,6 +42,7 @@ export const addUser = async (req: Request, res: Response) => {
   }
 };
 
+
 export const addFriend = async (req: Request, res: Response) => {
   const { idFollowed, idFollow } = req.body
   const followed = await userSchema.findOne({_id:idFollowed})
