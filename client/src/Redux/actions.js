@@ -50,6 +50,7 @@ export function getMyID(data) {
     })
   }
 }
+
 export function details(id){
   return async function(dispatch){
       var json = await axios.get(`http://localhost:3001/events/${id}`)
@@ -73,8 +74,8 @@ export default function getUser(id){
         type: GET_USER_FOR_ID,
         payload:json.data
     })
-}
-}
+}}
+
 export function searchUsersByName(name){
   return async function(dispatch){
     var json = await axios.get(`http://localhost:3001/users?name=${name}`)

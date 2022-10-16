@@ -49,3 +49,7 @@
 .date-hour-part span {
     margin-left:30px;
 }
+
+.left {
+    text-align: start;
+}

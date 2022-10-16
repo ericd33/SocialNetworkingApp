@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Home from "../Home/Home";
 import './LandingPage.css'
+import { grey, yellow } from '@mui/material/colors';
 
 function Copyright(props) {
   return (
@@ -27,7 +28,9 @@ const LoginButton = () => {
     const { loginWithRedirect } = useAuth0();
 
     return (
-      <button
+      <Button
+        sx={{ml:6,mt:2, textAlign:'center'}}
+        variant='contained'
         onClick={async () =>
           await loginWithRedirect({
             redirect_uri: "http://localhost:3000/home",
@@ -35,7 +38,7 @@ const LoginButton = () => {
         }
       >
         Log In
-      </button>
+      </Button>
     );
   };
 
