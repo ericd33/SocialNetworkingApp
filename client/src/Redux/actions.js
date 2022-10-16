@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DETAILS_EVENT, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID, GET_MY_ID } from './action-types.js';
+import { DETAILS_EVENT, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID, GET_MY_ID, SEARCH_BY_NAME } from './action-types.js';
 
 export function postUser(payload) {
     return function () {
@@ -71,6 +71,16 @@ export default function getUser(id){
     var json = await axios.get(`http://localhost:3001/users/${id}`)
     return dispatch({
         type: GET_USER_FOR_ID,
+        payload:json.data
+    })
+}
+}
+export function searchUsersByName(name){
+  return async function(dispatch){
+    var json = await axios.get(`http://localhost:3001/users?name=${name}`)
+    console.log(json)
+    return dispatch({
+        type: SEARCH_BY_NAME,
         payload:json.data
     })
 }

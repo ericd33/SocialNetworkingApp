@@ -12,6 +12,9 @@ import { IconButton } from "@mui/material";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { searchUsersByName } from "../../Redux/actions";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,6 +62,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
+  const dispatch = useDispatch()
+  const [search, setSearch] = useState("")
+  const handleInput = (e)=>{
+    setSearch(e.target.value)
+}
+const handleForm = (e)=>{
+  e.preventDefault()
+  dispatch(searchUsersByName(search))
+}
   const LogoutButton = () => {
     const { logout } = useAuth0();
 
@@ -84,7 +96,7 @@ const NavBar = () => {
               <h2>ConCatUs</h2>
             </a>
           </div>
-
+        <form onSubmit={handleForm}>
           <Search sx={{ marginLeft: 5 }}>
             <SearchIconWrapper>
               <SearchIcon />
@@ -92,8 +104,12 @@ const NavBar = () => {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
+              value={search}
+              onChange={handleInput}
             />
+            {console.log(search)}
           </Search>
+          </form>
         </Toolbar>
 
         <Toolbar>
