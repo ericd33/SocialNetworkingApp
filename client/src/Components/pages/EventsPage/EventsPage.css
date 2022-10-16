@@ -1,0 +1,56 @@
+.Home {
+    max-width: 100vw;
+    min-height: 100vh;
+}
+
+.navbar {
+    height: 67px;
+}
+
+.media-part {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(177, 177, 177);
+}
+
+.media-part .leftHome {
+    width: 300px;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 20px;
+}
+.media-part .rightHome {
+    width: 300px;
+    background-color: gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#buttonPost {
+    width: 55px;
+    height: 55px;
+    position: fixed;
+    border: 1px solid transparent;
+    bottom: 50px;
+    right: 50px;
+    transition: all 0.2s;
+}
+#buttonPost:hover {
+    cursor: pointer;
+    background-color: rgb(255, 208, 0);
+    border: 2px solid white;
+    width: 65px;
+    height: 65px;
+    bottom: 45px;
+    right: 45px;
+}
+
+.media-part .centerHome {
+    background-color: transparent;
+}

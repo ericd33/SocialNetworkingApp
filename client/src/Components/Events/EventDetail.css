@@ -1,0 +1,55 @@
+.infoEvent {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right {
+    width: 250px;
+}
+
+.right #createdby {
+    margin-left: 100px;
+}
+
+.right-namephoto {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.right-namephoto #h5 {
+    margin-top: 10px;
+    padding-top: 5px;
+}
+
+.text {
+    border-bottom: 1px solid rgb(204, 204, 204);
+    padding-bottom: 20px;
+}
+
+.info2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+#assistButton {
+    border-radius: 10px;
+    width: 150px;
+}
+#assistButton:hover {
+    background-color: rgb(255, 208, 0);
+}
+
+.date-hour-part {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.date-hour-part span {
+    margin-left:30px;
+}
+
+.left {
+    text-align: start;
+}

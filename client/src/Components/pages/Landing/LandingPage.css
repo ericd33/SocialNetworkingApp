@@ -1,0 +1,23 @@
+.landing {
+    background-color:gray;
+}
+
+.landing .form {
+    width: 350px;
+    height: fit-content;
+    border-radius: 25px;
+    margin-left: 120px;
+    padding-left: 80px;
+    padding-bottom: 20px;
+    margin-top: 100px;
+    background-color: gainsboro;
+    border: 1px solid rgb(194, 194, 194);
+}
+
+#or {
+    margin-left: 30px;
+}
+
+#changeForm {
+    width: 80px;
+}
