@@ -15,6 +15,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { searchUsersByName } from "../../Redux/actions";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -64,22 +65,26 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavBar = () => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("")
+
   const handleInput = (e)=>{
     setSearch(e.target.value)
-}
-const handleForm = (e)=>{
+  } 
+
+  const handleForm = (e)=>{
   e.preventDefault()
   dispatch(searchUsersByName(search))
-}
+  }
+  
   const LogoutButton = () => {
     const { logout } = useAuth0();
 
     return (
-      <button onClick={() => logout({ returnTo: window.location.origin })}>
-        Log Out
-      </button>
+      <IconButton sx={{color: grey[800]}} onClick={() => logout({ returnTo: window.location.origin })}>
+        <LogoutIcon/>
+      </IconButton>
     );
   };
+
   return (
     <AppBar sx={{ bgcolor: yellow[500], color: grey[800] }} position="fixed">
       <Toolbar
@@ -89,25 +94,33 @@ const handleForm = (e)=>{
           alignItems: "center",
         }}
       >
-        {LogoutButton()}
         <Toolbar>
           <div>
-            <a href="/home">
-              <h2>ConCatUs</h2>
-            </a>
+            <Link to={"/"}>
+                <h2>ConCatUs</h2>
+            </Link>
           </div>
         <form onSubmit={handleForm}>
           <Search sx={{ marginLeft: 5 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              value={search}
-              onChange={handleInput}
-            />
-            {console.log(search)}
+            {
+              window.location.href === 'http://localhost:3000/events' 
+                ?
+                <StyledInputBase
+                placeholder="Search events..."
+                inputProps={{ "aria-label": "search" }}
+                value={search}
+                onChange={handleInput}
+              /> :
+                <StyledInputBase
+                  placeholder="Search persons..."
+                  inputProps={{ "aria-label": "search" }}
+                  value={search}
+                  onChange={handleInput}
+                />
+            }
           </Search>
           </form>
         </Toolbar>
@@ -121,6 +134,8 @@ const handleForm = (e)=>{
             <ChatOutlinedIcon />
           </IconButton>
 
+          {LogoutButton()}
+          
           <Button
             sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
             component={Link}

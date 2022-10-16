@@ -12,10 +12,7 @@ export default function EventsMenu() {
                 </Typography>
             </div>
             <div className="buttons">
-                <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[900], fontSize: 11}} variant="contained">
-                    Create Event
-                </Button>
-                <Link to={'/event'}><Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[900], fontSize:11}} variant="contained">
+                <Link to={'/events'}><Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[900], fontSize:11}} variant="contained">
                     Assist an event
                 </Button></Link>
             </div>

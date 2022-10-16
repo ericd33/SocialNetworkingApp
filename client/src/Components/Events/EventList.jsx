@@ -1,4 +1,4 @@
-import PostEvent from "./PostEvent";
+import EventCard from "./EventCard";
 import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -11,15 +11,14 @@ export default function EventList() {
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(getEvents())
-    },[getEvents,dispatch])
+    },[dispatch])
 
     return (
         <Container>
-            <Link to={"/"}><button>Home</button></Link>
             {
                 events?.map(e=>{
                     return (
-                        <PostEvent
+                        <EventCard
                             key={e.author+e.date} 
                             date={e.date}
                             hour={e.hour}
