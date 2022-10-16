@@ -3,6 +3,7 @@ import { Container } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getEvents } from "../../Redux/actions";
+import { Link } from "react-router-dom";
 
 export default function EventList() {
     const events = useSelector(e=>e.events)
@@ -10,10 +11,11 @@ export default function EventList() {
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(getEvents())
-    },[getEvents])
+    },[getEvents,dispatch])
 
     return (
         <Container>
+            <Link to={"/"}><button>Home</button></Link>
             {
                 events?.map(e=>{
                     return (
