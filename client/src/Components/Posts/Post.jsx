@@ -8,11 +8,11 @@ import axios from 'axios';
 import CommentsModal from './Modals/CommentsModal';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 
-export default function Post({text,author,comments,likes,image,photoperfil}) {
+export default function Post({text,author,comments,likes,image}) {
         const [User, setUser] = useState({name:'',avatar:''});
 
         useEffect(() => {
-            axios.get(`http://localhost:3001/users/${author}`)
+            axios.get(`${process.env.REACT_APP_MY_API_URL}/users/${author}`)
             .then((user) => {
                 setUser({
                     name: user.data.name,
