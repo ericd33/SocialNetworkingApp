@@ -12,37 +12,45 @@ import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreatePost.css";
-import { postPost } from "../../Redux/actions";
+import { getMyUser, postPost } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { useEffect } from "react";
+
 
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
+
+  let email =  window.localStorage.getItem('input')
+  email = email.slice(1,-1)
+  useEffect(()=>{
+    dispatch(getMyUser(email))
+  },[])
+
   const User = useSelector(state => state.myUser)
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  console.log(User)
   const opencloseModal = () => {
     setModal(!modal);
   };
   const [formState, setFormState] = useState({
     content: "",
-    idUser:'634d8a272b4dde3aced10ad5',
+    idUser:"",
     image: '',
   });
-
+  
   const handleChange = (e) => {
     setFormState({
       content: e.target.value,
       image: '',
-      idUser:'634d8a272b4dde3aced10ad5'
+      idUser: User._id
     });
   };
-
+  
   const handleSubmit = (e) => {
-    // e.peventDefault();
+    e.preventDefault();
     dispatch(postPost(formState));
-    // navigate("/");
   };
 
   const body = (
