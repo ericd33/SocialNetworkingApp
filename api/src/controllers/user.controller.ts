@@ -155,3 +155,12 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.status(404).send(err);
   }
 }
+
+export const findUser = async (req: Request, res: Response) => {
+  const { user } = req.body
+  const password = user.password
+  const email = user.email
+  const users = await userSchema.findOne({ email: email });
+  if(password === users?.password) return res.status(200).send(true)
+  return res.status(200).send(false)
+}
