@@ -13,7 +13,7 @@ const LandingLogin = () => {
       email:"",
       password: "",
     });
-    const [inputEmail, setInputEmail] = useLocalStorage('input.email',"")
+    const [inputEmail, setInputEmail] = useLocalStorage('input',"")
     const [errors, setErrors] = useState({});
   
     function validate(input) {
@@ -26,6 +26,7 @@ const LandingLogin = () => {
       }
       return errors;
     }
+
   console.log(inputEmail)
   function handleChangeEmail(e) {
     setInput({
@@ -57,6 +58,7 @@ const LandingLogin = () => {
   
     function handleSubmit(e) {
       e.preventDefault();
+
       dispatch(login(input));
       setInput({
         email:"",
@@ -64,6 +66,7 @@ const LandingLogin = () => {
       });
     }
   
+
     return (
       <Grid className='loginForm' container sx={{fontFamily: 'Nunito'}}>
           <h1>Login</h1>
