@@ -16,30 +16,26 @@ import { postPost } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import {useAuth0} from '@auth0/auth0-react'
+
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
   const User = useSelector(state => state.myUser)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useAuth0() 
   const opencloseModal = () => {
     setModal(!modal);
   };
   const [formState, setFormState] = useState({
     content: "",
-    idUser:"634d5e8886ccf56a0ff71942",
-    image:"",
+    idUser:User._id,
   });
-  
+
   const handleChange = (e) => {
     setFormState({
-    idUser:"634d5e8886ccf56a0ff71942",
-    image:"",
-    content: e.target.value,
+      [e.target.content]: e.target.value,
     });
   };
- console.log(formState)
+
   const handleSubmit = (e) => {
     // e.peventDefault();
     dispatch(postPost(formState));

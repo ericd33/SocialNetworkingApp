@@ -29,17 +29,14 @@ export default function CreatePost() {
   const [formState, setFormState] = useState({
     content: "",
     idUser:"634d5e8886ccf56a0ff71942",
-    image:"",
   });
   
   const handleChange = (e) => {
     setFormState({
-    idUser:"634d5e8886ccf56a0ff71942",
-    image:"",
-    content: e.target.value,
+      content: e.target.value,
     });
   };
- console.log(formState)
+
   const handleSubmit = (e) => {
     // e.peventDefault();
     dispatch(postPost(formState));

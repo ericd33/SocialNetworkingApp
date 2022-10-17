@@ -4,7 +4,6 @@ import React,{ useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { getMyUser, login } from '../../../../Redux/actions';
 import './LandingLogin.css';
-import { useLocalStorage } from './useLocalStorage';
 
 
 const LandingLogin = () => {
@@ -13,7 +12,7 @@ const LandingLogin = () => {
       email:"",
       password: "",
     });
-    const [inputEmail, setInputEmail] = useLocalStorage('input.email',"")
+  
     const [errors, setErrors] = useState({});
   
     function validate(input) {
@@ -26,21 +25,7 @@ const LandingLogin = () => {
       }
       return errors;
     }
-  console.log(inputEmail)
-  function handleChangeEmail(e) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
-    setInputEmail(e.target.value)
-    // console.log(input)
-  }
+  
     function handleChange(e) {
       setInput({
         ...input,
@@ -76,7 +61,7 @@ const LandingLogin = () => {
               id='email'
               value={input.email}
               name="email"
-              onChange={(e) => handleChangeEmail(e)}
+              onChange={(e) => handleChange(e)}
               aria-describedby='email-helper'/>
               <FormHelperText sx={{mb:2, color:grey[400]}} id='email-helper'>Your email</FormHelperText>
             </FormControl>

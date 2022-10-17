@@ -23,10 +23,11 @@ export function getPosts() {
 }
 
 export function postPost(payload) {
-  return async function () {
+  return async function (dispatch) {
     let json = await axios.post(`${process.env.REACT_APP_MY_API_URL}/posts`, payload)
-    console.log(json)
-    return json
+    return dispatch({
+      payload: json.data
+    })
   };
 }
 

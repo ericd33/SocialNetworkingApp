@@ -27,20 +27,6 @@ const LandingLogin = () => {
       return errors;
     }
   console.log(inputEmail)
-  function handleChangeEmail(e) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
-    setInputEmail(e.target.value)
-    // console.log(input)
-  }
     function handleChange(e) {
       setInput({
         ...input,
@@ -52,6 +38,7 @@ const LandingLogin = () => {
           [e.target.name]: e.target.value,
         })
       );
+      setInputEmail(e.target.value)
       // console.log(input)
     }
   
@@ -76,7 +63,7 @@ const LandingLogin = () => {
               id='email'
               value={input.email}
               name="email"
-              onChange={(e) => handleChangeEmail(e)}
+              onChange={(e) => handleChange(e)}
               aria-describedby='email-helper'/>
               <FormHelperText sx={{mb:2, color:grey[400]}} id='email-helper'>Your email</FormHelperText>
             </FormControl>
