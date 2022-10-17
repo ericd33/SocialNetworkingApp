@@ -81,7 +81,7 @@ const LandingPage = () => {
             {login_register ? (<LandingLogin />) : <LandingRegister/> }
             <p id='or'>Or</p>
             {login_register ? <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Login</Button>}
-            {LoginButton()}
+            {/* {LoginButton()} */}
         </Grid>
       </Grid>
     </ThemeProvider>

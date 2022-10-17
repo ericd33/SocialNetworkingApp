@@ -94,7 +94,7 @@ const NavBar = () => {
       >
         <Toolbar>
           <div>
-            <Link to={"/"}>
+            <Link to={"/home"}>
                 <h2>ConCatUs</h2>
             </Link>
           </div>
