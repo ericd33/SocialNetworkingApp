@@ -5,8 +5,8 @@ import {
   Button,
   IconButton,
   Card,
-  CardHeader,
   CardContent,
+  Input,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
@@ -15,6 +15,7 @@ import "./CreatePost.css";
 import { postPost } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
@@ -72,6 +73,10 @@ export default function CreatePost() {
           onChange={handleChange}
         />
         <div align="right">
+        <IconButton>
+          <Input id='inputImage'type="file" accept="image/*" disableUnderline={true}/>
+          <FileUploadIcon/>
+        </IconButton>
           <Button onClick={handleSubmit}>Post</Button>
         </div>
       </CardContent>
