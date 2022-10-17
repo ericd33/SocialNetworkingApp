@@ -19,6 +19,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
+  const User = useSelector(state => state.myUser)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const opencloseModal = () => {
@@ -26,13 +27,13 @@ export default function CreatePost() {
   };
   const [formState, setFormState] = useState({
     content: "",
+    idUser:User._id,
   });
 
   const handleChange = (e) => {
     setFormState({
       [e.target.content]: e.target.value,
     });
-    console.log(e.target.value);
   };
 
   const handleSubmit = (e) => {

@@ -65,7 +65,7 @@ export function getMyUser (email){
       type: GET_MY_USER,
       payload:json.data
     })
-  }
+    }
   }
 
 export function searchUsersByName(name){
@@ -77,4 +77,19 @@ export function searchUsersByName(name){
         payload:json.data
     })
 }
+}
+
+export function login(user) {
+  return async function(dispatch) {
+    axios.post(`${process.env.REACT_APP_MY_API_URL}/login`, user)
+    .then(function(response) {
+      if (response) {
+        dispatch(getMyUser(user.email));
+      }
+      else {
+        alert('This account doesnt exist!');
+      }
+    })
+    .catch(function(err) {alert('An error ocurred')});
+  }
 }
