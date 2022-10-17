@@ -23,10 +23,10 @@ export function getPosts() {
 }
 
 export function postPost(payload) {
-  return async function () {
-    let json = await axios.post(`${process.env.REACT_APP_MY_API_URL}/posts`, payload)
-    console.log(json)
-    return json
+  return function () {
+    axios.post(`${process.env.REACT_APP_MY_API_URL}/posts`, payload)
+    .then(function(response) {console.log(response)})
+    .catch(function(err) {alert('An error ocurred')});
   };
 }
 

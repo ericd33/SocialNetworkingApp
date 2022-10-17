@@ -34,9 +34,7 @@ export default function CreatePost() {
   
   const handleChange = (e) => {
     setFormState({
-    idUser:"634d5e8886ccf56a0ff71942",
-    image:"",
-    content: e.target.value,
+      content: e.target.value,
     });
   };
  console.log(formState)
