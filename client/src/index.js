@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import store from "./Redux/store.js";
 import {auth} from './firebase/config'
 const root = ReactDOM.createRoot(document.getElementById("root"));
-console.log(auth)
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
