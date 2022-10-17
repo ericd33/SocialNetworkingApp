@@ -16,6 +16,6 @@ router.route('/email/:email')
 router.route('/follow')
     .post(addFriend)
 router.route('/login')
-    .get(findUser)
+    .post(findUser)
 
 export default router;

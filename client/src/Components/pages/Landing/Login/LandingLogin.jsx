@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { getMyUser, login } from '../../../../Redux/actions';
 import './LandingLogin.css';
 
+
 const LandingLogin = () => {
     const dispatch = useDispatch(); 
-  
     const [input, setInput] = useState({
       email:"",
       password: "",
@@ -43,8 +43,6 @@ const LandingLogin = () => {
     function handleSubmit(e) {
       e.preventDefault();
       dispatch(login(input));
-      dispatch(getMyUser(input.email));
-      console.log(input);
       setInput({
         email:"",
         password: "",

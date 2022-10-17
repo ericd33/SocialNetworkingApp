@@ -5,7 +5,7 @@ import "./Home.css";
 import CreatePost from "../../Posts/CreatePost";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getMyID } from "../../../Redux/actions";
 
@@ -18,8 +18,8 @@ export default function Home() {
   //   console.log(id.data);
   //   dispatch(getMyID(id.data))
   // },[dispatch])
-
-  // console.log(user);
+  let user = useSelector(state => state.myUser)
+  console.log(user);
 
   return (
     <div className="Home">

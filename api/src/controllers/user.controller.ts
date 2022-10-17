@@ -157,10 +157,13 @@ export const deleteUser = async (req: Request, res: Response) => {
 }
 
 export const findUser = async (req: Request, res: Response) => {
-  const { user } = req.body
-  const password = user.password
-  const email = user.email
-  const users = await userSchema.findOne({ email: email });
-  if(password === users?.password) return res.status(200).send(true)
-  return res.status(200).send(false)
+  const { email, password } = req.body;
+  try{
+    const users = await userSchema.findOne({ email: email });
+    if(password === users?.password) return res.status(200).send(true)
+    return res.status(200).send(false);
+  }
+  catch(err) {
+    return res.status(400).send(err);
+  }
 }

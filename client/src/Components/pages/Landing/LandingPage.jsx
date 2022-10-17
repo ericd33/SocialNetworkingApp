@@ -12,6 +12,8 @@ import './LandingPage.css'
 import { grey, yellow } from '@mui/material/colors';
 import LandingLogin from './Login/LandingLogin';
 import LandingRegister from './Register/LandingRegister';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../Redux/actions';
 
 function Copyright(props) {
   return (
