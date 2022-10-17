@@ -60,7 +60,7 @@ export function deleteDetails(){
 
 export function getMyUser (email){
   return async function(dispatch){
-    let json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/users/email/${email}`)
+    let json = await axios.get(`http://localhost:3001/users/email/${email}`)
     return dispatch({
       type: GET_MY_USER,
       payload:json.data
@@ -78,18 +78,20 @@ export function searchUsersByName(name){
     })
 }
 }
-
 export function login(user) {
   return async function(dispatch) {
-    axios.post(`${process.env.REACT_APP_MY_API_URL}/login`, user)
+    axios.post(`http://localhost:3001/users/login`, user)
     .then(function(response) {
-      if (response) {
+      if (response.data === true) {
+        console.log(user.email);
         dispatch(getMyUser(user.email));
+        window.location.href = '/home';
       }
       else {
         alert('This account doesnt exist!');
       }
+      // console.log(response);
     })
-    .catch(function(err) {alert('An error ocurred')});
+    .catch(function(err) {console.log(err)});
   }
 }

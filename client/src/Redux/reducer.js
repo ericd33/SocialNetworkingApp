@@ -8,7 +8,6 @@ const initialState = {
   events:[],
   myUser:{},
   details:[],
-  findUserId:[],
   searchByNameUsers:[],
 };
 
