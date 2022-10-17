@@ -28,7 +28,7 @@ export default function PostList() {
                 {
                     all_posts.map((p) => {
                             return <Post author={p.author} likes={p.likes} comments={p.comments} text={p.content} image={p.image}/>
-                    })
+                    }).reverse()
                 }
             </div>
         )
