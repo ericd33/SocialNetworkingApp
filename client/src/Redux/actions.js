@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DETAILS_EVENT, GET_DETAILS, GET_EVENTS, GET_POSTS, GET_USER_FOR_ID, GET_MY_ID, SEARCH_BY_NAME } from './action-types.js';
+import { DETAILS_EVENT, GET_DETAILS, GET_EVENTS, GET_POSTS, SEARCH_BY_NAME, GET_MY_USER } from './action-types.js';
 
 export function postUser(payload) {
     return function () {
@@ -42,15 +42,6 @@ export function getEvents() {
   }
 }
 
-export function getMyID(data) {
-  return function(dispatch) {
-    dispatch({
-      type: GET_MY_ID,
-      payload: data
-    })
-  }
-}
-
 export function details(id){
   return async function(dispatch){
       var json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/events/${id}`)
@@ -67,14 +58,15 @@ export function deleteDetails(){
   }
 }
 
-export default function getUser(id){
+export function getMyUser (email){
   return async function(dispatch){
-    var json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/users/${id}`)
+    let json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/users/email/${email}`)
     return dispatch({
-        type: GET_USER_FOR_ID,
-        payload:json.data
+      type: GET_MY_USER,
+      payload:json.data
     })
-}}
+  }
+  }
 
 export function searchUsersByName(name){
   return async function(dispatch){
