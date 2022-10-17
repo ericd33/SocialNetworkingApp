@@ -8,14 +8,15 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Avatar from "@mui/material/Avatar";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { IconButton } from "@mui/material";
+import { Card, CardContent, CardHeader, IconButton, Modal } from "@mui/material";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { searchUsersByName } from "../../Redux/actions";
 import LogoutIcon from '@mui/icons-material/Logout';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,14 +67,6 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("")
 
-  const handleInput = (e)=>{
-    setSearch(e.target.value)
-  } 
-
-  const handleForm = (e)=>{
-  e.preventDefault()
-  dispatch(searchUsersByName(search))
-  }
   
   const LogoutButton = () => {
     const { logout } = useAuth0();
@@ -83,7 +76,12 @@ const NavBar = () => {
         <LogoutIcon/>
       </IconButton>
     );
-  };
+    };
+    
+    const handleInput = (e)=>{
+      setSearch(e.target.value)
+      dispatch(searchUsersByName(search))
+    }
 
   return (
     <AppBar sx={{ bgcolor: yellow[500], color: grey[800] }} position="fixed">
@@ -100,13 +98,12 @@ const NavBar = () => {
                 <h2>ConCatUs</h2>
             </Link>
           </div>
-        <form onSubmit={handleForm}>
           <Search sx={{ marginLeft: 5 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             {
-              window.location.href === `${process.env.REACT_APP_MY_API_URL}/events` 
+              window.location.href === `http://localhost:3000/events` 
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
@@ -122,7 +119,6 @@ const NavBar = () => {
                 />
             }
           </Search>
-          </form>
         </Toolbar>
 
         <Toolbar>
