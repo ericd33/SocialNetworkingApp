@@ -3,7 +3,7 @@ import { DETAILS_EVENT, GET_DETAILS, GET_EVENTS, GET_POSTS, SEARCH_BY_NAME, GET_
 
 export function postUser(payload) {
     return function () {
-      axios.post(`${process.env.REACT_APP_MY_API_URL}/user`, payload)
+      axios.post(`${process.env.REACT_APP_MY_API_URL}/users`, payload)
       .then(function(response) {console.log(response)})
       .catch(function(err) {console.log(err)});
     };
@@ -30,6 +30,13 @@ export function postPost(payload) {
   };
 }
 
+export function postEvent(payload) {
+  return async function () {
+    let json = await axios.post(`http://localhost:3001/events`, payload)
+    console.log(json);
+    return json;
+  };
+}
 
 export function getEvents() {
   return async function(dispatch) {
