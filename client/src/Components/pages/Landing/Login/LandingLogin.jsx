@@ -1,13 +1,12 @@
 import { Button, FormControl, FormHelperText, Grid, Input, InputLabel } from '@mui/material';
 import { grey} from '@mui/material/colors';
 import React,{ useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { getMyUser, login } from '../../../../Redux/actions';
 import './LandingLogin.css';
 
 const LandingLogin = () => {
-   // const dispatch = useDispatch();
-    // useEffect(() => {
-    // }, [dispatch]);
-  
+    const dispatch = useDispatch(); 
   
     const [input, setInput] = useState({
       email:"",
@@ -38,12 +37,14 @@ const LandingLogin = () => {
           [e.target.name]: e.target.value,
         })
       );
-      console.log(input)
+      // console.log(input)
     }
   
     function handleSubmit(e) {
       e.preventDefault();
-      // dispatch(postVideogame(input));
+      dispatch(login(input));
+      dispatch(getMyUser(input.email));
+      console.log(input);
       setInput({
         email:"",
         password: "",

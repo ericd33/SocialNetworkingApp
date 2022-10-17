@@ -110,7 +110,7 @@ export const findUserByEmail = async (req: Request, res: Response) => {
       const user = await userSchema.findOne({ "email": email });
 
       if (user) {
-        res.status(200).send(user._id)
+        res.status(200).send(user)
         return
       }
       res.status(404).send('User id not found.')

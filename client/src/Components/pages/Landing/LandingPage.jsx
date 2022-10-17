@@ -10,6 +10,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Home from "../Home/Home";
 import './LandingPage.css'
 import { grey, yellow } from '@mui/material/colors';
+import LandingLogin from './Login/LandingLogin';
+import LandingRegister from './Register/LandingRegister';
 
 function Copyright(props) {
   return (
@@ -37,7 +39,7 @@ const LoginButton = () => {
           })
         }
       >
-        Log In
+        Login auth0
       </Button>
     );
   };
@@ -52,7 +54,7 @@ const LandingPage = () => {
     e.preventDefault();
     setLogin_register(!login_register)
   }
-
+          
   if (isAuthenticated) return <Home/>
   return (
     <ThemeProvider theme={theme}>
@@ -74,6 +76,9 @@ const LandingPage = () => {
           }}
         />
         <Grid className='form' item component={Paper} elevation={6} square>
+            {login_register ? (<LandingLogin />) : <LandingRegister/> }
+            <p id='or'>Or</p>
+            {login_register ? <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Login</Button>}
             {LoginButton()}
         </Grid>
       </Grid>
@@ -83,22 +88,3 @@ const LandingPage = () => {
 }
 
 export default LandingPage
-
-
-// const[ login_register, setLogin_register] = useState(true)
-
-  // const loginOrRegister = (e) =>{
-  //   e.preventDefault();
-  //   setLogin_register(!login_register)
-  // }
-  // return(
-  //   <div>
-  //     {login_register ? (<LandingLogin />) : <LandingRegister/> }
-  //     {login_register ? <button onClick={(e) => loginOrRegister(e)}>Register</button> : <button onClick={(e) => loginOrRegister(e)}>Login</button>}
-  //   </div>
-  // )
-
-  //{login_register ? (<LandingLogin />) : <LandingRegister/> }
-   //     <p id='or'>Or</p>
-    //    {login_register ? <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Login</Button>}
-        
