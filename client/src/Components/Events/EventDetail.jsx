@@ -12,6 +12,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function EventDetail({participants}) {
     const detail = useSelector(d=>d.details)
+    // console.log(detail);
     const dispatch = useDispatch()
     const { id }= useParams()
     useEffect(()=>{

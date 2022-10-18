@@ -24,11 +24,14 @@ export default function CreateEvent() {
   const [modal, setModal] = useState(false);
   let email = getAuth().currentUser.email
   console.log(email)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(()=>{
     dispatch(getMyUser(email))
   },[])
+
   const opencloseModal = () => {
     setModal(!modal);
   };
@@ -36,18 +39,18 @@ export default function CreateEvent() {
   const [formState, setFormState] = useState({
     name:"",
     content: "",
-    idUser:User._id,
+    idUser:'',
     date: "",
     hour: 0,
     location: "",
-    image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg'
+    image:''
   });
 
   const handleChange = (e) => {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
-      idUser:User._id,
+      idUser:'634d8a272b4dde3aced10ad5',
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
   };
