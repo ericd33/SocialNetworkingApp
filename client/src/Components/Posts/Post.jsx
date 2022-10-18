@@ -35,7 +35,7 @@ export default function Post({ text, author, comments, likes, image , id}) {
     };
     axios(Config)
       .then(user => {
-        // console.log(user.data.image)
+        console.log(user.data)
         setUser({
             name: user.data.name,
             avatar: user.data.image,

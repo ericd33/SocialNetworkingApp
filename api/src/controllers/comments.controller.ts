@@ -18,7 +18,7 @@ export const addComment = async (req: Request, res: Response) => {
     comment.image = image;
     comment.enabled = true;
     const newComent = await comment.save();
-    console.log(newComent)
+    // console.log(newComent)
     post.comments = post.comments.concat(newComent)
     await post.save()
     res.status(200).send("new comment");
