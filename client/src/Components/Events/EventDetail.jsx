@@ -14,7 +14,6 @@ import { getAuth } from "firebase/auth";
 export default function EventDetail({participants}) {
     const detail = useSelector(d=>d.details)
     const token = getAuth().currentUser.accessToken
-
     const dispatch = useDispatch()
     const { id }= useParams()
     useEffect(()=>{

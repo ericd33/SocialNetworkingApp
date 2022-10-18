@@ -3,11 +3,7 @@ import EventsMenu from "../../Home-Components/EventsMenu";
 import PostList from "../../Posts/PostList";
 import "./Home.css";
 import CreatePost from "../../Posts/CreatePost";
-import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getMyID } from "../../../Redux/actions";
+import { useSelector } from "react-redux";
 import { Avatar, Card, CardHeader } from "@mui/material";
 import { grey, yellow } from "@mui/material/colors";
 
@@ -47,9 +43,7 @@ export default function Home() {
         </div>
         <div className="rightHome"></div>
       </div>
-      
+      <CreatePost />
     </div>
   );
 }
-
-<CreatePost />

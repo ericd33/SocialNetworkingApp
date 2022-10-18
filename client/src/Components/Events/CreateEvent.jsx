@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Modal,
   TextField,
@@ -16,33 +16,43 @@ import "./CreateEvent.css";
 import { postEvent } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
+import { getMyUser } from "../../Redux/actions";
 
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
+  let email = getAuth().currentUser.email
+  console.log(email)
 
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
+
+  useEffect(()=>{
+    dispatch(getMyUser(email))
+  },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
-  let email = getAuth().currentUser.email
+  email = getAuth().currentUser.email
   let token = getAuth().currentUser.accessToken
 
   const [formState, setFormState] = useState({
     name:"",
     content: "",
+    idUser:'',
     email:email,
     date: "",
     hour: 0,
     location: "",
-    image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg'
+    image:''
   });
 
   const handleChange = (e) => {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
+      idUser:'',
       email:email,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
