@@ -18,7 +18,8 @@ export default function LandingPage() {
 
   //CUANDO INICIA LA PAGINA SE GUARDA EL USUARIO QUE ESTA EN LA SESION EN EL ESTADO
   useEffect(()=> {
-    setCurUser(auth.currentUser)
+
+    setCurUser(getAuth().currentUser)
   },[])
 
 

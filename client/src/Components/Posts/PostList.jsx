@@ -2,18 +2,18 @@ import Post from "./Post";
 import {useDispatch, useSelector} from 'react-redux';
 import { useEffect } from "react";
 import { getPosts } from "../../Redux/actions";
-
+import {getAuth} from 'firebase/auth'
 export default function PostList() {
     const all_posts = useSelector((state) => state.filtered_posts);
     console.log(all_posts);
     const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(getPosts());
+        const token = getAuth().currentUser.accessToken
+        dispatch(getPosts(token));
     },[dispatch])
 
 
-    if (all_posts.length === 0) {
+    if (!all_posts) {
         return(
             <div>
                 <h2>
