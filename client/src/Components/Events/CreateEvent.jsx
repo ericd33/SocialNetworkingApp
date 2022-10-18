@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Modal,
   TextField,
@@ -16,6 +16,7 @@ import "./CreateEvent.css";
 import { postEvent } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
+import { getMyUser } from "../../Redux/actions";
 
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 
@@ -25,7 +26,7 @@ export default function CreateEvent() {
   console.log(email)
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(()=>{
     dispatch(getMyUser(email))
@@ -33,7 +34,7 @@ export default function CreateEvent() {
   const opencloseModal = () => {
     setModal(!modal);
   };
-  let email = getAuth().currentUser.email
+  email = getAuth().currentUser.email
   let token = getAuth().currentUser.accessToken
 
   const [formState, setFormState] = useState({
