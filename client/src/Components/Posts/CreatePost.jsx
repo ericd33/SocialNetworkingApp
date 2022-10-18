@@ -31,13 +31,11 @@ export default function CreatePost() {
 
   const User = useSelector(state => state.myUser)
   const dispatch = useDispatch();
-  console.log(User)
   const opencloseModal = () => {
     setModal(!modal);
   };
   const [formState, setFormState] = useState({
     content: "",
-    idUser:"",
     image: '',
   });
   
@@ -51,7 +49,13 @@ export default function CreatePost() {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postPost(formState));
+
+    const data = {
+      ...formState,
+      email: getAuth().currentUser.email
+    }
+
+    dispatch(postPost(getAuth().currentUser.accessToken, data));
   };
 
   const body = (

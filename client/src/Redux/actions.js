@@ -49,12 +49,18 @@ export function getPosts(payload) {
   };
 }
 
-export function postPost(payload) {
+export function postPost(payload, data) {
+  
   return async function () {
-    let json = await axios.post(
-      `${process.env.REACT_APP_MY_API_URL}/posts`,
-      payload
-    );
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
+      headers: {
+        authorization: `Bearer ${payload}`
+      },
+      data: data
+    };
+    let json = await axios(Config)
     console.log(json);
     return json;
   };

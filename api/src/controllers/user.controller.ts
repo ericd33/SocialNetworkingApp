@@ -101,10 +101,11 @@ export const findUserById = async (req: Request, res: Response) => {
 
 export const findUserByEmail = async (req: Request, res: Response) => {
   const { email } = req.params;
+  console.log(req.params)
   try {
     if (email) {
       const user = await userSchema.findOne({ "email": email });
-
+      console.log(user)
       if (user) {
         res.status(200).send(user)
         return

@@ -5,7 +5,6 @@ import { getPosts } from "../../Redux/actions";
 import {getAuth} from 'firebase/auth'
 export default function PostList() {
     const all_posts = useSelector((state) => state.filtered_posts);
-    console.log(all_posts);
     const dispatch = useDispatch();
     useEffect(() => {
         const token = getAuth().currentUser.accessToken

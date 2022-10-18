@@ -20,6 +20,7 @@ export default function Home() {
       <div className="navbar">
         <span></span>
       </div>
+      <CreatePost />
       <NavBar />
       <div className="media-part">
         <div className="leftHome">
@@ -52,4 +53,3 @@ export default function Home() {
   );
 }
 
-<CreatePost />

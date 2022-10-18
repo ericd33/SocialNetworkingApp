@@ -1,21 +1,17 @@
 import { Request, Response } from "express";
 const userSchema = require("../models/user");
 const postSchema = require("../models/post");
-const commentSchema = require("../models/comment");
+
 
 export const addPost = async (req: Request, res: Response) => {
-  const { image, content, idUser, idComment } = req.body;
+  const { email, content, image } = req.body;
+  console.log(req.body)
   let post = await new postSchema();
-  const user = await userSchema.find({ _id: idUser });
-  if (idComment?.length) {
-    const comment = await commentSchema.find({ _id: idComment });
-    console.log(comment);
-    post.comments = comment[0]._id;
-  }
+  const user = await userSchema.find({ email: email });
 
   try {
-    if ((content.length || image.length) && idUser.length) {
-      post.author = user[0]._id;
+    if (content.length || image.length) {
+      post.author = email;
       post.image = image;
       post.content = content;
       post.enabled = true;
