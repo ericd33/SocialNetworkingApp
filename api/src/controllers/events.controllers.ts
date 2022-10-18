@@ -160,7 +160,7 @@ export const addEventParticipant = async (req: Request, res: Response) => {
     const currentEvent = await eventSchema.findOne({ _id: idEvent });
 
     if (user) {
-      currentEvent.participants.push(user.name);
+      currentEvent.participants.push(user._id);
 
       const eventUpdated = await eventSchema.findByIdAndUpdate({_id: idEvent}, currentEvent, {new: true});
 
