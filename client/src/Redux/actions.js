@@ -38,7 +38,7 @@ export function getPosts(payload) {
         authorization: `Bearer ${payload}`
       },
     };
-    await axios(Config).then(res =>{
+    axios(Config).then(res =>{
       return dispatch({
         type: GET_POSTS,
         payload: res.data,
@@ -70,26 +70,47 @@ export function postPost(payload, data) {
 
 
 
-export function postEvent(payload) {
-  return async function () {
-    let json = await axios.post(`http://localhost:3001/events`, payload);
-    console.log(json);
-    return json;
+export function postEvent(payload,token) {
+  return function () {
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        email: payload.email,
+        name: payload.name,
+        image: payload.image,
+        hour: payload.hour,
+        location: payload.location,
+        content:payload.content,
+        date: payload.date
+      },
+    };
+    axios(Config).then(res=>console.log(res))
   };
 }
 
 
 
-export function details(id) {
-  return async function (dispatch) {
-    var json = await axios.get(
-      `${process.env.REACT_APP_MY_API_URL}/events/${id}`
-    );
-    return dispatch({
-      type: GET_DETAILS,
-      payload: json.data,
-    });
-  };
+export function details(id,token) {
+  return function (dispatch) {
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/events/${id}`,
+      headers: {
+        authorization: `Bearer ${token}`
+      },
+    };
+    axios(Config).then(res=>{
+      console.log(res)
+      return dispatch({
+        type: GET_DETAILS,
+        payload: res.data
+      })
+    })
+  }
 }
 
 export function deleteDetails() {
