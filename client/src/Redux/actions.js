@@ -64,11 +64,25 @@ export function postPost(payload) {
 
 
 
-export function postEvent(payload) {
-  return async function () {
-    let json = await axios.post(`http://localhost:3001/events`, payload);
-    console.log(json);
-    return json;
+export function postEvent(payload,token) {
+  return function () {
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        email: payload.email,
+        name: payload.name,
+        image: payload.image,
+        hour: payload.hour,
+        location: payload.location,
+        content:payload.content,
+        date: payload.date
+      },
+    };
+    axios(Config).then(res=>console.log(res))
   };
 }
 

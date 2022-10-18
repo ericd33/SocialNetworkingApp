@@ -13,30 +13,26 @@ import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreateEvent.css";
-import { getMyUser, postEvent } from "../../Redux/actions";
+import { postEvent } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { useEffect } from "react";
+
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
-  let email = getAuth().currentUser.email
-  console.log(email)
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  useEffect(()=>{
-    dispatch(getMyUser(email))
-  },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
-  const User = useSelector(state => state.myUser)
+  let email = getAuth().currentUser.email
+  let token = getAuth().currentUser.accessToken
+
   const [formState, setFormState] = useState({
     name:"",
     content: "",
-    idUser:User._id,
+    email:email,
     date: "",
     hour: 0,
     location: "",
@@ -47,7 +43,7 @@ export default function CreateEvent() {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
-      idUser:User._id,
+      email:email,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
   };
@@ -55,7 +51,7 @@ export default function CreateEvent() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formState);
-    dispatch(postEvent(formState));
+    dispatch(postEvent(formState,token));
     // navigate("/");
   };
 
