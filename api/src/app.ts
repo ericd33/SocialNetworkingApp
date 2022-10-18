@@ -5,7 +5,7 @@ import userRoutes from "./routes/user.routes";
 import comment from "./routes/comment.router";
 import event from "./routes/events.routes";
 import post from "./routes/posts.router";
-import cors, { CorsOptions } from "cors";
+const cors = require('cors')
 const middleware = require('./middleware')
 dotenv.config();
 const app = express();
@@ -19,8 +19,8 @@ app.listen(app.get("port"), () => {
 
 
 // TODO: Implement configurations for CORS
-const corsOptions: CorsOptions = {};
-app.use(cors(corsOptions));
+
+app.use(cors({origin: "*"}));
 app.use(middleware.decodeToken)
 
    
