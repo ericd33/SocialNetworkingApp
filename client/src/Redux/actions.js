@@ -2,10 +2,20 @@ import axios from "axios";
 import { DETAILS_EVENT, GET_DETAILS, GET_EVENTS, GET_POSTS, SEARCH_BY_NAME, GET_MY_USER } from './action-types.js';
 
 export function postUser(payload) {
-    return function () {
-      axios.post(`${process.env.REACT_APP_MY_API_URL}/users`, payload)
-      .then(function(response) {console.log(response)})
-      .catch(function(err) {console.log(err)});
+    return async function () {
+      const congif = {
+        method: "post",
+        baseURL:`${process.env.REACT_APP_MY_API_URL}/users`,
+        headers:{
+          Authorization: `Bearer ${payload.token}`
+        },
+        data:{
+          email: payload.email,
+          name: payload.displayName,
+          image: payload.photoURL
+        }
+      }
+      axios.post(congif)
     };
   }
 
