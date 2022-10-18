@@ -149,3 +149,35 @@ export const deleteEvent = async (req: Request, res: Response) => {
     res.status(400).send(e);
   }
 };
+
+
+export const addEventParticipant = async (req: Request, res: Response) => {
+  try {
+    const { idEvent } = req.params;
+    const { idUser } = req.body;
+
+    const user = await userSchema.findOne({ _id: idUser });
+    const currentEvent = await eventSchema.findOne({ _id: idEvent });
+
+    if (user) {
+      currentEvent.participants.push(user.name);
+
+      const eventUpdated = await eventSchema.findByIdAndUpdate({_id: idEvent}, currentEvent, {new: true});
+
+      return res.status(200).json({
+        data: eventUpdated,
+      });
+    }
+
+    return res.status(404).json({
+      data: currentEvent,
+      msg: `User don't exist`
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: `An error ocurred (┬┬﹏┬┬)`,
+      error
+    });
+  }
+
+}
