@@ -88,9 +88,9 @@ export const putPostById = async (req: Request, res: Response) => {
 export const putPostLikes = async (req: Request, res: Response) => {
   try {
     const { idPost } = req.params;
-    const { idUser } = req.body;
+    const { email } = req.body;
 
-    const user = await userSchema.findOne({ _id: idUser });
+    const user = await userSchema.findOne({ email: email });
     const currentPost = await postSchema.findOne({ _id: idPost });
 
     if (user) {

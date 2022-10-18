@@ -119,35 +119,57 @@ export function deleteDetails() {
   };
 }
 
-export function getMyUser(email) {
+export function getMyUser(email,token) {
   return async function (dispatch) {
-    let json = await axios.get(`http://localhost:3001/users/email/${email}`);
-    return dispatch({
-      type: GET_MY_USER,
-      payload: json.data,
-    });
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${email}`,
+      headers: {
+        authorization: `Bearer ${token}`
+      },
+    };
+    axios(Config).then(res=>{
+      // console.log(res)
+      return dispatch({
+        type: GET_MY_USER,
+        payload: res.data
+      })
+    })
   };
 }
 
-export function searchUsersByName(name) {
-  return async function (dispatch) {
-    var json = await axios.get(
-      `${process.env.REACT_APP_MY_API_URL}/users?name=${name}`
-    );
-    console.log(json);
-    return dispatch({
-      type: SEARCH_BY_NAME,
-      payload: json.data,
-    });
-  };
+export function searchUsersByName(name,token) {
+  return function (dispatch) {
+    if(name === '') {
+      return dispatch({
+        type: SEARCH_BY_NAME,
+        payload: []
+      })
+    }
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users?name=${name}`,
+      headers: {
+        authorization: `Bearer ${token}`
+      },
+    };
+    axios(Config).then(res=>{
+      // console.log(res)
+      return dispatch({
+        type: SEARCH_BY_NAME,
+        payload: res.data
+      })
+    })
+  }
 }
+
 export function login(user) {
   return async function (dispatch) {
     axios
       .post(`http://localhost:3001/users/login`, user)
       .then(function (response) {
         if (response.data === true) {
-          console.log(user.email);
+          // console.log(user.email);
           dispatch(getMyUser(user.email));
           window.location.href = "/home";
         } else {
@@ -178,4 +200,23 @@ export function getEvents(payload) {
   })
   }) 
 }
+}
+
+export function putLikes(idPost,email,token) {
+  return function () {
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${idPost}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        email: email
+      },
+    };
+    // console.log(token,Config)
+    axios(Config).then(res=>{
+      console.log(res)
+    })
+  };
 }
