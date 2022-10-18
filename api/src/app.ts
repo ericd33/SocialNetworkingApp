@@ -7,6 +7,7 @@ import event from "./routes/events.routes";
 import post from "./routes/posts.router";
 const cors = require('cors')
 const middleware = require('./middleware')
+
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -17,15 +18,15 @@ app.listen(app.get("port"), () => {
   connectDB();
 });
 
-
 // TODO: Implement configurations for CORS
+
 
 app.use(cors({origin: "*"}));
 app.use(middleware.decodeToken)
 
    
+
 app.use("/comments", comment);
 app.use("/users", userRoutes);
 app.use("/events", event);
 app.use("/posts", post);
-  

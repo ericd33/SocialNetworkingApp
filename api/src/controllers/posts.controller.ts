@@ -3,7 +3,6 @@ const userSchema = require("../models/user");
 const postSchema = require("../models/post");
 const commentSchema = require("../models/comment");
 
-
 export const addPost = async (req: Request, res: Response) => {
   const { image, content, idUser, idComment } = req.body;
   let post = await new postSchema();
@@ -14,21 +13,21 @@ export const addPost = async (req: Request, res: Response) => {
     post.comments = comment[0]._id;
   }
 
-  try{
-  if ((content.length || image.length) && idUser.length) {
-    post.author= user[0]._id
-    post.image = image;
-    post.content = content;
-    post.enabled = true;
-    const savePost = await post.save();
-    console.log(user[0].posts)
-    user[0].posts = user[0].posts.concat(savePost)
-    console.log(user[0])
-    await user[0].save()
-    res.status(200).send("new post");
-  }}catch(e){
-    res.status(400).send(e)
-
+  try {
+    if ((content.length || image.length) && idUser.length) {
+      post.author = user[0]._id;
+      post.image = image;
+      post.content = content;
+      post.enabled = true;
+      const savePost = await post.save();
+      console.log(user[0].posts);
+      user[0].posts = user[0].posts.concat(savePost);
+      console.log(user[0]);
+      await user[0].save();
+      res.status(200).send("new post");
+    }
+  } catch (e) {
+    res.status(400).send(e);
   }
 };
 
@@ -89,3 +88,41 @@ export const putPostById = async (req: Request, res: Response) => {
 //     res.status(400).send(e)
 //   }
 // }
+
+export const putPostLikes = async (req: Request, res: Response) => {
+  try {
+    const { idPost } = req.params;
+    const { idUser } = req.body;
+
+    const user = await userSchema.findOne({ _id: idUser });
+    const currentPost = await postSchema.findOne({ _id: idPost });
+
+    if (user) {
+      currentPost.likes.push(user);
+
+      const postUpdated = await postSchema.findByIdAndUpdate(
+        {
+          _id: idPost,
+        },
+        currentPost,
+        {
+          new: true,
+        }
+      );
+
+      return res.status(200).json({
+        data: postUpdated,
+      });
+    }
+
+    return res.status(404).json({
+      data: currentPost,
+      msg: `User don't exist`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: `An error ocurred 😡`,
+      error,
+    });
+  }
+};
