@@ -20,8 +20,9 @@ app.listen(app.get("port"), () => {
 
 // TODO: Implement configurations for CORS
 const corsOptions: CorsOptions = {};
-app.use(middleware.decodeToken)
 app.use(cors(corsOptions));
+app.use(middleware.decodeToken)
+
    
 app.use("/comments", comment);
 app.use("/users", userRoutes);
