@@ -64,17 +64,36 @@ export const updateComment = async (req: Request, res: Response) => {
 };
 
 export const deleteComment = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    await commentSchema.findByIdAndDelete(id);
+  const { id, action } = req.query;
 
-    res.status(200).json({
-      msg: "comment delete successfully",
-    });
-  } catch (error) {
-    res.status(500).json({
-      msj: "An error ocurred 😡",
-      error,
-    });
+  try {
+    if (id) {
+      const comment = await commentSchema.findOne({ _id: id });
+      switch (action) {
+        case "disable":
+          if (comment.enabled) {
+            await commentSchema.updateOne({ _id: id },{ enabled: false }
+            );
+            res.status(200).send("Comment deleted successfully.");
+          } else {
+            res.status(400).send("Comment is already deleted.");
+          }
+          break;
+          case "enable":
+            if (!comment.enabled) {
+              await commentSchema.updateOne({ _id: id },{ enabled: true }
+              );
+              res.status(200).send("Comment re-enabled successfully.");
+            } else {
+              res.status(400).send("Comment is already deleted.");
+            }
+          break;
+        default:
+          res.status(400).send('Invalid action request.')
+          break;
+      }
+    }
+  } catch (err) {
+    res.status(404).send(err);
   }
 };
