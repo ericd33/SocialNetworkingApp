@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getEvents } from "../../Redux/actions";
 import { Link } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 
 export default function EventList() {
     const events = useSelector(e=>e.events)
 
     const dispatch = useDispatch()
     useEffect(()=>{
-        dispatch(getEvents())
+        const token = getAuth().currentUser.accessToken
+        dispatch(getEvents(token))
     },[dispatch])
 
     return (

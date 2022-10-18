@@ -9,7 +9,7 @@ import {
 } from "./action-types.js";
 
 export function postUser(payload,token) {
-  return async function () {
+  return function () {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
@@ -23,7 +23,9 @@ export function postUser(payload,token) {
       },
     };
     console.log(token,Config)
-    axios.post(Config);
+    axios(Config).then(res=>{
+      console.log(res)
+    })
   };
 }
 
@@ -58,6 +60,10 @@ export function postPost(payload) {
   };
 }
 
+
+
+
+
 export function postEvent(payload) {
   return async function () {
     let json = await axios.post(`http://localhost:3001/events`, payload);
@@ -66,16 +72,7 @@ export function postEvent(payload) {
   };
 }
 
-export function getEvents() {
-  return async function (dispatch) {
-    let json = await axios.get(`${process.env.REACT_APP_MY_API_URL}/events`);
-    console.log(json);
-    return dispatch({
-      type: GET_EVENTS,
-      payload: json.data,
-    });
-  };
-}
+
 
 export function details(id) {
   return async function (dispatch) {
@@ -135,4 +132,23 @@ export function login(user) {
         console.log(err);
       });
   };
+}
+
+export function getEvents(payload) {
+  return function (dispatch) {
+    console.log(payload)
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
+      headers: {
+        authorization: `Bearer ${payload}`
+    }
+  };
+   axios(Config).then(res=>{
+    return dispatch({
+    type: GET_EVENTS,
+    payload: res.data
+  })
+  }) 
+}
 }
