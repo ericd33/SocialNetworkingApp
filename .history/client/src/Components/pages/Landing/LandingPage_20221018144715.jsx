@@ -54,7 +54,6 @@ export default function LandingPage() {
         setCurUser(user)
         // ...
         const token = getAuth().currentUser.accessToken
-        console.log(token)
         console.log(user)
         dispatch(postUser(user,token))
       })

@@ -1,6 +1,5 @@
-const admin = require("../firebase/config");
+const admin = require('../firebase/config')
 class Middleware {
-
     async decodeToken(req, res, next) {
         console.log('decoding token')
         console.log(req.headers)
@@ -17,9 +16,9 @@ class Middleware {
     catch(e){
         console.log(e)
         return res.json({message: 'Error'});
-
     }
-  }
+    }
+
 }
 
 module.exports = new Middleware();

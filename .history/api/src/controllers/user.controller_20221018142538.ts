@@ -4,7 +4,6 @@ const userSchema = require("../models/user");
 export const addUser = async (req: Request, res: Response) => {
   const { name, email, image } = req.body;
   var user = await new userSchema();
-  console.log(name)
   try {
     let checkingUserExist = await userSchema.find({ email: email });
     if (checkingUserExist.length) {
@@ -29,7 +28,12 @@ export const addUser = async (req: Request, res: Response) => {
     user.enabled = true;
     user.email = checkIfPropertyExist(email);
 
-    await user.save();
+    await user.save(function (err: any, user: any) {
+      if (err) {
+        res.send(err);
+      }
+      console.log(user);
+    });
 
     res.status(200).send("signUp");
   } catch (e) {

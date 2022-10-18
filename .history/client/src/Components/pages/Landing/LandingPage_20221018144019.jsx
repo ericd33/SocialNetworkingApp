@@ -7,7 +7,6 @@ import {
 import { useEffect } from "react";
 import Home from '../Home/Home';
 import { useDispatch } from "react-redux";
-import { postUser } from "../../../Redux/actions";
 
 export default function LandingPage() {
   const dispatch = useDispatch()
@@ -53,10 +52,7 @@ export default function LandingPage() {
 
         setCurUser(user)
         // ...
-        const token = getAuth().currentUser.accessToken
-        console.log(token)
-        console.log(user)
-        dispatch(postUser(user,token))
+        dispatch(user)
       })
       .catch((error) => {
         const errorMessage = error.message;

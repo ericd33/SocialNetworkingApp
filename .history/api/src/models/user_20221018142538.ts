@@ -6,6 +6,7 @@ export interface Iuser extends Document{
     email: string,
     role: string,
     enabled: boolean,
+    password: string,
     friends?: string[],
     posts?:string[],
     liked?:string[],
@@ -33,6 +34,10 @@ const userSchema = new Schema({
         type: String,
         required:true,
         trim: true
+    },
+    password:{
+        type: String,
+        required: true
     },
     friends:[],
     posts:[],
