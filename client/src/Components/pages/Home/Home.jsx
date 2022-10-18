@@ -12,16 +12,6 @@ import { Avatar, Card, CardHeader } from "@mui/material";
 import { grey, yellow } from "@mui/material/colors";
 
 export default function Home() {
-  // const { user } = useAuth0();
-  // const dispatch = useDispatch();
-
-  // useEffect(async() => {
-  //   let id = await axios.get(`http://localhost:3000/users/email/${user.email}`);
-  //   console.log(id.data);
-  //   dispatch(getMyID(id.data))
-  // },[dispatch])
-  // let user = useSelector(state => state.myUser)
-  // console.log(user);
 
   let users_finded = useSelector((state) => state.searchByNameUsers);
 
@@ -57,7 +47,9 @@ export default function Home() {
         </div>
         <div className="rightHome"></div>
       </div>
-      <CreatePost />
+      
     </div>
   );
 }
+
+//<CreatePost />

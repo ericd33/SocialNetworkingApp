@@ -10,7 +10,7 @@ import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineR
 
 export default function Post({text,author,comments,likes,image}) {
         const [User, setUser] = useState({name:'',avatar:''});
-
+        
         useEffect(() => {
             axios.get(`${process.env.REACT_APP_MY_API_URL}/users/${author}`)
             .then((user) => {
