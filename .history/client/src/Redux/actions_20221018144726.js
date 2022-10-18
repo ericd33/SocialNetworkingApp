@@ -10,7 +10,7 @@ import {
 
 export function postUser(payload,token) {
   return async function () {
-    const Config = {
+    const congif = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
       headers: {
@@ -22,8 +22,7 @@ export function postUser(payload,token) {
         image: payload.photoURL,
       },
     };
-    console.log(token,Config)
-    axios.post(Config);
+    axios.post(congif);
   };
 }
 
@@ -36,6 +35,7 @@ export function getPosts(payload) {
         authorization: `Bearer ${payload}`
       },
     };
+    console.log(Config)
     await axios(Config).then(res =>{
       return dispatch({
         type: GET_POSTS,

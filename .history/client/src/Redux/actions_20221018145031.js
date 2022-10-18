@@ -36,6 +36,7 @@ export function getPosts(payload) {
         authorization: `Bearer ${payload}`
       },
     };
+    // console.log(Config)
     await axios(Config).then(res =>{
       return dispatch({
         type: GET_POSTS,

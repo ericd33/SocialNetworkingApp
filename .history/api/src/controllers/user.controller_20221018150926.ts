@@ -4,7 +4,7 @@ const userSchema = require("../models/user");
 export const addUser = async (req: Request, res: Response) => {
   const { name, email, image } = req.body;
   var user = await new userSchema();
-  console.log(name)
+  console.log('holaaaa')
   try {
     let checkingUserExist = await userSchema.find({ email: email });
     if (checkingUserExist.length) {
