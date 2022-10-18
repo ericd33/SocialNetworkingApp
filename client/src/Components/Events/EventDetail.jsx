@@ -8,18 +8,22 @@ import { useParams } from 'react-router-dom'
 import React from 'react'
 import NavBar from "../navbar/Navbar";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { getAuth } from "firebase/auth";
 
 
 export default function EventDetail({participants}) {
     const detail = useSelector(d=>d.details)
+    const token = getAuth().currentUser.accessToken
+
     const dispatch = useDispatch()
     const { id }= useParams()
     useEffect(()=>{
-        dispatch(details(id))
+        dispatch(details(id,token))
         return()=>{
             dispatch(deleteDetails())
         }
     },[dispatch,id])
+    console.log(detail)
     return (
             <Container sx={{textAlign:'center', width:'100%'}} >
                <div>
