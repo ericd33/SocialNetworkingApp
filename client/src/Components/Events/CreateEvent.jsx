@@ -21,8 +21,15 @@ import { getAuth } from "firebase/auth";
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
+  let email = getAuth().currentUser.email
+  console.log(email)
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    dispatch(getMyUser(email))
+  },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
@@ -32,17 +39,19 @@ export default function CreateEvent() {
   const [formState, setFormState] = useState({
     name:"",
     content: "",
+    idUser:'',
     email:email,
     date: "",
     hour: 0,
     location: "",
-    image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg'
+    image:''
   });
 
   const handleChange = (e) => {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
+      idUser:'',
       email:email,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
