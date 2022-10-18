@@ -6,7 +6,7 @@ import comment from "./routes/comment.router";
 import event from "./routes/events.routes";
 import post from "./routes/posts.router";
 import cors, { CorsOptions } from "cors";
-const middleware = require('./middleware')
+// const middleware = require("./middleware");
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -17,14 +17,12 @@ app.listen(app.get("port"), () => {
   connectDB();
 });
 
-
 // TODO: Implement configurations for CORS
 const corsOptions: CorsOptions = {};
-app.use(middleware.decodeToken)
+// app.use(middleware.decodeToken)
 app.use(cors(corsOptions));
-   
+
 app.use("/comments", comment);
 app.use("/users", userRoutes);
 app.use("/events", event);
 app.use("/posts", post);
-  
