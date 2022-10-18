@@ -23,7 +23,7 @@ export default function CreatePost() {
   const [modal, setModal] = useState(false);
 
   let email =  window.localStorage.getItem('input')
-  email = email.slice(1,-1)
+  // email = email.slice(1,-1)
   useEffect(()=>{
     dispatch(getMyUser(email))
   },[])

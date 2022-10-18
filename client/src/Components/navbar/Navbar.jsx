@@ -17,6 +17,7 @@ import { useState } from "react";
 import { searchUsersByName } from "../../Redux/actions";
 import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
+import { getAuth, signOut } from "firebase/auth";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,22 +67,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavBar = () => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("")
+  const auth = getAuth();
 
-  
-  const LogoutButton = () => {
-    const { logout } = useAuth0();
+  ///LOGOUT
+  function logOut() {
+    auth.signOut();
+  }
 
-    return (
-      <IconButton sx={{color: grey[800]}} onClick={() => logout({ returnTo: window.location.origin })}>
-        <LogoutIcon/>
-      </IconButton>
-    );
-    };
-    
-    const handleInput = (e)=>{
-      setSearch(e.target.value)
-      dispatch(searchUsersByName(search))
-    }
+  const handleInput = (e)=>{
+    setSearch(e.target.value)
+    dispatch(searchUsersByName(search))
+  }
 
   return (
     <AppBar sx={{ bgcolor: yellow[500], color: grey[800] }} position="fixed">
@@ -129,8 +125,10 @@ const NavBar = () => {
           <IconButton color="inherit" component={Link}>
             <ChatOutlinedIcon />
           </IconButton>
-
-          {LogoutButton()}
+          
+          <IconButton sx={{color: grey[800]}} onClick={logOut}>
+            <LogoutIcon/>
+          </IconButton>
           
           <Button
             sx={{ ml: "35px", borderRadius: "25px", height: 50 }}

@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import {
   getAuth,
   signInWithPopup,
-  signOut,
   GoogleAuthProvider,
 } from "firebase/auth";
 import { useEffect } from "react";
+import Home from '../Home/Home';
 
 export default function LandingPage() {
   const provider = new GoogleAuthProvider();
@@ -30,7 +30,8 @@ export default function LandingPage() {
     if (user) {
       setCurUser(user)
     }
-    });
+    }
+  );
 
 
     //LOGIN
@@ -55,13 +56,8 @@ export default function LandingPage() {
       });
   }
 
-  ///LOGOUT
-  function logOut() {
-    auth.signOut();
-  }
-
   if (curUser) {
-    return <button onClick={logOut}>Sign out</button>;
+    return <Home/>
   } else {
     return (
       <div>
