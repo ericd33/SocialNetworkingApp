@@ -13,23 +13,30 @@ import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreateEvent.css";
-import { postEvent } from "../../Redux/actions";
+import { getMyUser, postEvent } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import { useEffect } from "react";
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
-  const User = useSelector(state => state.myUser)
+  let email = getAuth().currentUser.email
+  console.log(email)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(()=>{
+    dispatch(getMyUser(email))
+  },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
+  const User = useSelector(state => state.myUser)
   const [formState, setFormState] = useState({
     name:"",
     content: "",
-    idUser:'634d8a272b4dde3aced10ad5',
+    idUser:User._id,
     date: "",
     hour: 0,
     location: "",
@@ -40,7 +47,7 @@ export default function CreateEvent() {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
-      idUser:'634d8a272b4dde3aced10ad5',
+      idUser:User._id,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
   };

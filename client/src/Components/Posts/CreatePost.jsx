@@ -17,12 +17,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { useEffect } from "react";
+import { getAuth } from "firebase/auth";
 
 
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
 
-  let email =  window.localStorage.getItem('input')
+  let email = getAuth().currentUser.email
   // email = email.slice(1,-1)
   useEffect(()=>{
     dispatch(getMyUser(email))
