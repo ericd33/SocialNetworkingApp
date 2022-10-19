@@ -63,16 +63,17 @@ export default function Post({ text, author, comments, likes, image, id }) {
         }}
       >
         <CardHeader
-          sx={{ pt: 0, pb: 0, mt: 2, color:'primary.main'}}
+          sx={{ pt: 0, pb: 0, mt: 2}}
+          className='titleName'
           avatar={
-            <Avatar imgProps={{ referrerPolicy: "no-referrer" }} sx={{ bgcolor: yellow[500] }} src={User.avatar}></Avatar>
+            <Avatar imgProps={{ referrerPolicy: "no-referrer" }} sx={{ bgcolor: 'primary.light' }} src={User.avatar}></Avatar>
           }
           title={<Link to={'/profile/' + author}>{User.name}</Link>}
         />
         <CardContent sx={{ pb: 1, color:'primary.main'}}>{text}</CardContent>
 
         {image ? (
-          <CardMedia component="img" alt="image" height="400" image={image} />
+          <CardMedia component="img" alt="image" image={image} />
         ) : (
           <div></div>
         )}

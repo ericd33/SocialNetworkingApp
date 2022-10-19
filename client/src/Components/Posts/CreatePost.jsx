@@ -23,13 +23,12 @@ import { getAuth } from "firebase/auth";
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
 
-  let email = getAuth().currentUser.email;
-  // email = email.slice(1,-1)
+  let userEmail = JSON.parse(localStorage.getItem('user')).email;
+
   useEffect(() => {
-    dispatch(getMyUser(email));
+    dispatch(getMyUser(userEmail));
   }, []);
 
-  const User = useSelector((state) => state.myUser);
   const dispatch = useDispatch();
   const opencloseModal = () => {
     setModal(!modal);
@@ -49,10 +48,10 @@ export default function CreatePost() {
   const handleSubmit = (e) => {
     const data = {
       ...formState,
-      email: getAuth().currentUser.email,
+      email: userEmail
     };
 
-    dispatch(postPost(getAuth().currentUser.accessToken, data));
+    dispatch(postPost(localStorage.getItem('token').slice(1,-1), data));
 
     setModal(!modal);
     window.location.reload()
