@@ -64,8 +64,11 @@ export default function LandingPage() {
       });
   }
 
+  let user = window.localStorage.getItem('user')
+  user = JSON.parse(user)
+
   if (curUser) {
-    return <Home info={curUser.reloadUserInfo}/>
+    return <Home info={user}/>
   } else {
     return (
       <div>

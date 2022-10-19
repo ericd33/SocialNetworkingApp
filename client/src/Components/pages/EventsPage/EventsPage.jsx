@@ -1,11 +1,6 @@
 import NavBar from "../../navbar/Navbar";
 import EventsMenu from "../../Home-Components/EventsMenu";
 import "./EventsPage.css";
-import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getMyID } from "../../../Redux/actions";
 import EventList from "../../Events/EventList";
 import CreateEvent from "../../Events/CreateEvent";
 
