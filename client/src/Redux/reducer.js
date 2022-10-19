@@ -1,6 +1,6 @@
 // Importa las action types acá
 
-import { GET_EVENTS, GET_POSTS, GET_MY_USER, DETAILS_EVENT, GET_DETAILS, SEARCH_BY_NAME} from "./action-types";
+import { GET_EVENTS, GET_POSTS, GET_MY_USER, DETAILS_EVENT, GET_DETAILS, SEARCH_BY_NAME, GET_POSTS_BY_NAME} from "./action-types";
 
 const initialState = {
   posts: [],
@@ -9,6 +9,7 @@ const initialState = {
   myUser:{},
   details:[],
   searchByNameUsers:[],
+  postsUser:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -45,6 +46,11 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state,
           searchByNameUsers:action.payload
+        }
+        case GET_POSTS_BY_NAME:
+        return{
+          ...state,
+          postsUser:action.payload
         }
     default:
       return state;

@@ -5,3 +5,6 @@ export const GET_DETAILS = 'GET_DETAILS'
 export const DETAILS_EVENT = 'DETAILS_EVENT'
 export const GET_USER_FOR_ID = "GET_USER_FOR_ID"
 export const GET_MY_USER = "GET_MY_USER"
+export const GET_POSTS_BY_NAME = "GET_POSTS_BY_NAME"
+
+
