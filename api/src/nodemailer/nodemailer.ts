@@ -18,7 +18,7 @@ module.exports = {
             to: email,
             subject: '¡Bienvenido a ConcatUs!',
             html: `
-                    <p>Comienza a agregar a tus amigos. ¡O has nuevos!
+                    <p>Comienza a agregar a tus amigos. ¡O has nuevos!<p/>
             <img width=80% src="https://img.freepik.com/vector-premium/texto-bienvenida-estilo-memphis_136321-654.jpg?w=2000"></img>
             `,
         }
