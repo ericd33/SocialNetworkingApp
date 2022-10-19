@@ -59,7 +59,6 @@ export default function Post({ text, author, comments, likes, image, id }) {
           width: 600,
           bgcolor: 'custom.dark',
           fontFamily: "Nunito",
-          color: grey[900],
           borderRadius:3
         }}
       >
