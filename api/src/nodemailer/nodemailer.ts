@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-const { SECRET, NODEMAILER } = process.env
+const { NODEMAILER } = process.env
 
 module.exports = {
     transporter: nodemailer.createTransport({
