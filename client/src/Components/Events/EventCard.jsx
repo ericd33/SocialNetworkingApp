@@ -7,7 +7,7 @@ export default function EventCard({location,title,creator,text,image,photoperfil
     return (
         <div>
             <br/>
-            <Card sx={{ width: 600, bgcolor: grey[300], color:grey[900]}}>
+            <Card sx={{ width: 600, bgcolor: 'custom.dark', borderRadius:3}}>
             <Typography sx={{fontSize: 14, fontFamily: 'Nunito', mt: '1px', ml:1, color:grey[800], pb:'1px'}} color="text.secondary" gutterBottom>
                 <Icon sx={{pt:'1px'}}>
                     <LocationOnIcon/>
