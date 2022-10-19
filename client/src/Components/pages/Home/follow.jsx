@@ -2,6 +2,8 @@ import { getAuth } from "firebase/auth";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { follows } from "../../../Redux/actions";
+import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined';
+import { IconButton } from "@mui/material";
 
 export default function Follow({email}){
     console.log(email)
@@ -19,6 +21,8 @@ export default function Follow({email}){
     }
     
     return(
-        <button onClick={handleFollow}>follow</button>
+        <IconButton id='buttonsPost' onClick={handleFollow}>
+            <PersonAddAlt1OutlinedIcon/>
+        </IconButton>
     )
 }
