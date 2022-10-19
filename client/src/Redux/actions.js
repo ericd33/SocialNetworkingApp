@@ -8,7 +8,7 @@ import {
   GET_MY_USER,
 } from "./action-types.js";
 
-export function postUser(payload,token) {
+export function postUser(payload, token) {
   return function () {
     const Config = {
       method: "post",
@@ -22,10 +22,10 @@ export function postUser(payload,token) {
         image: payload.photoURL,
       },
     };
-    console.log(token,Config)
-    axios(Config).then(res=>{
-      console.log(res)
-    })
+    console.log(token, Config);
+    axios(Config).then((res) => {
+      console.log(res);
+    });
   };
 }
 
@@ -35,42 +35,35 @@ export function getPosts(payload) {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
       headers: {
-        authorization: `Bearer ${payload}`
+        authorization: `Bearer ${payload}`,
       },
     };
-    axios(Config).then(res =>{
+    axios(Config).then((res) => {
       return dispatch({
         type: GET_POSTS,
         payload: res.data,
       });
-    })
-    
-    
+    });
   };
 }
 
 export function postPost(payload, data) {
-  
   return async function () {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
       headers: {
-        authorization: `Bearer ${payload}`
+        authorization: `Bearer ${payload}`,
       },
-      data: data
+      data: data,
     };
-    let json = await axios(Config)
+    let json = await axios(Config);
     console.log(json);
     return json;
   };
 }
 
-
-
-
-
-export function postEvent(payload,token) {
+export function postEvent(payload, token) {
   return function () {
     const Config = {
       method: "post",
@@ -84,33 +77,31 @@ export function postEvent(payload,token) {
         image: payload.image,
         hour: payload.hour,
         location: payload.location,
-        content:payload.content,
-        date: payload.date
+        content: payload.content,
+        date: payload.date,
       },
     };
-    axios(Config).then(res=>console.log(res))
+    axios(Config).then((res) => console.log(res));
   };
 }
 
-
-
-export function details(id,token) {
+export function details(id, token) {
   return function (dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events/${id}`,
       headers: {
-        authorization: `Bearer ${token}`
+        authorization: `Bearer ${token}`,
       },
     };
-    axios(Config).then(res=>{
-      console.log(res)
+    axios(Config).then((res) => {
+      console.log(res);
       return dispatch({
         type: GET_DETAILS,
-        payload: res.data
-      })
-    })
-  }
+        payload: res.data,
+      });
+    });
+  };
 }
 
 export function deleteDetails() {
@@ -119,22 +110,21 @@ export function deleteDetails() {
   };
 }
 
-
-export function getMyUser(token,email) {
+export function getMyUser(token, email) {
   return async function (dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${email}`,
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     };
-    axios(Config).then(res =>{
+    axios(Config).then((res) => {
       return dispatch({
         type: GET_MY_USER,
         payload: res.data,
       });
-    })
+    });
     // let json = await axios.get(`http://localhost:3001/users/email/${email}`);
     // return dispatch({
     //   type: GET_MY_USER,
@@ -143,30 +133,29 @@ export function getMyUser(token,email) {
   };
 }
 
-
-export function searchUsersByName(name,token) {
+export function searchUsersByName(name, token) {
   return function (dispatch) {
-    if(name === '') {
+    if (name === "") {
       return dispatch({
         type: SEARCH_BY_NAME,
-        payload: []
-      })
+        payload: [],
+      });
     }
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users?name=${name}`,
       headers: {
-        authorization: `Bearer ${token}`
+        authorization: `Bearer ${token}`,
       },
     };
-    axios(Config).then(res=>{
+    axios(Config).then((res) => {
       // console.log(res)
       return dispatch({
         type: SEARCH_BY_NAME,
-        payload: res.data
-      })
-    })
-  }
+        payload: res.data,
+      });
+    });
+  };
 }
 
 export function login(user) {
@@ -191,25 +180,25 @@ export function login(user) {
 
 export function getEvents(payload) {
   return function (dispatch) {
-    console.log(payload)
+    console.log(payload);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
       headers: {
-        authorization: `Bearer ${payload}`
-    }
+        authorization: `Bearer ${payload}`,
+      },
+    };
+    axios(Config).then((res) => {
+      return dispatch({
+        type: GET_EVENTS,
+        payload: res.data,
+      });
+    });
   };
-   axios(Config).then(res=>{
-    return dispatch({
-    type: GET_EVENTS,
-    payload: res.data
-  })
-  }) 
-}
 }
 
-export function putLikes(idPost,email,token) {
-  return function () {
+export function putLikes(idPost, email, token) {
+  return async function (dispatch) {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${idPost}`,
@@ -217,12 +206,15 @@ export function putLikes(idPost,email,token) {
         Authorization: `Bearer ${token}`,
       },
       data: {
-        email: email
+        email: email,
       },
     };
     // console.log(token,Config)
-    axios(Config).then(res=>{
-      console.log(res)
-    })
+    const { data } = await axios(Config);
+
+    dispatch({
+      type: "UPDATE_POSTS",
+      payload: data.data,
+    });
   };
 }

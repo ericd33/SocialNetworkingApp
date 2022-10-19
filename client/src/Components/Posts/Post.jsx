@@ -19,13 +19,13 @@ import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { putLikes } from "../../Redux/actions";
 
-export default function Post({ text, author, comments, likes, image , id}) {
+export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const auth = getAuth();
   const token = auth.currentUser.accessToken;
-  useEffect(() => {
 
+  useEffect(() => {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${author}`,
@@ -33,13 +33,14 @@ export default function Post({ text, author, comments, likes, image , id}) {
         authorization: `Bearer ${token}`,
       },
     };
+
     axios(Config)
-      .then(user => {
-        console.log(user.data)
+      .then((user) => {
+        console.log(user.data);
         setUser({
-            name: user.data.name,
-            avatar: user.data.image,
-          });
+          name: user.data.name,
+          avatar: user.data.image,
+        });
       })
       .catch(function (err) {
         console.log(err);
@@ -47,8 +48,8 @@ export default function Post({ text, author, comments, likes, image , id}) {
   }, []);
 
   const putLike = () => {
-    dispatch(putLikes(id,auth.currentUser.email,token))
-  }
+    dispatch(putLikes(id, auth.currentUser.email, token));
+  };
 
   return (
     <div>
