@@ -17,7 +17,7 @@ export default function Home() {
         <span></span>
       </div>
       <CreatePost />
-      <NavBar />
+      <NavBar  />
       <div className="media-part">
         <div className="leftHome">
           <div className="finded-persons">

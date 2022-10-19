@@ -119,24 +119,30 @@ export function deleteDetails() {
   };
 }
 
-export function getMyUser(email,token) {
+
+export function getMyUser(token,email) {
   return async function (dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${email}`,
       headers: {
-        authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       },
     };
-    axios(Config).then(res=>{
-      // console.log(res)
+    axios(Config).then(res =>{
       return dispatch({
         type: GET_MY_USER,
-        payload: res.data
-      })
+        payload: res.data,
+      });
     })
+    // let json = await axios.get(`http://localhost:3001/users/email/${email}`);
+    // return dispatch({
+    //   type: GET_MY_USER,
+    //   payload: json.data,
+    // });
   };
 }
+
 
 export function searchUsersByName(name,token) {
   return function (dispatch) {
