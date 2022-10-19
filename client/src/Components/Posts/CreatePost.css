@@ -1,12 +1,18 @@
 
 .textField{
     width:100%;
+    background-color: #3b3b3b;
+    border-radius: 10px;
+}
+
+#closeIcon:hover {
+    background-color: #5f5f5f;
+    border: 1px solid rgb(121, 121, 121)
 }
 
 .postCreator {
     position: absolute;
-    background-color:white;
-    border: 1px solid #000;
+    border: 1px solid #ffd000;
     padding: 16px 32px 24px;
     top: 50%;
     left: 50%;
@@ -22,6 +28,28 @@
     justify-content: space-between;
 }
 
-#inputImage {
-    opacity:0;
+#Postbutton:hover {
+    background-color: #ffec95;
+    font-weight:bold;
+}
+#Postbutton {
+    font-weight:bold;
+}
+
+.inputsdePost {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 190px;
+}
+
+.inputsdePost textarea{
+    color:white;
+}
+.inputsdePost input{
+    color:white;
+}
+.inputsdePost label{
+    color:#a5a5a5;
 }

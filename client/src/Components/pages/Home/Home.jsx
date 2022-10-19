@@ -25,26 +25,27 @@ export default function Home() {
               users_finded.map((u) => {
                 return (
                   <Card
+                    className="cardFinded"
                     sx={{
-                      width: 130,
-                      bgcolor: grey[400],
-                      fontFamily: "Nunito",
+                      width: 170,
+                      bgcolor: 'custom.main',
                       color: grey[900],
                       mb: 2,
                       mt: 1,
-                    }}
+                      borderRadius:3
+                    }
+                  }
                   >
                     <CardHeader
-                      sx={{ p: 1 }}
+                      sx={{ p: 1 , color:'primary.light'}}
                       avatar={
                         <Avatar
-                          sx={{ bgcolor: yellow[500] }}
                           src={u.image}
                         ></Avatar>
                       }
                       title={u.name}
                     />
-                    <Follow email={u.email} />
+                      <Follow email={u.email}/>
                   </Card>
                 );
               })
