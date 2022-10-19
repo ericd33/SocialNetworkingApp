@@ -43,12 +43,21 @@ export default function CreateEvent() {
     content: "",
     idUser:'',
     email:email,
-    date: "",
+    date : Date.now(),
     location: "",
     image:''
   });
 
+  function handleDateChange(e) {
+    console.log(e._d)
+    setFormState({
+      ...formState,
+      date: e._d
+    })
+  }
+
   const handleChange = (e) => {
+    console.log(e)
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
@@ -104,8 +113,11 @@ export default function CreateEvent() {
         />
         <InputLabel htmlFor='date'>Date</InputLabel>
         <DateTimePicker 
-        onChange={handleChange} 
-        name='date' 
+        minDate={Date.now()}
+        onChange={handleDateChange} 
+        name='date'
+        value={formState.date}
+        renderInput={(params) => <TextField {...params} />}
         />
 
         <InputLabel htmlFor='location'>Location</InputLabel>

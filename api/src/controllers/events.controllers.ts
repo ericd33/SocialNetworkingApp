@@ -4,12 +4,10 @@ const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
   const { name, date, content, image, location, email } = req.body;
-
+  console.log(req.body)
   try {
   const user = await userSchema.findOne({email:email})
-  console.log(user, 'holaa')
     let event = await new eventSchema();
-    console.log(user)
     if (name.length && date.length && content.length && location.length) {
       event.author= user.email
       event.avatar = user.image
@@ -22,11 +20,10 @@ export const addEvent = async (req: Request, res: Response) => {
       event.enabled = true;
       const newEvent = await event.save();
       user.events = user.events.concat(newEvent)
-      console.log(user)
-
+      console.log('event created?');
       await user.save()
 
-      console.log(event);
+      console.log('event created');
       res.status(200).send("new event");
     }
   } catch (e) {
