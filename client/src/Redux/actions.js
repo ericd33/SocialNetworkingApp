@@ -6,6 +6,7 @@ import {
   GET_POSTS,
   SEARCH_BY_NAME,
   GET_MY_USER,
+  GET_POSTS_BY_NAME
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -219,6 +220,27 @@ export function putLikes(idPost, email, token) {
 }
 
 
+export function getPostsByName(token,id) {
+  return async function (dispatch) {
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/post/${id}`,
+      headers: {
+        authorization: `Bearer ${token}`
+      },
+    };
+    axios(Config).then(res =>{
+      return dispatch({
+        type: GET_POSTS_BY_NAME,
+        payload: res.data,
+      });
+    })
+    
+    
+  };
+}
+
+
 export function follows(payload,token){
   return function () {
     const Config = {
@@ -235,4 +257,5 @@ export function follows(payload,token){
     axios(Config).then(res=>console.log(res))
   };
 }
+
 

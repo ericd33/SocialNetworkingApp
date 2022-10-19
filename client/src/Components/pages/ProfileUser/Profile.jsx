@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { useDispatch, useSelector } from "react-redux";
 import { getMyUser } from "../../../Redux/actions"
+import ProfilePostList from './ProfilePost/ProfilePostList';
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -31,7 +32,7 @@ return (
     {/* <EventsMenu /> */}
   </div>
   <div className="centerHome">
-    {/* <EventList /> */}
+    <ProfilePostList userInfoRen={userInfoRen} />
   </div>
   <div className="rightHome"></div>
 </div>

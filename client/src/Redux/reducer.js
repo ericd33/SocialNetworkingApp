@@ -8,14 +8,18 @@ import {
   GET_DETAILS,
   SEARCH_BY_NAME,
   UPDATE_POSTS,
+  GET_POSTS_BY_NAME,
 } from "./action-types";
+
 
 const initialState = {
   posts: [],
   filtered_posts: [],
-  events: [],
-  myUser: {},
-  details: [],
+  events:[],
+  myUser:{},
+  details:[],
+  searchByNameUsers:[],
+  postsUser:[],
   searchByNameUsers: [],
 };
 
@@ -48,27 +52,32 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         events: action.payload,
       };
-
-    case GET_MY_USER:
-      return {
-        ...state,
-        myUser: action.payload,
-      };
-    case GET_DETAILS:
-      return {
-        ...state,
-        details: action.payload,
-      };
-    case DETAILS_EVENT:
-      return {
-        ...state,
-        details: [],
-      };
-    case SEARCH_BY_NAME:
-      return {
-        ...state,
-        searchByNameUsers: action.payload,
-      };
+      
+      case GET_MY_USER:
+        return{
+          ...state,
+          myUser:action.payload
+        }
+        case GET_DETAILS:
+        return{
+          ...state,
+          details:action.payload
+        }
+      case DETAILS_EVENT:
+        return{
+            ...state,
+            details:[]     
+        }
+      case SEARCH_BY_NAME:
+        return{
+          ...state,
+          searchByNameUsers:action.payload
+        }
+        case GET_POSTS_BY_NAME:
+        return{
+          ...state,
+          postsUser:action.payload
+        }
     default:
       return state;
   }
