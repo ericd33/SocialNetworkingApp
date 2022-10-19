@@ -17,15 +17,18 @@ import CommentsModal from "./Modals/CommentsModal";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import { useDispatch } from "react-redux";
 import { putLikes } from "../../Redux/actions";
-import { Link } from 'react-router-dom';
+import { updateComment } from "../../Redux/actions";
+import { Link } from "react-router-dom";
+import "./Post.css";
 
 export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
-  let token = window.localStorage.getItem('token')
-  token=token.slice(1,-1)
-  let user = window.localStorage.getItem('user')
-  user = JSON.parse(user)
+  let token = window.localStorage.getItem("token");
+  token = token.slice(1, -1);
+  let user = window.localStorage.getItem("user");
+
+  user = JSON.parse(user);
   useEffect(() => {
     const Config = {
       method: "get",
@@ -51,26 +54,68 @@ export default function Post({ text, author, comments, likes, image, id }) {
     dispatch(putLikes(id, user.email, token));
   };
 
+  const [formState, setFormState] = useState({
+    image: "",
+    text: "",
+    idUser: author,
+    idPost: "",
+  });
+
+  const handleClick = (e) => {
+    setFormState({
+      text: e.target.value,
+    });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      ...formState,
+      // email: getAuth().currentUser.email,
+    };
+
+    dispatch(updateComment(id, data, token));
+  };
+
+  const handleSubmitCommentForm = (e) => {
+    e.preventDefault();
+
+    dispatch(updateComment(id, author, comment, token));
+
+    setComment("");
+  };
+
+  const [comment, setComment] = useState();
+  const handleChangeComment = (e) => {
+    e.preventDefault();
+    setComment(e.target.value);
+  };
+
+  const [commentsModalState, setCommentsmodalState] = useState(false);
+  const openCommentsModal = () => setCommentsmodalState(true);
+
   return (
     <div>
       <br />
       <Card
         sx={{
           width: 600,
-          bgcolor: 'custom.dark',
+          bgcolor: "custom.dark",
           fontFamily: "Nunito",
-          borderRadius:3
+          borderRadius: 3,
         }}
       >
         <CardHeader
-          sx={{ pt: 0, pb: 0, mt: 2}}
-          className='titleName'
+          sx={{ pt: 0, pb: 0, mt: 2, color: "primary.main" }}
           avatar={
-            <Avatar imgProps={{ referrerPolicy: "no-referrer" }} sx={{ bgcolor: 'primary.light' }} src={User.avatar}></Avatar>
+            <Avatar
+              imgProps={{ referrerPolicy: "no-referrer" }}
+              sx={{ bgcolor: "primary.light" }}
+              src={User.avatar}
+            ></Avatar>
           }
-          title={<Link to={'/profile/' + author}>{User.name}</Link>}
+          title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
-        <CardContent sx={{ pb: 1, color:'primary.main'}}>{text}</CardContent>
+        <CardContent sx={{ pb: 1, color: "primary.main" }}>{text}</CardContent>
 
         {image ? (
           <CardMedia component="img" alt="image" image={image} />
@@ -79,10 +124,20 @@ export default function Post({ text, author, comments, likes, image, id }) {
         )}
 
         <CardActions disableSpacing>
-          <IconButton id='buttonsPost' onClick={putLike}>
-            <ThumbUpOffAltIcon/>
+          <IconButton id="buttonsPost" onClick={putLike}>
+            <ThumbUpOffAltIcon />
           </IconButton>
-          <p id='textButtons'>{likes?.length} likes</p>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+            }}
+          >
+            <p id="textButtons">{likes?.length} likes</p>
+            <p id="textButtons">{comments.length} comments</p>
+          </div>
+
+          <CommentsModal comments={comments} />
 
           {/* ----Dislikes para un FUTURO---- */}
 
@@ -90,14 +145,15 @@ export default function Post({ text, author, comments, likes, image, id }) {
                             <ThumbDownOffAltIcon/>
                         </IconButton>
                         <p>6 dislikes</p> */}
+
+          {/* 								
           {comments ? (
             <CommentsModal comments={comments} />
           ) : (
-            <IconButton id='buttonsPost'>
+            <IconButton id="buttonsPost">
               <ChatBubbleOutlineRoundedIcon />
             </IconButton>
-          )}
-          <p id='textButtons'>{comments} comments</p>
+          )} */}
 
           {/* --- Shares para FUTURO --- */}
 
@@ -106,6 +162,30 @@ export default function Post({ text, author, comments, likes, image, id }) {
                         </IconButton>
                         <p>3 shares</p> */}
         </CardActions>
+
+        <form onSubmit={handleSubmitCommentForm} className="comments-container">
+          <textarea
+            className="coments-textarea"
+            placeholder="what are you thinking? 👀"
+            onChange={handleChangeComment}
+            value={comment}
+          />
+          <button className="comments-button" type="submit">
+            Send
+          </button>
+        </form>
+
+        {/*  <form>
+          <label />
+          <input
+            value={formState.content}
+            placeholder="leave a comment..."
+            className="post-comment-input1"
+            onChange={handleClick}
+          />
+          {console.log(formState, "ESTO ME TRAE EL INPUT")}
+          <button onClick={handleSubmit}>Send</button>
+        </form> */}
       </Card>
     </div>
   );

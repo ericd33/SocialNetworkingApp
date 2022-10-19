@@ -1,0 +1,29 @@
+.post-comment-input1 {
+  width: 100%;
+  background-color: rgb(16 16 16);
+  border: none;
+  padding: 5px;
+  color: white;
+}
+.post-comment-input1::placeholder {
+  color: white;
+}
+
+.comments-container {
+  display: flex;
+  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.coments-textarea {
+  flex: 1;
+  color: white;
+  background-color: black;
+  border: none;
+}
+
+.comments-button {
+  width: 100px;
+}

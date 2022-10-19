@@ -9,18 +9,18 @@ import {
   SEARCH_BY_NAME,
   UPDATE_POSTS,
   GET_POSTS_BY_NAME,
-  GET_POSTS_BY_ID
+  GET_POSTS_BY_ID,
+  UPDATE_COMMENT,
 } from "./action-types";
-
 
 const initialState = {
   posts: [],
   filtered_posts: [],
-  events:[],
-  myUser:{},
-  details:[],
-  searchByNameUsers:[],
-  postsUser:[],
+  events: [],
+  myUser: {},
+  details: [],
+  searchByNameUsers: [],
+  postsUser: [],
   PostID: [],
 };
 
@@ -41,6 +41,7 @@ const rootReducer = (state = initialState, action) => {
         filtered_posts: postsUpdated,
       };
     }
+
     case GET_POSTS:
       return {
         ...state,
@@ -53,37 +54,37 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         events: action.payload,
       };
-      
-      case GET_MY_USER:
-        return{
-          ...state,
-          myUser:action.payload
-        }
-        case GET_DETAILS:
-        return{
-          ...state,
-          details:action.payload
-        }
-      case DETAILS_EVENT:
-        return{
-            ...state,
-            details:[]     
-        }
-      case SEARCH_BY_NAME:
-        return{
-          ...state,
-          searchByNameUsers:action.payload
-        }
-        case GET_POSTS_BY_NAME:
-        return{
-          ...state,
-          postsUser:action.payload
-        }
-        case GET_POSTS_BY_ID:
-        return{
-          ...state,
-          PostID:action.payload
-        }
+
+    case GET_MY_USER:
+      return {
+        ...state,
+        myUser: action.payload,
+      };
+    case GET_DETAILS:
+      return {
+        ...state,
+        details: action.payload,
+      };
+    case DETAILS_EVENT:
+      return {
+        ...state,
+        details: [],
+      };
+    case SEARCH_BY_NAME:
+      return {
+        ...state,
+        searchByNameUsers: action.payload,
+      };
+    case GET_POSTS_BY_NAME:
+      return {
+        ...state,
+        postsUser: action.payload,
+      };
+    case GET_POSTS_BY_ID:
+      return {
+        ...state,
+        PostID: action.payload,
+      };
     default:
       return state;
   }

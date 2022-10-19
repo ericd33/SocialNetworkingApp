@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 const userSchema = require("../models/user");
 const postSchema = require("../models/post");
 
-
 export const addPost = async (req: Request, res: Response) => {
   const { email, content, image } = req.body;
   // console.log(req.body)
@@ -85,6 +84,18 @@ export const putPostById = async (req: Request, res: Response) => {
 //   }
 // }
 
+export const findPostsByEmail = async (req: Request, res: Response) => {
+  const { email } = req.params;
+  console.log(email);
+  try {
+    const post = await postSchema.find({ author: email });
+    console.log(post);
+    res.status(200).send(post);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
 export const putPostLikes = async (req: Request, res: Response) => {
   try {
     const { idPost } = req.params;
@@ -95,9 +106,10 @@ export const putPostLikes = async (req: Request, res: Response) => {
 
     if (user) {
       if (currentPost.likes.some((u: any) => u.email === user.email)) {
-        currentPost.likes = currentPost.likes.filter((u: any) => u.email !== user.email);
-      }
-      else {
+        currentPost.likes = currentPost.likes.filter(
+          (u: any) => u.email !== user.email
+        );
+      } else {
         currentPost.likes.push(user);
       }
 
@@ -128,15 +140,40 @@ export const putPostLikes = async (req: Request, res: Response) => {
   }
 };
 
+export const putPostComment = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
+    const { userId, commentData } = req.body;
 
-export const findPostsByEmail = async (req: Request, res: Response) => {
-  const { email } = req.params
-  console.log(email)
-  try{
-    const post = await postSchema.find({author:email})
-    console.log(post)
-    res.status(200).send(post)
-  }catch(e){
-    res.status(400).send(e)
+    const user = await userSchema.findOne({ email: userId });
+    const currentPost = await postSchema.findOne({ _id: postId });
+
+    if (user && currentPost) {
+      currentPost.comments.push(commentData);
+
+      const postUpdated = await postSchema.findByIdAndUpdate(
+        {
+          _id: postId,
+        },
+        currentPost,
+        {
+          new: true,
+        }
+      );
+
+      return res.status(200).json({
+        data: postUpdated,
+      });
+    }
+
+    return res.status(404).json({
+      data: currentPost,
+      msg: `This is not an error but... well... You know... 😅`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: `An error ocurred 😡`,
+      error,
+    });
   }
-}
+};
