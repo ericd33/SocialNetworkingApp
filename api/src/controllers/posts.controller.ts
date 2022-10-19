@@ -127,3 +127,16 @@ export const putPostLikes = async (req: Request, res: Response) => {
     });
   }
 };
+
+
+export const findPostId = async (req: Request, res: Response) => {
+  const { idPost } = req.params
+  console.log(idPost)
+  try{
+    const post = await postSchema.findOne({_id:idPost})
+    console.log(post)
+    res.status(200).send(post)
+  }catch(e){
+    res.status(400).send(e)
+  }
+}
