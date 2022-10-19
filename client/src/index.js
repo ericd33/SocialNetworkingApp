@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import store from "./Redux/store.js";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from '@mui/material/styles';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from "@mui/x-date-pickers";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const theme = createTheme({
@@ -33,7 +35,9 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <App />
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <App />
+          </LocalizationProvider>
         </ThemeProvider>
       </BrowserRouter>
     </Provider>

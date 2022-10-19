@@ -4,8 +4,7 @@ import { Document, model, Schema} from "mongoose";
 export interface Ievent extends Document {
     name: string
     author: object,
-    hour: string,
-    date: string,
+    date: Date,
     content: string,
     location: string,
     image?: string,
@@ -27,11 +26,7 @@ const eventSchema = new Schema({
         type:String
     },
     date:{
-        type: String,
-        required: true,
-    },
-    hour:{
-        type: String,
+        type: Date,
         required: true,
     },
     enabled: {

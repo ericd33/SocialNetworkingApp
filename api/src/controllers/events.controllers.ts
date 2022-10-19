@@ -3,7 +3,7 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, date, hour, content, image, location, email } = req.body;
+  const { name, date, content, image, location, email } = req.body;
 
   try {
   const user = await userSchema.findOne({email:email})
@@ -16,7 +16,6 @@ export const addEvent = async (req: Request, res: Response) => {
       event.nameAuthor = user.name
       event.name = name;
       event.date = date;
-      event.hour = hour;
       event.content = content;
       event.image = image;
       event.location = location;
@@ -73,7 +72,7 @@ export const findEventById = async (req: Request, res: Response) => {
 
 export const updateEvent = async (req: Request, res: Response) => {
   const { id } = req.query;
-  const { date, hour, enabled, content, image, location } = req.body;
+  const { date, enabled, content, image, location } = req.body;
   try {
     if (date.length) {
       await eventSchema.findOneAndUpdate(
@@ -81,9 +80,6 @@ export const updateEvent = async (req: Request, res: Response) => {
         { date: date },
         { new: true }
       );
-    }
-    if (isNaN(hour) || (hour >= 0 && hour <= 24)) {
-      await eventSchema.findOneAndUpdate({ _id: id }, { hour: hour });
     }
     if (enabled) {
       await eventSchema.findOneAndUpdate(
