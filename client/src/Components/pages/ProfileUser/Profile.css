@@ -7,24 +7,24 @@
     height: 67px;
 }
 
-.Home .media-part {
+.media-part {
     display: flex;
     justify-content: space-between;
-    background-color: #3b3b3b;
+    background-color: rgb(177, 177, 177);
 }
 
-.Home .media-part .leftHome {
+.media-part .leftHome {
     width: 300px;
-    background-color: #242424;
+    background-color: gray;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     padding-top: 20px;
 }
-.Home .media-part .rightHome {
+.media-part .rightHome {
     width: 300px;
-    background-color: #242424;
+    background-color: gray;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -53,26 +53,4 @@
 
 .media-part .centerHome {
     background-color: transparent;
-}
-
-.leftHome .finded-persons {
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    background-color:#e0e0e0;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
-
-
-#textButtons {
-    color:#a5a5a5;
-}
-#buttonsPost {
-    color:#a5a5a5;
-}
-#buttonsPost:hover {
-    color:#ffd000;
 }

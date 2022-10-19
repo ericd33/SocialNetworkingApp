@@ -15,47 +15,48 @@ import "./CreatePost.css";
 import { getMyUser, postPost } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FileUploadIcon from '@mui/icons-material/FileUpload';
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
-
 
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
 
-  let email = getAuth().currentUser.email
+  let email = getAuth().currentUser.email;
   // email = email.slice(1,-1)
-  useEffect(()=>{
-    dispatch(getMyUser(email))
-  },[])
+  useEffect(() => {
+    dispatch(getMyUser(email));
+  }, []);
 
-  const User = useSelector(state => state.myUser)
+  const User = useSelector((state) => state.myUser);
   const dispatch = useDispatch();
   const opencloseModal = () => {
     setModal(!modal);
   };
   const [formState, setFormState] = useState({
     content: "",
-    image: '',
+    image: "",
   });
-  
+
   const handleChange = (e) => {
     setFormState({
       content: e.target.value,
-      image: '',
-      idUser: User._id
+      image: "",
+      idUser: User._id,
     });
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
       ...formState,
-      email: getAuth().currentUser.email
-    }
+      email: getAuth().currentUser.email,
+    };
 
     dispatch(postPost(getAuth().currentUser.accessToken, data));
+
+    opencloseModal();
   };
 
   const body = (
@@ -90,7 +91,7 @@ export default function CreatePost() {
           onChange={handleChange}
         />
         <div align="right">
-        {/* <IconButton>
+          {/* <IconButton>
           <Input id='inputImage'type="file" accept="image/*" disableUnderline={true}/>
           <FileUploadIcon/>
         </IconButton> */}
@@ -105,7 +106,7 @@ export default function CreatePost() {
       <IconButton
         onClick={() => opencloseModal()}
         id="buttonPost"
-        sx={{ bgcolor: yellow[500] }}
+        sx={{ bgcolor: 'secondary.main' }}
       >
         <PostAddOutlinedIcon sx={{ color: grey[800] }} />
       </IconButton>

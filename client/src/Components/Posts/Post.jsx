@@ -19,13 +19,13 @@ import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { putLikes } from "../../Redux/actions";
 
-export default function Post({ text, author, comments, likes, image , id}) {
+export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const auth = getAuth();
   const token = auth.currentUser.accessToken;
-  useEffect(() => {
 
+  useEffect(() => {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${author}`,
@@ -33,13 +33,14 @@ export default function Post({ text, author, comments, likes, image , id}) {
         authorization: `Bearer ${token}`,
       },
     };
+
     axios(Config)
-      .then(user => {
-        console.log(user.data)
+      .then((user) => {
+        console.log(user.data);
         setUser({
-            name: user.data.name,
-            avatar: user.data.image,
-          });
+          name: user.data.name,
+          avatar: user.data.image,
+        });
       })
       .catch(function (err) {
         console.log(err);
@@ -47,8 +48,8 @@ export default function Post({ text, author, comments, likes, image , id}) {
   }, []);
 
   const putLike = () => {
-    dispatch(putLikes(id,auth.currentUser.email,token))
-  }
+    dispatch(putLikes(id, auth.currentUser.email, token));
+  };
 
   return (
     <div>
@@ -56,20 +57,20 @@ export default function Post({ text, author, comments, likes, image , id}) {
       <Card
         sx={{
           width: 600,
-          bgcolor: grey[300],
+          bgcolor: 'custom.dark',
           fontFamily: "Nunito",
           color: grey[900],
+          borderRadius:3
         }}
       >
         <CardHeader
-          sx={{ pt: 0, pb: 0, mt: 2 }}
+          sx={{ pt: 0, pb: 0, mt: 2, color:'primary.main'}}
           avatar={
             <Avatar sx={{ bgcolor: yellow[500] }} src={User.avatar}></Avatar>
           }
           title={User.name}
-          subheader="1h"
         />
-        <CardContent sx={{ pb: 1 }}>{text}</CardContent>
+        <CardContent sx={{ pb: 1, color:'primary.main'}}>{text}</CardContent>
 
         {image ? (
           <CardMedia component="img" alt="image" height="400" image={image} />
@@ -78,10 +79,10 @@ export default function Post({ text, author, comments, likes, image , id}) {
         )}
 
         <CardActions disableSpacing>
-          <IconButton onClick={putLike}>
-            <ThumbUpOffAltIcon />
+          <IconButton id='buttonsPost' onClick={putLike}>
+            <ThumbUpOffAltIcon/>
           </IconButton>
-          <p>{likes.length} likes</p>
+          <p id='textButtons'>{likes.length} likes</p>
 
           {/* ----Dislikes para un FUTURO---- */}
 
@@ -92,11 +93,11 @@ export default function Post({ text, author, comments, likes, image , id}) {
           {comments.length !== 0 ? (
             <CommentsModal comments={comments} />
           ) : (
-            <IconButton>
+            <IconButton id='buttonsPost'>
               <ChatBubbleOutlineRoundedIcon />
             </IconButton>
           )}
-          <p>{comments.length} comments</p>
+          <p id='textButtons'>{comments.length} comments</p>
 
           {/* --- Shares para FUTURO --- */}
 

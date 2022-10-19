@@ -63,7 +63,7 @@ export default function LandingPage() {
   }
 
   if (curUser) {
-    return <Home/>
+    return <Home info={curUser.reloadUserInfo}/>
   } else {
     return (
       <div>

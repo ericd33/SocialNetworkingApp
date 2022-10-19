@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,6 +18,8 @@ import { searchUsersByName } from "../../Redux/actions";
 import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import { getAuth, signOut } from "firebase/auth";
+import './Navbar.css';
+import axios from "axios";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -46,8 +48,8 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: grey[700],
-  backgroundColor: grey[200],
+  color: grey[200],
+  backgroundColor: grey[800],
   borderRadius: 25,
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -65,9 +67,30 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
+  const [AvatarImage, setAvatar] = useState();
   const dispatch = useDispatch()
   const auth = getAuth();
   const token = auth.currentUser.accessToken;
+  const userRedic = getAuth().currentUser.reloadUserInfo
+
+  useEffect(() => {
+
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${auth.currentUser.email}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    axios(Config)
+      .then(user => {
+        // console.log(user.data)
+        setAvatar(user.data.image);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
 
   ///LOGOUT
   function logOut() {
@@ -79,7 +102,7 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar sx={{ bgcolor: 'custom', color: grey[800] }} position="fixed">
+    <AppBar sx={{ bgcolor: 'custom.dark'}} position="fixed">
       <Toolbar
         sx={{
           display: "flex",
@@ -89,24 +112,26 @@ const NavBar = () => {
       >
         <Toolbar>
           <div>
-            <Link to={"/home"}>
+            <Link to={"/home"} >
                 <h2>ConCatUs</h2>
             </Link>
           </div>
-          <Search sx={{ marginLeft: 5 }}>
+          <Search sx={{ marginLeft: 5 , borderRadius:5}}>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon color="secondary"/>
             </SearchIconWrapper>
             {
               window.location.href === `http://localhost:3000/events` 
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
+                color='primary'
                 inputProps={{ "aria-label": "search" }}
                 onChange={handleInput}
               /> :
                 <StyledInputBase
                   placeholder="Search persons..."
+                  color='primary'
                   inputProps={{ "aria-label": "search" }}
                   onChange={handleInput}
                 />
@@ -115,15 +140,15 @@ const NavBar = () => {
         </Toolbar>
 
         <Toolbar>
-          <IconButton color="inherit" component={Link} to="/home">
+          <IconButton color="secondary" component={Link}>
             <NotificationsNoneIcon />
           </IconButton>
 
-          <IconButton color="inherit" component={Link}>
+          <IconButton color="secondary" component={Link}>
             <ChatOutlinedIcon />
           </IconButton>
           
-          <IconButton sx={{color: grey[800]}} onClick={logOut}>
+          <IconButton color="secondary" onClick={logOut}>
             <LogoutIcon/>
           </IconButton>
           
@@ -131,7 +156,8 @@ const NavBar = () => {
             sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
             component={Link}
           >
-            <Avatar>H</Avatar>
+            <Avatar src={AvatarImage} component={Link} to={`/profile/${userRedic.email}`}></Avatar>
+
           </Button>
         </Toolbar>
       </Toolbar>
