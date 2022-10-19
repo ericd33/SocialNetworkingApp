@@ -23,9 +23,10 @@ import { getPostId, putLikes } from "../../../../Redux/actions.js";
 const ProfilePost = ({ idPost, userInfoRen }) => {
   const dispatch = useDispatch();
   const [User, setUser] = useState({ name: "", avatar: "" });
-  const auth = getAuth();
-  const token = auth.currentUser.accessToken;
-  
+  let token = window.localStorage.getItem('token')
+  token=token.slice(1,-1)
+  let user = window.localStorage.getItem('user')
+  user = JSON.parse(user)
 	useEffect(()=>{
 		dispatch(getPostId(token,idPost))
     setUser({
@@ -35,7 +36,7 @@ const ProfilePost = ({ idPost, userInfoRen }) => {
 	},[dispatch])
 
   const putLike = () => {
-    dispatch(putLikes(idPost, auth.currentUser.email, token));
+    dispatch(putLikes(idPost, user.email, token));
   };
 
 	const post = useSelector((state)=> state.PostID)
