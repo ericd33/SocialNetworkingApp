@@ -129,11 +129,11 @@ export const putPostLikes = async (req: Request, res: Response) => {
 };
 
 
-export const findPostId = async (req: Request, res: Response) => {
-  const { idPost } = req.params
-  console.log(idPost)
+export const findPostsByEmail = async (req: Request, res: Response) => {
+  const { email } = req.params
+  console.log(email)
   try{
-    const post = await postSchema.findOne({_id:idPost})
+    const post = await postSchema.find({author:email})
     console.log(post)
     res.status(200).send(post)
   }catch(e){
