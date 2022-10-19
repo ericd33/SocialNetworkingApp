@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CommentsModal from "./Modals/CommentsModal";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { putLikes } from "../../Redux/actions";
 import { Link } from 'react-router-dom';
@@ -23,7 +22,6 @@ import { Link } from 'react-router-dom';
 export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
-  const auth = getAuth();
   let token = window.localStorage.getItem('token')
   token=token.slice(1,-1)
   let user = window.localStorage.getItem('user')
@@ -67,7 +65,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
         <CardHeader
           sx={{ pt: 0, pb: 0, mt: 2, color:'primary.main'}}
           avatar={
-            <Avatar sx={{ bgcolor: yellow[500] }} src={User.avatar}></Avatar>
+            <Avatar imgProps={{ referrerPolicy: "no-referrer" }} sx={{ bgcolor: yellow[500] }} src={User.avatar}></Avatar>
           }
           title={<Link to={'/profile/' + author}>{User.name}</Link>}
         />
