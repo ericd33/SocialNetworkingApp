@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { getAuth } from "firebase/auth";
 import { getMyUser } from "../../../../Redux/actions";
 import {useDispatch, useSelector} from 'react-redux';
-import Post from "../../../Posts/Post";
+// import Post from "../../../Posts/Post";
 // import { useEffect } from "react";
 // import { getPosts } from "../../Redux/actions";
 // import {getAuth} from 'firebase/auth'
@@ -23,7 +23,7 @@ const ProfilePostList = ({userInfoRen}) => {
         },[])
         
         const myUser = useSelector((state) => state.myUser);
-        console.log(myUser)
+        // console.log(myUser)
     if (!userInfoRen.posts) {
         return(
             <div>
@@ -38,7 +38,7 @@ const ProfilePostList = ({userInfoRen}) => {
             <div>
                 {
                     myUser.posts.map((p) => {
-                            return <Post text={p.content} author={p.author} comments={p.comments} likes={p.likes} image={p.image} id={p._id} />
+                            return <ProfilePost userInfoRen={userInfoRen} idPost={p} />
                     }).reverse()
                 }
             </div>

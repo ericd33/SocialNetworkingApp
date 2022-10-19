@@ -9,6 +9,7 @@ import {
   SEARCH_BY_NAME,
   UPDATE_POSTS,
   GET_POSTS_BY_NAME,
+  GET_POSTS_BY_ID
 } from "./action-types";
 
 
@@ -20,7 +21,7 @@ const initialState = {
   details:[],
   searchByNameUsers:[],
   postsUser:[],
-  searchByNameUsers: [],
+  PostID: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -77,6 +78,11 @@ const rootReducer = (state = initialState, action) => {
         return{
           ...state,
           postsUser:action.payload
+        }
+        case GET_POSTS_BY_ID:
+        return{
+          ...state,
+          PostID:action.payload
         }
     default:
       return state;

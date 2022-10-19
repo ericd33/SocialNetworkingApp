@@ -20,7 +20,7 @@ const userInfoRen= useSelector((state)=> state.myUser)
 
 return (
   <div>
-    {console.log(userInfoRen)}
+    {/* {console.log(userInfoRen)} */}
     <div className="Home">
 <div className="navbar">
   <span></span>
