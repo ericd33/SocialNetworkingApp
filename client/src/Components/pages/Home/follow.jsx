@@ -17,6 +17,7 @@ export default function Follow({email}){
         e.preventDefault()
         dispatch(follows(info,token))
     }
+    
     return(
         <button onClick={handleFollow}>follow</button>
     )
