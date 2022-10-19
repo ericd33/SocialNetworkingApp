@@ -9,6 +9,7 @@ import {
   Input,
   InputLabel,
 } from "@mui/material";
+import {DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
@@ -42,13 +43,21 @@ export default function CreateEvent() {
     content: "",
     idUser:'',
     email:email,
-    date: "",
-    hour: 0,
+    date : Date.now(),
     location: "",
     image:''
   });
 
+  function handleDateChange(e) {
+    console.log(e._d)
+    setFormState({
+      ...formState,
+      date: e._d
+    })
+  }
+
   const handleChange = (e) => {
+    console.log(e)
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
@@ -103,11 +112,13 @@ export default function CreateEvent() {
           onChange={handleChange}
         />
         <InputLabel htmlFor='date'>Date</InputLabel>
-        <Input 
-        type='text' 
-        onChange={handleChange} 
-        name='date' 
-        value={formState.date}/>
+        <DateTimePicker 
+        minDate={Date.now()}
+        onChange={handleDateChange} 
+        name='date'
+        value={formState.date}
+        renderInput={(params) => <TextField {...params} />}
+        />
 
         <InputLabel htmlFor='location'>Location</InputLabel>
         <Input
@@ -115,14 +126,6 @@ export default function CreateEvent() {
         onChange={handleChange} 
         name='location' 
         value={formState.location}/>
-
-        <InputLabel htmlFor='hour'>Hour</InputLabel>
-        <Input
-        type='number'
-        onChange={handleChange} 
-        name='hour' 
-        value={formState.hour}/>
-        
         
         <div align="right">
 
