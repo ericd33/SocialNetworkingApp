@@ -7,7 +7,7 @@ import {
   SEARCH_BY_NAME,
   GET_MY_USER,
   GET_POSTS_BY_NAME,
-  GET_POSTS_BY_ID
+  GET_POSTS_BY_ID,
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -120,7 +120,7 @@ export function getMyUser(token, email) {
       },
     };
     axios(Config).then((res) => {
-      console.log(res)
+      console.log(res);
       return dispatch({
         type: GET_MY_USER,
         payload: res.data,
@@ -220,29 +220,74 @@ export function putLikes(idPost, email, token) {
   };
 }
 
+export function updateComment(postId, userId, commentData, token) {
+  return async function (dispatch) {
+    const requestConfig = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${postId}/comment`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId,
+        commentData,
+      },
+    };
 
-export function getPostsByName(token,id) {
+    await axios(requestConfig);
+
+    dispatch({
+      type: "UPDATE_COMMENT",
+    });
+
+    dispatch(getPosts(token));
+  };
+}
+
+/* 
+export function updateComment(text, image, idUser, idPost, token) {
+  return async function (dispatch) {
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        image,
+        text: text,
+        idUser,
+        idPost,
+      },
+    };
+    const { data } = await axios(Config);
+
+    dispatch({
+      type: "UPDATE_COMMENT",
+      payload: data,
+    });
+  };
+} */
+
+export function getPostsByName(token, id) {
   return async function (dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/post/${id}`,
       headers: {
-        authorization: `Bearer ${token}`
+        authorization: `Bearer ${token}`,
       },
     };
-    axios(Config).then(res =>{
+    axios(Config).then((res) => {
       return dispatch({
         type: GET_POSTS_BY_NAME,
         payload: res.data,
       });
-    })
-    
-    
+    });
   };
 }
 
-
-export function follows(payload,token){
+export function follows(payload, token) {
   return function () {
     const Config = {
       method: "post",
@@ -252,14 +297,14 @@ export function follows(payload,token){
       },
       data: {
         emailFollowed: payload.emailFollowed,
-        emailFollow: payload.emailFollow
+        emailFollow: payload.emailFollow,
       },
     };
-    axios(Config).then(res=>console.log(res))
+    axios(Config).then((res) => console.log(res));
   };
 }
 
-export function getPostId(token,idPost) {
+export function getPostId(token, idPost) {
   return async function (dispatch) {
     const Config = {
       method: "get",

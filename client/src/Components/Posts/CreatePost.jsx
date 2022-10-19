@@ -104,7 +104,7 @@ export default function CreatePost() {
       <IconButton
         onClick={() => opencloseModal()}
         id="buttonPost"
-        sx={{ bgcolor: 'secondary.main' }}
+        sx={{ bgcolor: "secondary.main" }}
       >
         <PostAddOutlinedIcon sx={{ color: grey[800] }} />
       </IconButton>
