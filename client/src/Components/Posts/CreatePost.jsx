@@ -54,7 +54,8 @@ export default function CreatePost() {
 
     dispatch(postPost(getAuth().currentUser.accessToken, data));
 
-    opencloseModal();
+    setModal(!modal);
+    window.location.reload()
   };
 
   const body = (
