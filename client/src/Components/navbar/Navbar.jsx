@@ -71,6 +71,7 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const auth = getAuth();
   const token = auth.currentUser.accessToken;
+  const userRedic = getAuth().currentUser.reloadUserInfo
 
   useEffect(() => {
 
@@ -155,7 +156,8 @@ const NavBar = () => {
             sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
             component={Link}
           >
-            <Avatar src={AvatarImage}>H</Avatar>
+            <Avatar src={AvatarImage} component={Link} to={`/profile/${userRedic.email}`}></Avatar>
+
           </Button>
         </Toolbar>
       </Toolbar>
