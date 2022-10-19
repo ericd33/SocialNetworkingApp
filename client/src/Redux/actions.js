@@ -6,7 +6,8 @@ import {
   GET_POSTS,
   SEARCH_BY_NAME,
   GET_MY_USER,
-  GET_POSTS_BY_NAME
+  GET_POSTS_BY_NAME,
+  GET_POSTS_BY_ID
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -258,4 +259,20 @@ export function follows(payload,token){
   };
 }
 
-
+export function getPostId(token,idPost) {
+  return async function (dispatch) {
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${idPost}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    axios(Config).then((res) => {
+      return dispatch({
+        type: GET_POSTS_BY_ID,
+        payload: res.data,
+      });
+    });
+  };
+}
