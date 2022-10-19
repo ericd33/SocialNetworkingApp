@@ -49,10 +49,12 @@ export default function LandingPage() {
         } else {
             console.log('Usuario existente logueado')
         }
-
+        window.localStorage.setItem("user", JSON.stringify(user))
+        
         setCurUser(user)
         // ...
         const token = getAuth().currentUser.accessToken
+        window.localStorage.setItem("token", JSON.stringify(token))
 
         dispatch(postUser(user,token))
       })
