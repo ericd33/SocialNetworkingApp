@@ -40,7 +40,6 @@ export default function EventList() {
                             <EventCard
                                 key={e.author+e.date} 
                                 date={e.date}
-                                hour={e.hour}
                                 location={e.location}
                                 title={e.title}
                                 text={e.content}

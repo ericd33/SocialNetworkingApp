@@ -11,7 +11,8 @@ export interface Iuser extends Document{
     liked?:string[],
     events?:string[],
     image?: string,
-    follows?:string[]
+    follows?:string[],
+    asistEvent?:string[]
 }
 const userSchema = new Schema({
     name: {
@@ -40,6 +41,10 @@ const userSchema = new Schema({
     posts:[{
         type:Types.ObjectId,
         ref:'post'
+    }],
+    asistEvent:[{
+        type:Types.ObjectId,
+        ref:'event'
     }],
     liked:[],
     events:[]

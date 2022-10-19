@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CommentsModal from "./Modals/CommentsModal";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { putLikes } from "../../Redux/actions";
 import { updateComment } from "../../Redux/actions";
@@ -25,9 +24,11 @@ import "./Post.css";
 export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
-  const auth = getAuth();
-  const token = auth.currentUser.accessToken;
+  let token = window.localStorage.getItem("token");
+  token = token.slice(1, -1);
+  let user = window.localStorage.getItem("user");
 
+  user = JSON.parse(user);
   useEffect(() => {
     const Config = {
       method: "get",
@@ -50,13 +51,13 @@ export default function Post({ text, author, comments, likes, image, id }) {
   }, []);
 
   const putLike = () => {
-    dispatch(putLikes(id, auth.currentUser.email, token));
+    dispatch(putLikes(id, user.email, token));
   };
 
   const [formState, setFormState] = useState({
     image: "",
     text: "",
-    idUser: auth.currentUser.email,
+    idUser: author,
     idPost: "",
   });
 
@@ -78,7 +79,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
   const handleSubmitCommentForm = (e) => {
     e.preventDefault();
 
-    dispatch(updateComment(id, auth.currentUser.email, comment, token));
+    dispatch(updateComment(id, author, comment, token));
 
     setComment("");
   };
@@ -106,14 +107,18 @@ export default function Post({ text, author, comments, likes, image, id }) {
         <CardHeader
           sx={{ pt: 0, pb: 0, mt: 2, color: "primary.main" }}
           avatar={
-            <Avatar sx={{ bgcolor: yellow[500] }} src={User.avatar}></Avatar>
+            <Avatar
+              imgProps={{ referrerPolicy: "no-referrer" }}
+              sx={{ bgcolor: "primary.light" }}
+              src={User.avatar}
+            ></Avatar>
           }
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
         <CardContent sx={{ pb: 1, color: "primary.main" }}>{text}</CardContent>
 
         {image ? (
-          <CardMedia component="img" alt="image" height="400" image={image} />
+          <CardMedia component="img" alt="image" image={image} />
         ) : (
           <div></div>
         )}
@@ -129,11 +134,10 @@ export default function Post({ text, author, comments, likes, image, id }) {
             }}
           >
             <p id="textButtons">{likes?.length} likes</p>
-						<p id="textButtons">{comments.length} comments</p>
+            <p id="textButtons">{comments.length} comments</p>
           </div>
 
-					<CommentsModal comments={comments} />
-
+          <CommentsModal comments={comments} />
 
           {/* ----Dislikes para un FUTURO---- */}
 

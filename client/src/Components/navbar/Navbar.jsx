@@ -11,7 +11,6 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { Card, CardContent, CardHeader, IconButton, Modal } from "@mui/material";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { searchUsersByName } from "../../Redux/actions";
@@ -94,7 +93,9 @@ const NavBar = () => {
 
   ///LOGOUT
   function logOut() {
-    auth.signOut();
+    window.location.reload(false)
+    localStorage.clear();
+    auth.signOut(); 
   }
 
   const handleInput = (e)=>{

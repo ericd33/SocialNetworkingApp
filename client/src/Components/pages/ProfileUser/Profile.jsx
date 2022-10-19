@@ -12,7 +12,8 @@ import axios from 'axios';
 
 const Profile = () => {
   const dispatch = useDispatch()
-  const token = getAuth().currentUser.accessToken
+  let token = window.localStorage.getItem('token')
+  token=token.slice(1,-1)
   const [profileUser, setProfileUser] = useState({})
   const [posts, setPosts] = useState([])
   let query = useParams();

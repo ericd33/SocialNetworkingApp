@@ -20,21 +20,21 @@ export default function LandingPage() {
 
   //CUANDO INICIA LA PAGINA SE GUARDA EL USUARIO QUE ESTA EN LA SESION EN EL ESTADO
   useEffect(()=> {
+    auth.onAuthStateChanged(function(user) {
 
+      //GUARDO EL USUARIO EN EL ESTADO
+      if (user) {
+        setCurUser(user)
+      }
+      }
+    );
     setCurUser(getAuth().currentUser)
   },[])
 
 
 
   //AUTHSTATECHANGED SE LLAMA CUANDO SE HACE EL LOGIN
-  auth.onAuthStateChanged(function(user) {
-
-    //GUARDO EL USUARIO EN EL ESTADO
-    if (user) {
-      setCurUser(user)
-    }
-    }
-  );
+  
 
 
     //LOGIN
