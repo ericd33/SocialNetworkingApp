@@ -217,3 +217,22 @@ export function putLikes(idPost, email, token) {
     });
   };
 }
+
+
+export function follows(payload,token){
+  return function () {
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/follow`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        emailFollowed: payload.emailFollowed,
+        emailFollow: payload.emailFollow
+      },
+    };
+    axios(Config).then(res=>console.log(res))
+  };
+}
+

@@ -6,6 +6,7 @@ import CreatePost from "../../Posts/CreatePost";
 import { useSelector } from "react-redux";
 import { Avatar, Card, CardHeader } from "@mui/material";
 import { grey, yellow } from "@mui/material/colors";
+import Follow from "./follow";
 
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
@@ -43,12 +44,14 @@ export default function Home() {
                       }
                       title={u.name}
                     />
+                    <Follow email={u.email} />
                   </Card>
                 );
               })
             ) : (
               <div></div>
             )}
+
           </div>
           <EventsMenu />
         </div>

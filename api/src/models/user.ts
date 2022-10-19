@@ -6,11 +6,12 @@ export interface Iuser extends Document{
     email: string,
     role: string,
     enabled: boolean,
-    friends?: string[],
+    followeds?: string[],
     posts?:string[],
     liked?:string[],
     events?:string[],
-    image?: string
+    image?: string,
+    follows?:string[]
 }
 const userSchema = new Schema({
     name: {
@@ -34,7 +35,8 @@ const userSchema = new Schema({
         required:true,
         trim: true
     },
-    friends:[],
+    followeds:[],
+    follows:[],
     posts:[],
     liked:[],
     events:[]

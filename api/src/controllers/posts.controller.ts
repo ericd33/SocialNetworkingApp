@@ -92,22 +92,13 @@ export const putPostLikes = async (req: Request, res: Response) => {
 
     const user = await userSchema.findOne({ email: email });
     const currentPost = await postSchema.findOne({ _id: idPost });
-    // console.log(user);
-    // console.log(currentPost.likes);
 
     if (user) {
       if (currentPost.likes.some((u: any) => u.email === user.email)) {
         currentPost.likes = currentPost.likes.filter((u: any) => u.email !== user.email);
-
-        // if(user.liked.length !== 0) {
-        //   user.liked = user.liked.filter((p:any) => p._id !== currentPost._id);
-        // }
-        // console.log('sii');
-        // console.log(currentPost.likes);
       }
       else {
         currentPost.likes.push(user);
-        // user.liked.push(currentPost);
       }
 
       const postUpdated = await postSchema.findByIdAndUpdate(
