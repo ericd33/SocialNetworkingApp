@@ -40,14 +40,21 @@ export const addUser = async (req: Request, res: Response) => {
 
 
 export const addFriend = async (req: Request, res: Response) => {
-  const { idFollowed, idFollow } = req.body
-  const followed = await userSchema.findOne({_id:idFollowed})
-  const follow = await userSchema.findOne({_id:idFollow})
+  const { emailFollowed, emailFollow } = req.body
+  const followed = await userSchema.findOne({email:emailFollowed})
+  const follow = await userSchema.findOne({email:emailFollow})
+  console.log(follow.email)
+  console.log(followed.followeds.some((e:any)=>e.email!==follow.email))
   try{
-    if(followed){
-      followed.friends = follow._id
+    if(followed && !followed.followeds.some((e:any)=>e.email!==follow.email)){
+      followed.followeds.push(follow.email)
+      follow.follows.push(followed.email)
+    }else{
+      followed.followeds = followed.followeds.filter((e:any)=>e!==follow.email)
+      follow.follows = follow.follows.filter((e:any)=>e!==followed.email)
     }
     followed.save()
+    follow.save()
     res.status(200).send('successfolly')
   }catch(e){
     res.status(400).send(e)
