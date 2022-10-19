@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 const userSchema = require("../models/user");
+const mailSettings = require('../nodemailer/nodemailer');
 
 export const addUser = async (req: Request, res: Response) => {
   const { name, email, image } = req.body;
@@ -33,6 +34,20 @@ export const addUser = async (req: Request, res: Response) => {
     await user.save();
 
     res.status(200).send("signUp");
+
+//NODEMAILER
+
+const transporter = mailSettings.transporter;
+const mailDetails = mailSettings.mailDetails(email);
+
+transporter.sendMail(mailDetails, (err: any ) => {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log('Email enviado');
+  }
+});
+
   } catch (e) {
     res.status(400).send(e);
   }
@@ -127,7 +142,7 @@ export const findUserByEmail = async (req: Request, res: Response) => {
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
-  const { id, action } = req.query;
+  const { id, action, email } = req.query;
 
   try {
     if (id) {
@@ -137,6 +152,19 @@ export const deleteUser = async (req: Request, res: Response) => {
           if (user.enabled) {
             await userSchema.updateOne({ _id: id },{ enabled: false }
             );
+
+            //NODEMAILER
+            const transporter = mailSettings.transporter;
+            const mailDetails = mailSettings.mailDelete(email);
+            transporter.sendMail(mailDetails, (error: any,) => {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log("Email enviado");
+              }
+            });
+
+
             res.status(200).send("User deleted successfully.");
           } else {
             res.status(400).send("User is already deleted.");
