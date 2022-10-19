@@ -75,6 +75,7 @@ export function postEvent(payload, token) {
       data: {
         email: payload.email,
         name: payload.name,
+        username: payload.username,
         image: payload.image,
         location: payload.location,
         content: payload.content,

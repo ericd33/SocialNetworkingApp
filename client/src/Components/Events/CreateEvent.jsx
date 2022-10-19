@@ -24,7 +24,7 @@ import { getMyUser } from "../../Redux/actions";
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
   let userEmail = JSON.parse(localStorage.getItem('user')).email
-
+  let userName = JSON.parse(localStorage.getItem('user')).displayName
   const dispatch = useDispatch();
   // const navigate = useNavigate();
 
@@ -40,6 +40,7 @@ export default function CreateEvent() {
   const [formState, setFormState] = useState({
     name:"",
     content: "",
+    username: userName,
     email:userEmail,
     date : Date.now(),
     location: "",
