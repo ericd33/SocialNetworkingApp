@@ -120,6 +120,7 @@ export function getMyUser(token, email) {
       },
     };
     axios(Config).then((res) => {
+      console.log(res)
       return dispatch({
         type: GET_MY_USER,
         payload: res.data,

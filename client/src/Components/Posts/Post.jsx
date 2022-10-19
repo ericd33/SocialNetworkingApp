@@ -37,7 +37,6 @@ export default function Post({ text, author, comments, likes, image, id }) {
 
     axios(Config)
       .then((user) => {
-        console.log(user.data);
         setUser({
           name: user.data.name,
           avatar: user.data.image,
@@ -90,14 +89,14 @@ export default function Post({ text, author, comments, likes, image, id }) {
                             <ThumbDownOffAltIcon/>
                         </IconButton>
                         <p>6 dislikes</p> */}
-          {comments.length !== 0 ? (
+          {comments ? (
             <CommentsModal comments={comments} />
           ) : (
             <IconButton id='buttonsPost'>
               <ChatBubbleOutlineRoundedIcon />
             </IconButton>
           )}
-          <p id='textButtons'>{comments.length} comments</p>
+          <p id='textButtons'>{comments} comments</p>
 
           {/* --- Shares para FUTURO --- */}
 

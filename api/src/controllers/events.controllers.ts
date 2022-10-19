@@ -20,10 +20,7 @@ export const addEvent = async (req: Request, res: Response) => {
       event.enabled = true;
       const newEvent = await event.save();
       user.events = user.events.concat(newEvent)
-      console.log('event created?');
       await user.save()
-
-      console.log('event created');
       res.status(200).send("new event");
     }
   } catch (e) {

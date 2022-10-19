@@ -5,22 +5,44 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { useDispatch, useSelector } from "react-redux";
 import { getMyUser } from "../../../Redux/actions"
 import ProfilePostList from './ProfilePost/ProfilePostList';
+import { useParams } from 'react-router-dom';
+import {useState} from 'react';
+import axios from 'axios';
+
 
 const Profile = () => {
   const dispatch = useDispatch()
-
-  const userInfo = getAuth().currentUser.reloadUserInfo
   const token = getAuth().currentUser.accessToken
-  
+  const [profileUser, setProfileUser] = useState({})
+  const [posts, setPosts] = useState([])
+  let query = useParams();
   useEffect(()=>{
-    dispatch(getMyUser(token,userInfo.email))
+    //token,query.email
+    const Config = {
+      method: 'get',
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${query.email}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    }
+    axios(Config).then(res => setProfileUser(res.data))
+
+    const Config2 = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/email/${query.email}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log(Config2)
+    axios(Config2).then((res) => {
+        setPosts(res.data)});
+    
 },[dispatch])
 
-const userInfoRen= useSelector((state)=> state.myUser)
 
 return (
   <div>
-    {/* {console.log(userInfoRen)} */}
     <div className="Home">
 <div className="navbar">
   <span></span>
@@ -28,11 +50,11 @@ return (
 <NavBar />
 <div className="media-part">
   <div className="leftHome">
-    <ProfileInfo userInfoRen={userInfoRen}/>
+    <ProfileInfo userInfoRen={profileUser}/>
     {/* <EventsMenu /> */}
   </div>
   <div className="centerHome">
-    <ProfilePostList userInfoRen={userInfoRen} />
+    <ProfilePostList posts={posts}/>
   </div>
   <div className="rightHome"></div>
 </div>
