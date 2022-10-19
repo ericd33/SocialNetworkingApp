@@ -80,3 +80,8 @@
 .cardFinded {
     display:flex;
 }
+
+.titleName a{
+    text-decoration: none;
+    color:white;
+}

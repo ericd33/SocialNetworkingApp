@@ -49,7 +49,7 @@ export default function CommentsModal(comments) {
 
     return (
         <div className='container'>
-            <IconButton onClick={() => opencloseModal()}>
+            <IconButton id='buttonsPost' onClick={() => opencloseModal()}>
                 <ChatBubbleOutlineRoundedIcon/>  
             </IconButton>
             <Modal
