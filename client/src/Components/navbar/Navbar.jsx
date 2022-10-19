@@ -68,6 +68,7 @@ const NavBar = () => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("")
   const auth = getAuth();
+  const userRedic = getAuth().currentUser.reloadUserInfo
 
   ///LOGOUT
   function logOut() {
@@ -134,7 +135,7 @@ const NavBar = () => {
             sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
             component={Link}
           >
-            <Avatar>H</Avatar>
+            <Avatar component={Link} to={`/profile/${userRedic.email}`}>H</Avatar>
           </Button>
         </Toolbar>
       </Toolbar>
