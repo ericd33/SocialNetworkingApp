@@ -23,26 +23,27 @@ import { getMyUser } from "../../Redux/actions";
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
-  let email = getAuth().currentUser.email
-  console.log(email)
+  let userEmail = window.localStorage.getItem('user')
+  userEmail = userEmail.email
+  console.log(userEmail)
 
   const dispatch = useDispatch();
   // const navigate = useNavigate();
 
   useEffect(()=>{
-    dispatch(getMyUser(email))
+    dispatch(getMyUser(userEmail))
   },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
-  email = getAuth().currentUser.email
-  let token = getAuth().currentUser.accessToken
 
+  let token = window.localStorage.getItem('token')
+  token=token.slice(1,-1)
   const [formState, setFormState] = useState({
     name:"",
     content: "",
     idUser:'',
-    email:email,
+    email:userEmail,
     date : Date.now(),
     location: "",
     image:''
@@ -62,7 +63,7 @@ export default function CreateEvent() {
       ...formState,
       [e.target.name]: e.target.value,
       idUser:'',
-      email:email,
+      email:userEmail,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
   };

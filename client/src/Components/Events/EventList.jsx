@@ -11,8 +11,11 @@ export default function EventList() {
     events = useSelector(e=>e.events);
 
     const dispatch = useDispatch()
+    let token = window.localStorage.getItem('token')
+    // console.log
+    token=token.slice(1,-1)
+    console.log(token)
     useEffect(()=>{
-        const token = getAuth().currentUser.accessToken
         dispatch(getEvents(token))
     },[dispatch])
 
