@@ -14,7 +14,7 @@ export default function PostList() {
     const token = getAuth().currentUser.accessToken;
     dispatch(getPosts(token));
   }, [dispatch]);
-
+ console.log(all_posts)
   if (all_posts.length === 0) {
     return (
       <div className="List">
