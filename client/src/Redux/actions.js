@@ -277,3 +277,20 @@ export function getPostId(token,idPost) {
     });
   };
 }
+
+export function assitEvent(token,payload){
+  return function () {
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/event`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        eventId: payload.eventId,
+        userEmail: payload.userEmail
+      },
+    };
+    axios(Config).then(res=>console.log(res))
+  };
+}
