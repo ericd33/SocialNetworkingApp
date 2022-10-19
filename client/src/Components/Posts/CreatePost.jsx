@@ -47,8 +47,6 @@ export default function CreatePost() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
     const data = {
       ...formState,
       email: getAuth().currentUser.email,
