@@ -77,7 +77,7 @@ export const findUserByName = async (req: Request, res: Response) => {
       res.status(201).send("el usuario no existe");
       return;
     } else {
-      const users = await userSchema.find({});
+      const users = await userSchema.find({}).populate('post');
       users.length
         ? res.status(200).send(users)
         : res.status(400).send("sin eventos");
@@ -93,7 +93,7 @@ export const findUserById = async (req: Request, res: Response) => {
   try {
     if (id) {
       const user = await userSchema.findOne({ "_id": id });
-
+      
       if (user) {
         res.status(200).send(user)
         return
@@ -109,6 +109,7 @@ export const findUserById = async (req: Request, res: Response) => {
 export const findUserByEmail = async (req: Request, res: Response) => {
   const { email } = req.params;
   // console.log(req.params)
+  console.log(email)
   try {
     if (email) {
       const user = await userSchema.findOne({ "email": email });

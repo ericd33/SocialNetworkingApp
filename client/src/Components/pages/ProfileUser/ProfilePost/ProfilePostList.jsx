@@ -1,18 +1,29 @@
 import ProfilePost from "./ProfilePost";
-import React from 'react'
-// import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect } from 'react'
+import { getAuth } from "firebase/auth";
+import { getMyUser } from "../../../../Redux/actions";
+import {useDispatch, useSelector} from 'react-redux';
+import Post from "../../../Posts/Post";
 // import { useEffect } from "react";
 // import { getPosts } from "../../Redux/actions";
 // import {getAuth} from 'firebase/auth'
 
 const ProfilePostList = ({userInfoRen}) => {
-  // const all_posts = useSelector((state) => state.filtered_posts);
-  //   const dispatch = useDispatch();
-  //   useEffect(() => {
-  //       const token = getAuth().currentUser.accessToken
-  //       dispatch(getPosts(token));
-  //   },[dispatch])
-
+    const dispatch = useDispatch();
+    //   useEffect(() => {
+        //       const token = getAuth().currentUser.accessToken
+        //       dispatch(getPosts(token));
+        //   },[dispatch])
+        
+        const email = getAuth().currentUser.email
+        const token = getAuth().currentUser.accessToken
+        
+        useEffect(()=>{
+            dispatch(getMyUser(token,email))
+        },[])
+        
+        const myUser = useSelector((state) => state.myUser);
+        console.log(myUser)
     if (!userInfoRen.posts) {
         return(
             <div>
@@ -26,8 +37,8 @@ const ProfilePostList = ({userInfoRen}) => {
         return (
             <div>
                 {
-                    userInfoRen.posts.map((p) => {
-                            return <ProfilePost idPost={p._id} />
+                    myUser.posts.map((p) => {
+                            return <Post text={p.content} author={p.author} comments={p.comments} likes={p.likes} image={p.image} id={p._id} />
                     }).reverse()
                 }
             </div>

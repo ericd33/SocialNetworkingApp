@@ -17,7 +17,7 @@ export const addPost = async (req: Request, res: Response) => {
       post.enabled = true;
       const savePost = await post.save();
       console.log(user[0].posts);
-      user[0].posts = user[0].posts.concat(savePost);
+      user[0].posts = user[0].posts.concat(savePost._id);
       // console.log(user[0]);
       await user[0].save();
       res.status(200).send("new post");

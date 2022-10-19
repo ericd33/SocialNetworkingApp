@@ -1,4 +1,4 @@
-import { Document, model, Schema } from "mongoose";
+import { Document, model, Schema, Types } from "mongoose";
 
 
 export interface Iuser extends Document{
@@ -37,7 +37,10 @@ const userSchema = new Schema({
     },
     followeds:[],
     follows:[],
-    posts:[],
+    posts:[{
+        type:Types.ObjectId,
+        ref:'post'
+    }],
     liked:[],
     events:[]
 });

@@ -81,7 +81,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
           <IconButton id='buttonsPost' onClick={putLike}>
             <ThumbUpOffAltIcon/>
           </IconButton>
-          <p id='textButtons'>{likes.length} likes</p>
+          <p id='textButtons'>{likes?.length} likes</p>
 
           {/* ----Dislikes para un FUTURO---- */}
 
