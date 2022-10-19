@@ -94,7 +94,9 @@ const NavBar = () => {
 
   ///LOGOUT
   function logOut() {
-    auth.signOut();
+    window.location.reload(false)
+    localStorage.clear();
+    auth.signOut(); 
   }
 
   const handleInput = (e)=>{
