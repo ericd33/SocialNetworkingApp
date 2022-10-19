@@ -69,15 +69,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavBar = () => {
   const [AvatarImage, setAvatar] = useState();
   const dispatch = useDispatch()
-  const auth = getAuth();
-  const token = auth.currentUser.accessToken;
-  const userRedic = getAuth().currentUser.reloadUserInfo
-
+  const auth = getAuth()
+  let token = window.localStorage.getItem('token')
+  token = token.slice(1,-1)
+  let userRedic = window.localStorage.getItem('user')
+  userRedic = JSON.parse(userRedic)
+  console.log(userRedic)
   useEffect(() => {
 
     const Config = {
       method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${auth.currentUser.email}`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${userRedic.email}`,
       headers: {
         authorization: `Bearer ${token}`,
       },
