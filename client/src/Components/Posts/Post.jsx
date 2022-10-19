@@ -18,6 +18,7 @@ import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineR
 import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { putLikes } from "../../Redux/actions";
+import { Link } from 'react-router-dom';
 
 export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
@@ -67,7 +68,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
           avatar={
             <Avatar sx={{ bgcolor: yellow[500] }} src={User.avatar}></Avatar>
           }
-          title={User.name}
+          title={<Link to={'/profile/' + author}>{User.name}</Link>}
         />
         <CardContent sx={{ pb: 1, color:'primary.main'}}>{text}</CardContent>
 
