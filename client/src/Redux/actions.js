@@ -48,7 +48,7 @@ export function getPosts(payload) {
 }
 
 export function postPost(payload, data) {
-  return async function () {
+  return async function (dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
@@ -57,9 +57,8 @@ export function postPost(payload, data) {
       },
       data: data,
     };
-    let json = await axios(Config);
-    console.log(json);
-    return json;
+    await axios(Config);
+    dispatch(getPosts(payload));
   };
 }
 
