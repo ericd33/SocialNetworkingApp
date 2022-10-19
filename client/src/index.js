@@ -21,8 +21,9 @@ const theme = createTheme({
       main: '#ffd000',
     },
     custom: {
-      light:'#2a2a2a',
-      main: '#101010'
+      light:'#3b3b3b',
+      main:'#2a2a2a',
+      dark: '#101010'
     }
   }
 });

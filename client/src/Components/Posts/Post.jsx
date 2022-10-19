@@ -56,20 +56,20 @@ export default function Post({ text, author, comments, likes, image , id}) {
       <Card
         sx={{
           width: 600,
-          bgcolor: grey[300],
+          bgcolor: 'custom.dark',
           fontFamily: "Nunito",
           color: grey[900],
+          borderRadius:3
         }}
       >
         <CardHeader
-          sx={{ pt: 0, pb: 0, mt: 2 }}
+          sx={{ pt: 0, pb: 0, mt: 2, color:'primary.main'}}
           avatar={
             <Avatar sx={{ bgcolor: yellow[500] }} src={User.avatar}></Avatar>
           }
           title={User.name}
-          subheader="1h"
         />
-        <CardContent sx={{ pb: 1 }}>{text}</CardContent>
+        <CardContent sx={{ pb: 1, color:'primary.main'}}>{text}</CardContent>
 
         {image ? (
           <CardMedia component="img" alt="image" height="400" image={image} />
@@ -78,10 +78,10 @@ export default function Post({ text, author, comments, likes, image , id}) {
         )}
 
         <CardActions disableSpacing>
-          <IconButton onClick={putLike}>
-            <ThumbUpOffAltIcon />
+          <IconButton id='buttonsPost' onClick={putLike}>
+            <ThumbUpOffAltIcon/>
           </IconButton>
-          <p>{likes.length} likes</p>
+          <p id='textButtons'>{likes.length} likes</p>
 
           {/* ----Dislikes para un FUTURO---- */}
 
@@ -92,11 +92,11 @@ export default function Post({ text, author, comments, likes, image , id}) {
           {comments.length !== 0 ? (
             <CommentsModal comments={comments} />
           ) : (
-            <IconButton>
+            <IconButton id='buttonsPost'>
               <ChatBubbleOutlineRoundedIcon />
             </IconButton>
           )}
-          <p>{comments.length} comments</p>
+          <p id='textButtons'>{comments.length} comments</p>
 
           {/* --- Shares para FUTURO --- */}
 

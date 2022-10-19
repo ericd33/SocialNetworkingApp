@@ -102,7 +102,7 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar sx={{ bgcolor: 'custom.main'}} position="fixed">
+    <AppBar sx={{ bgcolor: 'custom.dark'}} position="fixed">
       <Toolbar
         sx={{
           display: "flex",
