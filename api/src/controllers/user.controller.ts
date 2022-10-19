@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 const userSchema = require("../models/user");
+
+const eventSchema = require("../models/event");
+
 const mailSettings = require('../nodemailer/nodemailer');
+
 
 export const addUser = async (req: Request, res: Response) => {
   const { name, email, image } = req.body;
@@ -75,7 +79,27 @@ export const addFriend = async (req: Request, res: Response) => {
     res.status(400).send(e)
   }
 }
-
+export const asistEvent = async (req: Request, res: Response) => {
+  const { eventId, userEmail } = req.body
+  const event = await eventSchema.findOne({_id:eventId})
+  const user = await userSchema.findOne({email:userEmail})
+  // console.log(user)
+  // console.log(event)
+  try{
+    if(event && !event.participants.some((e:any)=>e.email!==user.email)){
+      event.participants.push(user.email)
+      user.asistEvent.push(event._id)
+    }else{
+      event.participants = event.participants.filter((e:any)=>e!==user.email)
+      user.asistEvent = user.asistEvent.filter((e:any)=>e._id!==event._id)
+    }
+    event.save()
+    user.save()
+    res.status(200).send('successfolly')
+  }catch(e){
+    res.status(400).send(e)
+  }
+}
 
 
 export const findUserByName = async (req: Request, res: Response) => {
