@@ -75,7 +75,6 @@ export function postEvent(payload, token) {
         email: payload.email,
         name: payload.name,
         image: payload.image,
-        hour: payload.hour,
         location: payload.location,
         content: payload.content,
         date: payload.date,

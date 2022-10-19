@@ -32,8 +32,8 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <App />
+        <ThemeProvider theme={theme}>        
+            <App />
         </ThemeProvider>
       </BrowserRouter>
     </Provider>
