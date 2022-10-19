@@ -49,18 +49,18 @@ export function getPosts(payload) {
   };
 }
 
-export function postPost(payload, data) {
+export function postPost(token, data) {
   return async function (dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
       headers: {
-        authorization: `Bearer ${payload}`,
+        authorization: `Bearer ${token}`,
       },
       data: data,
     };
     await axios(Config);
-    dispatch(getPosts(payload));
+    dispatch(getPosts(token));
   };
 }
 

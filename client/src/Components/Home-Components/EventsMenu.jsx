@@ -13,7 +13,7 @@ export default function EventsMenu() {
             </div>
             <div className="buttons">
                 <Link to={'/events'}><Button id='assistButton' sx={{bgcolor: 'secondary.main', color:grey[900], fontSize:11}} variant="contained">
-                    Assist an event
+                    Show events
                 </Button></Link>
             </div>
         </Card>
