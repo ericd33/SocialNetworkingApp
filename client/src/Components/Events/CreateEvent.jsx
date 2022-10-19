@@ -23,9 +23,7 @@ import { getMyUser } from "../../Redux/actions";
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
-  let userEmail = window.localStorage.getItem('user')
-  userEmail = userEmail.email
-  console.log(userEmail)
+  let userEmail = JSON.parse(localStorage.getItem('user')).email
 
   const dispatch = useDispatch();
   // const navigate = useNavigate();
@@ -37,12 +35,11 @@ export default function CreateEvent() {
     setModal(!modal);
   };
 
-  let token = window.localStorage.getItem('token')
+  let token = localStorage.getItem('token')
   token=token.slice(1,-1)
   const [formState, setFormState] = useState({
     name:"",
     content: "",
-    idUser:'',
     email:userEmail,
     date : Date.now(),
     location: "",
@@ -62,7 +59,6 @@ export default function CreateEvent() {
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
-      idUser:'',
       email:userEmail,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
@@ -70,8 +66,9 @@ export default function CreateEvent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formState);
+    setModal(!modal)
     dispatch(postEvent(formState,token));
+    window.location.reload()
     // navigate("/");
   };
 
