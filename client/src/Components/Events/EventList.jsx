@@ -12,9 +12,7 @@ export default function EventList() {
 
     const dispatch = useDispatch()
     let token = window.localStorage.getItem('token')
-    // console.log
     token=token.slice(1,-1)
-    console.log(token)
     useEffect(()=>{
         dispatch(getEvents(token))
     },[dispatch])

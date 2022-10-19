@@ -8,12 +8,13 @@ import { useParams } from 'react-router-dom'
 import React from 'react'
 import NavBar from "../navbar/Navbar";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { getAuth } from "firebase/auth";
+
 
 
 export default function EventDetail({participants}) {
     const detail = useSelector(d=>d.details)
-    const token = getAuth().currentUser.accessToken
+    let token = window.localStorage.getItem('token')
+    token=token.slice(1,-1)
     const dispatch = useDispatch()
     const { id }= useParams()
     useEffect(()=>{
@@ -80,7 +81,6 @@ export default function EventDetail({participants}) {
                         <div className="date-hour-part">
                             <span>Participants: {participants}</span>
                             <span>Date: {detail?.date}</span>
-                            <span>Hour: {detail?.hour} hs.</span>
                         </div>
                     </div>
                 </CardContent>
