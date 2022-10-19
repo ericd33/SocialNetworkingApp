@@ -24,8 +24,10 @@ export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const auth = getAuth();
-  const token = auth.currentUser.accessToken;
-
+  let token = window.localStorage.getItem('token')
+  token=token.slice(1,-1)
+  let user = window.localStorage.getItem('user')
+  user = JSON.parse(user)
   useEffect(() => {
     const Config = {
       method: "get",
@@ -48,7 +50,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
   }, []);
 
   const putLike = () => {
-    dispatch(putLikes(id, auth.currentUser.email, token));
+    dispatch(putLikes(id, user.email, token));
   };
 
   return (
