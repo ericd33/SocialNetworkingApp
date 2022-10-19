@@ -5,7 +5,7 @@ const postSchema = require("../models/post");
 
 export const addPost = async (req: Request, res: Response) => {
   const { email, content, image } = req.body;
-  console.log(req.body)
+  // console.log(req.body)
   let post = await new postSchema();
   const user = await userSchema.find({ email: email });
 
@@ -18,7 +18,7 @@ export const addPost = async (req: Request, res: Response) => {
       const savePost = await post.save();
       console.log(user[0].posts);
       user[0].posts = user[0].posts.concat(savePost);
-      console.log(user[0]);
+      // console.log(user[0]);
       await user[0].save();
       res.status(200).send("new post");
     }
@@ -88,13 +88,27 @@ export const putPostById = async (req: Request, res: Response) => {
 export const putPostLikes = async (req: Request, res: Response) => {
   try {
     const { idPost } = req.params;
-    const { idUser } = req.body;
+    const { email } = req.body;
 
-    const user = await userSchema.findOne({ _id: idUser });
+    const user = await userSchema.findOne({ email: email });
     const currentPost = await postSchema.findOne({ _id: idPost });
+    // console.log(user);
+    // console.log(currentPost.likes);
 
     if (user) {
-      currentPost.likes.push(user);
+      if (currentPost.likes.some((u: any) => u.email === user.email)) {
+        currentPost.likes = currentPost.likes.filter((u: any) => u.email !== user.email);
+
+        // if(user.liked.length !== 0) {
+        //   user.liked = user.liked.filter((p:any) => p._id !== currentPost._id);
+        // }
+        // console.log('sii');
+        // console.log(currentPost.likes);
+      }
+      else {
+        currentPost.likes.push(user);
+        // user.liked.push(currentPost);
+      }
 
       const postUpdated = await postSchema.findByIdAndUpdate(
         {

@@ -16,12 +16,15 @@ import axios from "axios";
 import CommentsModal from "./Modals/CommentsModal";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import { getAuth } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { putLikes } from "../../Redux/actions";
 
-export default function Post({ text, author, comments, likes, image }) {
+export default function Post({ text, author, comments, likes, image , id}) {
   const [User, setUser] = useState({ name: "", avatar: "" });
-
+  const dispatch = useDispatch();
+  const auth = getAuth();
+  const token = auth.currentUser.accessToken;
   useEffect(() => {
-    const token = getAuth().currentUser.accessToken;
 
     const Config = {
       method: "get",
@@ -32,7 +35,7 @@ export default function Post({ text, author, comments, likes, image }) {
     };
     axios(Config)
       .then(user => {
-        console.log(user.data.image)
+        console.log(user.data)
         setUser({
             name: user.data.name,
             avatar: user.data.image,
@@ -42,6 +45,10 @@ export default function Post({ text, author, comments, likes, image }) {
         console.log(err);
       });
   }, []);
+
+  const putLike = () => {
+    dispatch(putLikes(id,auth.currentUser.email,token))
+  }
 
   return (
     <div>
@@ -71,7 +78,7 @@ export default function Post({ text, author, comments, likes, image }) {
         )}
 
         <CardActions disableSpacing>
-          <IconButton>
+          <IconButton onClick={putLike}>
             <ThumbUpOffAltIcon />
           </IconButton>
           <p>{likes.length} likes</p>

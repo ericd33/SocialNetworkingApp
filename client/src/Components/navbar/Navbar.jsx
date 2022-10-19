@@ -66,8 +66,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const NavBar = () => {
   const dispatch = useDispatch()
-  const [search, setSearch] = useState("")
   const auth = getAuth();
+  const token = auth.currentUser.accessToken;
   const userRedic = getAuth().currentUser.reloadUserInfo
 
   ///LOGOUT
@@ -76,8 +76,7 @@ const NavBar = () => {
   }
 
   const handleInput = (e)=>{
-    setSearch(e.target.value)
-    dispatch(searchUsersByName(search))
+    dispatch(searchUsersByName(e.target.value,token))
   }
 
   return (
@@ -105,13 +104,11 @@ const NavBar = () => {
                 <StyledInputBase
                 placeholder="Search events..."
                 inputProps={{ "aria-label": "search" }}
-                value={search}
                 onChange={handleInput}
               /> :
                 <StyledInputBase
                   placeholder="Search persons..."
                   inputProps={{ "aria-label": "search" }}
-                  value={search}
                   onChange={handleInput}
                 />
             }

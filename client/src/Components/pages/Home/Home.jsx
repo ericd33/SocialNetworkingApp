@@ -22,7 +22,7 @@ export default function Home() {
         <div className="leftHome">
           <div className="finded-persons">
               {
-                typeof users_finded === 'object' && users_finded?.map(u => {
+                (typeof users_finded === 'object' && users_finded.length !== 0) ? users_finded.map(u => {
                   return(
                     <Card sx={{width: 130, bgcolor: grey[400], fontFamily: 'Nunito', color:grey[900], mb:2,mt:1}}>
                       <CardHeader
@@ -34,7 +34,7 @@ export default function Home() {
                           title={u.name}
                       />
                     </Card>
-                  )})
+                  )}) : <div></div>
               }
           </div>
           <EventsMenu />
