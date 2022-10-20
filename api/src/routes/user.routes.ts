@@ -21,4 +21,5 @@ router.route('/event')
     .post(asistEvent)
     .get(userEvents)
 
+    
 export default router;
