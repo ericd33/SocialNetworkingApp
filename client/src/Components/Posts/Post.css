@@ -27,3 +27,12 @@
 .comments-button {
   width: 100px;
 }
+
+.card {
+  transition: .1s;
+}
+
+.card:hover {
+  transition: ease-in-out .1s;
+ transform:scale(1.01)
+}
