@@ -52,7 +52,7 @@ export default function CommentsModal(comments) {
               <CardHeader
                 sx={{ pt: 0, pb: 0, mt: 2 }}
                 avatar={
-                  <Avatar sx={{ bgcolor: yellow[500] }} src={c.avatar}></Avatar>
+                  <Avatar sx={{ bgcolor: yellow[500] }} >R</Avatar>
                 }
                 title={c}
                 subheader="1h"
