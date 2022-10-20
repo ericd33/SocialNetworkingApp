@@ -74,7 +74,7 @@ export const addFriend = async (req: Request, res: Response) => {
     }
     followed.save()
     follow.save()
-    res.status(200).send('successfolly')
+    res.status(200).send('successfully')
   }catch(e){
     res.status(400).send(e)
   }
@@ -95,7 +95,7 @@ export const asistEvent = async (req: Request, res: Response) => {
     }
     event.save()
     user.save()
-    res.status(200).send('successfolly')
+    res.status(200).send('successfully')
   }catch(e){
     res.status(400).send(e)
   }
