@@ -1,7 +1,7 @@
 import { asistEvent, findUserByEmail } from './../controllers/user.controller';
 import { Router } from "express";
 
-import { addUser, findUserByName, findUserById , deleteUser, addFriend, findUser } from "../controllers/user.controller";
+import { addUser, findUserByName, findUserById , deleteUser, addFriend, findUser, userEvents } from "../controllers/user.controller";
 
 const router = Router()
 
@@ -19,5 +19,6 @@ router.route('/login')
     .post(findUser)
 router.route('/event')
     .post(asistEvent)
+    .get(userEvents)
 
 export default router;

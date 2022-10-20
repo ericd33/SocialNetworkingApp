@@ -224,3 +224,25 @@ export const findUser = async (req: Request, res: Response) => {
     return res.status(400).send(err);
   }
 }
+
+
+
+export const userEvents = async (req: Request, res: Response) => {
+  const { id } = req.query;
+
+  try {
+    if (id) {
+      const user = await userSchema.findOne({_id: id });
+  
+      if (user) {
+        res.status(200).send(user.events)
+        return
+      }
+      res.status(404).send('User not found.')
+    }
+  } catch (e) {
+    res.status(400).send(e);
+    return;
+  }
+};
+
