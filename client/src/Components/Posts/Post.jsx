@@ -137,7 +137,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
             <p id="textButtons">{comments.length} comments</p>
           </div>
 
-          <CommentsModal comments={comments} />
+          
 
           {/* ----Dislikes para un FUTURO---- */}
 
