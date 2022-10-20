@@ -94,7 +94,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
   const openCommentsModal = () => setCommentsmodalState(true);
 
   return (
-    <div>
+    <div className="card">
       <br />
       <Card
         sx={{
