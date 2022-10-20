@@ -2,8 +2,8 @@ import { Avatar, Button, Card, Container, CardContent, CardMedia, Typography, Ic
 import { grey, yellow } from "@mui/material/colors";
 import './EventDetail.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from "react";
-import { details, deleteDetails, assitEvent, getMyUser } from "../../Redux/actions.js";
+import { useEffect } from "react";
+import { details, deleteDetails, assitEvent  } from "../../Redux/actions.js";
 import { useParams } from 'react-router-dom'
 import React from 'react'
 import NavBar from "../navbar/Navbar";
@@ -13,7 +13,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function EventDetail({participants}) {
     const detail = useSelector(d=>d.details)
-    const users = useSelector(d=>d.myUser)
     let token = window.localStorage.getItem('token')
     let user = window.localStorage.getItem('user')
     user = JSON.parse(user)
@@ -22,7 +21,6 @@ export default function EventDetail({participants}) {
     token=token.slice(1,-1)
     const dispatch = useDispatch()
     const { id }= useParams()
-    const [Assist,setAssist]= useState(true)
 
 		const payload ={
 			eventId: id,
@@ -34,11 +32,10 @@ export default function EventDetail({participants}) {
         return()=>{
             dispatch(deleteDetails())
         }
-    },[dispatch,id,Assist])
+    },[dispatch,id])
 
 		const submitEvent = ()=>{
 			dispatch(assitEvent(token, payload))
-            setAssist(!Assist)
 		}
     // console.log(detail)
     return (
@@ -94,18 +91,10 @@ export default function EventDetail({participants}) {
 
                 <CardContent sx={{fontFamily: 'Nunito'}}>
                     <div className="info2">
-                        {/* {console.log(detail.participants)} */}
-					    {detail.participants?.includes(emailU) ? <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>No Assist</Button>:<Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>}
+											{detail.participants?.includes(emailU) ? <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>No Assist</Button>:<Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>}
                         {/* <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button> */}
                         <div className="date-hour-part">
-                            <span>Participants: 
-                                {detail.participants?.map((p,index)=>{
-                                        // dispatch(getMyUser(token,p))
-                                    return(
-                                        <div key={index}>{p}</div>
-                                    )
-                                })}
-                            </span>
+                            <span>Participants: {participants}</span>
                             <span>Date: {detail?.date}</span>
                         </div>
                     </div>
