@@ -79,22 +79,26 @@ export const addFriend = async (req: Request, res: Response) => {
     res.status(400).send(e)
   }
 }
-export const asistEvent = async (req: Request, res: Response) => {
+export const asistEvents = async (req: Request, res: Response) => {
   const { eventId, userEmail } = req.body
   const event = await eventSchema.findOne({_id:eventId})
   const user = await userSchema.findOne({email:userEmail})
+  
   // console.log(user)
-  // console.log(event)
   try{
     if(event && !event.participants.some((e:any)=>e.email!==user.email)){
       event.participants.push(user.email)
-      user.asistEvent.push(event._id)
+      user.asistEvent.push(eventId)
     }else{
-      event.participants = event.participants.filter((e:any)=>e!==user.email)
-      user.asistEvent = user.asistEvent.filter((e:any)=>e._id!==event._id)
+      let participants = []
+      let events = []
+      participants = event.participants.filter((e:any)=>e!==user.email)
+      events = user.asistEvent.filter((e:any)=>e!==eventId) 
+      user.asistEvent = events;
+      event.participants = participants;
     }
-    event.save()
     user.save()
+    event.save()
     res.status(200).send('successfolly')
   }catch(e){
     res.status(400).send(e)
