@@ -1,7 +1,7 @@
-import { asistEvent, findUserByEmail } from './../controllers/user.controller';
+import { asistEvents, findUserByEmail } from './../controllers/user.controller';
 import { Router } from "express";
 
-import { addUser, findUserByName, findUserById , deleteUser, addFriend, findUser, userEvents } from "../controllers/user.controller";
+import { addUser, findUserByName, findUserById , deleteUser, addFriend, findUser } from "../controllers/user.controller";
 
 const router = Router()
 
@@ -18,7 +18,6 @@ router.route('/follow')
 router.route('/login')
     .post(findUser)
 router.route('/event')
-    .post(asistEvent)
-    .get(userEvents)
+    .post(asistEvents)
 
 export default router;
