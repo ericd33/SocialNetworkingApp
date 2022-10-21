@@ -6,7 +6,7 @@ import "./PostList.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function PostList() {
-  const all_posts = useSelector((state) => state.filtered_posts);
+  const all_posts = useSelector((state) => state.posts);
   const dispatch = useDispatch();
   const {user} = useUserAuth();
   useEffect(() => {
@@ -29,6 +29,7 @@ return (
       </div>
     ) : (
       <div className="List">
+        {console.log(all_posts)}
         {all_posts
           .map((p) => {
             return (

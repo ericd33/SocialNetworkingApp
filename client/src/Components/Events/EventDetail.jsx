@@ -8,17 +8,19 @@ import { useParams } from 'react-router-dom'
 import React from 'react'
 import NavBar from "../navbar/Navbar";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useUserAuth } from "../../context/UserAuthContext";
 
 
 
-export default function EventDetail({participants}) {
+export default function EventDetail() {
     const detail = useSelector(d=>d.details)
-    let token = window.localStorage.getItem('token')
-    let user = window.localStorage.getItem('user')
-    user = JSON.parse(user)
+    const {user} = useUserAuth();
+    let token = user.accessToken;
+
+    
     let emailU =user.email
 		// console.log(emailU)
-    token=token.slice(1,-1)
+    
     const dispatch = useDispatch()
     const { id }= useParams()
 
@@ -94,7 +96,7 @@ export default function EventDetail({participants}) {
 											{detail.participants?.includes(emailU) ? <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>No Assist</Button>:<Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>}
                         {/* <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button> */}
                         <div className="date-hour-part">
-                            <span>Participants: {participants}</span>
+                            <span>Participants: </span>
                             <span>Date: {detail?.date}</span>
                         </div>
                     </div>

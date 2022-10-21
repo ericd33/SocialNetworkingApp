@@ -182,7 +182,7 @@ export function login(user) {
 
 export function getEvents(payload) {
   return function (dispatch) {
-    console.log(payload);
+    // console.log(payload);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
