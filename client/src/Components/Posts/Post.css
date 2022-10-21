@@ -84,7 +84,7 @@ height: 35px;
 }
 .post-comment-input1::placeholder {
 color: white;
-} */
+}
 
 
 .card {
@@ -94,6 +94,7 @@ transition: .1s;
 .card:hover {
 transition: ease-in-out .1s;
 transform:scale(1.01)
+}
 
 .inputsdeComments {
 display: flex;
