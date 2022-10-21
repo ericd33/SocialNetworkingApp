@@ -134,9 +134,9 @@ export default function Post({ text, author, comments, likes, image, id }) {
                   <ThumbUpOffAltIcon className='ButtonActionPost'/>
                 </IconButton>
                 {
-                   likes?
+                  likes ?
                   <div>
-                    <p className="textLikes">{likes && likes.length} likes</p>
+                    <p className="textLikes">{likes?.length} likes</p>
                     <ul>
                       <li id='LikeTitle'>Likes</li>
                     {
