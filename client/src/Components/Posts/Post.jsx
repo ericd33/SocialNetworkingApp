@@ -150,10 +150,10 @@ export default function Post({ text, author, comments, likes, image, id }) {
               </div>
             </div>
 
-          {/* {comments ? 
+          {comments ? 
             <CommentsModal comments={comments} />
             : <></>
-          } */}
+          }
           <p className='textCommentarys'>{comments.length} comments</p>
 
           {/* --- Shares para FUTURO --- */}

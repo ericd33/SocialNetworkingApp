@@ -35,11 +35,11 @@ export default function EventDetail() {
         }
     },[dispatch,id,assist])
 
-		const submitEvent = ()=>{
-			dispatch(assitEvent(token, payload))
-			setTimeout(()=>{
-				setAssist(!assist)
-			},1000);
+	const submitEvent = ()=>{
+		dispatch(assitEvent(token, payload))
+		setTimeout(()=>{
+			setAssist(!assist)
+		},1000)};
       
     if (detail.length !== 0) {
         console.log(detail);
