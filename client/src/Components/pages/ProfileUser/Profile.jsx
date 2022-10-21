@@ -8,12 +8,13 @@ import ProfilePostList from './ProfilePost/ProfilePostList';
 import { useParams } from 'react-router-dom';
 import {useState} from 'react';
 import axios from 'axios';
+import { useUserAuth } from '../../../context/UserAuthContext';
 
 
 const Profile = () => {
   const dispatch = useDispatch()
-  let token = window.localStorage.getItem('token')
-  token=token.slice(1,-1)
+  const {user} = useUserAuth();
+  let token = user.accessToken;
   const [profileUser, setProfileUser] = useState({})
   const [posts, setPosts] = useState([])
   let query = useParams();

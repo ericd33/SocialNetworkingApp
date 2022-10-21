@@ -12,6 +12,7 @@ import {
 
 export function postUser(payload, token) {
   return function () {
+    console.log(payload)
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
@@ -20,14 +21,13 @@ export function postUser(payload, token) {
       },
       data: {
         email: payload.email,
-        name: payload.displayName,
-        image: payload.photoURL,
+        name: payload.name,
+        image: payload.image,
       },
     };
-    console.log(token, Config);
     axios(Config).then((res) => {
       console.log(res);
-    });
+    }).catch(err => console.log(err))
   };
 }
 

@@ -19,12 +19,13 @@ import { useNavigate } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
+import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
+  const {user} = useUserAuth();
 
-  let userEmail = JSON.parse(localStorage.getItem('user')).email;
-
+  let userEmail = user.email;
   useEffect(() => {
     dispatch(getMyUser(userEmail));
   }, []);

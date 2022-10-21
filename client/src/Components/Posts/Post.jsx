@@ -1,11 +1,13 @@
 import {
   Avatar,
+  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
   IconButton,
+  TextField,
 } from "@mui/material";
 import { yellow, grey } from "@mui/material/colors";
 import ReplyIcon from "@mui/icons-material/Reply";
@@ -20,15 +22,16 @@ import { putLikes } from "../../Redux/actions";
 import { updateComment } from "../../Redux/actions";
 import { Link } from "react-router-dom";
 import "./Post.css";
+import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
-  let token = window.localStorage.getItem("token");
-  token = token.slice(1, -1);
-  let user = window.localStorage.getItem("user");
-
-  user = JSON.parse(user);
+  const sessionUser = useUserAuth();
+  let token = sessionUser.user.accessToken;
+  let user = sessionUser.user;
+  console.log(token)
+  console.log(user)
   useEffect(() => {
     const Config = {
       method: "get",
@@ -94,14 +97,15 @@ export default function Post({ text, author, comments, likes, image, id }) {
   const openCommentsModal = () => setCommentsmodalState(true);
 
   return (
-    <div>
+    <div className="card">
       <br />
       <Card
         sx={{
           width: 600,
           bgcolor: "custom.dark",
           fontFamily: "Nunito",
-          borderRadius: 3,
+          borderRadius:3,
+          position:'relative'
         }}
       >
         <CardHeader
@@ -123,37 +127,37 @@ export default function Post({ text, author, comments, likes, image, id }) {
           <div></div>
         )}
 
-        <CardActions disableSpacing>
-          <IconButton id="buttonsPost" onClick={putLike}>
-            <ThumbUpOffAltIcon />
-          </IconButton>
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-            }}
-          >
-            <p id="textButtons">{likes?.length} likes</p>
-            <p id="textButtons">{comments.length} comments</p>
-          </div>
+        <CardActions>
+          <div className="actionsPost">
+            <div className="actionLikes">
+                <IconButton onClick={putLike}>
+                  <ThumbUpOffAltIcon className='ButtonActionPost'/>
+                </IconButton>
+                {
+                   likes?
+                  <div>
+                    <p className="textLikes">{likes && likes.length} likes</p>
+                    <ul>
+                      <li id='LikeTitle'>Likes</li>
+                    {
+                      likes?.map(l => {
+                        return (
+                          <li>{l.name}</li>
+                        )
+                      })
+                    }
+                    </ul>
+                  </div> : 
+                  <p id="OLikes">0 likes</p>
+                }
+              </div>
+            </div>
 
-          
-
-          {/* ----Dislikes para un FUTURO---- */}
-
-          {/* <IconButton>
-                            <ThumbDownOffAltIcon/>
-                        </IconButton>
-                        <p>6 dislikes</p> */}
-
-          {/* 								
-          {comments ? (
+          {comments ? 
             <CommentsModal comments={comments} />
-          ) : (
-            <IconButton id="buttonsPost">
-              <ChatBubbleOutlineRoundedIcon />
-            </IconButton>
-          )} */}
+            : <></>
+          }
+          <p className='textCommentarys'>{comments && comments.length} comments</p>
 
           {/* --- Shares para FUTURO --- */}
 
@@ -163,17 +167,23 @@ export default function Post({ text, author, comments, likes, image, id }) {
                         <p>3 shares</p> */}
         </CardActions>
 
-        <form onSubmit={handleSubmitCommentForm} className="comments-container">
-          <textarea
-            className="coments-textarea"
-            placeholder="what are you thinking? 👀"
-            onChange={handleChangeComment}
-            value={comment}
-          />
-          <button className="comments-button" type="submit">
-            Send
-          </button>
-        </form>
+          <div className="inputsdeComments">
+            <TextField
+              id="filled-multiline-static"
+              label="What are you thinking? 👀"
+              value={comment}
+              variant="filled"
+              name="content"
+              onChange={handleChangeComment}
+            />
+            <Button
+            sx={{mt:3, bgcolor:'secondary.main', fontFamily: "Nunito",
+            color:'custom.dark'}} 
+            variant='outlined'
+            onClick={handleSubmitCommentForm}>
+              Post
+            </Button>
+          </div>
 
         {/*  <form>
           <label />

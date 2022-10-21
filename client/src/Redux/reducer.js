@@ -15,7 +15,7 @@ import {
 
 const initialState = {
   posts: [],
-  filtered_posts: [],
+  filtered_posts: ['1', '2'],
   events: [],
   myUser: {},
   details: [],

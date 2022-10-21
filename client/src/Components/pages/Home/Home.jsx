@@ -2,22 +2,22 @@ import NavBar from "../../navbar/Navbar";
 import EventsMenu from "../../Home-Components/EventsMenu";
 import PostList from "../../Posts/PostList";
 import "./Home.css";
-import CreatePost from "../../Posts/CreatePost";
 import { useSelector } from "react-redux";
 import { Avatar, Card, CardHeader } from "@mui/material";
 import { grey, yellow } from "@mui/material/colors";
 import Follow from "./follow";
+import CreatePost from '../../Posts/CreatePost'
+import CreateEvent from "../../Events/CreateEvent";
 
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
-
   return (
     <div className="Home">
       <div className="navbar">
         <span></span>
       </div>
-      <CreatePost />
       <NavBar />
+      <PostList />
       <div className="media-part">
         <div className="leftHome">
           <div className="finded-persons">
@@ -56,11 +56,12 @@ export default function Home() {
           <EventsMenu />
         </div>
         <div className="centerHome">
-          <PostList />
+        <CreatePost />
         </div>
         <div className="rightHome"></div>
       </div>
-      <CreatePost />
+      
     </div>
   );
 }
+

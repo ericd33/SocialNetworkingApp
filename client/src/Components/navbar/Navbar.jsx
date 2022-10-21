@@ -19,7 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { getAuth, signOut } from "firebase/auth";
 import './Navbar.css';
 import axios from "axios";
-
+import { useUserAuth } from "../../context/UserAuthContext";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -68,15 +68,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavBar = () => {
   const [AvatarImage, setAvatar] = useState();
   const dispatch = useDispatch()
-  const auth = getAuth();
-  let token = window.localStorage.getItem('token')
-    token=token.slice(1,-1)
-  let userRedic = window.localStorage.getItem('user')
-  userRedic = JSON.parse(userRedic)
+  const {user} = useUserAuth();
+  const token = user.accessToken;
+
   useEffect(() => {
     const Config = {
       method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${userRedic.email}`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -95,7 +93,6 @@ const NavBar = () => {
   function logOut() {
     window.location.reload(false)
     localStorage.clear();
-    auth.signOut(); 
   }
 
   const handleInput = (e)=>{
@@ -113,7 +110,7 @@ const NavBar = () => {
       >
         <Toolbar>
           <div>
-            <Link to={"/"} >
+            <Link to={"/home"} >
                 <h2>ConCatUs</h2>
             </Link>
           </div>
@@ -157,7 +154,7 @@ const NavBar = () => {
             sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
             component={Link}
           >
-            <Avatar src={AvatarImage} component={Link} to={`/profile/${userRedic.email}`}></Avatar>
+            <Avatar src={AvatarImage} component={Link} to={`/profile/${user.email}`}></Avatar>
 
           </Button>
         </Toolbar>

@@ -18,6 +18,7 @@ import { postEvent } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { getMyUser } from "../../Redux/actions";
+import { useUserAuth } from "../../context/UserAuthContext";
 
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 
@@ -27,7 +28,7 @@ export default function CreateEvent() {
   let userName = JSON.parse(localStorage.getItem('user')).displayName
   const dispatch = useDispatch();
   // const navigate = useNavigate();
-
+  const {user} = useUserAuth();
   useEffect(()=>{
     dispatch(getMyUser(userEmail))
   },[])
@@ -35,8 +36,7 @@ export default function CreateEvent() {
     setModal(!modal);
   };
 
-  let token = localStorage.getItem('token')
-  token=token.slice(1,-1)
+  let token = user.accessToken;
   const [formState, setFormState] = useState({
     name:"",
     content: "",

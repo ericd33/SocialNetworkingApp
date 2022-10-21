@@ -57,7 +57,7 @@ export default function CommentsModal(comments) {
                 title={c}
                 subheader="1h"
               />
-              <CardContent sx={{ pb: 1 }}>{c.text}</CardContent>
+              <CardContent sx={{ pb: 1 }}>{c && c.text}</CardContent>
             </Card>
           </div>
         ))}
