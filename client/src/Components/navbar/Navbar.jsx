@@ -8,16 +8,22 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Avatar from "@mui/material/Avatar";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { Card, CardContent, CardHeader, IconButton, Modal } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Modal,
+} from "@mui/material";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { searchUsersByName } from "../../Redux/actions";
-import LogoutIcon from '@mui/icons-material/Logout';
-import CloseIcon from '@mui/icons-material/Close';
+import LogoutIcon from "@mui/icons-material/Logout";
+import CloseIcon from "@mui/icons-material/Close";
 import { getAuth, signOut } from "firebase/auth";
-import './Navbar.css';
+import "./Navbar.css";
 import axios from "axios";
 
 const Search = styled("div")(({ theme }) => ({
@@ -67,12 +73,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const NavBar = () => {
   const [AvatarImage, setAvatar] = useState();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const auth = getAuth();
-  let token = window.localStorage.getItem('token')
-    token=token.slice(1,-1)
-  let userRedic = window.localStorage.getItem('user')
-  userRedic = JSON.parse(userRedic)
+  let token = window.localStorage.getItem("token");
+  token = token.slice(1, -1);
+  let userRedic = window.localStorage.getItem("user");
+  userRedic = JSON.parse(userRedic);
   useEffect(() => {
     const Config = {
       method: "get",
@@ -82,7 +88,7 @@ const NavBar = () => {
       },
     };
     axios(Config)
-      .then(user => {
+      .then((user) => {
         // console.log(user.data)
         setAvatar(user.data.image);
       })
@@ -93,17 +99,17 @@ const NavBar = () => {
 
   ///LOGOUT
   function logOut() {
-    window.location.reload(false)
+    window.location.reload(false);
     localStorage.clear();
-    auth.signOut(); 
+    auth.signOut();
   }
 
-  const handleInput = (e)=>{
-    dispatch(searchUsersByName(e.target.value,token))
-  }
+  const handleInput = (e) => {
+    dispatch(searchUsersByName(e.target.value, token));
+  };
 
   return (
-    <AppBar sx={{ bgcolor: 'custom.dark'}} position="fixed">
+    <AppBar sx={{ bgcolor: "custom.dark" }} position="fixed">
       <Toolbar
         sx={{
           display: "flex",
@@ -113,30 +119,29 @@ const NavBar = () => {
       >
         <Toolbar>
           <div>
-            <Link to={"/"} >
-                <h2>ConCatUs</h2>
+            <Link to={"/"}>
+              <h2>ConCatUs</h2>
             </Link>
           </div>
-          <Search sx={{ marginLeft: 5 , borderRadius:5}}>
+          <Search sx={{ marginLeft: 5, borderRadius: 5 }}>
             <SearchIconWrapper>
-              <SearchIcon color="secondary"/>
+              <SearchIcon color="secondary" />
             </SearchIconWrapper>
-            {
-              window.location.href === `http://localhost:3000/events` 
-                ?
-                <StyledInputBase
+            {window.location.href === `http://localhost:3000/events` ? (
+              <StyledInputBase
                 placeholder="Search events..."
-                color='primary'
+                color="primary"
                 inputProps={{ "aria-label": "search" }}
                 onChange={handleInput}
-              /> :
-                <StyledInputBase
-                  placeholder="Search persons..."
-                  color='primary'
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={handleInput}
-                />
-            }
+              />
+            ) : (
+              <StyledInputBase
+                placeholder="Search persons..."
+                color="primary"
+                inputProps={{ "aria-label": "search" }}
+                onChange={handleInput}
+              />
+            )}
           </Search>
         </Toolbar>
 
@@ -144,21 +149,25 @@ const NavBar = () => {
           <IconButton color="secondary" component={Link}>
             <NotificationsNoneIcon />
           </IconButton>
+          <Link to="/chat">
+            <IconButton color="secondary">
+              <ChatOutlinedIcon />
+            </IconButton>
+          </Link>
 
-          <IconButton color="secondary" component={Link}>
-            <ChatOutlinedIcon />
-          </IconButton>
-          
           <IconButton color="secondary" onClick={logOut}>
-            <LogoutIcon/>
+            <LogoutIcon />
           </IconButton>
-          
+
           <Button
             sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
             component={Link}
           >
-            <Avatar src={AvatarImage} component={Link} to={`/profile/${userRedic.email}`}></Avatar>
-
+            <Avatar
+              src={AvatarImage}
+              component={Link}
+              to={`/profile/${userRedic.email}`}
+            ></Avatar>
           </Button>
         </Toolbar>
       </Toolbar>
