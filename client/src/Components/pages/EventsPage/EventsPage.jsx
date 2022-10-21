@@ -14,7 +14,7 @@ export default function EventsPage() {
       <NavBar />
       <div className="media-part">
         <div className="leftHome">
-          <EventsMenu />
+          
         </div>
         <div className="centerHome">
           <EventList />

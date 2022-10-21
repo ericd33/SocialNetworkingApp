@@ -3,7 +3,7 @@ import {Modal, IconButton, Card, CardContent, CardHeader, Avatar } from '@mui/ma
 import CloseIcon from '@mui/icons-material/Close';
 import { grey, yellow } from '@mui/material/colors';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import '../CreatePost.css';
+import './CommentsModal.css';
 
 export default function CommentsModal(comments) {
     const [modal, setModal] = useState(false);
@@ -49,7 +49,7 @@ export default function CommentsModal(comments) {
 
     return (
         <div className='container'>
-            <IconButton id='buttonsPost' onClick={() => opencloseModal()}>
+            <IconButton id='ButtonActionPost' onClick={() => opencloseModal()}>
                 <ChatBubbleOutlineRoundedIcon/>  
             </IconButton>
             <Modal

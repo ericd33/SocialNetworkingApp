@@ -18,6 +18,7 @@ import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineR
 import { useDispatch } from "react-redux";
 import { putLikes } from "../../Redux/actions";
 import { Link } from 'react-router-dom';
+import './Post.css';
 
 export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
@@ -59,7 +60,8 @@ export default function Post({ text, author, comments, likes, image, id }) {
           width: 600,
           bgcolor: 'custom.dark',
           fontFamily: "Nunito",
-          borderRadius:3
+          borderRadius:3,
+          position:'relative'
         }}
       >
         <CardHeader
@@ -78,26 +80,37 @@ export default function Post({ text, author, comments, likes, image, id }) {
           <div></div>
         )}
 
-        <CardActions disableSpacing>
-          <IconButton id='buttonsPost' onClick={putLike}>
-            <ThumbUpOffAltIcon/>
-          </IconButton>
-          <p id='textButtons'>{likes?.length} likes</p>
+        <CardActions>
+          <div className="actionsPost">
+            <div className="actionLikes">
+                <IconButton onClick={putLike}>
+                  <ThumbUpOffAltIcon className='ButtonActionPost'/>
+                </IconButton>
+                {
+                  likes.length !== 0 ?
+                  <div>
+                    <p className="textLikes">{likes?.length} likes</p>
+                    <ul>
+                      <li id='LikeTitle'>Likes</li>
+                    {
+                      likes?.map(l => {
+                        return (
+                          <li>{l.name}</li>
+                        )
+                      })
+                    }
+                    </ul>
+                  </div> : 
+                  <p id="OLikes">0 likes</p>
+                }
+              </div>
+            </div>
 
-          {/* ----Dislikes para un FUTURO---- */}
-
-          {/* <IconButton>
-                            <ThumbDownOffAltIcon/>
-                        </IconButton>
-                        <p>6 dislikes</p> */}
-          {comments ? (
+          {/* {comments ? 
             <CommentsModal comments={comments} />
-          ) : (
-            <IconButton id='buttonsPost'>
-              <ChatBubbleOutlineRoundedIcon />
-            </IconButton>
-          )}
-          <p id='textButtons'>{comments} comments</p>
+            : <></>
+          } */}
+          <p className='textCommentarys'>{comments.length} comments</p>
 
           {/* --- Shares para FUTURO --- */}
 
