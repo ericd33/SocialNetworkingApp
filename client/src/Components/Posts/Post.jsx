@@ -30,8 +30,8 @@ export default function Post({ text, author, comments, likes, image, id }) {
   const sessionUser = useUserAuth();
   let token = sessionUser.user.accessToken;
   let user = sessionUser.user;
-  console.log(token)
-  console.log(user)
+  // console.log(token)
+  // console.log(user)
   useEffect(() => {
     const Config = {
       method: "get",
@@ -98,6 +98,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
 
   return (
     <div className="card">
+      {/* {console.log(User)} */}
       <br />
       <Card
         sx={{

@@ -20,18 +20,19 @@ import { getAuth } from "firebase/auth";
 import { getMyUser } from "../../Redux/actions";
 import { useUserAuth } from "../../context/UserAuthContext";
 
+
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
-  let userEmail = JSON.parse(localStorage.getItem('user')).email
-  let userName = JSON.parse(localStorage.getItem('user')).displayName
+  const {user} = useUserAuth();
+  let userEmail = user.email
+  let userName = user.displayName
   const dispatch = useDispatch();
   // const navigate = useNavigate();
-  const {user} = useUserAuth();
   useEffect(()=>{
     dispatch(getMyUser(userEmail))
-  },[])
+  },[dispatch])
   const opencloseModal = () => {
     setModal(!modal);
   };
@@ -69,7 +70,7 @@ export default function CreateEvent() {
     e.preventDefault();
     setModal(!modal)
     dispatch(postEvent(formState,token));
-    window.location.reload()
+    // window.location.reload()
     // navigate("/");
   };
 
