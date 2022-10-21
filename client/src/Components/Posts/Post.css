@@ -1,29 +1,91 @@
-.post-comment-input1 {
-  width: 100%;
-  background-color: rgb(16 16 16);
-  border: none;
-  padding: 5px;
-  color: white;
+.textLikes:hover ~ ul{
+  display: inline-block;
+  opacity: 90%;
+}
+.actionsPost ul {
+  display: none;
+  opacity: 0%;
+  background-color: gray;
+  position: absolute;
+  z-index: 1;
+  color:white;
+  font-family: 'Nunito';
+  text-decoration:none;
+  list-style: none;
+  padding: 10px;
+  border-radius: 10px;
+  bottom: 80px;
+  left: 5px;
+}
+.actionsPost ul #LikeTitle {
+  text-align: center;
+  color: #ffd000;
+}
+
+
+.textLikes {
+  color:#a5a5a5;
+  cursor: pointer;
+}
+.textCommentarys {
+  color:#a5a5a5;
+}
+.ButtonActionPost {
+  color:#a5a5a5;
+}
+.ButtonActionPost:hover {
+  color:#ffd000;
+}
+#OLikes {
+  color:#a5a5a5;
+}
+.actionLikes {
+  display: flex;
+  padding-right: 20px;
+}
+
+/* .post-comment-input1 {
+width: 100%;
+background-color: rgb(16 16 16);
+border: none;
+padding: 5px;
+color: white;
 }
 .post-comment-input1::placeholder {
-  color: white;
+color: white;
+} */
+
+.inputsdeComments {
+display: flex;
+justify-content: space-around;
+align-items: center;
+margin-left: 5px;
+margin-bottom: 5px;
 }
 
-.comments-container {
-  display: flex;
-  justify-content: space-between;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.inputsdeComments #filled-multiline-static{
+background-color: black;
+border-radius: 10px;
+width: 450px;
+color: white;
+height: 20px;
 }
 
-.coments-textarea {
-  flex: 1;
-  color: white;
-  background-color: black;
-  border: none;
+.inputsdeComments label{
+color: gray;
 }
 
-.comments-button {
-  width: 100px;
+.inputsdeComments button {
+margin-bottom: 20px;
+height: 35px;
+/* width: ; */
+}
+
+.card {
+transition: .1s;
+}
+
+.card:hover {
+transition: ease-in-out .1s;
+transform:scale(1.01)
 }
