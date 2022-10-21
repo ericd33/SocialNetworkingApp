@@ -50,10 +50,50 @@ background-color: rgb(16 16 16);
 border: none;
 padding: 5px;
 color: white;
+
 }
 .post-comment-input1::placeholder {
 color: white;
 } */
+
+.inputsdeComments {
+display: flex;
+justify-content: space-around;
+align-items: center;
+margin-left: 5px;
+margin-bottom: 5px;
+}
+
+.inputsdeComments #filled-multiline-static{
+background-color: black;
+border-radius: 10px;
+width: 450px;
+color: white;
+height: 20px;
+}
+
+.inputsdeComments label{
+color: gray;
+}
+
+.inputsdeComments button {
+margin-bottom: 20px;
+height: 35px;
+/* width: ; */
+
+}
+.post-comment-input1::placeholder {
+color: white;
+} */
+
+
+.card {
+transition: .1s;
+}
+
+.card:hover {
+transition: ease-in-out .1s;
+transform:scale(1.01)
 
 .inputsdeComments {
 display: flex;
