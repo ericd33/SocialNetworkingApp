@@ -1,4 +1,4 @@
-import { asistEvent, findUserByEmail } from './../controllers/user.controller';
+import { asistEvents, findUserByEmail } from './../controllers/user.controller';
 import { Router } from "express";
 
 import { addUser, findUserByName, findUserById , deleteUser, addFriend, findUser } from "../controllers/user.controller";
@@ -18,6 +18,7 @@ router.route('/follow')
 router.route('/login')
     .post(findUser)
 router.route('/event')
-    .post(asistEvent)
+    .post(asistEvents)
 
+    
 export default router;

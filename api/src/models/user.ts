@@ -42,10 +42,7 @@ const userSchema = new Schema({
         type:Types.ObjectId,
         ref:'post'
     }],
-    asistEvent:[{
-        type:Types.ObjectId,
-        ref:'event'
-    }],
+    asistEvent:[],
     liked:[],
     events:[]
 });
