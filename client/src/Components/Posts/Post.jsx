@@ -1,11 +1,13 @@
 import {
   Avatar,
+  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
   CardMedia,
   IconButton,
+  TextField,
 } from "@mui/material";
 import { yellow, grey } from "@mui/material/colors";
 import ReplyIcon from "@mui/icons-material/Reply";
@@ -164,17 +166,23 @@ export default function Post({ text, author, comments, likes, image, id }) {
                         <p>3 shares</p> */}
         </CardActions>
 
-        <form onSubmit={handleSubmitCommentForm} className="comments-container">
-          <textarea
-            className="coments-textarea"
-            placeholder="what are you thinking? 👀"
-            onChange={handleChangeComment}
-            value={comment}
-          />
-          <button className="comments-button" type="submit">
-            Send
-          </button>
-        </form>
+          <div className="inputsdeComments">
+            <TextField
+              id="filled-multiline-static"
+              label="What are you thinking? 👀"
+              value={comment}
+              variant="filled"
+              name="content"
+              onChange={handleChangeComment}
+            />
+            <Button
+            sx={{mt:3, bgcolor:'secondary.main', fontFamily: "Nunito",
+            color:'custom.dark'}} 
+            variant='outlined'
+            onClick={handleSubmitCommentForm}>
+              Post
+            </Button>
+          </div>
 
         {/*  <form>
           <label />
