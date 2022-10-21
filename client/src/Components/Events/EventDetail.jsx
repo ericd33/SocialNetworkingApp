@@ -94,7 +94,7 @@ export default function EventDetail() {
                             
                             <div className="date-hour-part">
                                 {
-                                    detail ? <span>Participants: {detail.participants}</span> : <></>
+                                    detail ? <span>Participants: {detail.participants?.map(e=>e+' ')}</span> : <></>
                                 }
                                 <span>Date: {detail?.date}</span>
                             </div>

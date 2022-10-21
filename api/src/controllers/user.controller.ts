@@ -65,7 +65,7 @@ export const addFriend = async (req: Request, res: Response) => {
   console.log(follow.email)
   console.log(followed.followeds.some((e:any)=>e.email!==follow.email))
   try{
-    if(followed && !followed.followeds.some((e:any)=>e.email!==follow.email)){
+    if(!followed.followeds.includes(follow.email)){
       followed.followeds.push(follow.email)
       follow.follows.push(followed.email)
     }else{
@@ -86,7 +86,7 @@ export const asistEvents = async (req: Request, res: Response) => {
   
   // console.log(user)
   try{
-    if(event && !event.participants.some((e:any)=>e.email!==user.email)){
+    if(!event.participants.includes(user.email)){
       event.participants.push(user.email)
       user.asistEvent.push(eventId)
     }else{
