@@ -6,6 +6,7 @@ import "./App.css";
 import EventDetail from "./Components/Events/EventDetail.jsx";
 import EventsPage from "./Components/pages/EventsPage/EventsPage.jsx";
 import Profile from "./Components/pages/ProfileUser/Profile.jsx";
+import Chat from './Components/pages/Chat/Chat.jsx';
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
@@ -15,6 +16,7 @@ function App() {
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="/events" element={<EventsPage />} />
           <Route exact path="/events/:id" element={<EventDetail />} />
           <Route exact path="/profile/:email" element={<Profile />} />
