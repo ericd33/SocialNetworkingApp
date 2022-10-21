@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useEffect } from "react";
-import { getAuth } from "firebase/auth";
 import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function CreatePost() {
@@ -26,6 +25,7 @@ export default function CreatePost() {
   const {user} = useUserAuth();
   let userEmail = user.email;
   const token = user.accessToken;
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getMyUser(userEmail));
   }, []);
@@ -53,7 +53,7 @@ export default function CreatePost() {
     };
 
     dispatch(postPost(token, data));
-
+    navigate("/home")
     setModal(!modal);
   };
 

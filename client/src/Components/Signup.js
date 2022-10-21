@@ -7,6 +7,7 @@ import { postUser } from "../Redux/actions";
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("")
   const { signUp } = useUserAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signUp(email, password);
+      await signUp(username, email, password);
       navigate("/")
     } catch (err) {
       console.log(err);
@@ -24,6 +25,7 @@ export default function Signup() {
     <div>
       <h1>Sign up</h1>
       <form onSubmit={handleSubmit}>
+      
         <div className="input-container">
           <label>Email </label>
           <input
