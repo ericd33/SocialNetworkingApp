@@ -1,0 +1,25 @@
+.user {
+    height: fit-content;
+    border-radius: 140px;
+}
+
+.userInfo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    padding-top: 20px;
+}
+
+.userCard {
+    background-color: rgb(158, 158, 158);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.userPlusInfo {
+    margin: 0px;
+    font-size: 17px;
+}
+
+.userPlusInfo p {
+    margin: 3px
+}
