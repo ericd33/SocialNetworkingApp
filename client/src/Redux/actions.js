@@ -339,3 +339,21 @@ export function assitEvent(token,payload){
     axios(Config).then(res=>console.log(res))
   };
 }
+
+export function getEventsByName(token,name) {
+  return async function (dispatch) {
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/events?name=${name}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    axios(Config).then((res) => {
+      return dispatch({
+        type: GET_EVENTS,
+        payload: res.data,
+      });
+    });
+  };
+}
