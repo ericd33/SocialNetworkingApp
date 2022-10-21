@@ -1,4 +1,5 @@
 import NavBar from "../../navbar/Navbar";
+import NavbarEvents from "./NavbarEvents/NavbarEvents";
 import EventsMenu from "../../Home-Components/EventsMenu";
 import "./EventsPage.css";
 import EventList from "../../Events/EventList";
@@ -11,7 +12,8 @@ export default function EventsPage() {
       <div className="navbar">
         <span></span>
       </div>
-      <NavBar />
+      <NavbarEvents />
+      {/* <NavBar /> */}
       <div className="media-part">
         <div className="leftHome">
           

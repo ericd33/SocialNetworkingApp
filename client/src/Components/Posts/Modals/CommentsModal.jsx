@@ -10,7 +10,7 @@ export default function CommentsModal(comments) {
   const opencloseModal = () => {
     setModal(!modal);
   };
-  console.log(comments);
+//   console.log(comments);
 
     const body = (
         <Card className='postCreator' sx={{width: 600, borderRadius:'15px',bgcolor: grey[300], fontFamily: 'Nunito', color:grey[900]}}>
