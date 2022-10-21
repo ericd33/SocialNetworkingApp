@@ -12,7 +12,7 @@ const userAuthContext = createContext();
 export function UserAuthContextProvider({children}) {
     const dispatch = useDispatch();
     const [user, setUser] = useState();
-    function signUp(email, password) {
+    function signUp(username, email, password) {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
@@ -21,27 +21,27 @@ export function UserAuthContextProvider({children}) {
         return signInWithPopup(auth, googleAuthProvider)
     }
     function logIn(email, password) {
-        const tuser = auth.currentUser;
-        if (tuser && (tuser.metadata.creationTime == tuser.metadata.lastSignInTime)) {
-            console.log('creating user')
-            const userconfig = {
-                email:'',
-                name:'New User',
-                image:'https://avatars.githubusercontent.com/u/16511727?v=4',
-            }
-
-            userconfig.email = tuser.email
-            if (tuser.name != null) userconfig.name = tuser.displayName;
-            if (tuser.image != null) userconfig.image = tuser.photoURL;
-
-            dispatch(postUser(userconfig, tuser.accessToken))
-        }
+        
         return signInWithEmailAndPassword(auth, email, password)
     }
 
     useEffect(()=> {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-
+            const tuser = currentUser;
+            if (tuser && (tuser.metadata.creationTime == tuser.metadata.lastSignInTime)) {
+                console.log('creating user')
+                const userconfig = {
+                    email:'',
+                    name:tuser.displayName,
+                    image:'https://avatars.githubusercontent.com/u/16511727?v=4',
+                }
+    
+                userconfig.email = tuser.email
+                if (tuser.name != null) userconfig.name = tuser.displayName;
+                if (tuser.image != null) userconfig.image = tuser.photoURL;
+    
+                dispatch(postUser(userconfig, tuser.accessToken))
+            }
             
             setUser(currentUser);
         })
