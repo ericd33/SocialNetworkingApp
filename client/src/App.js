@@ -24,6 +24,7 @@ function App() {
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path="/profile/:email" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
+          <Route path="/events" element={<ProtectedRoute><EventsPage/></ProtectedRoute>}/>
         </Routes>
         </UserAuthContextProvider>
       </LocalizationProvider>
