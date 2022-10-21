@@ -5,16 +5,14 @@ import { useEffect } from "react";
 import { getEvents } from "../../Redux/actions";
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function EventList() {
-    const {user} = useUserAuth();
+    let events = [];
+    events = useSelector(e=>e.events);
+
     const dispatch = useDispatch()
-    let events = []
-    events = useSelector((state)=>state.events);
-
-    let token = user.accessToken
-
+    let token = window.localStorage.getItem('token')
+    token=token.slice(1,-1)
     useEffect(()=>{
         dispatch(getEvents(token))
     },[dispatch])
@@ -38,12 +36,13 @@ export default function EventList() {
             <div className="List">
                 {
                     events?.map(e=>{
+                        console.log(e);
                         return (
                             <EventCard
                                 key={e.author+e.date} 
                                 date={e.date}
                                 location={e.location}
-                                title={e.title}
+                                name={e.name}
                                 text={e.content}
                                 image={e.image}
                                 id={e._id}
