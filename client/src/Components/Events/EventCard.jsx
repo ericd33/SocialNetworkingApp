@@ -4,7 +4,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Link } from "react-router-dom";
 import './EventCard.css';
 
-export default function EventCard({location,title,text,image,date,id}) {
+export default function EventCard({location,name,text,image,date,id}) {
     date = date.replace('T',' / ').substring(0,date.length-6)
     return (
         <div>
@@ -25,7 +25,7 @@ export default function EventCard({location,title,text,image,date,id}) {
             />
             <CardContent>
                 <Typography sx={{fontFamily: 'Nunito', color:'primary.light'}} gutterBottom variant="h5" component="div">
-                {title}
+                {name}
                 </Typography>
                 <Typography sx={{fontFamily: 'Nunito', color:'primary.dark'}} variant="body2" color="text.secondary">
                 {text?.substring(0,100)+'...'}

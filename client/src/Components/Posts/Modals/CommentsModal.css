@@ -1,0 +1,6 @@
+.container #ButtonActionPost {
+    color:#a5a5a5;
+}
+.container #ButtonActionPost:hover {
+    color:#ffd000;
+}
