@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from "react";
 import { details, deleteDetails, assitEvent  } from "../../Redux/actions.js";
 import { useParams } from 'react-router-dom'
-import React from 'react'
+import React, {useState}  from 'react'
 import NavBar from "../navbar/Navbar";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
@@ -21,6 +21,7 @@ export default function EventDetail({participants}) {
     token=token.slice(1,-1)
     const dispatch = useDispatch()
     const { id }= useParams()
+    const [ assist , setAssist ] = useState(true)
 
 		const payload ={
 			eventId: id,
@@ -32,16 +33,19 @@ export default function EventDetail({participants}) {
         return()=>{
             dispatch(deleteDetails())
         }
-    },[dispatch,id])
+    },[dispatch,id,assist])
 
 		const submitEvent = ()=>{
 			dispatch(assitEvent(token, payload))
+			setTimeout(()=>{
+				setAssist(!assist)
+			},1000);
+            
 		}
     // console.log(detail)
     return (
             <Container sx={{textAlign:'center', width:'100%'}} >
                <div>
-								{console.log(detail)}
                     <div className="navbar">
                         <span></span>
                     </div>
@@ -91,10 +95,19 @@ export default function EventDetail({participants}) {
 
                 <CardContent sx={{fontFamily: 'Nunito'}}>
                     <div className="info2">
-											{detail.participants?.includes(emailU) ? <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>No Assist</Button>:<Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>}
+						{detail.participants?.includes(emailU) ? <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>No Assist</Button>:<Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>}
                         {/* <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button> */}
                         <div className="date-hour-part">
-                            <span>Participants: {participants}</span>
+                            <span>Participants: 
+															{/* {console.log(detail.participants)} */}
+                                {
+                            detail.participants?.map((p)=> {
+															return(
+																<div>{p}</div>
+															)
+														})
+                            }
+														</span>
                             <span>Date: {detail?.date}</span>
                         </div>
                     </div>
