@@ -8,10 +8,26 @@ import { useEffect } from "react";
 import Home from '../Home/Home';
 import { useDispatch } from "react-redux";
 import { postUser } from "../../../Redux/actions";
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import './LandingPage.css'
+import { grey, yellow } from '@mui/material/colors';
+import LandingLogin from './Login/LandingLogin';
+import LandingRegister from './Register/LandingRegister';
 
 export default function LandingPage() {
   const dispatch = useDispatch()
   const provider = new GoogleAuthProvider();
+  const[ login_register, setLogin_register] = useState(true)
+  const loginOrRegister = (e) =>{
+    e.preventDefault();
+    setLogin_register(!login_register)
+  }
 
   ///INFO DE LA SESION
   const auth = getAuth();
@@ -63,14 +79,40 @@ export default function LandingPage() {
         console.log(errorMessage);
       });
   }
+  const theme = createTheme();
 
   if (curUser) {
     return <Home info={curUser}/>
   } else {
     return (
-      <div>
-        <button onClick={signIn}>Sign in</button>
-      </div>
+      <ThemeProvider theme={theme}>
+      <Grid className='landing' container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          className='carousel'
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid className='form' item component={Paper} elevation={6} square>
+            {login_register ? (<LandingLogin />) : <LandingRegister/> }
+            <p id='or'>Or</p>
+            {login_register ? <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Login</Button>}
+            <div>
+              <Button  onClick={(e) => signIn(e)}>SIGN IN WITH GOOGLE</Button>
+            </div>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
     );
   }
 }
