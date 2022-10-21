@@ -10,6 +10,7 @@ export default function CommentsModal(comments) {
   const opencloseModal = () => {
     setModal(!modal);
   };
+  console.log(comments);
 
     const body = (
         <Card className='postCreator' sx={{width: 600, borderRadius:'15px',bgcolor: grey[300], fontFamily: 'Nunito', color:grey[900]}}>
@@ -28,14 +29,13 @@ export default function CommentsModal(comments) {
                                     <CardHeader
                                         sx={{pt: 0, pb: 0, mt:2}}
                                         avatar={
-                                        <Avatar sx={{ bgcolor: yellow[500]}} src={c.avatar}>
+                                        <Avatar sx={{ bgcolor: yellow[500]}}>
                                         </Avatar>
                                         }
-                                        title={c.name}
-                                        subheader="1h"
+                                        title='Nombre'
                                     />
                                     <CardContent sx={{pb:1}}>
-                                        {c.text}
+                                        {c}
                                     </CardContent>
                                 </Card>
                             </div>
@@ -55,42 +55,7 @@ export default function CommentsModal(comments) {
             open={modal}
             onClose={opencloseModal}>
                 {body}
-            </Modal>
+            </Modal> 
         </div>
-        {comments.comments.map((c, index) => (
-          <div key={`${index}`}>
-            <Card
-              sx={{
-                width: 500,
-                bgcolor: grey[300],
-                fontFamily: "Nunito",
-                color: grey[900],
-              }}
-            >
-              <CardHeader
-                sx={{ pt: 0, pb: 0, mt: 2 }}
-                avatar={
-                  <Avatar sx={{ bgcolor: yellow[500] }} >R</Avatar>
-                }
-                title={c}
-                subheader="1h"
-              />
-              <CardContent sx={{ pb: 1 }}>{c.text}</CardContent>
-            </Card>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
-  );
-
-  return (
-    <div className="container">
-      <IconButton onClick={() => opencloseModal()}>
-        <ChatBubbleOutlineRoundedIcon />
-      </IconButton>
-      <Modal open={modal} onClose={opencloseModal}>
-        {body}
-      </Modal>
-    </div>
-  );
-}
+        )
+  };
