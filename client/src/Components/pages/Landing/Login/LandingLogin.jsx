@@ -5,29 +5,43 @@ import { useDispatch } from 'react-redux';
 import { getMyUser, login } from '../../../../Redux/actions';
 import './LandingLogin.css';
 import { useLocalStorage } from './useLocalStorage';
-
+import {useNavigate} from 'react-router-dom';
+import {useUserAuth} from '../../../../context/UserAuthContext'
 
 const LandingLogin = () => {
+  const { logIn } = useUserAuth();
     const dispatch = useDispatch(); 
+    const navigate = useNavigate();
     const [input, setInput] = useState({
       email:"",
       password: "",
     });
     const [inputEmail, setInputEmail] = useLocalStorage('input',"")
     const [errors, setErrors] = useState({});
+
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        await logIn(input.email, input.password);
+        navigate("/home");
+      } catch (err) {
+        console.log(err);
+      }
+    };
   
     function validate(input) {
       let errors = {};
       if (!input.email || !/^[^@]+@[^@]+\.[a-zA-Z]{3,}$/.test(input.email)) {
         errors.email = "Invalid E-mail ";
       }
-      if (!input.password ||!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(input.password)){
+      if (!input.password ||!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(input.password)){
         errors.password = "Invalid Password";
       }
       return errors;
     }
 
-  console.log(inputEmail)
+
   function handleChangeEmail(e) {
     setInput({
       ...input,
@@ -40,7 +54,6 @@ const LandingLogin = () => {
       })
     );
     setInputEmail(e.target.value)
-    // console.log(input)
   }
     function handleChange(e) {
       setInput({
@@ -53,17 +66,6 @@ const LandingLogin = () => {
           [e.target.name]: e.target.value,
         })
       );
-      // console.log(input)
-    }
-  
-    function handleSubmit(e) {
-      e.preventDefault();
-
-      dispatch(login(input));
-      setInput({
-        email:"",
-        password: "",
-      });
     }
   
 

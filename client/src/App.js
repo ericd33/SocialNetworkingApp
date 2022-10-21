@@ -12,6 +12,7 @@ import Signup from './Components/Signup'
 import ProtectedRoute from './Components/ProtectedRoute'
 import { UserAuthContextProvider } from "./context/UserAuthContext.js";
 import Home from "./Components/pages/Home/Home.jsx";
+import LandingBackup from './Components/pages/Landing/LandingBackup'
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       <LocalizationProvider dateAdapter={AdapterMoment}>
       <UserAuthContextProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<LandingBackup/>} />
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/home" element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path="/profile/:email" element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
