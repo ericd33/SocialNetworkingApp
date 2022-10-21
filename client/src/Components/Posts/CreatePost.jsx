@@ -24,8 +24,8 @@ import { useUserAuth } from "../../context/UserAuthContext";
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
   const {user} = useUserAuth();
-
   let userEmail = user.email;
+  const token = user.accessToken;
   useEffect(() => {
     dispatch(getMyUser(userEmail));
   }, []);
@@ -52,10 +52,9 @@ export default function CreatePost() {
       email: userEmail
     };
 
-    dispatch(postPost(localStorage.getItem('token').slice(1,-1), data));
+    dispatch(postPost(token, data));
 
     setModal(!modal);
-    window.location.reload()
   };
 
   const body = (
