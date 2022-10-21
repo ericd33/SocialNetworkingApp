@@ -9,10 +9,8 @@ export default function PostList() {
   const all_posts = useSelector((state) => state.filtered_posts);
   const dispatch = useDispatch();
   const {user} = useUserAuth();
-  console.log(user)
   useEffect(() => {
     let token = user.accessToken;
-    console.log(user)
     dispatch(getPosts(token));
   }, [dispatch]);
 

@@ -16,8 +16,8 @@ export default function Home() {
       <div className="navbar">
         <span></span>
       </div>
+      <CreatePost />
       <NavBar />
-      <PostList />
       <div className="media-part">
         <div className="leftHome">
           <div className="finded-persons">
@@ -56,12 +56,11 @@ export default function Home() {
           <EventsMenu />
         </div>
         <div className="centerHome">
-        <CreatePost />
+          <PostList />
         </div>
         <div className="rightHome"></div>
       </div>
-      
+      <CreatePost />
     </div>
   );
 }
-

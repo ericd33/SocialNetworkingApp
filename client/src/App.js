@@ -11,13 +11,14 @@ import Login from './Components/Login'
 import Signup from './Components/Signup'
 import ProtectedRoute from './Components/ProtectedRoute'
 import { UserAuthContextProvider } from "./context/UserAuthContext.js";
-import Home from "./Components/pages/Home/Home";
+import Home from "./Components/pages/Home/Home.jsx";
 
 function App() {
   return (
     <>
+    
       <LocalizationProvider dateAdapter={AdapterMoment}>
-        <UserAuthContextProvider>
+      <UserAuthContextProvider>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup/>}/>
@@ -26,6 +27,7 @@ function App() {
         </Routes>
         </UserAuthContextProvider>
       </LocalizationProvider>
+      
     </>
   );
 }
