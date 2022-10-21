@@ -12,7 +12,7 @@
 
 .postCreator {
     position: absolute;
-    border: 1px solid #ffd000;
+    border: 1px solid black;
     padding: 16px 32px 24px;
     top: 50%;
     left: 50%;
@@ -40,7 +40,7 @@
     display:flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     height: 190px;
 }
 
@@ -52,4 +52,14 @@
 }
 .inputsdePost label{
     color:#a5a5a5;
+}
+
+.TitleCreatePost {
+    display: flex;
+    align-items: center;
+}
+
+.TitleCreatePost h2{
+    padding-right: 5px;
+    padding-bottom: 1px;
 }

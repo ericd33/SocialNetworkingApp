@@ -1,3 +1,49 @@
+.textLikes:hover ~ ul{
+    display: inline-block;
+    opacity: 90%;
+}
+.actionsPost ul {
+    display: none;
+    opacity: 0%;
+    background-color: gray;
+    position: absolute;
+    z-index: 1;
+    color:white;
+    font-family: 'Nunito';
+    text-decoration:none;
+    list-style: none;
+    padding: 10px;
+    border-radius: 10px;
+    bottom: 50px;
+    left: 5px;
+}
+.actionsPost ul #LikeTitle {
+    text-align: center;
+    color: #ffd000;
+}
+
+
+.textLikes {
+    color:#a5a5a5;
+    cursor: pointer;
+}
+.textCommentarys {
+    color:#a5a5a5;
+}
+.ButtonActionPost {
+    color:#a5a5a5;
+}
+.ButtonActionPost:hover {
+    color:#ffd000;
+}
+#OLikes {
+    color:#a5a5a5;
+}
+.actionLikes {
+    display: flex;
+    padding-right: 20px;
+}
+
 .post-comment-input1 {
   width: 100%;
   background-color: rgb(16 16 16);

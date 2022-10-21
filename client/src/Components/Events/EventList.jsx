@@ -36,12 +36,13 @@ export default function EventList() {
             <div className="List">
                 {
                     events?.map(e=>{
+                        console.log(e);
                         return (
                             <EventCard
                                 key={e.author+e.date} 
                                 date={e.date}
                                 location={e.location}
-                                title={e.title}
+                                name={e.name}
                                 text={e.content}
                                 image={e.image}
                                 id={e._id}

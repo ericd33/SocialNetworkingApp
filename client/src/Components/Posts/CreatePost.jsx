@@ -8,6 +8,7 @@ import {
   CardContent,
   Input,
   InputLabel,
+  Icon,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
@@ -17,6 +18,7 @@ import { getMyUser, postPost } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import { useEffect } from "react";
 import { getAuth } from "firebase/auth";
 
@@ -36,6 +38,7 @@ export default function CreatePost() {
   const [formState, setFormState] = useState({
     content: "",
     image: "",
+    email:""
   });
 
   const handleChange = (e) => {
@@ -70,7 +73,10 @@ export default function CreatePost() {
     >
       <CardContent>
         <div className="headerModal">
-          <h2>Create a post</h2>
+          <div className='TitleCreatePost'>
+            <h2>Create a post</h2>
+            <Icon><DriveFileRenameOutlineIcon/></Icon>
+          </div>
           <IconButton
             id='closeIcon'
             sx={{ width: "35px", height: "35px", top: "20px",

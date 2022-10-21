@@ -101,7 +101,8 @@ export default function Post({ text, author, comments, likes, image, id }) {
           width: 600,
           bgcolor: "custom.dark",
           fontFamily: "Nunito",
-          borderRadius: 3,
+          borderRadius:3,
+          position:'relative'
         }}
       >
         <CardHeader
@@ -123,37 +124,37 @@ export default function Post({ text, author, comments, likes, image, id }) {
           <div></div>
         )}
 
-        <CardActions disableSpacing>
-          <IconButton id="buttonsPost" onClick={putLike}>
-            <ThumbUpOffAltIcon />
-          </IconButton>
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-            }}
-          >
-            <p id="textButtons">{likes?.length} likes</p>
-            <p id="textButtons">{comments.length} comments</p>
-          </div>
+        <CardActions>
+          <div className="actionsPost">
+            <div className="actionLikes">
+                <IconButton onClick={putLike}>
+                  <ThumbUpOffAltIcon className='ButtonActionPost'/>
+                </IconButton>
+                {
+                  likes.length !== 0 ?
+                  <div>
+                    <p className="textLikes">{likes?.length} likes</p>
+                    <ul>
+                      <li id='LikeTitle'>Likes</li>
+                    {
+                      likes?.map(l => {
+                        return (
+                          <li>{l.name}</li>
+                        )
+                      })
+                    }
+                    </ul>
+                  </div> : 
+                  <p id="OLikes">0 likes</p>
+                }
+              </div>
+            </div>
 
-          
-
-          {/* ----Dislikes para un FUTURO---- */}
-
-          {/* <IconButton>
-                            <ThumbDownOffAltIcon/>
-                        </IconButton>
-                        <p>6 dislikes</p> */}
-
-          {/* 								
-          {comments ? (
+          {/* {comments ? 
             <CommentsModal comments={comments} />
-          ) : (
-            <IconButton id="buttonsPost">
-              <ChatBubbleOutlineRoundedIcon />
-            </IconButton>
-          )} */}
+            : <></>
+          } */}
+          <p className='textCommentarys'>{comments.length} comments</p>
 
           {/* --- Shares para FUTURO --- */}
 

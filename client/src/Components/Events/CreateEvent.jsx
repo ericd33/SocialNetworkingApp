@@ -8,16 +8,19 @@ import {
   CardContent,
   Input,
   InputLabel,
+  Icon,
 } from "@mui/material";
 import {DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreateEvent.css";
+import "../Posts/CreatePost.css";
 import { postEvent } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { getMyUser } from "../../Redux/actions";
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 
@@ -79,52 +82,67 @@ export default function CreateEvent() {
       sx={{
         width: 600,
         borderRadius: "15px",
-        bgcolor: grey[300],
+        bgcolor: 'custom.main',
         fontFamily: "Nunito",
-        color: grey[900],
+        color: 'primary.light',
+        padding:5,
+        pt:1
       }}
     >
-      <CardContent>
+      <CardContent sx={{padding:0}}>
         <div className="headerModal">
-          <h2>Create a post</h2>
+          <div className='TitleCreatePost'>
+            <h2>Create a event</h2>
+            <Icon><DriveFileRenameOutlineIcon/></Icon>
+          </div>
           <IconButton
-            sx={{ width: "35px", height: "35px", top: "20px" }}
+            id='closeIcon'
+            sx={{ width: "35px", height: "35px", top: "20px",
+            bgcolor:'custom.light' }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon />
+            <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
-        <InputLabel htmlFor='name'>Name</InputLabel>
-        <Input
-        type='text'
-        onChange={handleChange} 
-        name='name' 
-        value={formState.name}/>
-        <TextField
-          id="outlined-multiline-static"
-          label="¿Que estas pensando?"
-          multiline
-          rows={4}
-          value={formState.content}
-          name="content"
-          className="textField"
-          onChange={handleChange}
-        />
-        <InputLabel htmlFor='date'>Date</InputLabel>
-        <DateTimePicker 
-        minDate={Date.now()}
-        onChange={handleDateChange} 
-        name='date'
-        value={formState.date}
-        renderInput={(params) => <TextField {...params} />}
-        />
+        <div className="inputsdePost">
 
-        <InputLabel htmlFor='location'>Location</InputLabel>
-        <Input
-        type='text'
-        onChange={handleChange} 
-        name='location' 
-        value={formState.location}/>
+          <TextField id="filled-basic" 
+            label="Title" variant="filled" 
+            value={formState.name}
+            name="name"
+            type='text'
+            className="textField"
+            onChange={handleChange}
+          />
+          <TextField
+            id="filled-multiline-static"
+            label="Event's description"
+            multiline
+            rows={4}
+            value={formState.content}
+            variant="filled"
+            name="content"
+            className="textField"
+            onChange={handleChange}
+          />
+          <InputLabel htmlFor='date'>Date</InputLabel>
+          <DateTimePicker
+          minDate={Date.now()}
+          onChange={handleDateChange} 
+          name='date'
+          value={formState.date}
+          renderInput={(params) => <TextField {...params} />}
+          />
+          <TextField id="filled-basic"
+            sx={{width:'260px'}}
+            label="Location" variant="filled" 
+            value={formState.location}
+            name="location"
+            type='text'
+            className="textField"
+            onChange={handleChange}
+          />
+        </div>
         
         <div align="right">
 
@@ -132,7 +150,9 @@ export default function CreateEvent() {
           <Input id='inputImage'type="file" accept="image/*" disableUnderline={true}/>
           <FileUploadIcon/>
         </IconButton> */}
-          <Button onClick={handleSubmit}>Post</Button>
+          <Button id='Postbutton'
+          sx={{mt:5, bgcolor:'secondary.main', fontFamily: "Nunito",
+          color:'custom.dark'}} onClick={handleSubmit} variant='contained'>Post</Button>
         </div>
       </CardContent>
     </Card>
