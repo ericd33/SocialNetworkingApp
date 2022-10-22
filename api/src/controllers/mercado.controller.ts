@@ -4,12 +4,13 @@ const mercadopago = require("mercadopago");
 
 
 export const mercado = (req: Request, res: Response) => {
-    const { donacion } = req.body
+    const { donacion } = req.body;
+
     let preference = {
         items: [
                 {
                     title: "Gracias por tu donación!",
-                    unit_price: donacion,
+                    unit_price: parseInt(donacion),
                     quantity: 1,
                 },
         ],

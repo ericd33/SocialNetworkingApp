@@ -64,6 +64,22 @@ export function postPost(token, data) {
   };
 }
 
+export function Donate(token, data) {
+  return async function () {
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/mercado`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        donacion: data
+      }
+    };
+    await axios(Config).then((res) => console.log(res))
+  };
+}
+
 export function postEvent(payload, token) {
   return function () {
     const Config = {

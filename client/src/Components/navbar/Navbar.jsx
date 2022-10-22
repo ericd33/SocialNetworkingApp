@@ -20,6 +20,7 @@ import { getAuth, signOut } from "firebase/auth";
 import './Navbar.css';
 import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
+import Donations from "../Donations/Donations";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -145,6 +146,8 @@ const NavBar = () => {
           <IconButton color="secondary" component={Link}>
             <ChatOutlinedIcon />
           </IconButton>
+
+          <Donations/>
           
           <IconButton color="secondary" onClick={logOut}>
             <LogoutIcon/>

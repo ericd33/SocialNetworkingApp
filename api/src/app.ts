@@ -20,15 +20,13 @@ app.listen(app.get("port"), () => {
   connectDB();
 });
 
-// TODO: Implement configurations for CORS
+app.use(cors());
+app.use(middleware.decodeToken)
+app.use(bodyParser.urlencoded({extended: false}))
+
 mercadopago.configure({
   access_token : "APP_USR-8366918559204641-102119-b46a91ed28fa4f1cca1b56502af532a5-1222629415"
 })
-
-app.use(cors({origin: "*"}));
-app.use(middleware.decodeToken)
-app.use(bodyParser.urlencoded({extended: false}))
-   
 
 app.use("/comments", comment);
 app.use("/users", userRoutes);
