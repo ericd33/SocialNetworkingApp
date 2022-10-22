@@ -21,5 +21,17 @@
 }
 
 .userPlusInfo p {
-    margin: 3px
+    display: flex;
+    justify-content: center;
+    margin: 1px
+}
+
+.plus {
+    margin-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.205);
+    padding-top: 10px
+}
+
+.plusText {
+    color:rgba(238, 255, 0, 0.5)
 }
