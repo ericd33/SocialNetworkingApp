@@ -13,7 +13,7 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { searchUsersByName } from "../../Redux/actions";
+import { searchUsersByName,getEventsByName } from "../../Redux/actions";
 import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import { getAuth, signOut } from "firebase/auth";
@@ -99,6 +99,9 @@ const NavBar = () => {
   const handleInput = (e)=>{
     dispatch(searchUsersByName(e.target.value,token))
   }
+  const handleInputEvents = (e)=>{
+    dispatch(getEventsByName(token,e.target.value))
+  }
 
   return (
     <AppBar sx={{ bgcolor: 'custom.dark'}} position="fixed">
@@ -126,7 +129,7 @@ const NavBar = () => {
                 placeholder="Search events..."
                 color='primary'
                 inputProps={{ "aria-label": "search" }}
-                onChange={handleInput}
+                onChange={handleInputEvents}
               /> :
                 <StyledInputBase
                   placeholder="Search persons..."
