@@ -3,13 +3,13 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, username, date, content, image, location, email } = req.body;
+  const { name, username, date, content, image, location, email,lat_log} = req.body;
   console.log(req.body)
   try {
   const user = await userSchema.findOne({email:email})
   console.log('creating event')
     let event = await new eventSchema();
-    if (name.length && date.length && content.length && location.length) {
+    if (name.length && date.length && content.length && location.length && lat_log.length) {
       event.author= email
       event.avatar = image
       event.nameAuthor = username
@@ -19,6 +19,7 @@ export const addEvent = async (req: Request, res: Response) => {
       event.image = image;
       event.location = location;
       event.enabled = true;
+      event.lat_log=lat_log
       const newEvent = await event.save();
       user.events = user.events.concat(newEvent)
       await user.save()

@@ -21,8 +21,11 @@ import { getAuth } from "firebase/auth";
 import { getMyUser } from "../../Redux/actions";
 import { useUserAuth } from "../../context/UserAuthContext";
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-
+import { Search } from "./map/search";
+import React, { useContext, useRef } from "react"
+import { MapaContext } from './map/contex/MapaContext'; 
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
+import { searchPlaces } from './map/axios/searchPlaces';
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
@@ -32,21 +35,41 @@ export default function CreateEvent() {
   let userName = user.displayName
   const dispatch = useDispatch();
   // const navigate = useNavigate();
+  const {eventoLocation,setResults,location,setLocation,results} = useContext(MapaContext)
+  console.log(location)
   useEffect(()=>{
     dispatch(getMyUser(userEmail))
   },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
-
+console.log(eventoLocation)
+const timeOutRef=useRef()
+const [locations,setLocations] = useState([{
+    center:"",
+    place_name:"",
+    text:""
+}])
+async function search() {
+  if(timeOutRef.current){
+      clearInterval(timeOutRef.current)
+  }
+  if(!location) return
+  timeOutRef.current = setTimeout(async ()=>{
+      const {data} = await searchPlaces.get(`${location}.json`)
+      setLocations(data.features)
+      setResults(data.features.length>0)
+  },500)
+}
   const [formState, setFormState] = useState({
     name:"",
     content: "",
     username: userName,
     email:userEmail,
     date : Date.now(),
-    location: "",
-    image:''
+    location: location,
+    image:'',
+    lat_log: eventoLocation
   });
 
   function handleDateChange(e) {
@@ -63,10 +86,21 @@ export default function CreateEvent() {
       ...formState,
       [e.target.name]: e.target.value,
       email:userEmail,
+      lat_log: eventoLocation,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
   };
 
+  const handleSetLocation = (e)=>{
+    setLocation(e.target.innerHTML||e.target.value)
+    setFormState({
+      ...formState,
+      location: e.target.value ||e.target.innerHTML ,
+      lat_log: eventoLocation,
+      email:userEmail,
+      image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
+    });
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     setModal(!modal)
@@ -75,6 +109,9 @@ export default function CreateEvent() {
     // navigate("/");
   };
 
+  console.log(eventoLocation)
+    
+    console.log(formState)
   const body = (
     <Card
       className="postCreator"
@@ -132,7 +169,7 @@ export default function CreateEvent() {
           value={formState.date}
           renderInput={(params) => <TextField {...params} />}
           />
-          <TextField id="filled-basic"
+          {/* <TextField id="filled-basic"
             sx={{width:'260px'}}
             label="Location" variant="filled" 
             value={formState.location}
@@ -140,7 +177,28 @@ export default function CreateEvent() {
             type='text'
             className="textField"
             onChange={handleChange}
-          />
+          /> */}
+          <input type="search" 
+          name="location"
+        placeholder='search' 
+        className='search' 
+        onKeyUp={search}
+        value={location}
+        onChange={handleSetLocation}
+        style={{color:"#000"}}
+            />
+            <div>
+                {
+                    locations.length && results
+                    ? locations.map(({place_name,text, center},i)=><Search place_name={place_name} text={text} center={center} i={i}/>)
+                    : location && results &&(
+                        <div>
+                            <p className='parrafo'>No encontrado</p>
+                            <p className='parrafo'>{location}</p>
+                        </div>
+                    )
+                }
+            </div>
         </div>
         
         <div align="right">
