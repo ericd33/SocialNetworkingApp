@@ -41,13 +41,13 @@ export const findEvent = async (req: Request, res: Response) => {
         res.status(200).send(event);
         return;
       }
-      res.status(201).send("el evento no existe");
+      res.status(201).send(undefined);
       return;
     } else {
       const events = await eventSchema.find({});
       events.length
         ? res.status(200).send(events)
-        : res.status(400).send("sin eventos");
+        : res.status(400).send(undefined);
     }
   } catch (e) {
     res.status(400).send(e);

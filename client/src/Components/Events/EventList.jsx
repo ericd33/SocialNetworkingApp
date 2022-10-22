@@ -36,6 +36,7 @@ export default function EventList() {
     else {
         return (
             <div className="List">
+                {console.log(events)}
                 {
                     events?.map(e=>{
                         return (
@@ -43,13 +44,13 @@ export default function EventList() {
                                 key={e.author+e.date} 
                                 date={e.date}
                                 location={e.location}
-                                title={e.title}
+                                name={e.name}
                                 text={e.content}
                                 image={e.image}
                                 id={e._id}
                             />
                         )
-                    })
+                    }).reverse()
                 }
             </div>
         )

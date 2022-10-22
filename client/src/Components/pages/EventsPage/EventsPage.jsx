@@ -11,7 +11,7 @@ export default function EventsPage() {
       <div className="navbar">
         <span></span>
       </div>
-      <NavBar />
+      <NavBar/>
       <div className="media-part">
         <div className="leftHome">
           <EventsMenu />
