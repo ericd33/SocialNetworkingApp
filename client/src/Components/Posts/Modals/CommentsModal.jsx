@@ -68,7 +68,7 @@ export default function CommentsModal(comments) {
   return (
     <div className="container">
       <IconButton onClick={() => opencloseModal()}>
-        <ChatBubbleOutlineRoundedIcon />
+        <ChatBubbleOutlineRoundedIcon sx={{color:'primary.dark'}}/>
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>
         {body}

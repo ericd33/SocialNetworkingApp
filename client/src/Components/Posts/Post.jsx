@@ -122,7 +122,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
           }
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
-        <CardContent sx={{ pb: 1, color: "primary.main" }}>{text}</CardContent>
+        <CardContent sx={{color: "primary.main" }}>{text}</CardContent>
 
         {image ? (
           <CardMedia component="img" alt="image" image={image} />
@@ -130,14 +130,14 @@ export default function Post({ text, author, comments, likes, image, id }) {
           <div></div>
         )}
 
-        <CardActions>
+        <CardActions sx={{mb:0}}>
           <div className="actionsPost">
             <div className="actionLikes">
                 <IconButton onClick={putLike}>
                   <ThumbUpOffAltIcon className='ButtonActionPost'/>
                 </IconButton>
                 {
-                  likes ?
+                  likes.length !== 0 ?
                   <div>
                     <p className="textLikes">{likes?.length} likes</p>
                     <ul>
@@ -180,11 +180,11 @@ export default function Post({ text, author, comments, likes, image, id }) {
               onChange={handleChangeComment}
             />
             <Button
-            sx={{mt:3, bgcolor:'secondary.main', fontFamily: "Nunito",
-            color:'custom.dark'}} 
+            sx={{mb:1,fontFamily: "Nunito",
+            color:'primary.dark'}} 
             variant='outlined'
             onClick={handleSubmitCommentForm}>
-              Post
+              Comment
             </Button>
           </div>
 
