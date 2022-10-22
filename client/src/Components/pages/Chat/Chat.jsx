@@ -15,7 +15,7 @@ function Chat() {
     socket.emit("message", message);
     const newMessage = {
       body: message,
-      from: 'me',
+      from: user.displayName,
     };
     setMessage("");
     setMessages([newMessage, ...messages]);
@@ -50,10 +50,10 @@ function Chat() {
           {messages.map((message, i) => (
             <li
               key={i}
-              className={`message-from ${message.from === 'me' ? 'message-from-me' : 'message-from-friend' }`}
+              className={`message-from ${message.from === user.displayName ? 'message-from-me' : 'message-from-friend' }`}
             >
               <p>
-                {user.displayName}: {message.body}
+                {message.from}: {message.body}
               </p>
             </li>
           ))}
