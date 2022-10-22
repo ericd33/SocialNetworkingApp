@@ -27,11 +27,21 @@
 }
 
 .plus {
-    margin-top: 15px;
+    margin-top: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.205);
-    padding-top: 10px
+    padding-top: 7px
 }
 
 .plusText {
-    color:rgba(238, 255, 0, 0.5)
+    color:rgba(240, 255, 25, 0.5);
+    font-size: 13px; 
+}
+
+.followers {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.205);
+    padding-top: 7px
 }

@@ -111,7 +111,7 @@ const NavBar = () => {
         <Toolbar>
           <div>
             <Link to={"/home"} >
-                <h2>ConCatUs</h2>
+                <h2>ConcatUs</h2>
             </Link>
           </div>
           <Search sx={{ marginLeft: 5 , borderRadius:5}}>
