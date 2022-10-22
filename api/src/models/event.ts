@@ -11,7 +11,8 @@ export interface Ievent extends Document {
     enabled: string,
     nameAuthor:string,
     avatar:string,
-    participants?: string[]
+    participants?: string[],
+    lat_log:string[]
 }
 
 const eventSchema = new Schema({
@@ -46,7 +47,8 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
-    participants: []
+    participants: [],
+    lat_log:[]
     });
 
     const Event = model<Ievent>('event', eventSchema);

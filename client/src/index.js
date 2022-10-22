@@ -8,6 +8,12 @@ import { Provider } from "react-redux";
 import store from "./Redux/store.js";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from '@mui/material/styles';
+import { MapaProvider } from "./Components/Events/map/contex";
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { mapboxAccessToken } from "./Components/Events/map/constMap";
+mapboxgl.accessToken = mapboxAccessToken;
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const theme = createTheme({
@@ -32,9 +38,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ThemeProvider theme={theme}>        
+        <MapaProvider>
+          <ThemeProvider theme={theme}>        
             <App />
-        </ThemeProvider>
+          </ThemeProvider>
+        </MapaProvider> 
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

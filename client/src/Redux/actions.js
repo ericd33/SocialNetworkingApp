@@ -80,6 +80,7 @@ export function postEvent(payload, token) {
         location: payload.location,
         content: payload.content,
         date: payload.date,
+        lat_log:payload.lat_log
       },
     };
     axios(Config).then((res) => console.log(res));

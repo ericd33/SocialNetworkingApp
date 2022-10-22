@@ -9,7 +9,8 @@ import React from 'react'
 import NavBar from "../navbar/Navbar";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useUserAuth } from "../../context/UserAuthContext";
-
+import Maps from "./map/mapDetail";
+import './map/map.css'
 
 
 export default function EventDetail() {
@@ -101,6 +102,7 @@ export default function EventDetail() {
                 </CardContent>
             </Card>
         </Container>
+        <Maps latLon={detail?.lat_log}/>
     </div>
     
     )
@@ -116,6 +118,7 @@ else {
                 <div className="shadowDetail"></div>
                 <div className="shadowDetail"></div>
             </div>
+            
         </div>
     )
 }
