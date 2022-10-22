@@ -22,7 +22,7 @@ app.listen(app.get("port"), () => {
 
 // TODO: Implement configurations for CORS
 mercadopago.configure({
-  access_token : "APP_USR-7590321752100063-102008-e7aaefd92f008b7b276c2a0e7db58620-1221485770"
+  access_token : "APP_USR-8366918559204641-102119-b46a91ed28fa4f1cca1b56502af532a5-1222629415"
 })
 
 app.use(cors({origin: "*"}));

@@ -1,9 +1,19 @@
 import React from 'react'
 import { CardMedia } from "@mui/material";
 import './ProfileInfo.css'
-
+import { useParams } from 'react-router-dom';
+import { useUserAuth } from '../../../../context/UserAuthContext';
+import { useState } from 'react';
+import { useEffect } from 'react'
+import Follow from '../../Home/follow';
 const ProfileInfo = ({userInfoRen}) => {
-    
+  const {user} = useUserAuth();
+  let email = useParams()
+  const [myUser, setMyUser]=useState(true)
+  useEffect(()=>{
+    if(email.email===user.email){setMyUser(false)}
+  },[myUser,email,user])
+  console.log(myUser)
   return (
     <div className='userCard'>
         {userInfoRen.image ? (
@@ -30,6 +40,11 @@ const ProfileInfo = ({userInfoRen}) => {
           <div className='plus'><p>{userInfoRen.asistEvent?.length}</p>
           <p className='plusText'>Events that will attend</p></div>
             </div>
+            {
+            !myUser
+              ? <div></div>
+              : <Follow email={userInfoRen.email}/>
+          }
 				</div>
     </div>
   )
