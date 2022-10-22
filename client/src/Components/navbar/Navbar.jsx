@@ -13,14 +13,13 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { searchUsersByName,getEventsByName } from "../../Redux/actions";
+import { searchUsersByName } from "../../Redux/actions";
 import LogoutIcon from '@mui/icons-material/Logout';
 import CloseIcon from '@mui/icons-material/Close';
 import { getAuth, signOut } from "firebase/auth";
 import './Navbar.css';
 import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
-import Donations from "../Donations/Donations";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -99,9 +98,6 @@ const NavBar = () => {
   const handleInput = (e)=>{
     dispatch(searchUsersByName(e.target.value,token))
   }
-  const handleInputEvents = (e)=>{
-    dispatch(getEventsByName(token,e.target.value))
-  }
 
   return (
     <AppBar sx={{ bgcolor: 'custom.dark'}} position="fixed">
@@ -123,12 +119,13 @@ const NavBar = () => {
               <SearchIcon color="secondary"/>
             </SearchIconWrapper>
             {
+              window.location.href === `http://localhost:3000/events` 
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
                 color='primary'
                 inputProps={{ "aria-label": "search" }}
-                onChange={handleInputEvents}
+                onChange={handleInput}
               /> :
                 <StyledInputBase
                   placeholder="Search persons..."
@@ -145,13 +142,12 @@ const NavBar = () => {
             <NotificationsNoneIcon />
           </IconButton>
 
-          <Donations/>
-
           <Link to="/chat">
             <IconButton color="secondary">
               <ChatOutlinedIcon />
             </IconButton>
           </Link>
+
           
           <IconButton color="secondary" onClick={logOut}>
             <LogoutIcon/>
