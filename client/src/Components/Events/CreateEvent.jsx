@@ -26,6 +26,7 @@ import React, { useContext, useRef } from "react"
 import { MapaContext } from './map/contex/MapaContext'; 
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { searchPlaces } from './map/axios/searchPlaces';
+// import e from "express";
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
@@ -61,6 +62,7 @@ async function search() {
       setResults(data.features.length>0)
   },500)
 }
+
   const [formState, setFormState] = useState({
     name:"",
     content: "",
@@ -71,7 +73,13 @@ async function search() {
     image:'',
     lat_log: eventoLocation
   });
-
+useEffect(()=>{
+  setFormState({
+    ...formState,
+    location:location,
+    lat_log: eventoLocation
+  })
+},[location])
   function handleDateChange(e) {
     console.log(e._d)
     setFormState({
@@ -86,6 +94,7 @@ async function search() {
       ...formState,
       [e.target.name]: e.target.value,
       email:userEmail,
+      location:location,
       lat_log: eventoLocation,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });

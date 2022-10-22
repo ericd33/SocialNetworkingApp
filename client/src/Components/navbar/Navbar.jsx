@@ -143,11 +143,13 @@ const NavBar = () => {
             <NotificationsNoneIcon />
           </IconButton>
 
-          <IconButton color="secondary" component={Link}>
-            <ChatOutlinedIcon />
-          </IconButton>
-
           <Donations/>
+
+          <Link to="/chat">
+            <IconButton color="secondary">
+              <ChatOutlinedIcon />
+            </IconButton>
+          </Link>
           
           <IconButton color="secondary" onClick={logOut}>
             <LogoutIcon/>
