@@ -2,18 +2,20 @@ import React from "react";
 import io from "socket.io-client";
 import { useState, useEffect } from "react";
 import './Chat.css'
+import { useUserAuth } from '../../../context/UserAuthContext.js';
 
 const socket = io(`${process.env.REACT_APP_MY_API_URL}`);
 function Chat() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const {user} = useUserAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     socket.emit("message", message);
     const newMessage = {
       body: message,
-      from: "me",
+      from: 'me',
     };
     setMessage("");
     setMessages([newMessage, ...messages]);
@@ -32,6 +34,7 @@ function Chat() {
 
   return (
     <div className="chat-container">
+      {console.log(user)}
       <h1>ConcatUS Chat</h1>
       <p>Abrí otra pestaña y mira la magia</p>
       <form onSubmit={handleSubmit} className='chat-from-container'>
@@ -50,7 +53,7 @@ function Chat() {
               className={`message-from ${message.from === 'me' ? 'message-from-me' : 'message-from-friend' }`}
             >
               <p>
-                {message.from} : {message.body}
+                {user.displayName}: {message.body}
               </p>
             </li>
           ))}
