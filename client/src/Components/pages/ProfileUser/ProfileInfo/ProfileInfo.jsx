@@ -25,11 +25,13 @@ const ProfileInfo = ({userInfoRen}) => {
 					<p>{userInfoRen.name}</p>
             <div className='userPlusInfo'>
 
-          <div className='plus'><p>{userInfoRen.followeds?.length}</p>
-          <p className='plusText'>Followers</p></div>
+          <div className='followers'>
+           <div><p>{userInfoRen.followeds?.length}</p>
+          <p className='plusText'>Followers</p></div> 
 
-          <div className='plus'><p>{userInfoRen.follows?.length}</p>
-           <p className='plusText'>Followeds</p></div>
+          <div><p>{userInfoRen.follows?.length}</p>
+           <p className='plusText'>Follows</p>
+          </div></div>
 
            <div className='plus'><p>{userInfoRen.posts?.length}</p>
           <p className='plusText'>Posts</p></div>
