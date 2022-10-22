@@ -24,7 +24,6 @@ const ProfileInfo = ({userInfoRen}) => {
 				<div className='userInfo'>
 					<p>{userInfoRen.name}</p>
             <div className='userPlusInfo'>
-
           <div className='followers'>
            <div><p>{userInfoRen.followeds?.length}</p>
           <p className='plusText'>Followers</p></div> 
