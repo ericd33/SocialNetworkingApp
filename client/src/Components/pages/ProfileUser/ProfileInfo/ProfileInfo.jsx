@@ -29,7 +29,7 @@ const ProfileInfo = ({userInfoRen}) => {
           <p className='plusText'>Followers</p></div> 
 
           <div><p>{userInfoRen.follows?.length}</p>
-           <p className='plusText'>Follows</p>
+           <p className='plusText'>Following</p>
           </div></div>
 
            <div className='plus'><p>{userInfoRen.posts?.length}</p>
