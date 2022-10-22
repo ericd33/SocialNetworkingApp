@@ -123,7 +123,6 @@ const NavBar = () => {
               <SearchIcon color="secondary"/>
             </SearchIconWrapper>
             {
-              window.location.href === `http://localhost:3000/events` 
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
