@@ -8,9 +8,10 @@ import { grey, yellow } from "@mui/material/colors";
 import Follow from "./follow";
 import CreatePost from '../../Posts/CreatePost'
 import CreateEvent from "../../Events/CreateEvent";
-
+import { useUserAuth } from "../../../context/UserAuthContext";
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
+  const {user} = useUserAuth();
   return (
     <div className="Home">
       <div className="navbar">
@@ -45,7 +46,11 @@ export default function Home() {
                       }
                       title={u.name}
                     />
-                      <Follow email={u.email}/>
+                      {
+                        (user.email===u.email)
+                          ? <div></div>
+                          : <Follow email={u.email}/>
+                      }
                   </Card>
                 );
               })
