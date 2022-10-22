@@ -36,7 +36,7 @@ function Chat() {
     <div className="chat-container">
       {console.log(user)}
       <h1>ConcatUS Chat</h1>
-      <p>Abrí otra pestaña y mira la magia</p>
+      <p>This is a global chat, meet everyone!</p>
       <form onSubmit={handleSubmit} className='chat-from-container'>
         <input
           type="text"
