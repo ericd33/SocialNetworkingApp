@@ -14,11 +14,21 @@ const ProfileInfo = ({userInfoRen}) => {
 				<div className='userInfo'>
 					<p>{userInfoRen.name}</p>
             <div className='userPlusInfo'>
-          <p>Followers:{userInfoRen.followeds?.length}</p>
-          <p>Follows:{userInfoRen.follows?.length}</p>
-          <p>Posts:{userInfoRen.posts?.length}</p>
-          <p>Events created:{userInfoRen.events?.length}</p>
-          <p>Events that will attend:{userInfoRen.asistEvent?.length}</p>
+
+          <div className='plus'><p>{userInfoRen.followeds?.length}</p>
+          <p className='plusText'>Followers</p></div>
+
+          <div className='plus'><p>{userInfoRen.follows?.length}</p>
+           <p className='plusText'>Followeds</p></div>
+
+           <div className='plus'><p>{userInfoRen.posts?.length}</p>
+          <p className='plusText'>Posts</p></div>
+
+          <div className='plus'><p>{userInfoRen.events?.length}</p>
+          <p className='plusText'>Events created</p></div>
+
+          <div className='plus'><p>{userInfoRen.asistEvent?.length}</p>
+          <p className='plusText'>Events that will attend</p></div>
             </div>
 				</div>
     </div>
