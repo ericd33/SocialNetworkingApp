@@ -6,7 +6,7 @@
 .userInfo {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .userCard {
@@ -27,7 +27,7 @@
 }
 
 .plus {
-    margin-top: 10px;
+    margin-top: 1px;
     border-top: 1px solid rgba(0, 0, 0, 0.205);
     padding-top: 7px
 }
@@ -41,7 +41,6 @@
     width: 100%;
     display: inline-flex;
     justify-content: space-around;
-    margin-top: 10px;
-    border-top: 1px solid rgba(0, 0, 0, 0.205);
+    margin-top: 0px;
     padding-top: 7px
 }
