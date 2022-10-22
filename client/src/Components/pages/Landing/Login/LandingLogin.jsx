@@ -1,32 +1,60 @@
 import { Button, FormControl, FormHelperText, Grid, Input, InputLabel } from '@mui/material';
 import { grey} from '@mui/material/colors';
 import React,{ useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { getMyUser, login } from '../../../../Redux/actions';
 import './LandingLogin.css';
+import { useLocalStorage } from './useLocalStorage';
+import {useNavigate} from 'react-router-dom';
+import {useUserAuth} from '../../../../context/UserAuthContext'
 
 const LandingLogin = () => {
-   // const dispatch = useDispatch();
-    // useEffect(() => {
-    // }, [dispatch]);
-  
-  
+  const { logIn } = useUserAuth();
+    const dispatch = useDispatch(); 
+    const navigate = useNavigate();
     const [input, setInput] = useState({
       email:"",
       password: "",
     });
-  
+    const [inputEmail, setInputEmail] = useLocalStorage('input',"")
     const [errors, setErrors] = useState({});
+
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        await logIn(input.email, input.password);
+        navigate("/home");
+      } catch (err) {
+        console.log(err);
+      }
+    };
   
     function validate(input) {
       let errors = {};
       if (!input.email || !/^[^@]+@[^@]+\.[a-zA-Z]{3,}$/.test(input.email)) {
         errors.email = "Invalid E-mail ";
       }
-      if (!input.password ||!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/.test(input.password)){
+      if (!input.password ||!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(input.password)){
         errors.password = "Invalid Password";
       }
       return errors;
     }
-  
+
+
+  function handleChangeEmail(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
+    setInputEmail(e.target.value)
+  }
     function handleChange(e) {
       setInput({
         ...input,
@@ -38,18 +66,9 @@ const LandingLogin = () => {
           [e.target.name]: e.target.value,
         })
       );
-      console.log(input)
     }
   
-    function handleSubmit(e) {
-      e.preventDefault();
-      // dispatch(postVideogame(input));
-      setInput({
-        email:"",
-        password: "",
-      });
-    }
-  
+
     return (
       <Grid className='loginForm' container sx={{fontFamily: 'Nunito'}}>
           <h1>Login</h1>
@@ -62,7 +81,7 @@ const LandingLogin = () => {
               id='email'
               value={input.email}
               name="email"
-              onChange={(e) => handleChange(e)}
+              onChange={(e) => handleChangeEmail(e)}
               aria-describedby='email-helper'/>
               <FormHelperText sx={{mb:2, color:grey[400]}} id='email-helper'>Your email</FormHelperText>
             </FormControl>

@@ -10,12 +10,18 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Home from "../Home/Home";
 import './LandingPage.css'
 import { grey, yellow } from '@mui/material/colors';
-
+import LandingLogin from './Login/LandingLogin';
+import LandingRegister from './Register/LandingRegister';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../Redux/actions';
+import {useNavigate} from 'react-router-dom';
+import {useUserAuth} from '../../../context/UserAuthContext'
+import GoogleButton from 'react-google-button'
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" to="https://mui.com/">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -24,36 +30,27 @@ function Copyright(props) {
   );
 }
 
-const LoginButton = () => {
-    const { loginWithRedirect } = useAuth0();
 
-    return (
-      <Button
-        sx={{ml:6,mt:2, textAlign:'center'}}
-        variant='contained'
-        onClick={async () =>
-          await loginWithRedirect({
-            redirect_uri: "http://localhost:3000/home",
-          })
-        }
-      >
-        Log In
-      </Button>
-    );
-  };
 
 const theme = createTheme();
 
 const LandingPage = () => {
-    const { isAuthenticated } = useAuth0();
-    const[ login_register, setLogin_register] = useState(true)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { logIn, googleLogIn } = useUserAuth();
+  const navigate = useNavigate();
 
-  const loginOrRegister = (e) =>{
+  
+  const handleGoogleButton = async (e) => {
     e.preventDefault();
-    setLogin_register(!login_register)
+    try{
+      await googleLogIn();
+      navigate("/home")
+    }catch(err){
+      console.log(err)
+    }
   }
-
-  if (isAuthenticated) return <Home/>
+          
   return (
     <ThemeProvider theme={theme}>
       <Grid className='landing' container component="main" sx={{ height: '100vh' }}>
@@ -74,7 +71,10 @@ const LandingPage = () => {
           }}
         />
         <Grid className='form' item component={Paper} elevation={6} square>
-            {LoginButton()}
+        <LandingLogin />
+            <Button id='changeForm' onClick={() => navigate('/signup')}>Register</Button>
+
+            <GoogleButton onClick={handleGoogleButton}/>
         </Grid>
       </Grid>
     </ThemeProvider>
@@ -83,22 +83,3 @@ const LandingPage = () => {
 }
 
 export default LandingPage
-
-
-// const[ login_register, setLogin_register] = useState(true)
-
-  // const loginOrRegister = (e) =>{
-  //   e.preventDefault();
-  //   setLogin_register(!login_register)
-  // }
-  // return(
-  //   <div>
-  //     {login_register ? (<LandingLogin />) : <LandingRegister/> }
-  //     {login_register ? <button onClick={(e) => loginOrRegister(e)}>Register</button> : <button onClick={(e) => loginOrRegister(e)}>Login</button>}
-  //   </div>
-  // )
-
-  //{login_register ? (<LandingLogin />) : <LandingRegister/> }
-   //     <p id='or'>Or</p>
-    //    {login_register ? <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Register</Button> : <Button id='changeForm' onClick={(e) => loginOrRegister(e)}>Login</Button>}
-        

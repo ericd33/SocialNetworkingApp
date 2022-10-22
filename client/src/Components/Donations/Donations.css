@@ -1,0 +1,25 @@
+.postCreator #ButtonDonate {
+    color:black;
+    background-color: #ffd000;
+    font-weight: bold;
+    margin-top: 6px;
+}
+.postCreator #ButtonDonate:hover {
+    background-color: #ffec95;
+}
+
+.inputDonation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.inputDonation #filled-multiline-static {
+    width: 440px;
+    height: 15px;
+    color: white;
+    border-radius: 15px;
+    background-color: #3b3b3b;
+}
+.inputDonation label {
+    color: gray;
+}

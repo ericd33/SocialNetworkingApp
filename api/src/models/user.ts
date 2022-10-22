@@ -1,4 +1,4 @@
-import { Document, model, Schema } from "mongoose";
+import { Document, model, Schema, Types } from "mongoose";
 
 
 export interface Iuser extends Document{
@@ -6,12 +6,13 @@ export interface Iuser extends Document{
     email: string,
     role: string,
     enabled: boolean,
-    password: string,
-    friends?: string[],
+    followeds?: string[],
     posts?:string[],
     liked?:string[],
     events?:string[],
-    image?: string
+    image?: string,
+    follows?:string[],
+    asistEvent?:string[]
 }
 const userSchema = new Schema({
     name: {
@@ -35,12 +36,13 @@ const userSchema = new Schema({
         required:true,
         trim: true
     },
-    password:{
-        type: String,
-        required: true
-    },
-    friends:[],
-    posts:[],
+    followeds:[],
+    follows:[],
+    posts:[{
+        type:Types.ObjectId,
+        ref:'post'
+    }],
+    asistEvent:[],
     liked:[],
     events:[]
 });

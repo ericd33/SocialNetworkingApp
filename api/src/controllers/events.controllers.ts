@@ -3,30 +3,26 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, date, hour, content, image, location, idUser } = req.body;
-
+  const { name, username, date, content, image, location, email,lat_log} = req.body;
+  console.log(req.body)
   try {
-  const user = await userSchema.findOne({_id:idUser})
+  const user = await userSchema.findOne({email:email})
+  console.log('creating event')
     let event = await new eventSchema();
-    console.log(user)
-    if (name.length && date.length && content.length && location.length) {
-      event.author= user._id
-      event.avatar = user.image
-      event.nameAuthor = user.name
+    if (name.length && date.length && content.length && location.length && lat_log.length) {
+      event.author= email
+      event.avatar = image
+      event.nameAuthor = username
       event.name = name;
       event.date = date;
-      event.hour = hour;
       event.content = content;
       event.image = image;
       event.location = location;
       event.enabled = true;
+      event.lat_log=lat_log
       const newEvent = await event.save();
       user.events = user.events.concat(newEvent)
-      console.log(user)
-
       await user.save()
-
-      console.log(event);
       res.status(200).send("new event");
     }
   } catch (e) {
@@ -45,13 +41,13 @@ export const findEvent = async (req: Request, res: Response) => {
         res.status(200).send(event);
         return;
       }
-      res.status(201).send("el evento no existe");
+      res.status(201).send(undefined);
       return;
     } else {
       const events = await eventSchema.find({});
       events.length
         ? res.status(200).send(events)
-        : res.status(400).send("sin eventos");
+        : res.status(400).send(undefined);
     }
   } catch (e) {
     res.status(400).send(e);
@@ -72,7 +68,7 @@ export const findEventById = async (req: Request, res: Response) => {
 
 export const updateEvent = async (req: Request, res: Response) => {
   const { id } = req.query;
-  const { date, hour, enabled, content, image, location } = req.body;
+  const { date, enabled, content, image, location } = req.body;
   try {
     if (date.length) {
       await eventSchema.findOneAndUpdate(
@@ -80,9 +76,6 @@ export const updateEvent = async (req: Request, res: Response) => {
         { date: date },
         { new: true }
       );
-    }
-    if (isNaN(hour) || (hour >= 0 && hour <= 24)) {
-      await eventSchema.findOneAndUpdate({ _id: id }, { hour: hour });
     }
     if (enabled) {
       await eventSchema.findOneAndUpdate(
@@ -149,3 +142,35 @@ export const deleteEvent = async (req: Request, res: Response) => {
     res.status(400).send(e);
   }
 };
+
+
+export const addEventParticipant = async (req: Request, res: Response) => {
+  try {
+    const { idEvent } = req.params;
+    const { idUser } = req.body;
+
+    const user = await userSchema.findOne({ _id: idUser });
+    const currentEvent = await eventSchema.findOne({ _id: idEvent });
+
+    if (user) {
+      currentEvent.participants.push(user._id);
+
+      const eventUpdated = await eventSchema.findByIdAndUpdate({_id: idEvent}, currentEvent, {new: true});
+
+      return res.status(200).json({
+        data: eventUpdated,
+      });
+    }
+
+    return res.status(404).json({
+      data: currentEvent,
+      msg: `User don't exist`
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: `An error ocurred (┬┬﹏┬┬)`,
+      error
+    });
+  }
+
+}

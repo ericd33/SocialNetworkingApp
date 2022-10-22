@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,15 +8,19 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Avatar from "@mui/material/Avatar";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { IconButton } from "@mui/material";
+import { Card, CardContent, CardHeader, IconButton, Modal } from "@mui/material";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { searchUsersByName } from "../../Redux/actions";
+import { searchUsersByName,getEventsByName } from "../../Redux/actions";
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import CloseIcon from '@mui/icons-material/Close';
+import { getAuth, signOut } from "firebase/auth";
+import './Navbar.css';
+import axios from "axios";
+import { useUserAuth } from "../../context/UserAuthContext";
+import Donations from "../Donations/Donations";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -44,8 +48,8 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: grey[700],
-  backgroundColor: grey[200],
+  color: grey[200],
+  backgroundColor: grey[800],
   borderRadius: 25,
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -63,30 +67,44 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const NavBar = () => {
+  const [AvatarImage, setAvatar] = useState();
   const dispatch = useDispatch()
-  const [search, setSearch] = useState("")
+  const {user} = useUserAuth();
+  const token = user.accessToken;
+
+  useEffect(() => {
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    axios(Config)
+      .then(user => {
+        // console.log(user.data)
+        setAvatar(user.data.image);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }, []);
+
+  ///LOGOUT
+  function logOut() {
+    window.location.reload(false)
+    localStorage.clear();
+  }
 
   const handleInput = (e)=>{
-    setSearch(e.target.value)
-  } 
-
-  const handleForm = (e)=>{
-  e.preventDefault()
-  dispatch(searchUsersByName(search))
+    dispatch(searchUsersByName(e.target.value,token))
   }
-  
-  const LogoutButton = () => {
-    const { logout } = useAuth0();
-
-    return (
-      <IconButton sx={{color: grey[800]}} onClick={() => logout({ returnTo: window.location.origin })}>
-        <LogoutIcon/>
-      </IconButton>
-    );
-  };
+  const handleInputEvents = (e)=>{
+    dispatch(getEventsByName(token,e.target.value))
+  }
 
   return (
-    <AppBar sx={{ bgcolor: yellow[500], color: grey[800] }} position="fixed">
+    <AppBar sx={{ bgcolor: 'custom.dark'}} position="fixed">
       <Toolbar
         sx={{
           display: "flex",
@@ -96,51 +114,55 @@ const NavBar = () => {
       >
         <Toolbar>
           <div>
-            <Link to={"/"}>
-                <h2>ConCatUs</h2>
+            <Link to={"/home"} >
+                <h2>ConcatUs</h2>
             </Link>
           </div>
-        <form onSubmit={handleForm}>
-          <Search sx={{ marginLeft: 5 }}>
+          <Search sx={{ marginLeft: 5 , borderRadius:5}}>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon color="secondary"/>
             </SearchIconWrapper>
             {
-              window.location.href === `https://concatus.vercel.app/events` 
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
+                color='primary'
                 inputProps={{ "aria-label": "search" }}
-                value={search}
-                onChange={handleInput}
+                onChange={handleInputEvents}
               /> :
                 <StyledInputBase
                   placeholder="Search persons..."
+                  color='primary'
                   inputProps={{ "aria-label": "search" }}
-                  value={search}
                   onChange={handleInput}
                 />
             }
           </Search>
-          </form>
         </Toolbar>
 
         <Toolbar>
-          <IconButton color="inherit" component={Link} to="/home">
+          <IconButton color="secondary" component={Link}>
             <NotificationsNoneIcon />
           </IconButton>
 
-          <IconButton color="inherit" component={Link}>
-            <ChatOutlinedIcon />
-          </IconButton>
+          <Donations/>
 
-          {LogoutButton()}
+          <Link to="/chat">
+            <IconButton color="secondary">
+              <ChatOutlinedIcon />
+            </IconButton>
+          </Link>
+          
+          <IconButton color="secondary" onClick={logOut}>
+            <LogoutIcon/>
+          </IconButton>
           
           <Button
             sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
             component={Link}
           >
-            <Avatar>H</Avatar>
+            <Avatar src={AvatarImage} component={Link} to={`/profile/${user.email}`}></Avatar>
+
           </Button>
         </Toolbar>
       </Toolbar>

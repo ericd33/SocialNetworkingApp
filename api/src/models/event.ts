@@ -4,14 +4,15 @@ import { Document, model, Schema} from "mongoose";
 export interface Ievent extends Document {
     name: string
     author: object,
-    hour: number,
-    date: string,
+    date: Date,
     content: string,
     location: string,
     image?: string,
     enabled: string,
     nameAuthor:string,
-    avatar:string
+    avatar:string,
+    participants?: string[],
+    lat_log:string[]
 }
 
 const eventSchema = new Schema({
@@ -26,11 +27,7 @@ const eventSchema = new Schema({
         type:String
     },
     date:{
-        type: String,
-        required: true,
-    },
-    hour:{
-        type: Number,
+        type: Date,
         required: true,
     },
     enabled: {
@@ -49,7 +46,9 @@ const eventSchema = new Schema({
     location:{
         type: String,
         required: true
-    }
+    },
+    participants: [],
+    lat_log:[]
     });
 
     const Event = model<Ievent>('event', eventSchema);

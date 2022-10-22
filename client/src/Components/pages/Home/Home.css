@@ -7,24 +7,24 @@
     height: 67px;
 }
 
-.media-part {
+.Home .media-part {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(177, 177, 177);
+    background-color: #3b3b3b;
 }
 
-.media-part .leftHome {
+.Home .media-part .leftHome {
     width: 300px;
-    background-color: gray;
+    background-color: #242424;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     padding-top: 20px;
 }
-.media-part .rightHome {
+.Home .media-part .rightHome {
     width: 300px;
-    background-color: gray;
+    background-color: #242424;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -53,4 +53,24 @@
 
 .media-part .centerHome {
     background-color: transparent;
+}
+
+.leftHome .finded-persons {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color:#101010;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.cardFinded {
+    display:flex;
+}
+
+.titleName a{
+    text-decoration: none;
+    color:white;
 }

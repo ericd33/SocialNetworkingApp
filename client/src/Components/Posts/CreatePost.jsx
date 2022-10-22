@@ -5,39 +5,56 @@ import {
   Button,
   IconButton,
   Card,
-  CardHeader,
   CardContent,
+  Input,
+  InputLabel,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreatePost.css";
-import { postPost } from "../../Redux/actions";
+import { getMyUser, postPost } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { useEffect } from "react";
+import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function CreatePost() {
   const [modal, setModal] = useState(false);
-  const dispatch = useDispatch();
+  const {user} = useUserAuth();
+  let userEmail = user.email;
+  const token = user.accessToken;
   const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(getMyUser(userEmail));
+  }, []);
+
+  const dispatch = useDispatch();
   const opencloseModal = () => {
     setModal(!modal);
   };
   const [formState, setFormState] = useState({
     content: "",
+    image: "",
   });
 
   const handleChange = (e) => {
     setFormState({
-      [e.target.content]: e.target.value,
+      ...formState,
+      [e.target.name]: e.target.value
     });
-    console.log(e.target.value);
   };
 
   const handleSubmit = (e) => {
-    // e.peventDefault();
-    dispatch(postPost(formState));
-    // navigate("/");
+    const data = {
+      ...formState,
+      email: userEmail
+    };
+
+    dispatch(postPost(token, data));
+    navigate("/home")
+    setModal(!modal);
   };
 
   const body = (
@@ -46,33 +63,49 @@ export default function CreatePost() {
       sx={{
         width: 600,
         borderRadius: "15px",
-        bgcolor: grey[300],
+        bgcolor: 'custom.main',
         fontFamily: "Nunito",
-        color: grey[900],
+        color: 'primary.light',
       }}
     >
       <CardContent>
         <div className="headerModal">
           <h2>Create a post</h2>
           <IconButton
-            sx={{ width: "35px", height: "35px", top: "20px" }}
+            id='closeIcon'
+            sx={{ width: "35px", height: "35px", top: "20px",
+            bgcolor:'custom.light' }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon />
+            <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
-        <TextField
-          id="outlined-multiline-static"
-          label="¿Que estas pensando?"
-          multiline
-          rows={4}
-          value={formState.content}
-          name="content"
+        <div className="inputsdePost">
+          <TextField
+            id="filled-multiline-static"
+            label="What do you want to share?"
+            multiline
+            rows={4}
+            value={formState.content}
+            variant="filled"
+            name="content"
+            className="textField"
+            onChange={handleChange}
+          />
+          <TextField id="filled-basic" 
+          label="Image link" variant="filled" 
+          value={formState.image}
+          name="image"
           className="textField"
           onChange={handleChange}
-        />
+          />
+        </div>
+
         <div align="right">
-          <Button onClick={handleSubmit}>Post</Button>
+          <Button 
+          id='Postbutton'
+          sx={{mt:3, bgcolor:'secondary.main', fontFamily: "Nunito",
+          color:'custom.dark'}} onClick={handleSubmit} variant='contained'>Post</Button>
         </div>
       </CardContent>
     </Card>
@@ -83,7 +116,7 @@ export default function CreatePost() {
       <IconButton
         onClick={() => opencloseModal()}
         id="buttonPost"
-        sx={{ bgcolor: yellow[500] }}
+        sx={{ bgcolor: "secondary.main" }}
       >
         <PostAddOutlinedIcon sx={{ color: grey[800] }} />
       </IconButton>

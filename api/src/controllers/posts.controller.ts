@@ -1,34 +1,28 @@
 import { Request, Response } from "express";
 const userSchema = require("../models/user");
 const postSchema = require("../models/post");
-const commentSchema = require("../models/comment");
-
 
 export const addPost = async (req: Request, res: Response) => {
-  const { image, content, idUser, idComment } = req.body;
+  const { email, content, image } = req.body;
+  // console.log(req.body)
   let post = await new postSchema();
-  const user = await userSchema.find({ _id: idUser });
-  if (idComment?.length) {
-    const comment = await commentSchema.find({ _id: idComment });
-    console.log(comment);
-    post.comments = comment[0]._id;
-  }
+  const user = await userSchema.find({ email: email });
 
-  try{
-  if ((content.length || image.length) && idUser.length) {
-    post.author= user[0]._id
-    post.image = image;
-    post.content = content;
-    post.enabled = true;
-    const savePost = await post.save();
-    console.log(user[0].posts)
-    user[0].posts = user[0].posts.concat(savePost)
-    console.log(user[0])
-    await user[0].save()
-    res.status(200).send("new post");
-  }}catch(e){
-    res.status(400).send(e)
-
+  try {
+    if (content.length || image.length) {
+      post.author = email;
+      post.image = image;
+      post.content = content;
+      post.enabled = true;
+      const savePost = await post.save();
+      console.log(user[0].posts);
+      user[0].posts = user[0].posts.concat(savePost._id);
+      // console.log(user[0]);
+      await user[0].save();
+      res.status(200).send("new post");
+    }
+  } catch (e) {
+    res.status(400).send(e);
   }
 };
 
@@ -89,3 +83,97 @@ export const putPostById = async (req: Request, res: Response) => {
 //     res.status(400).send(e)
 //   }
 // }
+
+export const findPostsByEmail = async (req: Request, res: Response) => {
+  const { email } = req.params;
+  console.log(email);
+  try {
+    const post = await postSchema.find({ author: email });
+    console.log(post);
+    res.status(200).send(post);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
+
+export const putPostLikes = async (req: Request, res: Response) => {
+  try {
+    const { idPost } = req.params;
+    const { email } = req.body;
+
+    const user = await userSchema.findOne({ email: email });
+    const currentPost = await postSchema.findOne({ _id: idPost });
+
+    if (user) {
+      if (currentPost.likes.some((u: any) => u.email === user.email)) {
+        currentPost.likes = currentPost.likes.filter(
+          (u: any) => u.email !== user.email
+        );
+      } else {
+        currentPost.likes.push(user);
+      }
+
+      const postUpdated = await postSchema.findByIdAndUpdate(
+        {
+          _id: idPost,
+        },
+        currentPost,
+        {
+          new: true,
+        }
+      );
+
+      return res.status(200).json({
+        data: postUpdated,
+      });
+    }
+
+    return res.status(404).json({
+      data: currentPost,
+      msg: `User don't exist`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: `An error ocurred 😡`,
+      error,
+    });
+  }
+};
+
+export const putPostComment = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
+    const { userId, commentData } = req.body;
+
+    const user = await userSchema.findOne({ email: userId });
+    const currentPost = await postSchema.findOne({ _id: postId });
+
+    if (user && currentPost) {
+      currentPost.comments.push(commentData);
+
+      const postUpdated = await postSchema.findByIdAndUpdate(
+        {
+          _id: postId,
+        },
+        currentPost,
+        {
+          new: true,
+        }
+      );
+
+      return res.status(200).json({
+        data: postUpdated,
+      });
+    }
+
+    return res.status(404).json({
+      data: currentPost,
+      msg: `This is not an error but... well... You know... 😅`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: `An error ocurred 😡`,
+      error,
+    });
+  }
+};

@@ -1,0 +1,10 @@
+.mapa{
+    width: 500px;
+    height: 100%;
+    position: fixed;
+    
+}
+.bottonRoute{
+    position: absolute;
+    z-index: 1;
+}
