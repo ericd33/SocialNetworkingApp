@@ -17,7 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCommentsPost } from "../../../Redux/actions";
 import { useUserAuth } from "../../../context/UserAuthContext";
 
+
 import "./CommentsModal.css";
+
 
 export default function CommentsModal({idPost}) {
   const [modal, setModal] = useState(false);

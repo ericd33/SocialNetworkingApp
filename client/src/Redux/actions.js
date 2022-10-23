@@ -415,6 +415,7 @@ export function getCommentsPost(token, payload) {
       headers: {
         authorization: `Bearer ${token}`,
       },
+
     };
     axios(Config).then((res) => {
       console.log(res);
@@ -425,6 +426,7 @@ export function getCommentsPost(token, payload) {
     });
 }
 }
+
 
 const validate =(data)=>{
 for (let i = 0; i < data.length; i++) {
