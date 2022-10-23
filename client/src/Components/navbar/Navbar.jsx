@@ -118,8 +118,12 @@ const NavBar = () => {
             <SearchIconWrapper>
               <SearchIcon color="secondary"/>
             </SearchIconWrapper>
+
+            {/* {
+
             {
             window.location.href === `http://localhost:3000/events` 
+
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
@@ -133,7 +137,7 @@ const NavBar = () => {
                   inputProps={{ "aria-label": "search" }}
                   onChange={handleInput}
                 />
-            }
+            } */}
           </Search>
         </Toolbar>
 
