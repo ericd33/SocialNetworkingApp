@@ -74,6 +74,7 @@ export const getCommentPost = async (req: Request, res: Response) => {
     })
     res.status(200).send(comment)
   }catch(e){
+    
     res.status(400).send(e)
   }
 }
