@@ -32,11 +32,11 @@ export default function CommentsModal({idPost}) {
   useEffect(()=>{
     if(modal)
     dispatch(getCommentsPost(token,idPost))
-    console.log(token,idPost)
+    // console.log(token,idPost)
   },[getCommentsPost,modal])
   const comments = useSelector(e=>e.comments)
   
-  console.log(comments)
+  console.log(comments);
 
   const body = (
     <Card
@@ -67,24 +67,24 @@ export default function CommentsModal({idPost}) {
                 width: 462,
                 bgcolor: 'custom.light',
                 fontFamily: "Nunito",
-                color: grey[900],
+                color: 'primary.light',
                 borderRadius:'15px',
                 height:'55px',
                 mb:'10px'
               }}
             >
               <CardHeader
-                sx={{ pt: '8px' }}
+                sx={{ pt: '8px', color:'secondary.main'}}
                 avatar={
                   <Avatar
               imgProps={{ referrerPolicy: "no-referrer" }}
-              sx={{ bgcolor: "primary.light" }}
+              sx={{ bgcolor: "primary.light",mb:'10px'}}
               src={c.avatar}
             ></Avatar>
                 }
                 title={c.name}
+                subheader={<p className='textComment'>{c.text}</p>}
               />
-              <CardContent sx={{ pb: 1 }}>{c.text}</CardContent>
             </Card>
         ))}
       </CardContent>
