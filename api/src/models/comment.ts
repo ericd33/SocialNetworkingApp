@@ -3,7 +3,7 @@ import { Document, model, Schema } from "mongoose";
 export interface Icomment extends Document {
   enabled: boolean;
   author: object;
-  IdPost: object;
+  IdPost: string;
   like?: string[];
   text?: string;
   image?: string;
@@ -22,7 +22,9 @@ const commentSchema = new Schema({
     type:String
   },
   author: {},
-  IdPost: {},
+  IdPost: {
+    type:String
+  },
   like: [],
   text: {
     type: String,

@@ -18,18 +18,19 @@ import axios from "axios";
 import CommentsModal from "./Modals/CommentsModal";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import { useDispatch } from "react-redux";
-import { putLikes } from "../../Redux/actions";
+import { newComment, putLikes } from "../../Redux/actions";
 import { updateComment } from "../../Redux/actions";
 import { Link } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function Post({ text, author, comments, likes, image, id }) {
+  console.log(comments)
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const sessionUser = useUserAuth();
   let token = sessionUser.user.accessToken;
-  let user = sessionUser.user;
+  let user = sessionUser.name;
 
   // console.log(token)
   // console.log(user)
@@ -81,22 +82,37 @@ export default function Post({ text, author, comments, likes, image, id }) {
     dispatch(updateComment(id, data, token));
   };
 
-  const handleSubmitCommentForm = (e) => {
-    e.preventDefault();
+  // const handleSubmitCommentForm = (e) => {
+  //   e.preventDefault();
 
-    dispatch(updateComment(id, author, comment, token));
+  //   dispatch(updateComment(id, user, comment, token));
 
-    setComment("");
-  };
-
-  const [comment, setComment] = useState();
+  //   setComment("");
+  // };
+// console.log(sessionUser)
+console.log(sessionUser)
+  const [comment, setComment] = useState({
+    authorComment:sessionUser.user.email,
+    avatar: sessionUser.user.photoURL,
+    name:sessionUser.user.displayName,
+    idPost: id,
+    text:"",
+    image:""
+  });
+  console.log(comment)
   const handleChangeComment = (e) => {
-    e.preventDefault();
-    setComment(e.target.value);
+    // e.preventDefault();
+    setComment({
+      ...comment,
+      [e.target.name]:e.target.value});
   };
-
-  const [commentsModalState, setCommentsmodalState] = useState(false);
-  const openCommentsModal = () => setCommentsmodalState(true);
+  const handleSubmmitComment = (e)=>{
+    e.preventDefault()
+    console.log(comment)
+    dispatch(newComment(token,comment))
+  }
+  // const [commentsModalState, setCommentsmodalState] = useState(false);
+  // const openCommentsModal = () => setCommentsmodalState(true);
 
   return (
     <div className="card">
@@ -157,7 +173,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
             </div>
 
           {comments ? 
-            <CommentsModal comments={comments} />
+            <CommentsModal idPost={id} />
             : <></>
           }
           <p className='textCommentarys'>{comments && comments.length} comments</p>
@@ -174,16 +190,17 @@ export default function Post({ text, author, comments, likes, image, id }) {
             <TextField
               id="filled-multiline-static"
               label="What are you thinking? 👀"
-              value={comment}
+              value={comment?.text}
               variant="filled"
-              name="content"
+              name="text"
               onChange={handleChangeComment}
             />
             <Button
             sx={{mb:1,fontFamily: "Nunito",
             color:'primary.dark'}} 
             variant='outlined'
-            onClick={handleSubmitCommentForm}>
+            onClick={handleSubmmitComment}
+            >
               Comment
             </Button>
           </div>

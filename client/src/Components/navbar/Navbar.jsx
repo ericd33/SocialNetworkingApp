@@ -122,7 +122,7 @@ const NavBar = () => {
             <SearchIconWrapper>
               <SearchIcon color="secondary"/>
             </SearchIconWrapper>
-            {
+            {/* {
                 ?
                 <StyledInputBase
                 placeholder="Search events..."
@@ -136,7 +136,7 @@ const NavBar = () => {
                   inputProps={{ "aria-label": "search" }}
                   onChange={handleInput}
                 />
-            }
+            } */}
           </Search>
         </Toolbar>
 
