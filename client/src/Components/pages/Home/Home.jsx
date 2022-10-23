@@ -13,6 +13,8 @@ import FilterPost from "./FilterPost";
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
   const {user} = useUserAuth();
+
+
   return (
     <div className="Home">
       <div className="navbar">
@@ -60,7 +62,7 @@ export default function Home() {
             )}
           </div>
           <EventsMenu />
-        </div>
+          </div>
         <div className="centerHome">
           <FilterPost />
           <PostList />

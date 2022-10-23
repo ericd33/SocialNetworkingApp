@@ -45,7 +45,7 @@ export default function EventDetail() {
         console.log(detail);
     return (
         <div className='EventDetailContainer'>
-            <Link to={'/events'}><Button sx={{position:'absolute', top:'0px', left:'0px',bgcolor: yellow[500], color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
+            <Link to={'/events'}><Button id='buttonEventDetail' sx={{position:'absolute', top:'0px', left:'0px',bgcolor: 'secondary.main', color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
             <Container sx={{textAlign:'center', bgcolor:'transparent'}} >
                 <Card sx={{bgcolor:'custom.light'}}>
                     <CardMedia
@@ -82,15 +82,17 @@ export default function EventDetail() {
 
                 </CardContent>
 
-                <CardContent sx={{fontFamily: 'Nunito'}}>
-                    <div className="text">
-                        {detail?.content}
+                <div className="text">
+                    <Maps className='map' latLon={detail?.lat_log}/>
+                    <div className="descriptionDetail">
+                        <h3>Description:</h3>
+                        <h4>{detail?.content}</h4>
                     </div>
-                </CardContent>
+                </div>
 
                 <CardContent sx={{fontFamily: 'Nunito'}}>
                     <div className="info2">
-                        <Button id='assistButton' sx={{bgcolor: yellow[500], color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>
+                        <Button id='assistButton' sx={{bgcolor: 'secondary.main', color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>
                         
                         <div className="date-hour-part">
                             {
@@ -102,7 +104,6 @@ export default function EventDetail() {
                 </CardContent>
             </Card>
         </Container>
-        <Maps latLon={detail?.lat_log}/>
     </div>
     
     )

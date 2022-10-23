@@ -10,11 +10,14 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+
 import "../CreatePost.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommentsPost } from "../../../Redux/actions";
 import { useUserAuth } from "../../../context/UserAuthContext";
+
+import "./CommentsModal.css";
 
 export default function CommentsModal({idPost}) {
   const [modal, setModal] = useState(false);
@@ -29,54 +32,59 @@ export default function CommentsModal({idPost}) {
   useEffect(()=>{
     if(modal)
     dispatch(getCommentsPost(token,idPost))
-    console.log(token,idPost)
+    // console.log(token,idPost)
   },[getCommentsPost,modal])
   const comments = useSelector(e=>e.comments)
   
-  console.log(comments)
+  console.log(comments);
 
   const body = (
     <Card
-      className="postCreator"
+      className="commentsList"
       sx={{
-        width: 600,
+        width: 500,
         borderRadius: "15px",
-        bgcolor: grey[300],
+        bgcolor: 'custom.main',
         fontFamily: "Nunito",
-        color: grey[900],
+        color: 'primary.light',
       }}
     >
       <CardContent>
         <div className="headerModal">
           <h2>Comments</h2>
           <IconButton
-            sx={{ width: "35px", height: "35px", top: "20px" }}
+            id='closeIcon'
+            sx={{ width: "35px", height: "35px", top: "20px",
+            bgcolor:'custom.light' }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon />
+            <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
         {comments?.map((c) => (
             <Card
               sx={{
-                width: 500,
-                bgcolor: grey[300],
+                width: 462,
+                bgcolor: 'custom.light',
                 fontFamily: "Nunito",
-                color: grey[900],
+                color: 'primary.light',
+                borderRadius:'15px',
+                height:'55px',
+                mb:'10px'
               }}
             >
               <CardHeader
-                sx={{ pt: 0, pb: 0, mt: 2 }}
+                sx={{ pt: '8px', color:'secondary.main'}}
                 avatar={
                   <Avatar
               imgProps={{ referrerPolicy: "no-referrer" }}
-              sx={{ bgcolor: "primary.light" }}
+              sx={{ bgcolor: "primary.light",mb:'10px'}}
               src={c.avatar}
             ></Avatar>
                 }
                 title={c.name}
+                subheader={<p className='textComment'>{c.text}</p>}
               />
-              <CardContent sx={{ pb: 1 }}>{c.text}</CardContent>
             </Card>
         ))}
       </CardContent>

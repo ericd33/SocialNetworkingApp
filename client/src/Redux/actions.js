@@ -109,7 +109,7 @@ export function Donate(token, data) {
 }
 
 export function postEvent(payload, token) {
-  return function () {
+  return async function (dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
@@ -127,7 +127,8 @@ export function postEvent(payload, token) {
         lat_log:payload.lat_log
       },
     };
-    axios(Config).then((res) => console.log(res));
+    await axios(Config);
+    dispatch(getEvents(token));
   };
 }
 
@@ -406,6 +407,50 @@ export function getEventsByName(token, name) {
   };
 }
 
+export function getCommentsPost(token, payload) {
+  return function (dispatch) {
+    console.log(payload);
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    axios(Config).then((res) => {
+      console.log(res);
+      return dispatch({
+        type: GET_COMMENTS_POST,
+        payload: res.data
+      });
+    });
+}
+}
+
+export function newComment(token,payload){
+  console.log(payload)
+  return async function(dispatch){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        authorComment: payload.authorComment,
+        idPost:payload.idPost,
+        text: payload.text,
+        image:payload.image
+      }
+    };
+    await axios(Config).then((res)=>{
+      return dispatch({
+        type: NEW_COMMENT,
+        payload: res.data,
+      });
+    })
+  }
+}
 
 export function getCommentsPost(token, payload) {
   return function (dispatch) {
@@ -431,7 +476,7 @@ export function getCommentsPost(token, payload) {
 
 const validate =(data)=>{
 for (let i = 0; i < data.length; i++) {
-  if(typeof i === 'array'){
+  if(typeof i === 'object'){
     for (let z = 0; z < i.length; z++) {
       x.push(data[z])
     }
@@ -447,7 +492,7 @@ const clear = ()=>{
   },3000)
 }
 
-let x = []
+let x = [];
 
 export function getPostsFollows(token,email) {
   // let x = []
