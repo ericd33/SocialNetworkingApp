@@ -10,6 +10,9 @@ export const UPDATE_POSTS = "UPDATE_POSTS";
 export const GET_POSTS_BY_NAME = "GET_POSTS_BY_NAME"
 export const GET_POSTS_BY_ID = "GET_POSTS_BY_ID"
 export const UPDATE_COMMENT = "UPDATE_COMMENT"
+export const GET_POSTS_FOLLOW = "GET_POSTS_FOLLOW"
+
+
 
 
 
