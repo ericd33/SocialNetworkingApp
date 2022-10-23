@@ -158,13 +158,13 @@ const NavBar = () => {
             <LogoutIcon/>
           </IconButton>
           
+          <Link to={`/profile/${user.email}`}>
           <Button
-            sx={{ ml: "35px", borderRadius: "25px", height: 50 }}
-            component={Link}
-          >
-            <Avatar src={AvatarImage} component={Link} to={`/profile/${user.email}`}></Avatar>
-
+            sx={{ ml: "35px", borderRadius: "25px", height: 50 }}>
+            <Avatar src={AvatarImage}></Avatar>
           </Button>
+          
+        </Link>
         </Toolbar>
       </Toolbar>
     </AppBar>
