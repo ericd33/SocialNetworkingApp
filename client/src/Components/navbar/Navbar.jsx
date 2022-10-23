@@ -119,8 +119,6 @@ const NavBar = () => {
               <SearchIcon color="secondary"/>
             </SearchIconWrapper>
 
-            {/* {
-
             {
             window.location.href === `http://localhost:3000/events` 
 
@@ -137,7 +135,7 @@ const NavBar = () => {
                   inputProps={{ "aria-label": "search" }}
                   onChange={handleInput}
                 />
-            } */}
+            }
           </Search>
         </Toolbar>
 
