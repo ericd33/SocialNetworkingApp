@@ -32,7 +32,6 @@ export default function EventCard({location,name,text,image,date,id}) {
                 </Typography>
             </CardContent>
             <CardActions sx={{mt:0}}>
-                <Button sx={{color:"secondary.main"}} size="small">Share</Button>
                 <Link to={`/events/${id}`}><Button sx={{color:"secondary.main"}} size="small" >Learn More</Button></Link>
             </CardActions>
             </Card>
