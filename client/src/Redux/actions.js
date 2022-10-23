@@ -173,11 +173,6 @@ export function getMyUser(token, email) {
         payload: res.data,
       });
     });
-    // let json = await axios.get(`http://localhost:3001/users/email/${email}`);
-    // return dispatch({
-    //   type: GET_MY_USER,
-    //   payload: json.data,
-    // });
   };
 }
 
@@ -382,50 +377,6 @@ export function getEventsByName(token, name) {
   };
 }
 
-export function getCommentsPost(token, payload) {
-  return function (dispatch) {
-    // console.log(payload);
-    const Config = {
-      method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    };
-    axios(Config).then((res) => {
-      // console.log(res);
-      return dispatch({
-        type: GET_COMMENTS_POST,
-        payload: res.data
-      });
-    });
-}
-}
-
-export function newComment(token,payload){
-  // console.log(payload)
-  return async function(dispatch){
-    const Config = {
-      method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      data: {
-        authorComment: payload.authorComment,
-        idPost:payload.idPost,
-        text: payload.text,
-        image:payload.image
-      }
-    };
-    await axios(Config).then((res)=>{
-      return dispatch({
-        type: NEW_COMMENT,
-        payload: res.data,
-      });
-    })
-  }
-}
 
 export function getCommentsPost(token, payload) {
   return function (dispatch) {
@@ -447,8 +398,7 @@ export function getCommentsPost(token, payload) {
         payload: res.data
       });
     });
-
-
+  }}
 const validate =(data)=>{
 for (let i = 0; i < data.length; i++) {
   if(typeof i === 'object'){
@@ -492,3 +442,4 @@ export function getPostsFollows(token,email) {
 
   };
 }
+
