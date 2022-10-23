@@ -16,7 +16,7 @@ import {
 
 export function postUser(payload, token) {
   return function () {
-    console.log(payload)
+    console.log(payload);
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
@@ -29,9 +29,11 @@ export function postUser(payload, token) {
         image: payload.image,
       },
     };
-    axios(Config).then((res) => {
-      console.log(res);
-    }).catch(err => console.log(err))
+    axios(Config)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 }
 
@@ -67,9 +69,9 @@ export function postPost(token, data) {
     dispatch(getPosts(token));
   };
 }
-export function newComment(token,payload){
-  console.log(payload)
-  return async function(dispatch){
+export function newComment(token, payload) {
+  console.log(payload);
+  return async function (dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
@@ -78,18 +80,18 @@ export function newComment(token,payload){
       },
       data: {
         authorComment: payload.authorComment,
-        idPost:payload.idPost,
+        idPost: payload.idPost,
         text: payload.text,
-        image:payload.image
-      }
+        image: payload.image,
+      },
     };
-    await axios(Config).then((res)=>{
+    await axios(Config).then((res) => {
       return dispatch({
         type: NEW_COMMENT,
         payload: res.data,
       });
-    })
-  }
+    });
+  };
 }
 
 export function Donate(token, data) {
@@ -101,8 +103,8 @@ export function Donate(token, data) {
         authorization: `Bearer ${token}`,
       },
       data: {
-        donacion: data
-      }
+        donacion: data,
+      },
     };
     await axios(Config).then((res) => console.log(res));
   };
@@ -124,7 +126,7 @@ export function postEvent(payload, token) {
         location: payload.location,
         content: payload.content,
         date: payload.date,
-        lat_log:payload.lat_log
+        lat_log: payload.lat_log,
       },
     };
     await axios(Config);
@@ -344,7 +346,7 @@ export function getPostId(token, idPost) {
   };
 }
 
-export function assitEvent(token,payload){
+export function assitEvent(token, payload) {
   return function () {
     const Config = {
       method: "post",
@@ -354,13 +356,12 @@ export function assitEvent(token,payload){
       },
       data: {
         eventId: payload.eventId,
-        userEmail: payload.userEmail
+        userEmail: payload.userEmail,
       },
     };
-    axios(Config).then(res=>console.log(res))
+    axios(Config).then((res) => console.log(res));
   };
 }
-
 
 export function getEventsByName(token, name) {
   return function (dispatch) {
@@ -382,7 +383,7 @@ export function getEventsByName(token, name) {
   };
 }
 
-export function getCommentsPost(token, payload) {
+/* export function getCommentsPost(token, payload) {
   return function (dispatch) {
     // console.log(payload);
     const Config = {
@@ -396,36 +397,31 @@ export function getCommentsPost(token, payload) {
       // console.log(res);
       return dispatch({
         type: GET_COMMENTS_POST,
-        payload: res.data
-      });
-    });
-}
-}
-
-export function newComment(token,payload){
-  // console.log(payload)
-  return async function(dispatch){
-    const Config = {
-      method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      data: {
-        authorComment: payload.authorComment,
-        idPost:payload.idPost,
-        text: payload.text,
-        image:payload.image
-      }
-    };
-    await axios(Config).then((res)=>{
-      return dispatch({
-        type: NEW_COMMENT,
         payload: res.data,
       });
-    })
+    });
+  };
+} */
+
+const validate = (data) => {
+  for (let i = 0; i < data.length; i++) {
+    if (typeof i === "object") {
+      for (let z = 0; z < i.length; z++) {
+        x.push(data[z]);
+      }
+    } else {
+      x.push(data[i]);
+    }
   }
-}
+};
+
+const clear = () => {
+  setTimeout(() => {
+    x = [];
+  }, 3000);
+};
+
+let x = [];
 
 export function getCommentsPost(token, payload) {
   return function (dispatch) {
@@ -444,32 +440,13 @@ export function getCommentsPost(token, payload) {
       console.log(res);
       return dispatch({
         type: GET_COMMENTS_POST,
-        payload: res.data
+        payload: res.data,
       });
     });
-
-
-const validate =(data)=>{
-for (let i = 0; i < data.length; i++) {
-  if(typeof i === 'object'){
-    for (let z = 0; z < i.length; z++) {
-      x.push(data[z])
-    }
-  } else{
-    x.push(data[i])
-  }
-}
+  };
 }
 
-const clear = ()=>{
-  setTimeout(()=>{
-    x=[]
-  },3000)
-}
-
-let x = [];
-
-export function getPostsFollows(token,email) {
+export function getPostsFollows(token, email) {
   // let x = []
   return async function (dispatch) {
     const Config = {
@@ -480,15 +457,14 @@ export function getPostsFollows(token,email) {
       },
     };
     axios(Config).then((res) => {
-      validate(res.data)
-      setTimeout(()=>{
-        clear()
+      validate(res.data);
+      setTimeout(() => {
+        clear();
         return dispatch({
-        type: GET_POSTS_FOLLOW,
-        payload: x,
-      })
-      },1000)
-      })
-
+          type: GET_POSTS_FOLLOW,
+          payload: x,
+        });
+      }, 1000);
+    });
   };
 }
