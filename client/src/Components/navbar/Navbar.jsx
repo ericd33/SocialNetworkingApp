@@ -8,19 +8,27 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Avatar from "@mui/material/Avatar";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import { Card, CardContent, CardHeader, IconButton, Modal } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Modal,
+} from "@mui/material";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { searchUsersByName } from "../../Redux/actions";
-import LogoutIcon from '@mui/icons-material/Logout';
-import CloseIcon from '@mui/icons-material/Close';
+import LogoutIcon from "@mui/icons-material/Logout";
+import CloseIcon from "@mui/icons-material/Close";
 import { getAuth, signOut } from "firebase/auth";
 import './Navbar.css';
 import Donations from "../Donations/Donations"
 import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
+
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -68,8 +76,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const NavBar = () => {
   const [AvatarImage, setAvatar] = useState();
-  const dispatch = useDispatch()
-  const {user} = useUserAuth();
+  const dispatch = useDispatch();
+  const { user } = useUserAuth();
   const token = user.accessToken;
 
   useEffect(() => {
@@ -81,7 +89,7 @@ const NavBar = () => {
       },
     };
     axios(Config)
-      .then(user => {
+      .then((user) => {
         // console.log(user.data)
         setAvatar(user.data.image);
       })
@@ -92,16 +100,16 @@ const NavBar = () => {
 
   ///LOGOUT
   function logOut() {
-    window.location.reload(false)
+    window.location.reload(false);
     localStorage.clear();
   }
 
-  const handleInput = (e)=>{
-    dispatch(searchUsersByName(e.target.value,token))
-  }
+  const handleInput = (e) => {
+    dispatch(searchUsersByName(e.target.value, token));
+  };
 
   return (
-    <AppBar sx={{ bgcolor: 'custom.dark'}} position="fixed">
+    <AppBar sx={{ bgcolor: "custom.dark" }} position="fixed">
       <Toolbar
         sx={{
           display: "flex",
@@ -111,32 +119,30 @@ const NavBar = () => {
       >
         <Toolbar>
           <div>
-            <Link to={"/home"} >
-                <h2>ConcatUs</h2>
+            <Link to={"/home"}>
+              <h2>ConcatUs</h2>
             </Link>
           </div>
-          <Search sx={{ marginLeft: 5 , borderRadius:5}}>
+          <Search sx={{ marginLeft: 5, borderRadius: 5 }}>
             <SearchIconWrapper>
-              <SearchIcon color="secondary"/>
+              <SearchIcon color="secondary" />
             </SearchIconWrapper>
 
-            {
-            window.location.href === `http://localhost:3000/events` 
-
-                ?
-                <StyledInputBase
+            {window.location.href === `http://localhost:3000/events` ? (
+              <StyledInputBase
                 placeholder="Search events..."
-                color='primary'
+                color="primary"
                 inputProps={{ "aria-label": "search" }}
                 onChange={handleInput}
-              /> :
-                <StyledInputBase
-                  placeholder="Search persons..."
-                  color='primary'
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={handleInput}
-                />
-            }
+              />
+            ) : (
+              <StyledInputBase
+                placeholder="Search persons..."
+                color="primary"
+                inputProps={{ "aria-label": "search" }}
+                onChange={handleInput}
+              />
+            )}
           </Search>
         </Toolbar>
 
@@ -145,25 +151,23 @@ const NavBar = () => {
             <NotificationsNoneIcon />
           </IconButton>
 
-          <Donations/>
+          <Donations />
 
           <Link to="/chat">
             <IconButton color="secondary">
               <ChatOutlinedIcon />
             </IconButton>
           </Link>
-          
+
           <IconButton color="secondary" onClick={logOut}>
-            <LogoutIcon/>
+            <LogoutIcon />
           </IconButton>
-          
+
           <Link to={`/profile/${user.email}`}>
-          <Button
-            sx={{ ml: "35px", borderRadius: "25px", height: 50 }}>
-            <Avatar src={AvatarImage}></Avatar>
-          </Button>
-          
-        </Link>
+            <Button sx={{ ml: "35px", borderRadius: "25px", height: 50 }}>
+              <Avatar src={AvatarImage}></Avatar>
+            </Button>
+          </Link>
         </Toolbar>
       </Toolbar>
     </AppBar>
