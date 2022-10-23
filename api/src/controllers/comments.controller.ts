@@ -36,16 +36,17 @@ export const saveComment = async (req: Request, res: Response) => {
 };
  */
 export const addComment = async (req: Request, res: Response) => {
-  const { text, image, idUser, idPost } = req.body;
-  const user = await userSchema.findOne({ _id: idUser });
+  const { text, image, authorComment, idPost } = req.body;
+  const user = await userSchema.findOne({ email: authorComment });
+  console.log(user)
   const post = await postSchema.findOne({ _id: idPost });
   let comment = await new commentSchema();
   try {
-    if ((text.length || image.length) && idUser.length && idPost.length) {
-      comment.author = user._id;
+    if ((text.length || image.length) && authorComment.length && idPost.length) {
+      comment.author = user.email;
       comment.avatar = user.image;
       comment.name = user.name;
-      comment.IdPost = post._id;
+      comment.IdPost = idPost;
       comment.text = text;
       comment.image = image;
       comment.enabled = true;
@@ -60,17 +61,23 @@ export const addComment = async (req: Request, res: Response) => {
   }
 };
 
-export const getComment = async (_req: Request, res: Response) => {
-  try {
-    const comments = await commentSchema.find({});
-    res.status(200).json(comments);
-  } catch (error) {
-    res.status(500).json({
-      msj: "An error ocurred 😡",
-      error,
-    });
+export const getCommentPost = async (req: Request, res: Response) => {
+  const { idPost } = req.params
+  try{
+    console.log("post",idPost)
+    let comments = await commentSchema.find({IdPost:idPost})
+    let comment = comments?.map((e:any)=>{
+      return({
+      text:e.text,
+      avatar:e.avatar,
+      name:e.name})
+    })
+    res.status(200).send(comment)
+  }catch(e){
+    res.status(400).send(e)
   }
-};
+}
+
 
 export const updateComment = async (req: Request, res: Response) => {
   try {

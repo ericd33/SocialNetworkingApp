@@ -10,6 +10,7 @@ import {
   UPDATE_POSTS,
   GET_POSTS_BY_NAME,
   GET_POSTS_BY_ID,
+  GET_COMMENTS_POST
   UPDATE_COMMENT,
   GET_POSTS_FOLLOW,
 } from "./action-types";
@@ -23,6 +24,7 @@ const initialState = {
   searchByNameUsers: [],
   postsUser: [],
   PostID: [],
+  comments:[]
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -109,6 +111,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         PostID: action.payload,
       };
+    case GET_COMMENTS_POST:
+      return{
+        ...state,
+        comments:action.payload
+      }
     default:
       return state;
   }

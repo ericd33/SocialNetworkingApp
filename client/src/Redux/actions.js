@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import axios from "axios";
 import {
   DETAILS_EVENT,
@@ -8,6 +9,8 @@ import {
   GET_MY_USER,
   GET_POSTS_BY_NAME,
   GET_POSTS_BY_ID,
+  NEW_COMMENT,
+  GET_COMMENTS_POST,
   GET_POSTS_FOLLOW,
 } from "./action-types.js";
 
@@ -63,6 +66,30 @@ export function postPost(token, data) {
     await axios(Config);
     dispatch(getPosts(token));
   };
+}
+export function newComment(token,payload){
+  console.log(payload)
+  return async function(dispatch){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        authorComment: payload.authorComment,
+        idPost:payload.idPost,
+        text: payload.text,
+        image:payload.image
+      }
+    };
+    await axios(Config).then((res)=>{
+      return dispatch({
+        type: NEW_COMMENT,
+        payload: res.data,
+      });
+    })
+  }
 }
 
 export function Donate(token, data) {
@@ -379,6 +406,27 @@ export function getEventsByName(token, name) {
   };
 }
 
+export function getCommentsPost(token, payload) {
+  return function (dispatch) {
+    console.log(payload);
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      // :{
+      //   idPost: "635590883395234d7bc7d802"
+      // }
+    };
+    axios(Config).then((res) => {
+      console.log(res);
+      return dispatch({
+        type: GET_COMMENTS_POST,
+        payload: res.data
+      });
+    });
+=======
 
 
 const validate =(data)=>{
@@ -421,5 +469,6 @@ export function getPostsFollows(token,email) {
       })
       },1000)
       })
+
   };
 }

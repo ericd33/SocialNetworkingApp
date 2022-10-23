@@ -10,13 +10,33 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+
+import "../CreatePost.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCommentsPost } from "../../../Redux/actions";
+import { useUserAuth } from "../../../context/UserAuthContext";
+
 import "./CommentsModal.css";
 
-export default function CommentsModal(comments) {
+export default function CommentsModal({idPost}) {
   const [modal, setModal] = useState(false);
+
+  const sessionUser = useUserAuth();
+  let token = sessionUser.user.accessToken;
+  const dispatch = useDispatch()
+
   const opencloseModal = () => {
     setModal(!modal);
   };
+  useEffect(()=>{
+    if(modal)
+    dispatch(getCommentsPost(token,idPost))
+    console.log(token,idPost)
+  },[getCommentsPost,modal])
+  const comments = useSelector(e=>e.comments)
+  
+  console.log(comments)
 
   const body = (
     <Card
@@ -41,8 +61,7 @@ export default function CommentsModal(comments) {
             <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
-        {comments.comments.map((c, index) => (
-          <div key={`${index}`}>
+        {comments?.map((c) => (
             <Card
               sx={{
                 width: 462,
@@ -57,13 +76,16 @@ export default function CommentsModal(comments) {
               <CardHeader
                 sx={{ pt: '8px' }}
                 avatar={
-                  <Avatar sx={{ bgcolor: yellow[500] }} >R</Avatar>
+                  <Avatar
+              imgProps={{ referrerPolicy: "no-referrer" }}
+              sx={{ bgcolor: "primary.light" }}
+              src={c.avatar}
+            ></Avatar>
                 }
-                title={c}
+                title={c.name}
               />
-              <CardContent sx={{ pb: 1 }}>{c && c.text}</CardContent>
+              <CardContent sx={{ pb: 1 }}>{c.text}</CardContent>
             </Card>
-          </div>
         ))}
       </CardContent>
     </Card>
