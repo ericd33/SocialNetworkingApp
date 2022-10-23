@@ -26,6 +26,7 @@ import React, { useContext, useRef } from "react"
 import { MapaContext } from './map/contex/MapaContext'; 
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { searchPlaces } from './map/axios/searchPlaces';
+import { Navigate, useNavigate } from "react-router-dom";
 // import e from "express";
 
 export default function CreateEvent() {
@@ -35,16 +36,16 @@ export default function CreateEvent() {
   let userEmail = user.email
   let userName = user.displayName
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const {eventoLocation,setResults,location,setLocation,results} = useContext(MapaContext)
-  console.log(location)
+  // console.log(location)
   useEffect(()=>{
     dispatch(getMyUser(userEmail))
   },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
-console.log(eventoLocation)
+// console.log(eventoLocation)
 const timeOutRef=useRef()
 const [locations,setLocations] = useState([{
     center:"",
@@ -114,13 +115,12 @@ useEffect(()=>{
     e.preventDefault();
     setModal(!modal)
     dispatch(postEvent(formState,token));
-    window.location.reload()
-    // navigate("/");
+    navigate("/events")
   };
 
-  console.log(eventoLocation)
+  // console.log(eventoLocation)
     
-    console.log(formState)
+    // console.log(formState)
   const body = (
     <Card
       className="postCreator"

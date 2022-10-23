@@ -6,6 +6,8 @@ import { Marker } from 'mapbox-gl';
 import { MapaContext } from './contex/MapaContext';
 import { useSelector } from 'react-redux';
 import {searchRoute} from "./axios/routeSearch"
+import { Button } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 
 
@@ -109,9 +111,11 @@ export default function Maps({latLon}){
     }
 
     return(
-        <div>
+        <div className='divMapa'>
+            <Button onClick={handleMark} id='assistButton' sx={{bgcolor: 'secondary.main', color:grey[900], fontSize:11}} variant="contained">
+                How to get
+            </Button>
             <div className='mapa' ref={mapDiv}>
-                <button className='bottonRoute' onClick={handleMark}>Como llegar</button>
             </div>
         </div>
     )

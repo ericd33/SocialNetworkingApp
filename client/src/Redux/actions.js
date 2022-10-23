@@ -383,7 +383,7 @@ export function getEventsByName(token, name) {
 
 const validate =(data)=>{
 for (let i = 0; i < data.length; i++) {
-  if(typeof i === 'array'){
+  if(typeof i === 'object'){
     for (let z = 0; z < i.length; z++) {
       x.push(data[z])
     }

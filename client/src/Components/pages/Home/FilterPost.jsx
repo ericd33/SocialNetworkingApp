@@ -1,49 +1,45 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
 import { getMyUser, getPostsFollows, getPosts } from "../../../Redux/actions"
-import axios from "axios";
+import './FilterPost.css';
 
 const FilterPost = () => {
 	const dispatch = useDispatch();
 	const sessionUser = useUserAuth();
-  let token = sessionUser.user.accessToken;
-  let email = sessionUser.user.email;
+	let token = sessionUser.user.accessToken;
+	let email = sessionUser.user.email;
 	const userF = useSelector((state)=> state.myUser)
 	const userFP = useSelector((state)=> state.post)
 	const postF = userF.follows
-	const [isChecked, setIsChecked] = useState(false);
 
 	useEffect(() => {
 		dispatch(getMyUser(token,email))
 		console.log(userFP)
 		console.log(userF)
-  },[dispatch,isChecked]);
+  },[dispatch]);
 
-
-
-	const postFollows = () =>{
-		setIsChecked(true)
-		postF.map((f)=>{
-			dispatch(getPostsFollows(token, f))
-		})
-	}
-
-	const postGlobal = () =>{
-		setIsChecked(false)
-		dispatch(getPosts(token))
-	}
+	function onClicked(e) {
+		console.log(e.target.checked);
+		if(e.target.checked === true) {
+			postF.map((f)=>{
+				dispatch(getPostsFollows(token, f))
+			})
+		}
+		else {
+			dispatch(getPosts(token))
+		}
+	  }
 
 
   return (
     <div>
-			<div>
-				<button onClick={postGlobal} >Global</button>
-				<button onClick={postFollows} >follows</button>
-			{
-				isChecked ? <h1>follows</h1> : <h1>Global</h1>
-			}
-			</div>
+		<div className="wrap-toggle">
+            <label>Global</label>
+            <input type='checkbox' onClick={onClicked} id='toggle' className="offscreen"></input>
+            <label for='toggle' className="switch"></label>
+			<label>My follows</label>
+        </div>
     </div>
 	)
 }
