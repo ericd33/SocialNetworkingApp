@@ -80,7 +80,7 @@ export function Donate(token, data) {
         donacion: data
       }
     };
-    await axios(Config).then((res) => console.log(res))
+    await axios(Config).then((res) => console.log(res));
   };
 }
 
