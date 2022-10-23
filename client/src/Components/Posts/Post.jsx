@@ -25,7 +25,6 @@ import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function Post({ text, author, comments, likes, image, id }) {
-  // console.log(comments)
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const {user} = useUserAuth();
