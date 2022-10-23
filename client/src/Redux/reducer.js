@@ -11,6 +11,7 @@ import {
   GET_POSTS_BY_NAME,
   GET_POSTS_BY_ID,
   UPDATE_COMMENT,
+  GET_POSTS_FOLLOW,
 } from "./action-types";
 
 const initialState = {
@@ -47,6 +48,29 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         posts: action.payload,
         filtered_posts: action.payload,
+      };
+
+      case GET_POSTS_FOLLOW:
+        // let data =action.payload
+        // console.log(data)
+        // function validate(dataP){
+        // let post = [9898]
+        // for(let i = 0; i < dataP.length; i++) {
+        //   if(Array.isArray(dataP[i])){
+        //     for(let z = 0; z < i.length; z++) {
+        //       post.push(i[z])
+        //   }
+        //   } else{
+        //     post.push(dataP[i])
+        //   }
+        // }
+        // return post
+        // }
+        // let postR= validate(data)
+        // console.log(postR)
+      return {
+        ...state,
+        posts: action.payload,
       };
 
     case GET_EVENTS:

@@ -8,6 +8,7 @@ import {
   GET_MY_USER,
   GET_POSTS_BY_NAME,
   GET_POSTS_BY_ID,
+  GET_POSTS_FOLLOW,
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -375,5 +376,50 @@ export function getEventsByName(token, name) {
         payload: res.data,
       });
     });
+  };
+}
+
+
+
+const validate =(data)=>{
+for (let i = 0; i < data.length; i++) {
+  if(typeof i === 'array'){
+    for (let z = 0; z < i.length; z++) {
+      x.push(data[z])
+    }
+  } else{
+    x.push(data[i])
+  }
+}
+}
+
+const clear = ()=>{
+  setTimeout(()=>{
+    x=[]
+  },3000)
+}
+
+let x = []
+
+export function getPostsFollows(token,email) {
+  // let x = []
+  return async function (dispatch) {
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/email/${email}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    axios(Config).then((res) => {
+      validate(res.data)
+      setTimeout(()=>{
+        clear()
+        return dispatch({
+        type: GET_POSTS_FOLLOW,
+        payload: x,
+      })
+      },1000)
+      })
   };
 }
