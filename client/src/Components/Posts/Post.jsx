@@ -28,12 +28,10 @@ export default function Post({ text, author, comments, likes, image, id }) {
   // console.log(comments)
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
-  const sessionUser = useUserAuth();
-  let token = sessionUser.user.accessToken;
-  let user = sessionUser.name;
+  const {user} = useUserAuth();
+  let token = user.accessToken;
 
   // console.log(token)
-  // console.log(user)
 
   useEffect(() => {
     const Config = {
@@ -67,50 +65,29 @@ export default function Post({ text, author, comments, likes, image, id }) {
     idPost: "",
   });
 
-  const handleClick = (e) => {
-    setFormState({
-      text: e.target.value,
-    });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = {
-      ...formState,
-      // email: getAuth().currentUser.email,
-    };
-
-    dispatch(updateComment(id, data, token));
-  };
-
-  // const handleSubmitCommentForm = (e) => {
-  //   e.preventDefault();
-
-  //   dispatch(updateComment(id, user, comment, token));
-
-  //   setComment("");
-  // };
-// console.log(sessionUser)
-console.log(sessionUser)
   const [comment, setComment] = useState({
-    authorComment:sessionUser.user.email,
-    avatar: sessionUser.user.photoURL,
-    name:sessionUser.user.displayName,
+    authorComment:user.email,
+    avatar: user.photoURL,
+    name: user.displayName,
     idPost: id,
     text:"",
     image:""
   });
-  console.log(comment)
+  // console.log(comment)
+
   const handleChangeComment = (e) => {
     // e.preventDefault();
     setComment({
       ...comment,
       [e.target.name]:e.target.value});
   };
+
   const handleSubmmitComment = (e)=>{
     e.preventDefault()
-    console.log(comment)
+    // console.log(comment)
     dispatch(newComment(token,comment))
   }
+
   // const [commentsModalState, setCommentsmodalState] = useState(false);
   // const openCommentsModal = () => setCommentsmodalState(true);
 

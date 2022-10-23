@@ -80,7 +80,7 @@ export function Donate(token, data) {
         donacion: data
       }
     };
-    await axios(Config).then((res) => console.log(res))
+    await axios(Config).then((res) => console.log(res));
   };
 }
 
@@ -267,31 +267,6 @@ export function updateComment(postId, userId, commentData, token) {
   };
 }
 
-/* 
-export function updateComment(text, image, idUser, idPost, token) {
-  return async function (dispatch) {
-    const Config = {
-      method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      data: {
-        image,
-        text: text,
-        idUser,
-        idPost,
-      },
-    };
-    const { data } = await axios(Config);
-
-    dispatch({
-      type: "UPDATE_COMMENT",
-      payload: data,
-    });
-  };
-} */
-
 export function getPostsByName(token, id) {
   return async function (dispatch) {
     const Config = {
@@ -385,7 +360,7 @@ export function getEventsByName(token, name) {
 
 export function getCommentsPost(token, payload) {
   return function (dispatch) {
-    console.log(payload);
+    // console.log(payload);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
@@ -394,7 +369,7 @@ export function getCommentsPost(token, payload) {
       },
     };
     axios(Config).then((res) => {
-      console.log(res);
+      // console.log(res);
       return dispatch({
         type: GET_COMMENTS_POST,
         payload: res.data
@@ -404,7 +379,7 @@ export function getCommentsPost(token, payload) {
 }
 
 export function newComment(token,payload){
-  console.log(payload)
+  // console.log(payload)
   return async function(dispatch){
     const Config = {
       method: "post",

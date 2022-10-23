@@ -63,32 +63,32 @@ export default function CommentsModal({idPost}) {
         </div>
         {comments?.map((c) => (
             <Card
-              sx={{
-                width: 462,
-                bgcolor: 'custom.light',
-                fontFamily: "Nunito",
-                color: grey[900],
-                borderRadius:'15px',
-                height:'55px',
-                mb:'10px'
-              }}
-            >
-              <CardHeader
-                sx={{ pt: '8px' }}
-                avatar={
-                  <Avatar
-              imgProps={{ referrerPolicy: "no-referrer" }}
-              sx={{ bgcolor: "primary.light" }}
-              src={c.avatar}
-            ></Avatar>
-                }
-                title={c.name}
-              />
-              <CardContent sx={{ pb: 1 }}>{c.text}</CardContent>
-            </Card>
-        ))}
-      </CardContent>
-    </Card>
+            sx={{
+              width: 462,
+              bgcolor: 'custom.light',
+              fontFamily: "Nunito",
+              color: 'primary.light',
+              borderRadius:'15px',
+              height:'55px',
+              mb:'10px'
+            }}
+          >
+            <CardHeader
+              sx={{ pt: '8px', color:'secondary.main'}}
+              avatar={
+                <Avatar
+            imgProps={{ referrerPolicy: "no-referrer" }}
+            sx={{ bgcolor: "primary.light",mb:'10px'}}
+            src={c.avatar}
+          ></Avatar>
+              }
+              title={c.name}
+              subheader={<p className='textComment'>{c.text}</p>}
+            />
+          </Card>
+      ))}
+    </CardContent>
+  </Card>
   );
 
   return (
