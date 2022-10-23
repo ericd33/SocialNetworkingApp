@@ -415,9 +415,6 @@ export function getCommentsPost(token, payload) {
       headers: {
         authorization: `Bearer ${token}`,
       },
-      // :{
-      //   idPost: "635590883395234d7bc7d802"
-      // }
     };
     axios(Config).then((res) => {
       console.log(res);
@@ -426,8 +423,8 @@ export function getCommentsPost(token, payload) {
         payload: res.data
       });
     });
-=======
-
+}
+}
 
 const validate =(data)=>{
 for (let i = 0; i < data.length; i++) {
@@ -447,7 +444,7 @@ const clear = ()=>{
   },3000)
 }
 
-let x = []
+let x = [];
 
 export function getPostsFollows(token,email) {
   // let x = []

@@ -7,7 +7,6 @@ import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function PostList() {
   const all_posts = useSelector((state) => state.posts);
-  console.log(all_posts.comments)
   const dispatch = useDispatch();
   const {user} = useUserAuth();
   useEffect(() => {
