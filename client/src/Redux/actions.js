@@ -67,6 +67,30 @@ export function postPost(token, data) {
     dispatch(getPosts(token));
   };
 }
+export function newComment(token,payload){
+  console.log(payload)
+  return async function(dispatch){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        authorComment: payload.authorComment,
+        idPost:payload.idPost,
+        text: payload.text,
+        image:payload.image
+      }
+    };
+    await axios(Config).then((res)=>{
+      return dispatch({
+        type: NEW_COMMENT,
+        payload: res.data,
+      });
+    })
+  }
+}
 
 export function Donate(token, data) {
   return async function () {
@@ -427,6 +451,27 @@ export function newComment(token,payload){
     })
   }
 }
+
+export function getCommentsPost(token, payload) {
+  return function (dispatch) {
+    console.log(payload);
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      // :{
+      //   idPost: "635590883395234d7bc7d802"
+      // }
+    };
+    axios(Config).then((res) => {
+      console.log(res);
+      return dispatch({
+        type: GET_COMMENTS_POST,
+        payload: res.data
+      });
+    });
 
 
 const validate =(data)=>{
