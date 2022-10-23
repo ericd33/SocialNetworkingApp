@@ -1,0 +1,53 @@
+.wrap-toggle {
+    background-color: rgb(29, 29, 29);
+    display: flex;
+    border-radius: 15px;
+    padding-left: 20px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top:8px;
+    color:white;
+    font-family: 'Nunito';
+    align-items: center;
+    width: 210px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 23px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 50px;
+    background-color: rgb(56, 56, 56);
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    padding: 1px;
+    top: 1px;
+    left: 1px;
+    border-radius: 22px;
+    background-color: white;
+    transition: all 0.4s;
+}
+
+.wrap-toggle input[type='checkbox']:checked + .switch::after {
+    transform: translateX(25px);
+    background-color: rgb(29, 29, 29);
+}
+
+.wrap-toggle input[type='checkbox']:checked + .switch {
+    background-color: #ffd000;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}

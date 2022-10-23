@@ -32,8 +32,6 @@ export default function Post({ text, author, comments, likes, image, id }) {
   let token = sessionUser.user.accessToken;
   let user = sessionUser.name;
 
-  // console.log(token)
-  // console.log(user)
 
   useEffect(() => {
     const Config = {

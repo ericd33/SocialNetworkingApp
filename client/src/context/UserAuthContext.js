@@ -38,7 +38,7 @@ export function UserAuthContextProvider({children}) {
     
                 userconfig.email = tuser.email
                 if (tuser.name != null) userconfig.name = tuser.displayName;
-                if (tuser.image != null) userconfig.image = tuser.photoURL;
+                if (tuser.photoURL != null) userconfig.image = tuser.photoURL;
     
                 dispatch(postUser(userconfig, tuser.accessToken))
             }

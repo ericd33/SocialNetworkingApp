@@ -41,9 +41,31 @@
 }
 
 .text {
+    display: flex;
     border-bottom: 1px solid black;
     padding-bottom: 20px;
+    align-items: flex-start;
     color: white;
+    font-family: 'Nunito';
+    padding-left: 10px;
+}
+.descriptionDetail {
+  display: flex;
+  height: 40px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 30px;
+  padding: 10px;
+}
+.text .descriptionDetail h3 {
+  color: #ffd000;
+}
+.text .descriptionDetail h4 {
+  width:750px;
+  word-wrap: break-word;
+  margin-top: 0px;
+}
+.text .map {
 }
 
 .info2 {
@@ -175,4 +197,8 @@
     left: auto;
     right: 15%;
     animation-delay: .3s;
+  }
+
+  #buttonEventDetail:hover {
+    background-color: #ffec95;
   }
