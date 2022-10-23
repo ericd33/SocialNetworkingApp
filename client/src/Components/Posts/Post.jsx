@@ -28,6 +28,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const {user} = useUserAuth();
+  
   let token = user.accessToken;
 
   // console.log(token)
@@ -80,11 +81,18 @@ export default function Post({ text, author, comments, likes, image, id }) {
       ...comment,
       [e.target.name]:e.target.value});
   };
-
   const handleSubmmitComment = (e)=>{
     e.preventDefault()
     // console.log(comment)
     dispatch(newComment(token,comment))
+    setComment({
+      authorComment:user.email,
+    avatar: user.photoURL,
+    name: user.displayName,
+    idPost: id,
+    text:"",
+    image:""
+    })
   }
 
   // const [commentsModalState, setCommentsmodalState] = useState(false);
