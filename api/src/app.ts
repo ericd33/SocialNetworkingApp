@@ -10,6 +10,7 @@ const mercadopago = require("mercadopago");
 const cors = require("cors");
 const middleware = require("./middleware");
 const bodyParser = require("body-parser");
+
 dotenv.config();
 const app = express();
 app.use(express.json());
