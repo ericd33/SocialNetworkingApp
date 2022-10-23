@@ -144,12 +144,13 @@ const NavBar = () => {
             <NotificationsNoneIcon />
           </IconButton>
 
+          <Donations/>
+
           <Link to="/chat">
             <IconButton color="secondary">
               <ChatOutlinedIcon />
             </IconButton>
           </Link>
-
           
           <IconButton color="secondary" onClick={logOut}>
             <LogoutIcon/>
