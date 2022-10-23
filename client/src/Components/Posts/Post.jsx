@@ -144,6 +144,7 @@ console.log(sessionUser)
           <CardMedia component="img" alt="image" image={image} />
         ) : (
           <div></div>
+          
         )}
 
         <CardActions sx={{mb:0}}>
