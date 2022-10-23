@@ -14,7 +14,7 @@ import { grey, yellow } from "@mui/material/colors";
 import "./Donations.css";
 import { useDispatch } from "react-redux";
 import { Donate } from "../../Redux/actions";
-import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function Donations() {
@@ -31,11 +31,11 @@ export default function Donations() {
 
   const handleChange = (e) => {
     setAmount(e.target.value);
-  }
+  };
 
   const handleSubmit = () => {
-    dispatch(Donate(token,amount))
-  }
+    dispatch(Donate(token, amount));
+  };
 
   const body = (
     <Card
@@ -43,9 +43,9 @@ export default function Donations() {
       sx={{
         width: 600,
         borderRadius: "15px",
-        bgcolor: 'custom.main',
+        bgcolor: "custom.main",
         fontFamily: "Nunito",
-        color: 'primary.light',
+        color: "primary.light",
       }}
     >
       <CardContent>
@@ -58,25 +58,28 @@ export default function Donations() {
             <CloseIcon />
           </IconButton>
         </div>
-        <p>From the ConcatUs team we are very grateful for your support, we hope that the website is to your liking! ♡</p>
+        <p>
+          From the ConcatUs team we are very grateful for your support, we hope
+          that the website is to your liking! ♡
+        </p>
         <div className="inputDonation">
-            <TextField
-              id="filled-multiline-static"
-              label="Amount"
-              value={amount}
-              variant="filled"
-              name="content"
-              onChange={handleChange}
-            />
-            <Button
-            sx={{mb:1,fontFamily: "Nunito",
-            color:'primary.dark'}}
-            id='ButtonDonate' 
-            variant='outlined'
-            onClick={handleSubmit}>
-              Donate
-            </Button>
-          </div>
+          <TextField
+            id="filled-multiline-static"
+            label="Amount"
+            value={amount}
+            variant="filled"
+            name="content"
+            onChange={handleChange}
+          />
+          <Button
+            sx={{ mb: 1, fontFamily: "Nunito", color: "primary.dark" }}
+            id="ButtonDonate"
+            variant="outlined"
+            onClick={handleSubmit}
+          >
+            Donate
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
@@ -84,7 +87,7 @@ export default function Donations() {
   return (
     <div className="container">
       <IconButton onClick={() => opencloseModal()}>
-        <VolunteerActivismIcon sx={{color:'secondary.main'}}/>
+        <VolunteerActivismIcon sx={{ color: "secondary.main" }} />
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>
         {body}
