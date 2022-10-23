@@ -63,6 +63,7 @@ export default function CommentsModal({idPost}) {
                 bgcolor: grey[300],
                 fontFamily: "Nunito",
                 color: grey[900],
+                
               }}
             >
               <CardHeader
