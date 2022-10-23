@@ -90,6 +90,8 @@ useEffect(()=>{
   }
 
   const handleChange = (e) => {
+    e.preventDefault();
+
     console.log(e)
     setFormState({
       ...formState,
@@ -102,6 +104,8 @@ useEffect(()=>{
   };
 
   const handleSetLocation = (e)=>{
+    e.preventDefault();
+
     setLocation(e.target.innerHTML||e.target.value)
     setFormState({
       ...formState,
@@ -112,10 +116,10 @@ useEffect(()=>{
     });
   }
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setModal(!modal)
     dispatch(postEvent(formState,token));
-    navigate("/events")
+    // navigate("/events")
   };
 
   // console.log(eventoLocation)

@@ -53,7 +53,7 @@ export default function CreatePost() {
     };
 
     dispatch(postPost(token, data));
-    navigate("/home")
+    // navigate("/home")
     setModal(!modal);
   };
 
