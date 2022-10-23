@@ -67,30 +67,6 @@ export function postPost(token, data) {
     dispatch(getPosts(token));
   };
 }
-export function newComment(token,payload){
-  console.log(payload)
-  return async function(dispatch){
-    const Config = {
-      method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      data: {
-        authorComment: payload.authorComment,
-        idPost:payload.idPost,
-        text: payload.text,
-        image:payload.image
-      }
-    };
-    await axios(Config).then((res)=>{
-      return dispatch({
-        type: NEW_COMMENT,
-        payload: res.data,
-      });
-    })
-  }
-}
 
 export function Donate(token, data) {
   return async function () {
@@ -109,7 +85,7 @@ export function Donate(token, data) {
 }
 
 export function postEvent(payload, token) {
-  return function () {
+  return async function (dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
@@ -127,7 +103,8 @@ export function postEvent(payload, token) {
         lat_log:payload.lat_log
       },
     };
-    axios(Config).then((res) => console.log(res));
+    await axios(Config);
+    dispatch(getEvents(token));
   };
 }
 
@@ -425,6 +402,32 @@ export function getCommentsPost(token, payload) {
     });
 }
 }
+
+export function newComment(token,payload){
+  console.log(payload)
+  return async function(dispatch){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        authorComment: payload.authorComment,
+        idPost:payload.idPost,
+        text: payload.text,
+        image:payload.image
+      }
+    };
+    await axios(Config).then((res)=>{
+      return dispatch({
+        type: NEW_COMMENT,
+        payload: res.data,
+      });
+    })
+  }
+}
+
 
 const validate =(data)=>{
 for (let i = 0; i < data.length; i++) {
