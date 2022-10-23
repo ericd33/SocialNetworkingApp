@@ -9,6 +9,7 @@ import Follow from "./follow";
 import CreatePost from '../../Posts/CreatePost'
 import CreateEvent from "../../Events/CreateEvent";
 import { useUserAuth } from "../../../context/UserAuthContext";
+import FilterPost from "./FilterPost";
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
   const {user} = useUserAuth();
@@ -61,6 +62,7 @@ export default function Home() {
           <EventsMenu />
         </div>
         <div className="centerHome">
+          <FilterPost />
           <PostList />
         </div>
         <div className="rightHome"></div>
