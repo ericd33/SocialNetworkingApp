@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { getAuth, signOut } from "firebase/auth";
 import './Navbar.css';
 import axios from "axios";
+import Donations from '../Donations/Donations'
 import { useUserAuth } from "../../context/UserAuthContext";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
