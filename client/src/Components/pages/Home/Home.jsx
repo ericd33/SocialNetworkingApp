@@ -10,6 +10,7 @@ import CreatePost from '../../Posts/CreatePost'
 import CreateEvent from "../../Events/CreateEvent";
 import { useUserAuth } from "../../../context/UserAuthContext";
 import FilterPost from "./FilterPost";
+import { Link } from "react-router-dom";
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
   const {user} = useUserAuth();
@@ -37,10 +38,11 @@ export default function Home() {
                       mb: 2,
                       mt: 1,
                       borderRadius:3
+                      
                     }
                   }
                   >
-                    <CardHeader
+                    <Link to={`/profile/${u.email}`}><CardHeader
                       sx={{ p: 1 , color:'primary.light'}}
                       avatar={
                         <Avatar
@@ -48,7 +50,7 @@ export default function Home() {
                         ></Avatar>
                       }
                       title={u.name}
-                    />
+                    /></Link>
                       {
                         (user.email===u.email)
                           ? <div></div>
