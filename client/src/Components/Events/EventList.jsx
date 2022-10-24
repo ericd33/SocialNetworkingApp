@@ -12,6 +12,7 @@ export default function EventList() {
     const dispatch = useDispatch()
     let events = []
     events = useSelector((state)=>state.events);
+    const userE = JSON.parse(localStorage.getItem('user'));
 
     let token = user.accessToken
 
@@ -39,8 +40,11 @@ export default function EventList() {
                 {console.log(events)}
                 {
                     events?.map(e=>{
-                        return (
-                            <EventCard
+                        if(userE.enabled){
+                            switch(userE.role){
+                                case "admin":
+                                    return(
+                                        <EventCard
                                 key={e.author+e.date} 
                                 date={e.date}
                                 location={e.location}
@@ -48,8 +52,27 @@ export default function EventList() {
                                 text={e.content}
                                 image={e.image}
                                 id={e._id}
+                                enabled={e.enabled}
                             />
-                        )
+                            )
+                            case "user":
+                                if(e.enabled)
+                            return (
+                                <EventCard
+                                key={e.author+e.date} 
+                                date={e.date}
+                                location={e.location}
+                                name={e.name}
+                                text={e.content}
+                                image={e.image}
+                                id={e._id}
+                                enabled={e.enabled}
+                            />
+                            )
+                            default: <></>
+                            }
+                        }
+                        
                     }).reverse()
                 }
             </div>
