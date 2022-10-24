@@ -36,7 +36,7 @@ export const getPost = async (_req: Request, res: Response) => {
 };
 
 export const putPostById = async (req: Request, res: Response) => {
-  const { id, action } = req.query;
+  const { id, action } = req.body;
 
   try {
     if (id) {
