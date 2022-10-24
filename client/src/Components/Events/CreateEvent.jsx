@@ -130,6 +130,7 @@ useEffect(()=>{
       className="postCreator"
       sx={{
         width: 600,
+        height:550,
         borderRadius: "15px",
         bgcolor: 'custom.main',
         fontFamily: "Nunito",
@@ -182,24 +183,15 @@ useEffect(()=>{
           value={formState.date}
           renderInput={(params) => <TextField {...params} />}
           />
-          {/* <TextField id="filled-basic"
-            sx={{width:'260px'}}
+          <TextField id="filled-basic" 
             label="Location" variant="filled" 
-            value={formState.location}
+            value={location}
             name="location"
-            type='text'
-            className="textField"
-            onChange={handleChange}
-          /> */}
-          <input type="search" 
-          name="location"
-        placeholder='search' 
-        className='search' 
-        onKeyUp={search}
-        value={location}
-        onChange={handleSetLocation}
-        style={{color:"#000"}}
-            />
+            type='search'
+            onKeyUp={search}
+            className="location"
+            onChange={handleSetLocation}
+          />
             <div>
                 {
                     locations.length && results
@@ -221,7 +213,7 @@ useEffect(()=>{
           <FileUploadIcon/>
         </IconButton> */}
           <Button id='Postbutton'
-          sx={{mt:5, bgcolor:'secondary.main', fontFamily: "Nunito",
+          sx={{mt:8, bgcolor:'secondary.main', fontFamily: "Nunito",
           color:'custom.dark'}} onClick={handleSubmit} variant='contained'>Post</Button>
         </div>
       </CardContent>

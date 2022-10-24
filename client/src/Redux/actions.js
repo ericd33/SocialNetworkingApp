@@ -421,8 +421,8 @@ export function getPostsFollows(token,email) {
   };
 }
 
-export function imageChange(payload,token){
-  return async function(){
+export function imageChange(payload,token,email){
+  return async function(dispatch){
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/image`,
@@ -434,12 +434,13 @@ export function imageChange(payload,token){
         email: payload.email
       }
     };
-    console.log(payload)
-    await axios(Config)
+    console.log(payload);
+    await axios(Config);
+    dispatch(getMyUser(token,email));
   }
 } 
-export function nameChange(payload,token){
-  return async function(){
+export function nameChange(payload,token,email){
+  return async function(dispatch){
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/name`,
@@ -452,12 +453,13 @@ export function nameChange(payload,token){
       }
     };
     console.log(payload)
-    await axios(Config)
+    await axios(Config);
+    dispatch(getMyUser(token,email))
   }
 }
 
-export function presentationChange(payload,token){
-  return async function(){
+export function presentationChange(payload,token,email){
+  return async function(dispatch){
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/presentation`,
@@ -471,10 +473,11 @@ export function presentationChange(payload,token){
     };
     console.log(payload)
     await axios(Config)
+    dispatch(getMyUser(token,email))
   }
 }
-export function webSiteChange(payload,token){
-  return async function(){
+export function webSiteChange(payload,token,email){
+  return async function(dispatch){
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/website`,
@@ -488,6 +491,7 @@ export function webSiteChange(payload,token){
     };
     console.log(payload)
     await axios(Config)
+    dispatch(getMyUser(token,email))
   }
 }
 

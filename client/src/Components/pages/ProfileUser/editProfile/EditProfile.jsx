@@ -2,7 +2,7 @@ import { Button, Card, CardContent, IconButton, Modal, TextField } from "@mui/ma
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useUserAuth } from "../../../../context/UserAuthContext";
-import { imageChange, nameChange, presentationChange, webSiteChange } from "../../../../Redux/actions";
+import { getMyUser, imageChange, nameChange, presentationChange, webSiteChange } from "../../../../Redux/actions";
 import CloseIcon from "@mui/icons-material/Close";
 import './EditProfile.css';
 
@@ -12,32 +12,33 @@ const [modal, setModal] = useState(false);
 const opencloseModal = () => {
     setModal(!modal);
   };
-const dispatch = useDispatch()
-const {user} = useUserAuth()
+const dispatch = useDispatch();
+const {user} = useUserAuth();
+let token = user.accessToken;
 const [image,setImage ] = useState("")
 const [name,setName]= useState("")
 const [presentation,setPresentation]= useState("")
 const [webSite,setWebSite]= useState("")
 
 const handleWebSite = (e)=>{
-    setWebSite(e.target.value)
+    setWebSite(e.target.value);
 }
 const webSites ={
     email:user.email,
     website:webSite
 }
 const handleImage = (e)=>{
-    setImage(e.target.value)
+    setImage(e.target.value);
 }
 const images ={
     email:user.email,
     image:image
 }
 const handleName = (e)=>{
-    setName(e.target.value)
+    setName(e.target.value);
 }
 const handlePresentation = (e)=>{
-    setPresentation(e.target.value)
+    setPresentation(e.target.value);
 }
 const names ={
     email:user.email,
@@ -48,22 +49,25 @@ const presentations ={
     presentation:presentation
 }
 console.log(image)
-let token = user.accessToken
 const handleSubmitImage = (e)=>{
     e.preventDefault()
-    dispatch(imageChange(images,token))
+    dispatch(imageChange(images,token,user.email));
+    setModal(false);
 }
 const handleSubmitWebSite = (e)=>{
     e.preventDefault()
-    dispatch(webSiteChange(webSites,token))
+    dispatch(webSiteChange(webSites,token,user.email));
+    setModal(false);
 }
 const handleSubmitName = (e)=>{
     e.preventDefault()
-    dispatch(nameChange(names,token))
+    dispatch(nameChange(names,token,user.email));
+    setModal(false);
 }
 const handleSubmitPresentation=(e)=>{
     e.preventDefault()
-    dispatch(presentationChange(presentations,token))
+    dispatch(presentationChange(presentations,token,user.email));
+    setModal(false);
 }
 
 const body = (
