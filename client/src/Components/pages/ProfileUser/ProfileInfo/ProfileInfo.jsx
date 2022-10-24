@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { useEffect } from 'react'
 import Follow from '../../Home/follow';
 import { EditProfile } from '../editProfile/EditProfile';
+
+
 const ProfileInfo = ({userInfoRen}) => {
   const {user} = useUserAuth();
   let email = useParams()
@@ -14,13 +16,11 @@ const ProfileInfo = ({userInfoRen}) => {
   useEffect(()=>{
     if(email.email===user.email){setMyUser(false)}
   },[myUser,email,user])
-  // console.log(myUser)
+  console.log(myUser)
+  console.log('user',userInfoRen)
 
   return (
     <div className='userCard'>
-      {
-        console.log(userInfoRen)
-      }
         {userInfoRen.image ? (
         <CardMedia  className='user' component="img" alt="image" image={userInfoRen.image} />
         ) : (
