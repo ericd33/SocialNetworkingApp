@@ -8,7 +8,6 @@ import {
   Avatar,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { grey, yellow } from "@mui/material/colors";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 
 import "../CreatePost.css";
@@ -66,7 +65,7 @@ export default function CommentsModal({idPost}) {
         {comments?.map((c) => (
             <Card
             sx={{
-              width: 462,
+              width: 440,
               bgcolor: 'custom.light',
               fontFamily: "Nunito",
               color: 'primary.light',
