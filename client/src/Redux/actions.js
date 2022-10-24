@@ -80,7 +80,7 @@ export function Donate(token, data) {
         donacion: data
       }
     };
-    await axios(Config).then((res) => console.log(res));
+    await axios(Config).then((res) => window.open(res.data, '_blank', 'noopener,noreferrer'));
   };
 }
 
@@ -149,11 +149,6 @@ export function getMyUser(token, email) {
         payload: res.data,
       });
     });
-    // let json = await axios.get(`http://localhost:3001/users/email/${email}`);
-    // return dispatch({
-    //   type: GET_MY_USER,
-    //   payload: json.data,
-    // });
   };
 }
 
@@ -358,51 +353,29 @@ export function getEventsByName(token, name) {
   };
 }
 
+
+
 export function getCommentsPost(token, payload) {
   return function (dispatch) {
-    // console.log(payload);
+    console.log(payload);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
       headers: {
         authorization: `Bearer ${token}`,
       },
+      // :{
+      //   idPost: "635590883395234d7bc7d802"
+      // }
     };
     axios(Config).then((res) => {
-      // console.log(res);
+      console.log(res);
       return dispatch({
         type: GET_COMMENTS_POST,
         payload: res.data
       });
     });
-}
-}
-
-export function newComment(token,payload){
-  // console.log(payload)
-  return async function(dispatch){
-    const Config = {
-      method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      data: {
-        authorComment: payload.authorComment,
-        idPost:payload.idPost,
-        text: payload.text,
-        image:payload.image
-      }
-    };
-    await axios(Config).then((res)=>{
-      return dispatch({
-        type: NEW_COMMENT,
-        payload: res.data,
-      });
-    })
-  }
-}
-
+  }}
 
 const validate =(data)=>{
 for (let i = 0; i < data.length; i++) {
@@ -447,3 +420,4 @@ export function getPostsFollows(token,email) {
 
   };
 }
+
