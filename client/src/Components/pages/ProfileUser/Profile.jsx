@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import {useState} from 'react';
 import axios from 'axios';
 import { useUserAuth } from '../../../context/UserAuthContext';
+import './Profile.css';
 
 
 const Profile = () => {
@@ -46,22 +47,21 @@ const Profile = () => {
 return (
   <div>
     <div className="Home">
-<div className="navbar">
-  <span></span>
-</div>
-<NavBar />
-<div className="media-part">
-  <div className="leftHome">
-    <ProfileInfo userInfoRen={profileUser}/>
-    {/* <EventsMenu /> */}
-  </div>
-  <div className="centerHome">
-    <ProfilePostList posts={posts}/>
-  </div>
-  <div className="rightHome"></div>
-</div>
-</div>
-    
+      <div className="navbar">
+        <span></span>
+      </div>
+      <NavBar />
+      <div className="media-part">
+        <div className="leftHome">
+          <ProfileInfo userInfoRen={profileUser}/>
+          {/* <EventsMenu /> */}
+        </div>
+        <div className="centerHome">
+          <ProfilePostList posts={posts}/>
+        </div>
+        <div className="rightHome"></div>
+      </div>
+    </div>
   </div>
   )
 }
