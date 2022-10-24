@@ -42,6 +42,7 @@ export function UserAuthContextProvider({children}) {
     
                 dispatch(postUser(userconfig, tuser.accessToken))
             }
+            
             setUser(currentUser);
         })
         return () => {
