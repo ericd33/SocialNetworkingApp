@@ -30,19 +30,18 @@ export function UserAuthContextProvider({children}) {
             const tuser = currentUser;
             if (tuser && (tuser.metadata.creationTime == tuser.metadata.lastSignInTime)) {
                 console.log('creating user')
+                console.log(tuser)
                 const userconfig = {
-                    email:'',
+                    email:tuser.email,
                     name:tuser.displayName,
                     image:'https://avatars.githubusercontent.com/u/16511727?v=4',
                 }
-    
-                userconfig.email = tuser.email
-                if (tuser.name != null) userconfig.name = tuser.displayName;
+
+                if (userconfig.name == null) userconfig.name = tuser.email.split('@')[0];
                 if (tuser.photoURL != null) userconfig.image = tuser.photoURL;
     
                 dispatch(postUser(userconfig, tuser.accessToken))
             }
-            
             setUser(currentUser);
         })
         return () => {
