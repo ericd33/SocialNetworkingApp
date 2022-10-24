@@ -11,6 +11,8 @@ import CreateEvent from "../../Events/CreateEvent";
 import { useUserAuth } from "../../../context/UserAuthContext";
 import FilterPost from "./FilterPost";
 import { Link } from "react-router-dom";
+import FilterLike from "./FilterLike";
+import FilterComments from "./FilterComments";
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
   const {user} = useUserAuth();
@@ -67,6 +69,8 @@ export default function Home() {
           </div>
         <div className="centerHome">
           <FilterPost />
+          {/* <FilterLike />
+          <FilterComments /> */}
           <PostList />
         </div>
         <div className="rightHome"></div>
