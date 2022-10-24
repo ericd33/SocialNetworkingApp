@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 const userSchema = require("../models/user");
 
 const eventSchema = require("../models/event");
-
+const commentSchema = require("../models/comment");
 const mailSettings = require('../nodemailer/nodemailer');
 
 
@@ -247,3 +247,55 @@ export const userEvents = async (req: Request, res: Response) => {
   }
 };
 
+export const editImage = async (req: Request, res: Response) => {
+  const {image, email} = req.body
+  try{
+    const user = await userSchema.findOne({email:email})
+    if(image.length){
+      user.image= image
+      user.save()
+    }
+    res.status(200).send("image chance")
+  }catch(e){
+    res.status(400).send("ouch image invalidated")
+  }
+}
+export const editName = async (req: Request, res: Response) => {
+  const {name, email} = req.body
+  try{
+    const user = await userSchema.findOne({email:email})
+    
+    if(name.length){
+      user.name= name
+      user.save()
+      await commentSchema.update({author:email},{name:name})
+      await eventSchema.update({author:email},{nameAuthor:name})
+    }
+    res.status(200).send("name chance")
+  }catch(e){
+    res.status(400).send("ouch name invalidated")
+  }
+}
+
+export const editPresentation = async (req: Request, res: Response) => {
+  const {presentation, email} = req.body
+  try{
+    if(presentation.length){
+      await userSchema.findOneAndUpdate({email:email},{presentation:presentation})
+    }
+    res.status(200).send("name chance")
+  }catch(e){
+    res.status(400).send("ouch name invalidated")
+  }
+}
+export const editWebSite = async (req: Request, res: Response) => {
+  const { webSite, email} = req.body
+  try{
+    if(webSite.length){
+      await userSchema.findOneAndUpdate({email:email},{website:webSite})
+    }
+    res.status(200).send("name chance")
+  }catch(e){
+    res.status(400).send("ouch name invalidated")
+  }
+}
