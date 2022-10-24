@@ -421,3 +421,72 @@ export function getPostsFollows(token,email) {
   };
 }
 
+export function imageChange(payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/image`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        image:payload.image,
+        email: payload.email
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+} 
+export function nameChange(payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/name`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        name:payload.name,
+        email: payload.email
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+}
+
+export function presentationChange(payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/presentation`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        presentation:payload.presentation,
+        email: payload.email
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+}
+export function webSiteChange(payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/website`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        webSite:payload.website,
+        email: payload.email
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+}

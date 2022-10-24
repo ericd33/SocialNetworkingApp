@@ -1,7 +1,7 @@
 import React from 'react'
 import { CardMedia } from "@mui/material";
 import './ProfileInfo.css'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useUserAuth } from '../../../../context/UserAuthContext';
 import { useState } from 'react';
 import { useEffect } from 'react'
@@ -23,6 +23,7 @@ const ProfileInfo = ({userInfoRen}) => {
         )}
 				<div className='userInfo'>
 					<p>{userInfoRen.name}</p>
+          <Link to={"/edit_profile"}><button>Editar perfil</button></Link>
             <div className='userPlusInfo'>
           <div className='followers'>
            <div><p>{userInfoRen.followeds?.length}</p>
