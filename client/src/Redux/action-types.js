@@ -13,6 +13,10 @@ export const UPDATE_COMMENT = "UPDATE_COMMENT"
 export const NEW_COMMENT = "NEW_COMMENT"
 export const GET_COMMENTS_POST = "GET_COMMENTS_POST"
 export const GET_POSTS_FOLLOW = "GET_POSTS_FOLLOW"
+export const ORDER_BY_LIKE = "ORDER_BY_LIKE"
+export const ORDER_BY_COMENTS = "ORDER_BY_COMENTS"
+
+
 
 
 

@@ -15,12 +15,12 @@ const FilterPost = () => {
 
 	useEffect(() => {
 		dispatch(getMyUser(token,email))
-		console.log(userFP)
-		console.log(userF)
+		// console.log(userFP)
+		// console.log(userF)
   },[dispatch]);
 
 	function onClicked(e) {
-		console.log(e.target.checked);
+		// console.log(e.target.checked);
 		if(e.target.checked === true) {
 			postF.map((f)=>{
 				dispatch(getPostsFollows(token, f))

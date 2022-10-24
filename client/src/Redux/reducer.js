@@ -13,12 +13,14 @@ import {
   GET_COMMENTS_POST,
   UPDATE_COMMENT,
   GET_POSTS_FOLLOW,
+  ORDER_BY_LIKE,
+  ORDER_BY_COMENTS
 
 } from "./action-types";
 
 const initialState = {
   posts: [],
-  filtered_posts: ['1', '2'],
+  filtered_posts: [],
   events: [],
   myUser: {},
   details: [],
@@ -117,6 +119,45 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         comments:action.payload
       }
+      case ORDER_BY_LIKE:
+        const postLikes = state.posts;
+        // console.log(postLikes)
+      let sorted =
+        action.payload === true
+          ? postLikes.sort((el1, el2) => {
+              if (el1.likes.length > el2.likes.length) {
+                return -1;
+              }
+              if (el1.likes.length < el2.likes.length) {
+                return 1;
+              }
+              return 0;
+            })
+          : []
+          console.log(sorted)
+      return {
+        ...state,
+        posts: sorted,
+      };
+      case ORDER_BY_COMENTS:
+        const postComents = state.filtered_posts;
+        // console.log(postComents)
+        let sortedC =
+          action.payload === true
+            ? postComents.sort((el1, el2) => {
+              if (el1.comments.length > el2.comments.length) {
+                return -1;
+              }
+              if (el1.comments.length < el2.comments.length) {
+                return 1;
+              }
+              return 0;
+            })
+          : []
+          console.log(sortedC)
+        return{
+          posts: sortedC
+        }
     default:
       return state;
   }
