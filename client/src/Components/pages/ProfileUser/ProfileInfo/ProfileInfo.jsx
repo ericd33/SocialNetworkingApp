@@ -16,6 +16,9 @@ const ProfileInfo = ({userInfoRen}) => {
   console.log(myUser)
   return (
     <div className='userCard'>
+      {
+        console.log(userInfoRen)
+      }
         {userInfoRen.image ? (
         <CardMedia  className='user' component="img" alt="image" image={userInfoRen.image} />
         ) : (

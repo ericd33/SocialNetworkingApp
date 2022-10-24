@@ -490,3 +490,47 @@ export function webSiteChange(payload,token){
     await axios(Config)
   }
 }
+
+
+
+export function banPost (payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        action:payload.action,
+        id:payload.idPost
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+}
+export function newComment(token,payload){
+  // console.log(payload)
+  return async function(dispatch){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        authorComment: payload.authorComment,
+        idPost:payload.idPost,
+        text: payload.text,
+        image:payload.image
+      }
+    };
+    await axios(Config).then((res)=>{
+      return dispatch({
+        type: NEW_COMMENT,
+        payload: res.data,
+      });
+    })
+  }
+}
