@@ -167,15 +167,16 @@ export const findUserByEmail = async (req: Request, res: Response) => {
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
-  const { id, action, email } = req.query;
+  const { action, email } = req.body;
 
   try {
-    if (id) {
-      const user = await userSchema.findOne({ _id: id });
+    if (email) {
+      const user = await userSchema.findOne({ email: email });
+      console.log(user)
       switch (action) {
         case "disable":
           if (user.enabled) {
-            await userSchema.updateOne({ _id: id },{ enabled: false }
+            await userSchema.updateOne({ email: email },{ enabled: false }
             );
 
             //NODEMAILER
@@ -197,7 +198,7 @@ export const deleteUser = async (req: Request, res: Response) => {
           break;
           case "enable":
             if (!user.enabled) {
-              await userSchema.updateOne({ _id: id },{ enabled: true }
+              await userSchema.updateOne({ email: email },{ enabled: true }
               );
               res.status(200).send("User re-enabled successfully.");
             } else {
