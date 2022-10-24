@@ -7,18 +7,52 @@ import { useState } from 'react';
 import { useEffect } from 'react'
 import Follow from '../../Home/follow';
 import { EditProfile } from '../editProfile/EditProfile';
+import { useDispatch } from 'react-redux';
+import { banUsers } from '../../../../Redux/actions';
+import axios from 'axios';
 
 
 const ProfileInfo = ({userInfoRen}) => {
   const {user} = useUserAuth();
+  const dispatch = useDispatch();
+  let token = user.accessToken;
+
+
   let email = useParams()
   const [myUser, setMyUser]=useState(true)
   useEffect(()=>{
     if(email.email===user.email){setMyUser(false)}
   },[myUser,email,user])
-  // console.log(myUser)
-  // console.log('user',userInfoRen)
+  console.log(myUser)
+  console.log('user',userInfoRen)
+  const [profileUser, setProfileUser] = useState({})
 
+  const handleBanUser=(e)=>{
+    e.preventDefault(e)
+    if(userInfoRen.enabled){
+      let data = {
+      email:email.email,
+      action:"disable"
+    }
+    dispatch(banUsers(data,token))
+  }else{
+    let data = {
+      email:email.email,
+      action:"enable"
+    }
+    dispatch(banUsers(data,token))
+  }
+}
+useEffect(() => {
+  const Config2 = {
+    method: 'get',
+    baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+  }
+  axios(Config2).then(res => setProfileUser(res.data))
+}, [dispatch]);
   return (
     <div className='userCard'>
         {userInfoRen.image ? (
@@ -28,7 +62,11 @@ const ProfileInfo = ({userInfoRen}) => {
         )}
 				<div className='userInfo'>
 					<p>{userInfoRen.name}</p>
-          
+          {
+            profileUser.role==='admin'
+              ?<div><button onClick={handleBanUser}>ban</button><span style={{color:"#fff"}}>{userInfoRen.enabled? "true":"false"}</span></div>
+              :<></>
+          }
             {
               myUser
               ? <div></div>

@@ -73,7 +73,7 @@ export default function EventDetail() {
                         </Typography>
 
                         <div className="right-namephoto">
-                            <Avatar id='avatar' sx={{ bgcolor: yellow[500] }} src={user?.avatar}></Avatar>
+                            <Avatar id='avatar' sx={{ bgcolor: yellow[500] }} src={detail?.avatar}></Avatar>
 
                             <Typography id="h5" sx={{fontFamily: 'Nunito', fontSize: 16,color:'primary.light'}} gutterBottom variant="h5" component="div">
                                 {detail?.nameAuthor}

@@ -101,6 +101,7 @@ export function postEvent(payload, token) {
         name: payload.name,
         username: payload.username,
         image: payload.image,
+        avatar:payload.avatar,
         location: payload.location,
         content: payload.content,
         date: payload.date,
@@ -533,6 +534,7 @@ export function banPost (payload,token){
     await axios(Config)
   }
 }
+
 export function newComment(token,payload){
   // console.log(payload)
   return async function(dispatch){
@@ -557,8 +559,7 @@ export function newComment(token,payload){
     })
   }
 }
-
-  
+ 
   const clearE = ()=>{
     setTimeout(()=>{
       y=[]
@@ -606,3 +607,56 @@ export function newComment(token,payload){
       })
     }
   }
+
+export function banUsers (payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        action:payload.action,
+        email:payload.email
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+}
+
+export function banComments (payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/delete`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        action:payload.action,
+        id:payload.id
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+}
+export function banEvents (payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        action:payload.action,
+        id:payload.id
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+}

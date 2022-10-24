@@ -3,7 +3,7 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, username, date, content, image, location, email,lat_log} = req.body;
+  const { name, username, date, content, image, location, email,lat_log,avatar} = req.body;
   
   console.log(req.body)
   try {
@@ -12,7 +12,7 @@ export const addEvent = async (req: Request, res: Response) => {
     let event = await new eventSchema();
     if (name.length && date.length && content.length && location.length && lat_log.length) {
       event.author= email
-      event.avatar = user.image
+      event.avatar = avatar
       event.nameAuthor = username
       event.name = name;
       event.date = date;
@@ -124,31 +124,30 @@ export const updateEvent = async (req: Request, res: Response) => {
 };
 
 export const deleteEvent = async (req: Request, res: Response) => {
-  const { id,action } = req.query;
-  const event = await eventSchema.find({_id: id })
+  const { action,id } = req.body;
+  console.log(id)
+  const event = await eventSchema.findOne({_id: id })
   console.log(event)
   try{switch (action) {
-    case "disable":
-      if (event.enabled) {
-        await userSchema.updateOne({ _id: id },{ enabled: false }
-        );
-        res.status(200).send("event deleted successfully.");
-      } else {
-        res.status(400).send("event is already deleted.");
-      }
-      break;
+      case "disable":
+        if (event.enabled) {
+          await eventSchema.updateOne({ _id: id }, { enabled: false });
+          res.status(200).send("Post deleted successfully.");
+        } else {
+          res.status(400).send("Post is already deleted.");
+        }
+        break;
       case "enable":
         if (!event.enabled) {
-          await userSchema.updateOne({ _id: id },{ enabled: true }
-          );
-          res.status(200).send("event re-enabled successfully.");
+          await eventSchema.updateOne({ _id: id }, { enabled: true });
+          res.status(200).send("Post re-enabled successfully.");
         } else {
-          res.status(400).send("event is already deleted.");
+          res.status(400).send("Post is already deleted.");
         }
-      break;
-    default:
-      res.status(400).send('Invalid action request.')
-      break;
+        break;
+      default:
+        res.status(400).send("Invalid action request.");
+        break;
   }
   }catch (e) {
     res.status(400).send(e);
