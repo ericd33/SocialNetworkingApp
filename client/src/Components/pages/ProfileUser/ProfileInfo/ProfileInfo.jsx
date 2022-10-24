@@ -23,7 +23,12 @@ const ProfileInfo = ({userInfoRen}) => {
         )}
 				<div className='userInfo'>
 					<p>{userInfoRen.name}</p>
-          <Link to={"/edit_profile"}><button>Editar perfil</button></Link>
+          
+            {
+              myUser
+              ? <div></div>
+              : <Link to={"/edit_profile"}><button>Editar perfil</button></Link>
+            }
             <div className='userPlusInfo'>
           <div className='followers'>
            <div><p>{userInfoRen.followeds?.length}</p>
