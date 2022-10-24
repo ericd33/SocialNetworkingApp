@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addEvent, deleteEvent, findEvent, findEventById, updateEvent, addEventParticipant, findEventByAuthor } from "../controllers/events.controllers";
+import { addEvent, deleteEvent, findEvent, findEventById, addEventParticipant, findEventByAuthor } from "../controllers/events.controllers";
 const router = Router()
 
 router.route('')
