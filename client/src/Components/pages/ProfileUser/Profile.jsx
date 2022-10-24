@@ -10,6 +10,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import { useUserAuth } from '../../../context/UserAuthContext';
 import './Profile.css';
+import ProfileDescription from './ProfileDescription/ProfileDescription';
 
 
 const Profile = () => {
@@ -59,7 +60,9 @@ return (
         <div className="centerHome">
           <ProfilePostList posts={posts}/>
         </div>
-        <div className="rightHome"></div>
+        <div className="rightHome">
+          <ProfileDescription userInfoRen={profileUser}/>
+        </div>
       </div>
     </div>
   </div>

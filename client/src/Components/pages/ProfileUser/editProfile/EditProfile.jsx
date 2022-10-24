@@ -90,26 +90,6 @@ const body = (
             <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
-        {/* <div className="inputsdePost">
-          <TextField
-            id="filled-multiline-static"
-            label="What do you want to share?"
-            multiline
-            rows={4}
-            value={formState.content}
-            variant="filled"
-            name="content"
-            className="textField"
-            onChange={handleChange}
-          />
-          <TextField id="filled-basic" 
-          label="Image link" variant="filled" 
-          value={formState.image}
-          name="image"
-          className="textField"
-          onChange={handleChange}
-          />
-        </div> */}
         <div className="inputsdePerfil">
             <div>
                 <TextField
