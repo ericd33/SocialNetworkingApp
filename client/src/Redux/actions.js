@@ -13,7 +13,9 @@ import {
   GET_COMMENTS_POST,
   GET_POSTS_FOLLOW,
   ORDER_BY_LIKE,
-  ORDER_BY_COMENTS
+  ORDER_BY_COMENTS,
+  GET_EVENT_PROFILE,
+  EVENTS_BY_AUTHOR,
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -121,7 +123,7 @@ export function details(id, token) {
       },
     };
     axios(Config).then((res) => {
-      console.log(res);
+      // console.log(res);
       return dispatch({
         type: GET_DETAILS,
         payload: res.data,
@@ -360,7 +362,7 @@ export function getEventsByName(token, name) {
 
 export function getCommentsPost(token, payload) {
   return function (dispatch) {
-    console.log(payload);
+    // console.log(payload);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
@@ -372,7 +374,7 @@ export function getCommentsPost(token, payload) {
       // }
     };
     axios(Config).then((res) => {
-      console.log(res);
+      // console.log(res);
       return dispatch({
         type: GET_COMMENTS_POST,
         payload: res.data
@@ -557,6 +559,54 @@ export function newComment(token,payload){
     })
   }
 }
+ 
+  const clearE = ()=>{
+    setTimeout(()=>{
+      y=[]
+    },3000)
+  }
+  
+  let y = [];
+  
+  export function getEventProfile(token,id) {
+    return async function (dispatch) {
+      const Config = {
+        method: "get",
+        baseURL: `${process.env.REACT_APP_MY_API_URL}/events/${id}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      };
+      axios(Config).then((res) => {
+        y.push(res.data)
+        setTimeout(()=>{
+          clearE()
+          return dispatch({
+          type: GET_EVENT_PROFILE,
+          payload: y,
+        })
+        },1000)
+        })
+    };
+  }
+
+  export function getEventsByAuthor(token,author){
+    return async function(dispatch){
+      const Config = {
+        method: "get",
+        baseURL: `${process.env.REACT_APP_MY_API_URL}/events/author/${author}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        }
+      };
+      await axios(Config).then((res)=>{
+        return dispatch({
+          type: EVENTS_BY_AUTHOR,
+          payload: res.data,
+        });
+      })
+    }
+  }
 
 export function banUsers (payload,token){
   return async function(){

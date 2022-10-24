@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function PostList() {
   const all_posts = useSelector((state) => state.posts);
-  console.log(all_posts.comments)
+  // console.log(all_posts.comments)
   const dispatch = useDispatch();
   const {user} = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
@@ -43,7 +43,7 @@ return (
       </div>
     ) : (
       <div className="List">
-        {console.log(all_posts)}
+        {/* {console.log(all_posts)} */}
         {all_posts
           .map((p) => {
             if(profileUser.enabled){

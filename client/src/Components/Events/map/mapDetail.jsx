@@ -13,11 +13,11 @@ import { grey } from '@mui/material/colors';
 
 export default function Maps({latLon}){
     // const detail = useSelector(d=>d.details)
-    console.log(latLon)
+    // console.log(latLon)
     const mapDiv = useRef(null)
     const {mapa,setMap,eventoLocation,marker,myUbication, setMyUbication} = useContext(MapaContext)
-    console.log(eventoLocation)
-    console.log(latLon)
+    // console.log(eventoLocation)
+    // console.log(latLon)
     useEffect(() => {
         if(mapDiv.current){
             setMap(

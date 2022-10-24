@@ -48,7 +48,7 @@ const presentations ={
     email:user.email,
     presentation:presentation
 }
-console.log(image)
+// console.log(image)
 const handleSubmitImage = (e)=>{
     e.preventDefault()
     dispatch(imageChange(images,token,user.email));

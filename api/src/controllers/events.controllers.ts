@@ -67,6 +67,17 @@ export const findEventById = async (req: Request, res: Response) => {
   }
 }
 
+export const findEventByAuthor = async (req: Request, res: Response) => {
+  const { author } = req.params;
+  try{
+    const events = await eventSchema.find({author:author})
+    console.log(events)
+    res.status(200).send(events)
+  }catch(e){
+    res.status(400).send(e)
+  }
+}
+
 export const updateEvent = async (req: Request, res: Response) => {
   const { id } = req.query;
   const { date, enabled, content, image, location } = req.body;
