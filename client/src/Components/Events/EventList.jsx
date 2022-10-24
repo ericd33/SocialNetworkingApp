@@ -68,6 +68,7 @@ export default function EventList() {
                                 id={e._id}
                                 enabled={e.enabled}
                             />
+                            
                             )
                             default: <></>
                             }
