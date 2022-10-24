@@ -18,20 +18,29 @@ import axios from "axios";
 import CommentsModal from "./Modals/CommentsModal";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import { useDispatch } from "react-redux";
-import { newComment, putLikes } from "../../Redux/actions";
+import { banPost, newComment, putLikes } from "../../Redux/actions";
 import { updateComment } from "../../Redux/actions";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 
-export default function Post({ text, author, comments, likes, image, id }) {
+export default function Post({ text, author, comments, likes, image, id,enabled }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const {user} = useUserAuth();
-  
+  const [profileUser, setProfileUser] = useState({})
   let token = user.accessToken;
 
-  // console.log(token)
+  console.log(token)
+
+  const handleBan=(e)=>{
+    e.preventDefault(e)
+    let data = {
+      idPost:id,
+      action:"disable"
+    }
+    dispatch(banPost(data,token))
+  }
 
   useEffect(() => {
     const Config = {
@@ -49,6 +58,16 @@ export default function Post({ text, author, comments, likes, image, id }) {
           avatar: user.data.image,
         });
       })
+
+      const Config2 = {
+        method: 'get',
+        baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+      axios(Config2).then(res => setProfileUser(res.data))
+  
       .catch(function (err) {
         console.log(err);
       });
@@ -86,7 +105,7 @@ export default function Post({ text, author, comments, likes, image, id }) {
     // console.log(comment)
     dispatch(newComment(token,comment))
     setComment({
-      authorComment:user.email,
+    authorComment:user.email,
     avatar: user.photoURL,
     name: user.displayName,
     idPost: id,
@@ -122,6 +141,14 @@ export default function Post({ text, author, comments, likes, image, id }) {
           }
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
+        {
+          console.log("role",profileUser.role)
+        }
+        {
+          profileUser.role==='admin'
+          ?<div><button onClick={handleBan}>ban</button><span style={{color:"#fff"}}>{enabled? "true":"false"}</span></div>
+          :<></>
+        }
         <CardContent sx={{color: "primary.main" }}>{text}</CardContent>
 
         {image ? (

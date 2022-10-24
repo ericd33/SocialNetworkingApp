@@ -1,0 +1,34 @@
+.ProfileEdit {
+    position: absolute;
+    top: 25%;
+    left: 30%;
+    height: 350px;
+}
+
+.inputsdePerfil {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.inputsdePerfil #assistButton {
+    width: 70px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.inputsdePerfil label {
+    color:#a5a5a5;
+}
+
+.inputsdePerfil input {
+    color:white;
+    width: 350px;
+    border-radius: 15px;
+    background-color: #3b3b3b;
+    height: 15px;
+}
+
