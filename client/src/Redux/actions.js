@@ -12,6 +12,8 @@ import {
   NEW_COMMENT,
   GET_COMMENTS_POST,
   GET_POSTS_FOLLOW,
+  ORDER_BY_LIKE,
+  ORDER_BY_COMENTS
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -418,6 +420,20 @@ export function getPostsFollows(token,email) {
       },1000)
       })
 
+  };
+}
+
+export function sortByLikes(payload) {
+  return {
+    type: ORDER_BY_LIKE,
+    payload,
+  };
+}
+
+export function sortByComents(payload) {
+  return {
+    type: ORDER_BY_COMENTS,
+    payload,
   };
 }
 
