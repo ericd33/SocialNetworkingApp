@@ -38,6 +38,7 @@ export default function CreateEvent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {eventoLocation,setResults,location,setLocation,results} = useContext(MapaContext)
+  const userImage = JSON.parse(localStorage.getItem('user'));
   // console.log(location)
   useEffect(()=>{
     dispatch(getMyUser(userEmail))
@@ -70,6 +71,7 @@ async function search() {
     username: userName,
     email:userEmail,
     date : Date.now(),
+    avatar: "",
     location: location,
     image:'',
     lat_log: eventoLocation
@@ -99,6 +101,7 @@ useEffect(()=>{
       email:userEmail,
       location:location,
       lat_log: eventoLocation,
+      avatar: userImage.image,
       image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
   };
