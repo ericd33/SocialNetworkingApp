@@ -20,7 +20,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useEffect } from "react";
 import { useUserAuth } from "../../context/UserAuthContext";
 
-export default function CreatePost() {
+export default function CreatePost({profileUser}) {
   const [modal, setModal] = useState(false);
   const {user} = useUserAuth();
   let userEmail = user.email;
@@ -110,9 +110,10 @@ export default function CreatePost() {
       </CardContent>
     </Card>
   );
-
+  const userStorage = JSON.parse(localStorage.getItem('user'))
   return (
-    <div className="container">
+    userStorage.enabled
+  ?<div className="container">
       <IconButton
         onClick={() => opencloseModal()}
         id="buttonPost"
@@ -124,5 +125,6 @@ export default function CreatePost() {
         {body}
       </Modal>
     </div>
+    : <></>
   );
 }

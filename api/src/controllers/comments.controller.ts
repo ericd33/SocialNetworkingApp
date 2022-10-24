@@ -104,8 +104,7 @@ export const updateComment = async (req: Request, res: Response) => {
 };
 
 export const deleteComment = async (req: Request, res: Response) => {
-  const { id, action } = req.query;
-
+  const { id, action } = req.body;
   try {
     if (id) {
       const comment = await commentSchema.findOne({ _id: id });

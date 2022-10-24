@@ -11,12 +11,30 @@ import CreateEvent from "../../Events/CreateEvent";
 import { useUserAuth } from "../../../context/UserAuthContext";
 import FilterPost from "./FilterPost";
 import { Link } from "react-router-dom";
-import FilterLike from "./FilterLike";
-import FilterComments from "./FilterComments";
+import { useEffect, useState } from "react";
+import axios from "axios";
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
   const {user} = useUserAuth();
+  const [profileUser, setProfileUser] = useState({})
 
+  let token = user.accessToken;
+
+  useEffect(() => {
+    const Config2 = {
+      method: 'get',
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    }
+    axios(Config2).then(res => setProfileUser(res.data))
+
+    .catch(function (err) {
+      console.log(err);
+    });
+}, []);
+localStorage.setItem('user',JSON.stringify(profileUser))
 
   return (
     <div className="Home">
@@ -40,7 +58,7 @@ export default function Home() {
                       mb: 2,
                       mt: 1,
                       borderRadius:3
-                      
+
                     }
                   }
                   >
@@ -69,13 +87,11 @@ export default function Home() {
           </div>
         <div className="centerHome">
           <FilterPost />
-          {/* <FilterLike />
-          <FilterComments /> */}
           <PostList />
         </div>
         <div className="rightHome"></div>
       </div>
-      <CreatePost />
+        <CreatePost  profileUser={profileUser}/>
     </div>
   );
 }
