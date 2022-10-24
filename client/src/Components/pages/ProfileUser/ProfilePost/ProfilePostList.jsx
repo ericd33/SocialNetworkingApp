@@ -9,10 +9,10 @@ import { getAuth } from "firebase/auth";
 
 const ProfilePostList = ({ posts }) => {
     console.log(posts)
-  if (!posts) {
+  if (posts.length === 0) {
     return (
       <div>
-        <h2>Loading...</h2>
+        <h2>There is no posts</h2>
       </div>
     );
   } else {

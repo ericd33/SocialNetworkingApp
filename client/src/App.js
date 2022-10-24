@@ -14,7 +14,7 @@ import { UserAuthContextProvider } from "./context/UserAuthContext.js";
 import Home from "./Components/pages/Home/Home.jsx";
 import LandingBackup from "./Components/pages/Landing/LandingBackup";
 import Chat from "./Components/pages/Chat/Chat.jsx";
-import { EditPorofile } from "./Components/pages/ProfileUser/editProfile/EditProfile";
+import { EditProfile } from "./Components/pages/ProfileUser/editProfile/EditProfile";
 
 function App() {
   return (
@@ -63,10 +63,6 @@ function App() {
                   <EventDetail />
                 </ProtectedRoute>
               }
-            />
-            <Route 
-            path="/edit_profile"
-            element={<EditPorofile/>}
             />
           </Routes>
         </UserAuthContextProvider>
