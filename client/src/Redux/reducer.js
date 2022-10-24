@@ -14,7 +14,9 @@ import {
   UPDATE_COMMENT,
   GET_POSTS_FOLLOW,
   ORDER_BY_LIKE,
-  ORDER_BY_COMENTS
+  ORDER_BY_COMENTS,
+  GET_EVENT_PROFILE,
+  EVENTS_BY_AUTHOR
 
 } from "./action-types";
 
@@ -99,6 +101,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         details: [],
       };
+    case EVENTS_BY_AUTHOR:
+      return {
+        ...state,
+        events: action.payload,
+      };
     case SEARCH_BY_NAME:
       return {
         ...state,
@@ -158,6 +165,12 @@ const rootReducer = (state = initialState, action) => {
         return{
           posts: sortedC
         }
+        case GET_EVENT_PROFILE:
+          // console.log(action.payload)
+          return {
+            ...state,
+            events: action.payload,
+          };
     default:
       return state;
   }

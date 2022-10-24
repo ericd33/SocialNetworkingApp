@@ -31,7 +31,7 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
   const [profileUser, setProfileUser] = useState({})
   let token = user.accessToken;
 
-  console.log(token)
+  // console.log(token)
 
   const handleBan=(e)=>{
     e.preventDefault(e)
@@ -142,7 +142,7 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
         {
-          console.log("role",profileUser.role)
+          // console.log("role",profileUser.role)
         }
         {
           profileUser.role==='admin'

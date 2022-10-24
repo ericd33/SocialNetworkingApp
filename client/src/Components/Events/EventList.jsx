@@ -36,7 +36,7 @@ export default function EventList() {
     else {
         return (
             <div className="List">
-                {console.log(events)}
+                {/* {console.log(events)} */}
                 {
                     events?.map(e=>{
                         return (

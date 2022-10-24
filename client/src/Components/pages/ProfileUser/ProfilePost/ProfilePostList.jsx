@@ -8,7 +8,7 @@ import { getAuth } from "firebase/auth";
 // import {getAuth} from 'firebase/auth'
 
 const ProfilePostList = ({ posts }) => {
-    console.log(posts)
+    // console.log(posts)
   if (posts.length === 0) {
     return (
       <div>

@@ -16,8 +16,8 @@ const ProfileInfo = ({userInfoRen}) => {
   useEffect(()=>{
     if(email.email===user.email){setMyUser(false)}
   },[myUser,email,user])
-  console.log(myUser)
-  console.log('user',userInfoRen)
+  // console.log(myUser)
+  // console.log('user',userInfoRen)
 
   return (
     <div className='userCard'>

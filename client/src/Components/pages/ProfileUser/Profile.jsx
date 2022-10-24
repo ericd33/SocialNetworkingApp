@@ -11,6 +11,9 @@ import axios from 'axios';
 import { useUserAuth } from '../../../context/UserAuthContext';
 import './Profile.css';
 import ProfileDescription from './ProfileDescription/ProfileDescription';
+import FilterEventsProfile from './EventsProfile/FilterEventsProfile';
+import EventsProfile from './EventsProfile/EventsProfile';
+import EventList from '../../Events/EventList';
 
 
 const Profile = () => {
@@ -38,7 +41,7 @@ const Profile = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    console.log(Config2)
+    // console.log(Config2)
     axios(Config2).then((res) => {
         setPosts(res.data)});
     
@@ -62,6 +65,8 @@ return (
         </div>
         <div className="rightHome">
           <ProfileDescription userInfoRen={profileUser}/>
+          <FilterEventsProfile userInfoRen={profileUser} />
+          <EventsProfile />
         </div>
       </div>
     </div>
