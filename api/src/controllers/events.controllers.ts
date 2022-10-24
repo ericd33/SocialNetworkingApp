@@ -3,7 +3,7 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, username, date, content, image, location, email,lat_log} = req.body;
+  const { name, username, date, content, image, location, email,lat_log,avatar} = req.body;
   
   console.log(req.body)
   try {
@@ -12,7 +12,7 @@ export const addEvent = async (req: Request, res: Response) => {
     let event = await new eventSchema();
     if (name.length && date.length && content.length && location.length && lat_log.length) {
       event.author= email
-      event.avatar = user.image
+      event.avatar = avatar
       event.nameAuthor = username
       event.name = name;
       event.date = date;

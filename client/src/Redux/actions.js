@@ -99,6 +99,7 @@ export function postEvent(payload, token) {
         name: payload.name,
         username: payload.username,
         image: payload.image,
+        avatar:payload.avatar,
         location: payload.location,
         content: payload.content,
         date: payload.date,
