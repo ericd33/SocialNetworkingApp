@@ -19,13 +19,12 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { grey, yellow } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { searchUsersByName } from "../../Redux/actions";
+import { getEventsByName, searchUsersByName } from "../../Redux/actions";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CloseIcon from "@mui/icons-material/Close";
 import { getAuth, signOut } from "firebase/auth";
 import './Navbar.css';
 import axios from "axios";
-import Donations from '../Donations/Donations'
 import { useUserAuth } from "../../context/UserAuthContext";
 
 
@@ -104,8 +103,12 @@ const NavBar = () => {
     localStorage.clear();
   }
 
-  const handleInput = (e) => {
+  const handleInputPersons = (e) => {
     dispatch(searchUsersByName(e.target.value, token));
+  };
+
+  const handleInputEvents = (e) => {
+    dispatch(getEventsByName(token, e.target.value));
   };
 
   return (
@@ -133,23 +136,23 @@ const NavBar = () => {
                 placeholder="Search events..."
                 color="primary"
                 inputProps={{ "aria-label": "search" }}
-                onChange={handleInput}
+                onChange={handleInputEvents}
               />
             ) : (
               <StyledInputBase
                 placeholder="Search persons..."
                 color="primary"
                 inputProps={{ "aria-label": "search" }}
-                onChange={handleInput}
+                onChange={handleInputPersons}
               />
             )}
           </Search>
         </Toolbar>
 
         <Toolbar>
-          <IconButton color="secondary" component={Link}>
+          {/* <IconButton color="secondary" component={Link}>
             <NotificationsNoneIcon />
-          </IconButton>
+          </IconButton> */}
 
           <Donations />
 

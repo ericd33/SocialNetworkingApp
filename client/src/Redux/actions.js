@@ -12,6 +12,8 @@ import {
   NEW_COMMENT,
   GET_COMMENTS_POST,
   GET_POSTS_FOLLOW,
+  ORDER_BY_LIKE,
+  ORDER_BY_COMENTS
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -419,5 +421,138 @@ export function getPostsFollows(token,email) {
       })
 
   };
+}
+
+export function sortByLikes(payload) {
+  return {
+    type: ORDER_BY_LIKE,
+    payload,
+  };
+}
+
+export function sortByComents(payload) {
+  return {
+    type: ORDER_BY_COMENTS,
+    payload,
+  };
+}
+
+
+export function imageChange(payload,token,email){
+  return async function(dispatch){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/image`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        image:payload.image,
+        email: payload.email
+      }
+    };
+    console.log(payload);
+    await axios(Config);
+    dispatch(getMyUser(token,email));
+  }
+} 
+export function nameChange(payload,token,email){
+  return async function(dispatch){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/name`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        name:payload.name,
+        email: payload.email
+      }
+    };
+    console.log(payload)
+    await axios(Config);
+    dispatch(getMyUser(token,email))
+  }
+}
+
+export function presentationChange(payload,token,email){
+  return async function(dispatch){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/presentation`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        presentation:payload.presentation,
+        email: payload.email
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+    dispatch(getMyUser(token,email))
+  }
+}
+export function webSiteChange(payload,token,email){
+  return async function(dispatch){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/website`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        webSite:payload.website,
+        email: payload.email
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+    dispatch(getMyUser(token,email))
+  }
+}
+
+
+
+export function banPost (payload,token){
+  return async function(){
+    const Config = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        action:payload.action,
+        id:payload.idPost
+      }
+    };
+    console.log(payload)
+    await axios(Config)
+  }
+}
+export function newComment(token,payload){
+  // console.log(payload)
+  return async function(dispatch){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        authorComment: payload.authorComment,
+        idPost:payload.idPost,
+        text: payload.text,
+        image:payload.image
+      }
+    };
+    await axios(Config).then((res)=>{
+      return dispatch({
+        type: NEW_COMMENT,
+        payload: res.data,
+      });
+    })
+  }
 }
 

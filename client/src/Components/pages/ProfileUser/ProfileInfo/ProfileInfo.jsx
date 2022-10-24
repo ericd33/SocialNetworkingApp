@@ -1,11 +1,14 @@
 import React from 'react'
-import { CardMedia } from "@mui/material";
+import { Button, CardMedia } from "@mui/material";
 import './ProfileInfo.css'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useUserAuth } from '../../../../context/UserAuthContext';
 import { useState } from 'react';
 import { useEffect } from 'react'
 import Follow from '../../Home/follow';
+import { EditProfile } from '../editProfile/EditProfile';
+
+
 const ProfileInfo = ({userInfoRen}) => {
   const {user} = useUserAuth();
   let email = useParams()
@@ -14,6 +17,8 @@ const ProfileInfo = ({userInfoRen}) => {
     if(email.email===user.email){setMyUser(false)}
   },[myUser,email,user])
   console.log(myUser)
+  console.log('user',userInfoRen)
+
   return (
     <div className='userCard'>
         {userInfoRen.image ? (
@@ -23,6 +28,12 @@ const ProfileInfo = ({userInfoRen}) => {
         )}
 				<div className='userInfo'>
 					<p>{userInfoRen.name}</p>
+          
+            {
+              myUser
+              ? <div></div>
+              : <EditProfile/>
+            }
             <div className='userPlusInfo'>
           <div className='followers'>
            <div><p>{userInfoRen.followeds?.length}</p>

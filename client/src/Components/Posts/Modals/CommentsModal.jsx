@@ -8,7 +8,6 @@ import {
   Avatar,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { grey, yellow } from "@mui/material/colors";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 
 import "../CreatePost.css";
@@ -47,6 +46,7 @@ export default function CommentsModal({idPost}) {
         bgcolor: 'custom.main',
         fontFamily: "Nunito",
         color: 'primary.light',
+        maxHeight: 400
       }}
     >
       <CardContent>
@@ -61,10 +61,11 @@ export default function CommentsModal({idPost}) {
             <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
+        <div className='boxComments'>
         {comments?.map((c) => (
             <Card
             sx={{
-              width: 462,
+              width: 440,
               bgcolor: 'custom.light',
               fontFamily: "Nunito",
               color: 'primary.light',
@@ -87,6 +88,7 @@ export default function CommentsModal({idPost}) {
             />
           </Card>
       ))}
+      </div>
     </CardContent>
   </Card>
   );
@@ -94,7 +96,7 @@ export default function CommentsModal({idPost}) {
   return (
     <div className="container">
       <IconButton onClick={() => opencloseModal()}>
-        <ChatBubbleOutlineRoundedIcon sx={{color:'primary.dark'}}/>
+        <ChatBubbleOutlineRoundedIcon id='ButtonActionPost' sx={{color:'primary.dark'}}/>
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>
         {body}

@@ -7,13 +7,12 @@ import EventsPage from "./Components/pages/EventsPage/EventsPage.jsx";
 import Profile from "./Components/pages/ProfileUser/Profile.jsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import Login from "./Components/Login";
-import Signup from "./Components/Signup";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext.js";
 import Home from "./Components/pages/Home/Home.jsx";
 import LandingBackup from "./Components/pages/Landing/LandingBackup";
 import Chat from "./Components/pages/Chat/Chat.jsx";
+import LandingRegister from "./Components/pages/Landing/Register/LandingRegister";
 
 function App() {
   return (
@@ -22,7 +21,7 @@ function App() {
         <UserAuthContextProvider>
           <Routes>
             <Route path="/" element={<LandingBackup />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<LandingRegister />} />
             <Route
               path="/chat"
               element={
