@@ -559,7 +559,6 @@ export function newComment(token,payload){
 
 export function banUsers (payload,token){
   return async function(){
-    
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
