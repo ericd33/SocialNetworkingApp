@@ -35,12 +35,20 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
 
   const handleBan=(e)=>{
     e.preventDefault(e)
-    let data = {
+    if(enabled){
+      let data = {
       idPost:id,
       action:"disable"
     }
     dispatch(banPost(data,token))
+  }else{
+    let data = {
+      idPost:id,
+      action:"enable"
+    }
+    dispatch(banPost(data,token))
   }
+}
 
   useEffect(() => {
     const Config = {
@@ -197,7 +205,7 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
                         <p>3 shares</p> */}
         </CardActions>
 
-          <div className="inputsdeComments">
+            <div className="inputsdeComments">
             <TextField
               id="filled-multiline-static"
               label="What are you thinking? 👀"
@@ -215,7 +223,6 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
               Comment
             </Button>
           </div>
-
         {/*  <form>
           <label />
           <input

@@ -27,6 +27,7 @@ export default function PostList() {
     axios(Config2).then(res => setProfileUser(res.data))
   }, [dispatch]);
 
+
 return (
   <div>
     {all_posts.length === 0 ? (
@@ -45,36 +46,40 @@ return (
         {console.log(all_posts)}
         {all_posts
           .map((p) => {
-            switch(profileUser.role){
-            case "admin":
-            return (
+            if(profileUser.enabled){
+              switch(profileUser.role){
+              case "admin":
+              return (
+                <Post
+                  key={p._id}
+                  author={p.author}
+                  likes={p.likes}
+                  comments={p.comments}
+                  text={p.content}
+                  image={p.image}
+                  id={p._id}
+                  enabled={p.enabled}
+                />
+              )
+            case "user":
+              if(p.enabled)
+              return(
               <Post
-                key={p._id}
-                author={p.author}
-                likes={p.likes}
-                comments={p.comments}
-                text={p.content}
-                image={p.image}
-                id={p._id}
-                enabled={p.enabled}
-              />
-            )
-          case "user":
-            if(p.enabled)
-            return(
-            <Post
-                key={p._id}
-                author={p.author}
-                likes={p.likes}
-                comments={p.comments}
-                text={p.content}
-                image={p.image}
-                id={p._id}
-                enabled={p.enabled}
-              />)
-            
-              default: return <></>
-        }
+                  key={p._id}
+                  author={p.author}
+                  likes={p.likes}
+                  comments={p.comments}
+                  text={p.content}
+                  image={p.image}
+                  id={p._id}
+                  enabled={p.enabled}
+                />)
+              
+                default: return <></>
+          }
+            }else{
+              return <div>ban</div>
+            }
           })
           .reverse()}
       </div>
