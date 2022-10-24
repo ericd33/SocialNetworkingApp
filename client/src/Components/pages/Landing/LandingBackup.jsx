@@ -73,7 +73,6 @@ const LandingPage = () => {
         <Grid className='form' item component={Paper} elevation={6} square>
         <LandingLogin />
             <Button id='changeForm' onClick={() => navigate('/signup')}>Register</Button>
-
             <GoogleButton onClick={handleGoogleButton}/>
         </Grid>
       </Grid>
