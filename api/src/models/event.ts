@@ -49,7 +49,9 @@ const eventSchema = new Schema({
     },
     participants: [],
     lat_log:[]
-    });
+    },{
+        timestamps:true
+      });
 
     const Event = model<Ievent>('event', eventSchema);
     module.exports = Event

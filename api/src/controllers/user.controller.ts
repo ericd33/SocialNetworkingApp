@@ -8,10 +8,9 @@ const mailSettings = require('../nodemailer/nodemailer');
 
 export const addUser = async (req: Request, res: Response) => {
   const { name, email, image } = req.body;
-  console.log(req.body)
+
   var user = await new userSchema();
-  // console.log(name)
-  // console.log(email)
+
   try {
     let checkingUserExist = await userSchema.find({ email: email });
     if (checkingUserExist.length) {
@@ -148,12 +147,10 @@ export const findUserById = async (req: Request, res: Response) => {
 
 export const findUserByEmail = async (req: Request, res: Response) => {
   const { email } = req.params;
-  // console.log(req.params)
-  console.log(email)
+
   try {
     if (email) {
       const user = await userSchema.findOne({ "email": email });
-      console.log(user)
       if (user) {
         res.status(200).send(user)
         return
@@ -172,7 +169,6 @@ export const deleteUser = async (req: Request, res: Response) => {
   try {
     if (email) {
       const user = await userSchema.findOne({ email: email });
-      console.log(user)
       switch (action) {
         case "disable":
           if (user.enabled) {

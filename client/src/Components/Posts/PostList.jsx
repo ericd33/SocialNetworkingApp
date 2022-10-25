@@ -27,7 +27,6 @@ export default function PostList() {
     axios(Config2).then(res => setProfileUser(res.data))
   }, [dispatch]);
 
-
 return (
   <div>
     {all_posts.length === 0 ? (
@@ -68,6 +67,7 @@ return (
               <Post
                   key={p._id}
                   author={p.author}
+                  created={p.createdAt}
                   likes={p.likes}
                   comments={p.comments}
                   text={p.content}

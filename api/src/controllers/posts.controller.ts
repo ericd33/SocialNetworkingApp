@@ -17,9 +17,8 @@ export const addPost = async (req: Request, res: Response) => {
       post.content = content;
       post.enabled = true;
       const savePost = await post.save();
-      console.log(user[0].posts);
       user[0].posts = user[0].posts.concat(savePost._id);
-      // console.log(user[0]);
+
       await user[0].save();
       res.status(200).send("new post");
     }
@@ -31,6 +30,7 @@ export const addPost = async (req: Request, res: Response) => {
 export const getPost = async (_req: Request, res: Response) => {
   try {
     const post = await postSchema.find({});
+    console.log(post);
     res.send(post);
   } catch (err) {
     res.status(400).send("There aren't any posts yet." + err);
@@ -71,27 +71,13 @@ export const putPostById = async (req: Request, res: Response) => {
   }
 };
 
-// export const like = async (req: Request, res: Response) => {
-//   const { idLiker, idPost } = req.body
-//   const liker = await userSchema.findOne({_id:idLiker})
-//   const post = await postSchema.findOne({_id:idPost})
-//   console.log(liker._id)
-//   console.log(post.likes)
-//   try{
-//     post.likes = [...new Set([...post.likes,liker._id])]
-//     post.save()
-//     res.status(200).send('successfully')
-//   }catch(e){
-//     res.status(400).send(e)
-//   }
-// }
-
 export const findPostsByEmail = async (req: Request, res: Response) => {
   const { email } = req.params;
-  console.log(email);
+
   try {
     const post = await postSchema.find({ author: email });
-    console.log(post);
+
+    
     res.status(200).send(post);
   } catch (e) {
     res.status(400).send(e);
@@ -183,7 +169,6 @@ export const putPostComment = async (req: Request, res: Response) => {
 export const reports = async (req: Request, res: Response) => {
   const { report, id, author, reporter } = req.body
   try{
-    // console.log(author)
     // const userPost = await userSchema.findOne({email:author}) 
     const post =await postSchema.findOne({_id:id})
     // console.log(post.disable);
