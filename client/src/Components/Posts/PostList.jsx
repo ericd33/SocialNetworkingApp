@@ -59,10 +59,11 @@ return (
                   image={p.image}
                   id={p._id}
                   enabled={p.enabled}
+                  disable={p.disable}
                 />
               )
             case "user":
-              if(p.enabled)
+              if(p.enabled && !p.disable.some(e=>e===profileUser.email))
               return(
               <Post
                   key={p._id}
@@ -73,6 +74,7 @@ return (
                   image={p.image}
                   id={p._id}
                   enabled={p.enabled}
+                  disable={p.disable}
                 />)
               
                 default: return <></>

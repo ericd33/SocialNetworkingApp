@@ -8,7 +8,8 @@ export interface Ipost extends Document {
   content?: string,
   image?: string,
   comments?: string[],
-
+  reports?: string[],
+  disable?:string[],
 }
 
 const postSchema = new Schema({
@@ -25,6 +26,8 @@ const postSchema = new Schema({
     type: String,
   },
   comments: [],
+  reports:[],
+  disable:[]
 });
 
 const Post = model<Ipost>("post", postSchema);

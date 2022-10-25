@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+const mailSettings = require('../nodemailer/nodemailer');
+
 const userSchema = require("../models/user");
 const postSchema = require("../models/post");
 
@@ -177,3 +179,35 @@ export const putPostComment = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const reports = async (req: Request, res: Response) => {
+  const { report, id, author, reporter } = req.body
+  try{
+    console.log(author)
+    // const userPost = await userSchema.findOne({email:author}) 
+    const post =await postSchema.findOne({_id:id})
+    post.disable.push(reporter)
+    post.reports.push(report)
+  if(post.reports.length>=5){
+    post.enabled = false
+    const transporter = mailSettings.transporter;
+    const mailReports = mailSettings.mailReports(author);
+    transporter.sendMail(mailReports, (err: any ) => {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log('Email enviado');
+      }
+    });
+    post.save()
+    res.status(200).send('post baneado')
+  }
+  else{
+    post.save()
+    res.status(200).send('ok')
+  }
+  }catch(e){
+    res.status(400).send(e)
+  }
+  
+}
