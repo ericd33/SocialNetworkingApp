@@ -68,12 +68,3 @@
 .inputsdeComments label {
   color: #a5a5a5;
 }
-
-.card {
-  transition: .1s;
-}
-
-.card:hover {
-  transition: ease-in-out .1s;
- transform:scale(1.01)
-}

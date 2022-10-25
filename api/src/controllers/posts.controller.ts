@@ -171,22 +171,25 @@ export const reports = async (req: Request, res: Response) => {
   try{
     // const userPost = await userSchema.findOne({email:author}) 
     const post =await postSchema.findOne({_id:id})
-    post.disable.push(reporter)
-    post.reports.push(report)
-  if(post.reports.length>=5){
-    post.enabled = false
-    const transporter = mailSettings.transporter;
-    const mailReports = mailSettings.mailReports(author);
-    transporter.sendMail(mailReports, (err: any ) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log('Email enviado');
-      }
-    });
-    post.save()
-    res.status(200).send('post baneado')
-  }
+    // console.log(post.disable);
+    if (!post.disable.find((u: any) => u === reporter)) {
+      post.disable.push(reporter)
+      post.reports.push(report)
+    }
+    if(post.reports.length>=5){
+      post.enabled = false
+      const transporter = mailSettings.transporter;
+      const mailReports = mailSettings.mailReports(author);
+      transporter.sendMail(mailReports, (err: any ) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Email enviado');
+        }
+      });
+      post.save()
+      res.status(200).send('post baneado')
+    }
   else{
     post.save()
     res.status(200).send('ok')
