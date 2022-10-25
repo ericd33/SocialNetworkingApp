@@ -19,11 +19,7 @@ import { Server as socketServer } from "socket.io";
 import http from "http";
 
 const server = http.createServer(app);
-const io = new socketServer(server, {
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+const io = new socketServer();
 
 app.use(cors());
 
