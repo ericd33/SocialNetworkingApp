@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useEffect, useState } from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,10 +37,12 @@ const theme = createTheme();
 const LandingPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { logIn, googleLogIn } = useUserAuth();
+  const { user, logIn, googleLogIn } = useUserAuth();
   const navigate = useNavigate();
 
-  
+  useEffect(()=> {
+    if (user) navigate('/home')
+  },[])
   const handleGoogleButton = async (e) => {
     e.preventDefault();
     try{
