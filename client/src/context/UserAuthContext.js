@@ -26,6 +26,10 @@ export function UserAuthContextProvider({children}) {
         return signInWithEmailAndPassword(auth, email, password)
     }
 
+    function logOut() {
+        return signOut(auth)
+    }
+
     useEffect(()=> {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             const tuser = currentUser;
@@ -51,7 +55,7 @@ export function UserAuthContextProvider({children}) {
             unsubscribe();
         }
     },[]);
-    if (!pending) return <userAuthContext.Provider value={{user, signUp, logIn, googleLogIn}}>{children}</userAuthContext.Provider>
+    if (!pending) return <userAuthContext.Provider value={{user, logOut, signUp, logIn, googleLogIn}}>{children}</userAuthContext.Provider>
     return <p>Loading...</p>
     
 }
