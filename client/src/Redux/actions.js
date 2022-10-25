@@ -660,3 +660,22 @@ export function banEvents (payload,token){
     await axios(Config)
   }
 }
+
+export function reportPost(payload,token) {
+  return async function(){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/report/post`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        report: payload.report,
+        id: payload.id,
+        author: payload.author,
+        reporter: payload.reporter
+      }
+    };
+    await axios(Config).then(res => console.log(res));
+  }
+}

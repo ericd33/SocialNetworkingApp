@@ -6,23 +6,28 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  // Fade,
   IconButton,
+  // Paper,
+  Popper,
   TextField,
+  // Typography,
 } from "@mui/material";
-import { yellow, grey } from "@mui/material/colors";
-import ReplyIcon from "@mui/icons-material/Reply";
+// import { yellow, grey } from "@mui/material/colors";
+// import ReplyIcon from "@mui/icons-material/Reply";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+// import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CommentsModal from "./Modals/CommentsModal";
-import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+// import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import { useDispatch } from "react-redux";
 import { banPost, newComment, putLikes } from "../../Redux/actions";
-import { updateComment } from "../../Redux/actions";
+// import { updateComment } from "../../Redux/actions";
 import { Link, useParams } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
+import OptionsPopper from "./Modals/OptionsPopper";
 
 export default function Post({ text, author, comments, likes, image, id,enabled }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
@@ -30,6 +35,8 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
   const {user} = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
   let token = user.accessToken;
+  let payload = {author,
+                  id}
 
   // console.log(token)
 
@@ -148,7 +155,8 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
             ></Avatar>
           }
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
-        />
+          />
+          <OptionsPopper payload={payload}/>
         {
           // console.log("role",profileUser.role)
         }
