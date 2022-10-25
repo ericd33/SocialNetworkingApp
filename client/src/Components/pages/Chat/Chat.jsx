@@ -3,6 +3,31 @@ import io from "socket.io-client";
 import { useState, useEffect } from "react";
 import './Chat.css'
 import { useUserAuth } from '../../../context/UserAuthContext.js';
+import { Link } from 'react-router-dom';
+import { Button } from "@mui/material";
+import { grey } from "@mui/material/colors";
+import InputBase from "@mui/material/InputBase";
+import { styled } from "@mui/material/styles";
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: grey[200],
+  backgroundColor: grey[800],
+  borderRadius: 20,
+  marginTop: 10,
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(1)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
 
 const socket = io(`${process.env.REACT_APP_MY_API_URL}`);
 function Chat() {
@@ -34,17 +59,28 @@ function Chat() {
 
   return (
     <div className="chat-container">
+                  <Link to={'/home'}><Button id='buttonEventDetail' sx={{position:'absolute', top:'0px', left:'0px',bgcolor: 'secondary.main', color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
       {console.log(user)}
       <h1>ConcatUS Chat</h1>
       <p>This is a global chat, meet everyone!</p>
       <form onSubmit={handleSubmit} className='chat-from-container'>
-        <input
+
+      <StyledInputBase
+                placeholder="Write a message"
+                color="primary"
+                value={message}
+                inputProps={{ "aria-label": "search" }}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+
+
+        {/* <input
           type="text"
           onChange={(e) => setMessage(e.target.value)}
           value={message}
           placeholder='write your message'
           className='chat-input'
-        />
+        /> */}
         {/* <button className="chat-send-button">Send</button> */}
         <ul className="chat-list-ul">
           {messages.map((message, i) => (
