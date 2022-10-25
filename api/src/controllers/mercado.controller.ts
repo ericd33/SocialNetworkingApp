@@ -25,3 +25,7 @@ export const mercado = (req: Request, res: Response) => {
             });
 }
 
+// export const subscription = (req: Request, res: Response)=>{
+    
+// }
+

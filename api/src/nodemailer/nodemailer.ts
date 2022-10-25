@@ -36,4 +36,13 @@ module.exports = {
             ,
         }
     },
+
+    mailReports: (email: any) => {
+        return {
+            from: 'concatuss@gmail.com',
+            to: email,
+            subject: '¡Tu posteo a sido reportado multiples veces decidimos ponerlo en revisión!',
+            html:"",
+        }
+    },
 }
