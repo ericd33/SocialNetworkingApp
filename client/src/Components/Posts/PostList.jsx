@@ -80,7 +80,18 @@ return (
                 default: return <></>
           }
             }else{
-              return <div>ban</div>
+              return (
+                <div className="List">
+                  <div className="wrapper">
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="shadow"></div>
+                    <div className="shadow"></div>
+                    <div className="shadow"></div>
+                  </div>
+                </div>
+              ) 
             }
           })
           .reverse()}
