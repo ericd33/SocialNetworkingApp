@@ -7,7 +7,7 @@ import {
   findPostsByEmail,
   putPostComment,
   reports,
-  addfile
+  addfile,
   paginate,
 } from "../controllers/posts.controller";
 const router = Router();
