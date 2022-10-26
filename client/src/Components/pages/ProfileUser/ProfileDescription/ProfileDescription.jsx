@@ -17,7 +17,7 @@ const ProfileDescription = ({userInfoRen}) => {
   // console.log('user',userInfoRen)
 
   return (
-    <div className='userCard'>
+    <div className='userCardDescription'>
         {userInfoRen.presentation ? (
           <div className='boxDescription'>
             <h2>Presentation</h2>

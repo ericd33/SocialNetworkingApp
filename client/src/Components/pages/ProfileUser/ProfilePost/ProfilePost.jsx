@@ -51,7 +51,8 @@ const ProfilePost = ({ idPost, userInfoRen }) => {
         width: 600,
         bgcolor: 'custom.dark',
         fontFamily: "Nunito",
-        borderRadius:3
+        borderRadius:3,
+        mb:2
       }}
     >
       <CardHeader
