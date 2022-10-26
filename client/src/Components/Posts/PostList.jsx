@@ -103,7 +103,6 @@ return (
                     <div className="circle"></div>
                     <div className="shadow"></div>
                     <div className="shadow"></div>
-                    
                     <div className="shadow"></div>
                   </div>
                 </div>
