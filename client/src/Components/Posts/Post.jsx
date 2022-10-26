@@ -187,9 +187,7 @@ export default function Post({
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
         <OptionsPopper payload={payload} />
-        {
-          // console.log("role",profileUser.role)
-        }
+
         {profileUser.role === "admin" ? (
           <div>
             <button onClick={handleBan}>ban</button>
@@ -205,10 +203,10 @@ export default function Post({
         ) : (
           <div></div>
         )}
-
         <CardActions sx={{ mb: 0 }}>
           <div className="actionsPost">
             <div className="actionLikes">
+
               <IconButton onClick={putLike}>
                 <ThumbUpOffAltIcon className="ButtonActionPost" />
               </IconButton>
