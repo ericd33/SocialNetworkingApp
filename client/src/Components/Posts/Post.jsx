@@ -181,9 +181,6 @@ function dateDiffInHours(a, b) {
           />
           <OptionsPopper payload={payload}/>
         {
-          // console.log("role",profileUser.role)
-        }
-        {
           profileUser.role==='admin'
           ?<div><button onClick={handleBan}>ban</button><span style={{color:"#fff"}}>{enabled? "true":"false"}</span></div>
           :<></>
@@ -203,7 +200,7 @@ function dateDiffInHours(a, b) {
                   <ThumbUpOffAltIcon className='ButtonActionPost'/>
                 </IconButton>
                 {
-                  likes.length !== 0 ?
+                  likes?.length !== 0 ?
                   <div>
                     <p className="textLikes">{likes?.length} likes</p>
                     <ul>

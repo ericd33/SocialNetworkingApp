@@ -112,9 +112,6 @@ return (
           }
       </div>
     )}
-
-        {/* <button onClick={handleNextPaginate}>next results</button> */}
-
   </div>
   </InfiniteScroll>
 );
