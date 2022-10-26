@@ -104,7 +104,7 @@ export function postEvent(payload, token) {
         email: payload.email,
         name: payload.name,
         username: payload.username,
-        image: payload.image,
+        image: payload.imageCloudinary,
         avatar:payload.avatar,
         location: payload.location,
         content: payload.content,

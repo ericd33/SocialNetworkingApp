@@ -27,10 +27,13 @@ import { MapaContext } from './map/contex/MapaContext';
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { searchPlaces } from './map/axios/searchPlaces';
 import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 // import e from "express";
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
+  const [file, setFile]= useState(null)
+  const [prev, setPrev]= useState(false)
   const {user} = useUserAuth();
   const token = user.accessToken;
   let userEmail = user.email
@@ -73,9 +76,10 @@ async function search() {
     date : Date.now(),
     avatar: "",
     location: location,
-    image:'',
+    imageCloudinary:'',
     lat_log: eventoLocation
   });
+
 useEffect(()=>{
   setFormState({
     ...formState,
@@ -83,6 +87,7 @@ useEffect(()=>{
     lat_log: eventoLocation
   })
 },[location])
+
   function handleDateChange(e) {
     console.log(e._d)
     setFormState({
@@ -94,7 +99,6 @@ useEffect(()=>{
   const handleChange = (e) => {
     e.preventDefault();
 
-    console.log(e)
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
@@ -102,8 +106,8 @@ useEffect(()=>{
       location:location,
       lat_log: eventoLocation,
       avatar: userImage.image,
-      image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
+    console.log(formState)
   };
 
   const handleSetLocation = (e)=>{
@@ -115,7 +119,6 @@ useEffect(()=>{
       location: e.target.value ||e.target.innerHTML ,
       lat_log: eventoLocation,
       email:userEmail,
-      image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
   }
   const handleSubmit = (e) => {
@@ -123,8 +126,50 @@ useEffect(()=>{
     setModal(!modal)
     dispatch(postEvent(formState,token));
     // navigate("/events")
+    setFormState({
+      name:"",
+    content: "",
+    username: userName,
+    email:userEmail,
+    date : Date.now(),
+    avatar: "",
+    location: location,
+    imageCloudinary:'',
+    lat_log: eventoLocation
+    })
   };
 
+  const submitFile = async(e)=>{
+    let FILE = file
+    const formdata = new FormData()
+    formdata.append("imageCloudinary",FILE)
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/file`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: formdata,
+    };
+    await axios(Config)
+    .then((res)=> {
+      console.log(res.data)
+      setTimeout(() => {
+        setFormState({
+          ...formState,
+          imageCloudinary:`${res.data}`})
+      }, 1000);
+      setPrev(true)
+      console.log(formState)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  const submit = (e)=>{
+    setFile(e.target.files[0])
+
+  }
   // console.log(eventoLocation)
     
     // console.log(formState)
@@ -218,6 +263,12 @@ useEffect(()=>{
           <Button id='Postbutton'
           sx={{mt:8, bgcolor:'secondary.main', fontFamily: "Nunito",
           color:'custom.dark'}} onClick={handleSubmit} variant='contained'>Post</Button>
+          <br/ >
+          <br/ >
+          <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
+          <button onClick={(e)=> submitFile(e)}>Image alredy</button>
+          <br/>
+          {prev ? <img src={formState.imageCloudinary} className="img"/> : null}
         </div>
       </CardContent>
     </Card>
