@@ -27,15 +27,38 @@ export const addPost = async (req: Request, res: Response) => {
   }
 };
 
+
+
 export const getPost = async (_req: Request, res: Response) => {
+
   try {
     const post = await postSchema.find({});
-    console.log(post);
     res.send(post);
   } catch (err) {
     res.status(400).send("There aren't any posts yet." + err);
   }
 };
+
+export const paginate = async (req: Request, res: Response)=>{
+  const { paginate } = req.body
+  console.log("paginate",paginate)
+  try {
+    const post =await postSchema.find({});
+    post.reverse()
+    const itemPerPage =10
+    const lastItem = paginate * itemPerPage
+    const firstItem = lastItem - itemPerPage
+    const currentItem = post.slice(firstItem,lastItem)
+    currentItem.push({page:paginate})
+    // const post =await postSchema.find({});
+
+    res.send(currentItem);
+
+  } catch (err) {
+    res.status(400).send("There aren't any posts yet." + err);
+  }
+}
+
 
 export const putPostById = async (req: Request, res: Response) => {
   const { id, action } = req.body;
