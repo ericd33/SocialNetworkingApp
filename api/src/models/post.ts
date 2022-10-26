@@ -27,7 +27,9 @@ const postSchema = new Schema({
   },
   comments: [],
   reports:[],
-  disable:[]
+  disable:[],
+},{
+  timestamps:true
 });
 
 postSchema.plugin(mongoosePaginate)

@@ -12,6 +12,7 @@ const userAuthContext = createContext();
 export function UserAuthContextProvider({children}) {
     const dispatch = useDispatch();
     const [user, setUser] = useState();
+    const [pending, setPending] = useState(true);
     function signUp(username, email, password) {
         return createUserWithEmailAndPassword(auth, email, password)
     }
@@ -23,6 +24,10 @@ export function UserAuthContextProvider({children}) {
     function logIn(email, password) {
         
         return signInWithEmailAndPassword(auth, email, password)
+    }
+
+    function logOut() {
+        return signOut(auth)
     }
 
     useEffect(()=> {
@@ -44,12 +49,14 @@ export function UserAuthContextProvider({children}) {
             }
             
             setUser(currentUser);
+            setPending(false)
         })
         return () => {
             unsubscribe();
         }
     },[]);
-    return <userAuthContext.Provider value={{user, signUp, logIn, googleLogIn}}>{children}</userAuthContext.Provider>
+    if (!pending) return <userAuthContext.Provider value={{user, logOut, signUp, logIn, googleLogIn}}>{children}</userAuthContext.Provider>
+    return <p>Loading...</p>
     
 }
 

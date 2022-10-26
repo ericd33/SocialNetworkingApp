@@ -38,7 +38,6 @@ export default function PostList() {
     axios(Config2).then(res => setProfileUser(res.data))
   }, [page])
 
-
 return (
   <InfiniteScroll 
   dataLength={post.length} 
@@ -83,6 +82,7 @@ return (
               <Post
                   key={p._id}
                   author={p.author}
+                  created={p.createdAt}
                   likes={p.likes}
                   comments={p.comments}
                   text={p.content}
@@ -95,7 +95,18 @@ return (
                 default: return <></>
           }
             }else{
-              return <div>ban</div>
+              return (
+                <div className="List">
+                  <div className="wrapper">
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="shadow"></div>
+                    <div className="shadow"></div>
+                    <div className="shadow"></div>
+                  </div>
+                </div>
+              ) 
             }
           })
           }

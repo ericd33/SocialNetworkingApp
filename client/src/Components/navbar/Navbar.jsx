@@ -22,7 +22,7 @@ import { useState } from "react";
 import { getEventsByName, searchUsersByName } from "../../Redux/actions";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CloseIcon from "@mui/icons-material/Close";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import './Navbar.css';
 import Donations from "../Donations/Donations"
 import axios from "axios";
@@ -77,7 +77,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavBar = () => {
   const [AvatarImage, setAvatar] = useState();
   const dispatch = useDispatch();
-  const { user } = useUserAuth();
+  const { user, logOut } = useUserAuth();
   const token = user.accessToken;
 
   useEffect(() => {
@@ -99,8 +99,8 @@ const NavBar = () => {
   }, []);
 
   ///LOGOUT
-  function logOut() {
-    window.location.reload(false);
+  function signOut() {
+    logOut();
     localStorage.clear();
   }
 
@@ -163,7 +163,7 @@ const NavBar = () => {
             </IconButton>
           </Link>
 
-          <IconButton color="secondary" onClick={logOut}>
+          <IconButton color="secondary" onClick={signOut}>
             <LogoutIcon />
           </IconButton>
 

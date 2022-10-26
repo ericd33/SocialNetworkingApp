@@ -6,30 +6,38 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  // Fade,
   IconButton,
+  // Paper,
+  Popper,
   TextField,
+  // Typography,
 } from "@mui/material";
-import { yellow, grey } from "@mui/material/colors";
-import ReplyIcon from "@mui/icons-material/Reply";
+// import { yellow, grey } from "@mui/material/colors";
+// import ReplyIcon from "@mui/icons-material/Reply";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+// import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CommentsModal from "./Modals/CommentsModal";
-import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
+// import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import { useDispatch } from "react-redux";
 import { banPost, newComment, putLikes } from "../../Redux/actions";
-import { updateComment } from "../../Redux/actions";
+// import { updateComment } from "../../Redux/actions";
 import { Link, useParams } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
+import OptionsPopper from "./Modals/OptionsPopper";
 
-export default function Post({ text, author, comments, likes, image, id,enabled }) {
+export default function Post({ created, text, author, comments, likes, image, id,enabled }) {
   const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const {user} = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
+  const [timeDate, setTimeDate] = useState('0')
   let token = user.accessToken;
+  let payload = {author,
+                  id}
 
   // console.log(token)
 
@@ -50,6 +58,17 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
   }
 }
 
+function dateDiffInHours(a, b) {
+  const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+  // Discard the time and time-zone information.
+  console.log(typeof a)
+  console.log(typeof b)
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
   useEffect(() => {
     const Config = {
       method: "get",
@@ -59,6 +78,14 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
       },
     };
 
+    if (created) {
+      const parsedDate = new Date(Date.parse(created.toString()));
+
+    const datenow = new Date()
+    setTimeDate(Math.floor(Math.abs(datenow - parsedDate) / 36e5) + 'H')
+
+    }
+    
     axios(Config)
       .then((user) => {
         setUser({
@@ -122,6 +149,7 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
     })
   }
 
+
   // const [commentsModalState, setCommentsmodalState] = useState(false);
   // const openCommentsModal = () => setCommentsmodalState(true);
 
@@ -139,6 +167,8 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
         }}
       >
         <CardHeader
+        subheader={timeDate}
+        subheaderTypographyProps={{ color: 'white' }}
           sx={{ pt: 0, pb: 0, mt: 2, color: "primary.main" }}
           avatar={
             <Avatar
@@ -148,7 +178,8 @@ export default function Post({ text, author, comments, likes, image, id,enabled 
             ></Avatar>
           }
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
-        />
+          />
+          <OptionsPopper payload={payload}/>
         {
           // console.log("role",profileUser.role)
         }
