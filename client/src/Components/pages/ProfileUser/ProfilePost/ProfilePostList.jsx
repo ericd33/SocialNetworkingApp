@@ -28,7 +28,6 @@ const ProfilePostList = ({ posts }) => {
     }
     axios(Config2).then(res => setProfileUser(res.data))
   }, [dispatch]);
-    //console.log(posts)
   if (posts.length === 0) {
     return (
       <div>
@@ -43,6 +42,7 @@ const ProfilePostList = ({ posts }) => {
             case "admin":
               return (
                 <Post
+                created={p.createdAt}
                   text={p.content}
                   author={p.author}
                   comments={p.comments}
@@ -55,6 +55,7 @@ const ProfilePostList = ({ posts }) => {
               case "user":
             if(p.enabled)return(
                 <Post
+                created={p.createdAt}
                   text={p.content}
                   author={p.author}
                   comments={p.comments}
