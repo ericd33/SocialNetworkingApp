@@ -1,5 +1,5 @@
 import { Document, model, Schema } from "mongoose";
-
+const mongoosePaginate = require("mongoose-paginate-v2")
 export interface Ipost extends Document {
 
   enabled: boolean,
@@ -29,6 +29,8 @@ const postSchema = new Schema({
   reports:[],
   disable:[]
 });
+
+postSchema.plugin(mongoosePaginate)
 
 const Post = model<Ipost>("post", postSchema);
 module.exports = Post;
