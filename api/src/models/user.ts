@@ -53,7 +53,9 @@ const userSchema = new Schema({
     asistEvent:[],
     liked:[],
     events:[]
-});
+},{
+    timestamps:true
+  });
 
 const User = model<Iuser>('users', userSchema);
 module.exports = User

@@ -11,7 +11,7 @@ const router = Router();
 router.route("/:idPost").get(getCommentPost);
 // router.route("/");
 router.route("/:id").put(updateComment);
-router.route("/delete").put(deleteComment);
+router.route("/disable").put(deleteComment);
 router.route("/new").post(addComment);
 
 export default router;

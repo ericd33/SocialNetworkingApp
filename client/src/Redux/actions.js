@@ -39,14 +39,18 @@ export function postUser(payload, token) {
   };
 }
 
-export function getPosts(payload) {
+export function getPosts(payload,page) {
   return async function (dispatch) {
+    console.log(page)
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
       headers: {
         authorization: `Bearer ${payload}`,
       },
+      data:{
+        page:page
+      }
     };
     axios(Config).then((res) => {
       return dispatch({
@@ -590,6 +594,30 @@ export function newComment(token,payload){
     };
   }
 
+export function paginate (token,payload){
+  console.log(payload)
+  return async function (dispatch){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/paginate`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        paginate:payload
+      }
+    };
+    await axios(Config).then(res=>{
+      console.log(res.data)
+      return dispatch({
+        type:GET_POSTS,
+        payload:res.data
+      })
+    })
+
+  }
+}
+
   export function getEventsByAuthor(token,author){
     return async function(dispatch){
       const Config = {
@@ -658,5 +686,24 @@ export function banEvents (payload,token){
     };
     console.log(payload)
     await axios(Config)
+  }
+}
+
+export function reportPost(payload,token) {
+  return async function(){
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/report/post`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        report: payload.report,
+        id: payload.id,
+        author: payload.author,
+        reporter: payload.reporter
+      }
+    };
+    await axios(Config).then(res => console.log(res));
   }
 }

@@ -3,14 +3,13 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, username, date, content, image, location, email,lat_log,avatar} = req.body;
-  
-  console.log(req.body)
+  const { name, username, date, content, image, location, email,lat_log,avatar, type} = req.body;
   try {
   const user = await userSchema.findOne({email:email})
   console.log('creating event')
     let event = await new eventSchema();
-    if (name.length && date.length && content.length && location.length && lat_log.length) {
+    if (name.length && date.length && content.length && location.length && lat_log.length && type.length) {
+      event.type= type
       event.author= email
       event.avatar = avatar
       event.nameAuthor = username
@@ -60,7 +59,6 @@ export const findEventById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try{
     const event = await eventSchema.findOne({_id:id})
-    console.log(event)
     res.status(200).send(event)
   }catch(e){
     res.status(400).send(e)
@@ -71,7 +69,6 @@ export const findEventByAuthor = async (req: Request, res: Response) => {
   const { author } = req.params;
   try{
     const events = await eventSchema.find({author:author})
-    console.log(events)
     res.status(200).send(events)
   }catch(e){
     res.status(400).send(e)
@@ -125,10 +122,8 @@ export const updateEvent = async (req: Request, res: Response) => {
 
 export const deleteEvent = async (req: Request, res: Response) => {
   const { action,id } = req.body;
-  console.log(id)
   const event = await eventSchema.findOne({_id: id })
-  console.log(event)
-  try{switch (action) {
+ try{switch (action) {
       case "disable":
         if (event.enabled) {
           await eventSchema.updateOne({ _id: id }, { enabled: false });

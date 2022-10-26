@@ -51,6 +51,7 @@ localStorage.setItem('user',JSON.stringify(profileUser))
                 return (
                   <Card
                     className="cardFinded"
+                    
                     sx={{
                       width: 170,
                       bgcolor: 'custom.main',

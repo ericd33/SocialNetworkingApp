@@ -32,6 +32,8 @@ const commentSchema = new Schema({
   image: {
     type: String,
   },
+},{
+  timestamps:true
 });
 
 const Comment = model<Icomment>("comment", commentSchema);

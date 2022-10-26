@@ -1,22 +1,33 @@
 import Post from "./Post";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getPosts } from "../../Redux/actions";
+// import { getPosts, paginate } from "../../Redux/actions";
 import "./PostList.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
-
+import InfiniteScroll from "react-infinite-scroll-component"
 export default function PostList() {
-  const all_posts = useSelector((state) => state.posts);
-  // console.log(all_posts.comments)
-  const dispatch = useDispatch();
   const {user} = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
-
+  let [page, setPage]= useState(1)
+  const [post, setPost]= useState([])
   useEffect(() => {
     let token = user.accessToken;
-    dispatch(getPosts(token));
-    
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/paginate`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data:{
+        paginate:page
+      }
+    };
+    axios(Config).then(res=>{
+      console.log(res)
+      setPost(post.concat(res.data))
+    })
+  
     const Config2 = {
       method: 'get',
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
@@ -25,12 +36,16 @@ export default function PostList() {
       },
     }
     axios(Config2).then(res => setProfileUser(res.data))
-  }, [dispatch]);
-
+  }, [page])
 
 return (
+  <InfiniteScroll 
+  dataLength={post.length} 
+  hasMore={true} 
+  next={()=>{setPage((prevPage)=>prevPage+1)}}
+  >
   <div>
-    {all_posts.length === 0 ? (
+    {post?.length === 0 ? (
       <div className="List">
         <div className="wrapper">
           <div className="circle"></div>
@@ -44,8 +59,7 @@ return (
     ) : (
       <div className="List">
         {/* {console.log(all_posts)} */}
-        {all_posts
-          .map((p) => {
+        {post?.map((p) => {
             if(profileUser.enabled){
               switch(profileUser.role){
               case "admin":
@@ -68,6 +82,7 @@ return (
               <Post
                   key={p._id}
                   author={p.author}
+                  created={p.createdAt}
                   likes={p.likes}
                   comments={p.comments}
                   text={p.content}
@@ -80,12 +95,24 @@ return (
                 default: return <></>
           }
             }else{
-              return <div>ban</div>
+              return (
+                <div className="List">
+                  <div className="wrapper">
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="circle"></div>
+                    <div className="shadow"></div>
+                    <div className="shadow"></div>
+                    <div className="shadow"></div>
+                  </div>
+                </div>
+              ) 
             }
           })
-          .reverse()}
+          }
       </div>
     )}
   </div>
+  </InfiniteScroll>
 );
 }

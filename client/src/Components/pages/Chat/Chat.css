@@ -16,11 +16,12 @@
     align-items: center;
     width: 400px;
     min-height: 400px;
-    height: fit-content;
+    height: 450px;
     opacity: 0.9;
     background-color:rgb(255 208 0);
     border-radius: 5px;
     box-shadow: 0px 0px 15px black;
+    overflow-y: scroll;
 }
 
 .chat-input{
@@ -35,8 +36,10 @@
 }
 
 .message-from-me{
-    color: rgb(0, 95, 249);
+    color: blue;
+    justify-content: left;
+    margin-left: -140px;
 }
 .message-from-friend{
-    color: rgb(81, 81, 167);
+    color: black;
 }
