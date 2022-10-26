@@ -210,7 +210,7 @@ export default function Post({
               <IconButton onClick={putLike}>
                 <ThumbUpOffAltIcon className="ButtonActionPost" />
               </IconButton>
-              {likes.length !== 0 ? (
+              {likes?.length !== 0 ? (
                 <div>
                   <p className="textLikes">{likes?.length} likes</p>
                   <ul>
