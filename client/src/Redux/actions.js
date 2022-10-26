@@ -316,6 +316,7 @@ export function getPostId(token, idPost) {
       },
     };
     axios(Config).then((res) => {
+      console.log(res);
       return dispatch({
         type: GET_POSTS_BY_ID,
         payload: res.data,
@@ -706,4 +707,22 @@ export function reportPost(payload,token) {
     };
     await axios(Config).then(res => console.log(res));
   }
+}
+
+export function editPost(payload, token) {
+  return async function () {
+    const requestConfig = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${payload.id}/content`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        content: payload.content,
+        email: payload.email
+      }};
+      console.log(payload);
+    await axios(requestConfig).then(res => console.log(res));
+    // dispatch(getPosts(token));
+  };
 }

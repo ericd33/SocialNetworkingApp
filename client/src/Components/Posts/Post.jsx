@@ -27,7 +27,7 @@ import { banPost, newComment, putLikes } from "../../Redux/actions";
 import { Link, useParams } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
-import OptionsPopper from "./Modals/OptionsPopper";
+import OptionsPopper from "./Options/OptionsPopper";
 
 export default function Post({
   created,
