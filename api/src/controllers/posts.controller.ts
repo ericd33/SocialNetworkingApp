@@ -1,19 +1,41 @@
 import { Request, Response } from "express";
 const mailSettings = require('../nodemailer/nodemailer');
+const fs = require("fs-extra");
+const cloudinary = require('cloudinary').v2;
 
 const userSchema = require("../models/user");
 const postSchema = require("../models/post");
+interface MulterRequest extends Request {
+  file: any;
+}
+export const addfile = async (req: Request, res: Response) => {
+  // console.log((req as MulterRequest).file)
+  // res.send("sera?")
+  try {
+    let send = await cloudinary.uploader.upload((req as MulterRequest).file.path)
+    // console.log(send.url)
+  res.send(send.url)
+  await fs.unlink((req as MulterRequest).file.path)
+  } catch (error) {
+    console.log(error)
+  }
+};
 
 export const addPost = async (req: Request, res: Response) => {
-  const { email, content, image } = req.body;
-  // console.log(req.body)
+  const { email, content, imageCloudinary } = req.body;
+  // const { imageCloudinary } = (req as MulterRequest).file;
+  // let send = await cloudinary.uploader.upload((req as MulterRequest).file.path)
+  // let image = send.url
+  // if(imageCloudinary){
+  //   console.log(imageCloudinary)
+  // }
   let post = await new postSchema();
   const user = await userSchema.find({ email: email });
 
   try {
-    if (content.length || image.length) {
+    if (content.length || imageCloudinary.length) {
       post.author = email;
-      post.image = image;
+      post.image = imageCloudinary;
       post.content = content;
       post.enabled = true;
       const savePost = await post.save();
