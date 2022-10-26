@@ -61,6 +61,10 @@ export const putPostById = async (req: Request, res: Response) => {
             res.status(400).send("Post is already deleted.");
           }
           break;
+        case "delete":
+          await postSchema.updateOne({ _id: id }, { enabled: false });
+          res.status(200).send("Post deleted successfully.");
+          break;
         default:
           res.status(400).send("Invalid action request.");
           break;

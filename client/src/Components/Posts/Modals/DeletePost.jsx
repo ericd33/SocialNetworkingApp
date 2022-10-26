@@ -11,10 +11,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useEffect } from "react";
 import { useDispatch} from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
-import { reportPost } from "../../../Redux/actions";
+import { banPost } from "../../../Redux/actions";
+import { red } from "@mui/material/colors";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
-export default function Reports(payload) {
+export default function DeletePost(payload) {
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
 
@@ -28,25 +30,13 @@ export default function Reports(payload) {
   const opencloseModal2 = () => {
     setModal2(!modal2);
   };
-
-  
-  const reports = [
-      'Spam',
-      'Inappropriate',
-      'Sexual content',
-      'Offensive or violent content',
-      'Bullying',
-      'Other'
-    ];
     
-    const handleSubmit = (r) => {
+    const handleSubmit = () => {
       let data = {
-          author: payload.payload.payload.author,
-          id: payload.payload.payload.id,
-          reporter: sessionUser.user.email,
-          report: r
+        idPost: payload.payload.payload.id,
+        action: 'delete'
       }
-      dispatch(reportPost(data,token))
+      dispatch(banPost(data,token))
       setModal(false);
       setModal2(true);
     }
@@ -65,7 +55,7 @@ export default function Reports(payload) {
     >
       <CardContent>
         <div className="headerModal">
-          <h2>Explain us the reason!</h2>
+          <h2>Are you sure to delete the post?</h2>
           <IconButton
             id='closeIcon'
             sx={{ width: "35px", height: "35px", top: "20px",
@@ -75,23 +65,11 @@ export default function Reports(payload) {
             <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
-        <div className='boxReports'>
-        {reports.map((r) => (
-            <Button
-            sx={{
-              width: 440,
-              bgcolor: 'custom.light',
-              fontFamily: "Nunito",
-              color: 'primary.light',
-              borderRadius:'15px',
-              height:'50px',
-              mb:'10px'
-            }}
-            onClick={() => handleSubmit(r)}>
-                <p>{r}</p>
-            </Button>
-      ))}
-      </div>
+        <Button onClick={handleSubmit} sx={{mr:'15px'}} variant="outlined" color="error">
+            Delete
+            <DeleteIcon fontSize="small" />
+        </Button>
+        <Button onClick={opencloseModal} variant="outlined">Back</Button>
     </CardContent>
   </Card>
   );
@@ -110,7 +88,7 @@ export default function Reports(payload) {
     >
     <CardContent sx={{fontSize:'13px'}}>
         <div className="headerModal">
-        <h2>This post will no longer appear in your feed, ty.</h2>
+        <h2>Post deleted succesfully</h2>
         <IconButton
             id='closeIcon'
             sx={{ width: "35px", height: "35px", top: "20px",
@@ -126,8 +104,8 @@ export default function Reports(payload) {
 
   return (
     <div className="container">
-      <Button sx={{color:'custom.dark'}} onClick={() => opencloseModal()}>
-        Report
+      <Button sx={{color:red[800]}} onClick={() => opencloseModal()}>
+        Delete
       </Button>
       <Modal open={modal} onClose={opencloseModal}>
         {body}
