@@ -152,7 +152,7 @@ const body = (
     return(
         <div>
             <Button onClick={() => opencloseModal()} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
-              Edit perfil
+              Edit profile
               </Button>
             <Modal open={modal} onClose={opencloseModal}>
                 {body}
