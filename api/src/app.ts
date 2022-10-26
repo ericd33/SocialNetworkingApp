@@ -38,7 +38,6 @@ server.listen(process.env.PORT, () => {
   connectDB();
 });
 
-app.use(cors());
 app.use(middleware.decodeToken)
 app.use(bodyParser.urlencoded({extended: false}))
 
