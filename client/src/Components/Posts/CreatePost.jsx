@@ -20,10 +20,12 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useEffect } from "react";
 import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
+import { width } from "@mui/system";
 
 export default function CreatePost({profileUser}) {
   const [modal, setModal] = useState(false);
   const [file, setFile]= useState(null)
+  const [prev, setPrev]= useState(false)
   const {user} = useUserAuth();
   let userEmail = user.email;
   const token = user.accessToken;
@@ -60,11 +62,12 @@ export default function CreatePost({profileUser}) {
     };
     await axios(Config)
     .then((res)=> {
-      console.log(res.data)
+      // console.log(res.data)
       setFormState({
         ...formState,
         imageCloudinary:`${res.data}`})
-        console.log(formState)
+          setPrev(true)
+        // console.log(formState)
     }).catch((err)=>{
       console.log(err)
     })
@@ -139,6 +142,7 @@ export default function CreatePost({profileUser}) {
 
         <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
         <button onClick={(e)=> submitFile(e)}>Image alredy</button>
+        {prev ? <img src={formState.imageCloudinary} className="img"/> : null}
 
         <div align="right">
           <Button 

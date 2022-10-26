@@ -43,7 +43,7 @@ export default function EventDetail() {
 		}
     // console.log(detail)
     if (detail.length !== 0) {
-        // console.log(detail);
+        console.log(detail);
     return (
         <div className='EventDetailContainer'>
             <Link to={'/events'}><Button id='buttonEventDetail' sx={{position:'absolute', top:'0px', left:'0px',bgcolor: 'secondary.main', color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
