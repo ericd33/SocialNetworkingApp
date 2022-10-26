@@ -14,7 +14,7 @@ import { useUserAuth } from "../../../context/UserAuthContext";
 import { reportPost } from "../../../Redux/actions";
 
 
-export default function Reports(payload) {
+export default function Reports({payload}) {
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
 
@@ -41,8 +41,8 @@ export default function Reports(payload) {
     
     const handleSubmit = (r) => {
       let data = {
-          author: payload.payload.payload.author,
-          id: payload.payload.payload.id,
+          author: payload.author,
+          id: payload.id,
           reporter: sessionUser.user.email,
           report: r
       }

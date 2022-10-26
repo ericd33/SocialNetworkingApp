@@ -10,6 +10,7 @@ export interface Ipost extends Document {
   comments?: string[],
   reports?: string[],
   disable?:string[],
+  type:string
 }
 
 const postSchema = new Schema({
@@ -25,6 +26,7 @@ const postSchema = new Schema({
   image: {
     type: String,
   },
+  type:String,
   comments: [],
   reports:[],
   disable:[],

@@ -4,7 +4,6 @@ import { useContext, useEffect, useMemo, useRef } from 'react';
 import './map.css'
 import { Marker } from 'mapbox-gl';
 import { MapaContext } from './contex/MapaContext';
-import { useSelector } from 'react-redux';
 import {searchRoute} from "./axios/routeSearch"
 import { Button } from '@mui/material';
 import { grey } from '@mui/material/colors';
@@ -15,7 +14,7 @@ export default function Maps({latLon}){
     // const detail = useSelector(d=>d.details)
     // console.log(latLon)
     const mapDiv = useRef(null)
-    const {mapa,setMap,eventoLocation,marker,myUbication, setMyUbication} = useContext(MapaContext)
+    const {mapa,setMap,marker,myUbication, setMyUbication} = useContext(MapaContext)
     // console.log(eventoLocation)
     // console.log(latLon)
     useEffect(() => {

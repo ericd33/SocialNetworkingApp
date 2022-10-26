@@ -14,6 +14,7 @@ import ProfileDescription from './ProfileDescription/ProfileDescription';
 import FilterEventsProfile from './EventsProfile/FilterEventsProfile';
 import EventsProfile from './EventsProfile/EventsProfile';
 import EventList from '../../Events/EventList';
+import { Button } from '@mui/material';
 
 
 const Profile = () => {
@@ -23,6 +24,20 @@ const Profile = () => {
   const [profileUser, setProfileUser] = useState({})
   const [posts, setPosts] = useState([])
   let query = useParams();
+
+  const [render, setRender] = useState('posts');
+
+
+  const handleClick = (e) => {
+    if(e.target.id === 'posts') {
+      setRender('posts');
+    }
+    else {
+      setRender('events');
+    }
+  }
+
+
   useEffect(()=>{
     //token,query.email
     const Config = {
@@ -61,12 +76,14 @@ return (
           {/* <EventsMenu /> */}
         </div>
         <div className="centerHome">
-          <ProfilePostList posts={posts}/>
+          <Button variant="outlined" id='posts' onClick={handleClick}>Posts</Button>
+          <Button variant="outlined" id='events' onClick={handleClick}>Events</Button>
+          <ProfilePostList render={render} posts={posts}/>
         </div>
         <div className="rightHome">
           <ProfileDescription userInfoRen={profileUser}/>
-          <FilterEventsProfile userInfoRen={profileUser} />
-          <EventsProfile />
+          {/* <FilterEventsProfile userInfoRen={profileUser} />
+          <EventsProfile /> */}
         </div>
       </div>
     </div>

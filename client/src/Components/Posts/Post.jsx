@@ -27,7 +27,7 @@ import { banPost, newComment, putLikes } from "../../Redux/actions";
 import { Link, useParams } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
-import OptionsPopper from "./Modals/OptionsPopper";
+import OptionsPopper from "./Options/OptionsPopper";
 
 export default function Post({
   created,
@@ -187,9 +187,7 @@ export default function Post({
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
         <OptionsPopper payload={payload} />
-        {
-          // console.log("role",profileUser.role)
-        }
+
         {profileUser.role === "admin" ? (
           <div>
             <button onClick={handleBan}>ban</button>
@@ -205,14 +203,14 @@ export default function Post({
         ) : (
           <div></div>
         )}
-
         <CardActions sx={{ mb: 0 }}>
           <div className="actionsPost">
             <div className="actionLikes">
+
               <IconButton onClick={putLike}>
                 <ThumbUpOffAltIcon className="ButtonActionPost" />
               </IconButton>
-              {likes.length !== 0 ? (
+              {likes?.length !== 0 ? (
                 <div>
                   <p className="textLikes">{likes?.length} likes</p>
                   <ul>

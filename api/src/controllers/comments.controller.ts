@@ -36,9 +36,12 @@ export const getCommentPost = async (req: Request, res: Response) => {
     let comments = await commentSchema.find({IdPost:idPost})
     let comment = comments?.map((e:any)=>{
       return({
+      id:e._id,
       text:e.text,
       avatar:e.avatar,
-      name:e.name})
+      name:e.name,
+      enabled:e.enabled
+    })
     })
     res.status(200).send(comment)
   }catch(e){

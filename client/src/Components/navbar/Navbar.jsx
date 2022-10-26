@@ -141,7 +141,7 @@ const NavBar = () => {
               />
             ) : (
               <StyledInputBase
-                placeholder="Search persons..."
+                placeholder="Search users..."
                 color="primary"
                 inputProps={{ "aria-label": "search" }}
                 onChange={handleInputPersons}

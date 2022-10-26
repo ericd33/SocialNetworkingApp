@@ -17,9 +17,11 @@ import { getCommentsPost } from "../../../Redux/actions";
 import { useUserAuth } from "../../../context/UserAuthContext";
 
 import "./CommentsModal.css";
+import { Comments } from "./comments";
 
 export default function CommentsModal({idPost}) {
   const [modal, setModal] = useState(false);
+  const userE = JSON.parse(localStorage.getItem('user'));
 
   const sessionUser = useUserAuth();
   let token = sessionUser.user.accessToken;
@@ -35,7 +37,7 @@ export default function CommentsModal({idPost}) {
   },[getCommentsPost,modal])
   const comments = useSelector(e=>e.comments)
   
-  // console.log(comments);
+  console.log(comments);
 
   const body = (
     <Card
@@ -62,32 +64,18 @@ export default function CommentsModal({idPost}) {
           </IconButton>
         </div>
         <div className='boxComments'>
-        {comments?.map((c) => (
-            <Card
-            sx={{
-              width: 440,
-              bgcolor: 'custom.light',
-              fontFamily: "Nunito",
-              color: 'primary.light',
-              borderRadius:'15px',
-              height:'55px',
-              mb:'10px'
-            }}
-          >
-            <CardHeader
-              sx={{ pt: '8px', color:'secondary.main'}}
-              avatar={
-                <Avatar
-            imgProps={{ referrerPolicy: "no-referrer" }}
-            sx={{ bgcolor: "primary.light",mb:'10px'}}
-            src={c.avatar}
-          ></Avatar>
-              }
-              title={c.name}
-              subheader={<p className='textComment'>{c.text}</p>}
-            />
-          </Card>
-      ))}
+        {comments?.map((c) => {
+          switch(userE.role){
+            case "admin":
+              return(<Comments enabled={c.enabled} avatar={c.avatar} name={c.name} text={c.text} id={c.id} />)
+            case 'user':
+            if(c.enabled){
+              return(<Comments enabled={c.enabled} avatar={c.avatar} name={c.name} text={c.text} id={c.id} />)
+            }
+            default : return <></>
+            }
+        }
+      )}
       </div>
     </CardContent>
   </Card>
