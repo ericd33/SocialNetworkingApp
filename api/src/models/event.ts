@@ -6,6 +6,8 @@ export interface Ievent extends Document {
     author: object,
     date: Date,
     content: string,
+    type: string,
+    meet_link: string,
     location: string,
     image?: string,
     enabled: string,
@@ -30,6 +32,12 @@ const eventSchema = new Schema({
         type: Date,
         required: true,
     },
+    type: {
+        type: String
+    },
+    meet_link: {
+        type: String
+    },
     enabled: {
         type: Boolean,
         required: true,
@@ -45,7 +53,6 @@ const eventSchema = new Schema({
     },
     location:{
         type: String,
-        required: true
     },
     participants: [],
     lat_log:[]
