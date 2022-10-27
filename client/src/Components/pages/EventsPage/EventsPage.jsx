@@ -3,6 +3,7 @@ import EventsMenu from "../../Home-Components/EventsMenu";
 import "./EventsPage.css";
 import EventList from "../../Events/EventList";
 import CreateEvent from "../../Events/CreateEvent";
+import FilterEvents from "./FilterEvents";
 
 export default function EventsPage() {
 
@@ -17,6 +18,7 @@ export default function EventsPage() {
           <EventsMenu />
         </div>
         <div className="centerHome">
+          <FilterEvents />
           <EventList />
         </div>
         <div className="rightHome"></div>

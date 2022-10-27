@@ -16,7 +16,8 @@ import {
   ORDER_BY_LIKE,
   ORDER_BY_COMENTS,
   GET_EVENT_PROFILE,
-  EVENTS_BY_AUTHOR
+  EVENTS_BY_AUTHOR,
+  FILTER_GLOBAL_EVENTS
 
 } from "./action-types";
 
@@ -24,6 +25,7 @@ const initialState = {
   posts: [],
   filtered_posts: [],
   events: [],
+  filtered_events: [],
   myUser: {},
   details: [],
   searchByNameUsers: [],
@@ -84,6 +86,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         events: action.payload,
+        filtered_events: action.payload,
       };
 
     case GET_MY_USER:
@@ -171,6 +174,17 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             events: action.payload,
           };
+        case FILTER_GLOBAL_EVENTS:
+        const allEvents = state.filtered_events;
+        const filterEvent =
+        action.payload === "online"
+          ? allEvents.filter((e) => e.type==="online")
+          : allEvents.filter((e) => e.type==="in-person");
+      return {
+        ...state,
+        events: 
+          action.payload === "All" ? allEvents : filterEvent
+      };
     default:
       return state;
   }
