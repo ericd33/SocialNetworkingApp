@@ -22,12 +22,13 @@ import axios from "axios";
 import CommentsModal from "./Modals/CommentsModal";
 // import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
 import { useDispatch } from "react-redux";
-import { banPost, newComment, putLikes } from "../../Redux/actions";
+import { banPost, deletePost, newComment, putLikes } from "../../Redux/actions";
 // import { updateComment } from "../../Redux/actions";
 import { Link, useParams } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
-import OptionsPopper from "./Options/OptionsPopper";
+// import OptionsPopper from "./Modals/OptionsPopper";
+import EditPost from "./EditPost";
 
 export default function Post({
   created,
@@ -79,15 +80,16 @@ export default function Post({
       const parsedDate = new Date(Date.parse(created.toString()));
 
       const datenow = new Date();
-      
+
       const hourDifference = Math.floor(Math.abs(datenow - parsedDate) / 36e5);
+      console.log(hourDifference);
       // console.log(hourDifference)
       if (hourDifference > 730) {
         setTimeDate(Math.floor(hourDifference / 730) + " m");
       } else if (hourDifference > 24) {
         setTimeDate(Math.floor(hourDifference / 24) + " d");
-      } else if (hourDifference <= 0){
-        setTimeDate('Now')
+      } else if (hourDifference <= 0) {
+        setTimeDate("Now");
       } else {
         setTimeDate(hourDifference + " h");
       }
@@ -173,6 +175,10 @@ export default function Post({
           position: "relative",
         }}
       >
+        {profileUser?.posts?.length > 0 && profileUser.posts.includes(id) ? (
+          <EditPost idPost={id} />
+        ) : null}
+
         <CardHeader
           subheader={timeDate}
           subheaderTypographyProps={{ color: "white" }}
@@ -186,7 +192,7 @@ export default function Post({
           }
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
-        <OptionsPopper payload={payload} />
+        {/* <OptionsPopper payload={payload} /> */}
 
         {profileUser.role === "admin" ? (
           <div>
@@ -206,7 +212,6 @@ export default function Post({
         <CardActions sx={{ mb: 0 }}>
           <div className="actionsPost">
             <div className="actionLikes">
-
               <IconButton onClick={putLike}>
                 <ThumbUpOffAltIcon className="ButtonActionPost" />
               </IconButton>

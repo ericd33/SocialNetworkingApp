@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-const mailSettings = require('../nodemailer/nodemailer');
+const mailSettings = require("../nodemailer/nodemailer");
 const fs = require("fs-extra");
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require("cloudinary").v2;
 
 const userSchema = require("../models/user");
 const postSchema = require("../models/post");
@@ -12,12 +12,14 @@ export const addfile = async (req: Request, res: Response) => {
   // console.log((req as MulterRequest).file)
   // res.send("sera?")
   try {
-    let send = await cloudinary.uploader.upload((req as MulterRequest).file.path)
+    let send = await cloudinary.uploader.upload(
+      (req as MulterRequest).file.path
+    );
     // console.log(send.url)
-  res.send(send.url)
-  await fs.unlink((req as MulterRequest).file.path)
+    res.send(send.url);
+    await fs.unlink((req as MulterRequest).file.path);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
@@ -49,10 +51,7 @@ export const addPost = async (req: Request, res: Response) => {
   }
 };
 
-
-
 export const getPost = async (_req: Request, res: Response) => {
-
   try {
     const post = await postSchema.find({});
     res.send(post);
@@ -61,25 +60,24 @@ export const getPost = async (_req: Request, res: Response) => {
   }
 };
 
-export const paginate = async (req: Request, res: Response)=>{
-  const { paginate } = req.body
-  console.log("paginate",paginate)
+export const paginate = async (req: Request, res: Response) => {
+  const { paginate } = req.body;
+  console.log("paginate", paginate);
   try {
-    const post =await postSchema.find({});
-    post.reverse()
-    const itemPerPage =10
-    const lastItem = paginate * itemPerPage
-    const firstItem = lastItem - itemPerPage
-    const currentItem = post.slice(firstItem,lastItem)
-    currentItem.push({page:paginate})
+    const post = await postSchema.find({});
+    post.reverse();
+    const itemPerPage = 10;
+    const lastItem = paginate * itemPerPage;
+    const firstItem = lastItem - itemPerPage;
+    const currentItem = post.slice(firstItem, lastItem);
+    currentItem.push({ page: paginate });
     // const post =await postSchema.find({});
 
     res.send(currentItem);
-
   } catch (err) {
     res.status(400).send("There aren't any posts yet." + err);
   }
-}
+};
 
 export const getPostbyID = async (req: Request, res: Response) => {
   const { idPost } = req.params;
@@ -135,10 +133,49 @@ export const findPostsByEmail = async (req: Request, res: Response) => {
   try {
     const post = await postSchema.find({ author: email });
 
-    
     res.status(200).send(post);
   } catch (e) {
     res.status(400).send(e);
+  }
+};
+
+export const putPost = async (req: Request, res: Response) => {
+  try {
+    const { idPost } = req.params;
+    const { email, content } = req.body;
+
+    const user = await userSchema.findOne({ email: email });
+    const currentPost = await postSchema.findOne({ _id: idPost });
+
+    currentPost.content = content;
+
+    if (user) {
+      const postUpdated = await postSchema.findByIdAndUpdate(
+        {
+          _id: idPost,
+        },
+        currentPost,
+        {
+          new: true,
+        }
+      );
+
+      console.log("postUpdated", postUpdated);
+
+      return res.status(200).json({
+        data: postUpdated,
+      });
+    }
+
+    return res.status(404).json({
+      data: currentPost,
+      msg: `User don't exist`,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: `An error ocurred 😡`,
+      error,
+    });
   }
 };
 
@@ -192,12 +229,11 @@ export const putPostContent = async (req: Request, res: Response) => {
     const { content, email } = req.body;
 
     const user = await userSchema.findOne({ email: email });
-    if(user.posts.includes(postId)) {
-      await postSchema.updateOne({_id: postId},{content: content});
+    if (user.posts.includes(postId)) {
+      await postSchema.updateOne({ _id: postId }, { content: content });
       return res.status(200);
-    }
-    else {
-      return res.status(400).send('This post is not yours.')
+    } else {
+      return res.status(400).send("This post is not yours.");
     }
   } catch (error) {
     return res.status(500).json({
@@ -246,35 +282,33 @@ export const putPostComment = async (req: Request, res: Response) => {
 };
 
 export const reports = async (req: Request, res: Response) => {
-  const { report, id, author, reporter } = req.body
-  try{
-    // const userPost = await userSchema.findOne({email:author}) 
-    const post =await postSchema.findOne({_id:id})
+  const { report, id, author, reporter } = req.body;
+  try {
+    // const userPost = await userSchema.findOne({email:author})
+    const post = await postSchema.findOne({ _id: id });
     // console.log(post.disable);
     if (!post.disable.find((u: any) => u === reporter)) {
-      post.disable.push(reporter)
-      post.reports.push(report)
+      post.disable.push(reporter);
+      post.reports.push(report);
     }
-    if(post.reports.length>=5){
-      post.enabled = false
+    if (post.reports.length >= 5) {
+      post.enabled = false;
       const transporter = mailSettings.transporter;
       const mailReports = mailSettings.mailReports(author);
-      transporter.sendMail(mailReports, (err: any ) => {
+      transporter.sendMail(mailReports, (err: any) => {
         if (err) {
-          console.log(err)
+          console.log(err);
         } else {
-          console.log('Email enviado');
+          console.log("Email enviado");
         }
       });
-      post.save()
-      res.status(200).send('post baneado')
+      post.save();
+      res.status(200).send("post baneado");
+    } else {
+      post.save();
+      res.status(200).send("ok");
     }
-  else{
-    post.save()
-    res.status(200).send('ok')
+  } catch (e) {
+    res.status(400).send(e);
   }
-  }catch(e){
-    res.status(400).send(e)
-  }
-  
-}
+};
