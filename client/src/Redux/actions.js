@@ -41,7 +41,7 @@ export function postUser(payload, token) {
 
 export function getPosts(payload,page) {
   return async function (dispatch) {
-    console.log(page)
+    // console.log(page)
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
@@ -455,7 +455,7 @@ export function imageChange(payload,token,email){
         authorization: `Bearer ${token}`,
       },
       data:{
-        image:payload.image,
+        image:payload.img,
         email: payload.email
       }
     };

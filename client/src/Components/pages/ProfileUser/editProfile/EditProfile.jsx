@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useUserAuth } from "../../../../context/UserAuthContext";
 import { getMyUser, imageChange, nameChange, presentationChange, webSiteChange } from "../../../../Redux/actions";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
 import './EditProfile.css';
 
 
@@ -15,10 +16,15 @@ const opencloseModal = () => {
 const dispatch = useDispatch();
 const {user} = useUserAuth();
 let token = user.accessToken;
-const [image,setImage ] = useState("")
 const [name,setName]= useState("")
 const [presentation,setPresentation]= useState("")
 const [webSite,setWebSite]= useState("")
+const [file, setFile]= useState(null)
+const [prev, setPrev]= useState(false)
+const [img, setImg] = useState({
+    email:user.email,
+    image:"",
+});
 
 const handleWebSite = (e)=>{
     setWebSite(e.target.value);
@@ -27,13 +33,41 @@ const webSites ={
     email:user.email,
     website:webSite
 }
-const handleImage = (e)=>{
-    setImage(e.target.value);
+const submit = (e)=>{
+	setFile(e.target.files[0])
 }
-const images ={
-    email:user.email,
-    image:image
+
+const submitFile = async(e)=>{
+	let FILE = file
+	const formdata = new FormData()
+	formdata.append("imageCloudinary",FILE)
+	const Config = {
+		method: "post",
+		baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/file`,
+		headers: {
+			authorization: `Bearer ${token}`,
+		},
+		data: formdata,
+	};
+	await axios(Config)
+	.then((res)=> {
+		// console.log(res.data)
+		setImg({
+			...img,
+			img:`${res.data}`})
+			setPrev(true)
+			// console.log(formState)
+	}).catch((err)=>{
+		console.log(err)
+	})
 }
+// const handleImage = (e)=>{
+//     setImage(e.target.value);
+// }
+// const images ={
+//     email:user.email,
+//     image:image
+// }
 const handleName = (e)=>{
     setName(e.target.value);
 }
@@ -51,7 +85,7 @@ const presentations ={
 // console.log(image)
 const handleSubmitImage = (e)=>{
     e.preventDefault()
-    dispatch(imageChange(images,token,user.email));
+    dispatch(imageChange(img,token,user.email));
     setModal(false);
 }
 const handleSubmitWebSite = (e)=>{
@@ -98,18 +132,6 @@ const body = (
             <div>
                 <TextField
                     id="filled-multiline-static"
-                    label="Change avatar"
-                    value={image}
-                    variant="filled"
-                    onChange={handleImage}
-                />
-                <Button onClick={handleSubmitImage} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
-                    Submit
-                </Button>
-            </div>
-            <div>
-                <TextField
-                    id="filled-multiline-static"
                     label="Change name"
                     value={name}
                     variant="filled"
@@ -143,6 +165,14 @@ const body = (
                 <Button onClick={handleSubmitWebSite} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
                     Submit
                 </Button>
+            </div>
+						<div>
+							<input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
+        			<button onClick={(e)=> submitFile(e)}>Image alredy</button>
+              <Button onClick={handleSubmitImage} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
+                Submit
+              </Button>
+        			{prev ? <img src={img.imageCloudinary} className="img"/> : null}
             </div>
         </div>
     </CardContent>
