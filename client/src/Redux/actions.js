@@ -16,6 +16,7 @@ import {
   ORDER_BY_COMENTS,
   GET_EVENT_PROFILE,
   EVENTS_BY_AUTHOR,
+  FILTER_GLOBAL_EVENTS
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -742,5 +743,12 @@ export function editPost(payload, token) {
     console.log(payload);
     await axios(requestConfig).then((res) => console.log(res));
     // dispatch(getPosts(token));
+  };
+}
+
+export function filterGlobalEvents(payload) {
+  return {
+    type: FILTER_GLOBAL_EVENTS,
+    payload,
   };
 }
