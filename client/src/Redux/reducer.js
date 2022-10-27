@@ -17,7 +17,8 @@ import {
   ORDER_BY_COMENTS,
   GET_EVENT_PROFILE,
   EVENTS_BY_AUTHOR,
-  FILTER_GLOBAL_EVENTS
+  FILTER_GLOBAL_EVENTS,
+  FILTER_EVE_LOC
 
 } from "./action-types";
 
@@ -185,6 +186,13 @@ const rootReducer = (state = initialState, action) => {
         events: 
           action.payload === "All" ? allEvents : filterEvent
       };
+      case FILTER_EVE_LOC:
+      const filterEventsLoc = state.events
+      const inPersonLoc = filterEventsLoc.filter((e)=> e.location === action.payload)
+      return{
+        ...state,
+        events: inPersonLoc
+      }
     default:
       return state;
   }
