@@ -6,13 +6,17 @@ import "./PostList.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component"
+import { useDispatch, useSelector } from "react-redux";
+import { paginate } from "../../Redux/actions";
 export default function PostList() {
+  const dispatch =  useDispatch()
   const {user} = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
-  let [page, setPage]= useState(1)
+  let [page, setPage]= useState(2)
+  const all_posts = useSelector(e=>e.posts)
   const [post, setPost]= useState([])
+  let token = user.accessToken;
   useEffect(() => {
-    let token = user.accessToken;
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/paginate`,
@@ -20,14 +24,14 @@ export default function PostList() {
         authorization: `Bearer ${token}`,
       },
       data:{
-        paginate:page
+        paginate:1
       }
     };
     axios(Config).then(res=>{
       console.log(res)
       setPost(post.concat(res.data))
     })
-  
+
     const Config2 = {
       method: 'get',
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
@@ -36,11 +40,15 @@ export default function PostList() {
       },
     }
     axios(Config2).then(res => setProfileUser(res.data))
-  }, [page])
-
+  }, [])
+  useEffect(()=>{
+    dispatch(paginate(token,page))
+    setPost(post?.concat(all_posts))
+  },[page])
+  console.log(all_posts)
 return (
   <InfiniteScroll 
-  dataLength={post.length} 
+  dataLength={post?.length} 
   hasMore={true} 
   next={()=>{setPage((prevPage)=>prevPage+1)}}
   >
@@ -60,7 +68,7 @@ return (
       <div className="List">
         {/* {console.log(all_posts)} */}
         {post?.map((p) => {
-            if(profileUser.enabled){
+            if(profileUser?.enabled){
               switch(profileUser.role){
               case "admin":
               return (
@@ -77,7 +85,7 @@ return (
                 />
               )
             case "user":
-              if(p.enabled && !p.disable.some(e=>e===profileUser.email))
+              if(p?.enabled && !p.disable.some(e=>e===profileUser.email))
               return(
               <Post
                   key={p._id}

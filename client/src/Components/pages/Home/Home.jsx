@@ -87,7 +87,7 @@ localStorage.setItem('user',JSON.stringify(profileUser))
           <EventsMenu />
           </div>
         <div className="centerHome">
-          <FilterPost />
+          {/* <FilterPost /> */}
           <PostList />
         </div>
         <div className="rightHome"></div>
