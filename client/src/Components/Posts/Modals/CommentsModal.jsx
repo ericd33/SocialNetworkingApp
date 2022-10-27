@@ -37,7 +37,7 @@ export default function CommentsModal({idPost}) {
   },[getCommentsPost,modal])
   const comments = useSelector(e=>e.comments)
   
-  // console.log(comments);
+  console.log(comments);
 
   const body = (
     <Card

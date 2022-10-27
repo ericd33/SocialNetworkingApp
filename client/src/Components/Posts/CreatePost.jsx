@@ -22,11 +22,11 @@ import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
 import { width } from "@mui/system";
 
-export default function CreatePost({ profileUser }) {
+export default function CreatePost({profileUser}) {
   const [modal, setModal] = useState(false);
-  const [file, setFile] = useState(null);
-  const [prev, setPrev] = useState(false);
-  const { user } = useUserAuth();
+  const [file, setFile]= useState(null)
+  const [prev, setPrev]= useState(false)
+  const {user} = useUserAuth();
   let userEmail = user.email;
   const token = user.accessToken;
   const navigate = useNavigate();
@@ -44,14 +44,14 @@ export default function CreatePost({ profileUser }) {
     imageCloudinary: "",
   });
 
-  const submit = (e) => {
-    setFile(e.target.files[0]);
-  };
+  const submit = (e)=>{
+    setFile(e.target.files[0])
+  }
 
-  const submitFile = async (e) => {
-    let FILE = file;
-    const formdata = new FormData();
-    formdata.append("imageCloudinary", FILE);
+  const submitFile = async(e)=>{
+    let FILE = file
+    const formdata = new FormData()
+    formdata.append("imageCloudinary",FILE)
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/file`,
@@ -61,32 +61,30 @@ export default function CreatePost({ profileUser }) {
       data: formdata,
     };
     await axios(Config)
-      .then((res) => {
-        // console.log(res.data)
-        setFormState({
-          ...formState,
-          imageCloudinary: `${res.data}`,
-        });
-        setPrev(true);
+    .then((res)=> {
+      // console.log(res.data)
+      setFormState({
+        ...formState,
+        imageCloudinary:`${res.data}`})
+          setPrev(true)
         // console.log(formState)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
 
   const handleChange = (e) => {
     setFormState({
       ...formState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e) => {
     // await submitFile()
     const data = {
       ...formState,
-      email: userEmail,
+      email: userEmail
     };
     setTimeout(() => {
       dispatch(postPost(token, data));
@@ -95,7 +93,7 @@ export default function CreatePost({ profileUser }) {
     setFormState({
       content: "",
       imageCloudinary: "",
-    });
+    })
   };
 
   const body = (
@@ -104,25 +102,21 @@ export default function CreatePost({ profileUser }) {
       sx={{
         width: 600,
         borderRadius: "15px",
-        bgcolor: "custom.main",
+        bgcolor: 'custom.main',
         fontFamily: "Nunito",
-        color: "primary.light",
+        color: 'primary.light',
       }}
     >
       <CardContent>
         <div className="headerModal">
           <h2>Create a post</h2>
           <IconButton
-            id="closeIcon"
-            sx={{
-              width: "35px",
-              height: "35px",
-              top: "20px",
-              bgcolor: "custom.light",
-            }}
+            id='closeIcon'
+            sx={{ width: "35px", height: "35px", top: "20px",
+            bgcolor:'custom.light' }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon sx={{ pr: "1px" }} />
+            <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
         <div className="inputsdePost">
@@ -136,9 +130,6 @@ export default function CreatePost({ profileUser }) {
             name="content"
             className="textField"
             onChange={handleChange}
-            inputProps={{
-              maxLength: 200
-            }}
           />
           {/* <TextField id="filled-basic" 
           label="Image link" variant="filled" 
@@ -147,33 +138,25 @@ export default function CreatePost({ profileUser }) {
           className="textField"
           onChange={handleChange}
           />*/}
-        </div>
+        </div> 
 
-        <input type="file" name="imageCloudinary" onChange={(e) => submit(e)} />
-        <button onClick={(e) => submitFile(e)}>Image alredy</button>
-        {prev ? <img src={formState.imageCloudinary} className="img" /> : null}
+        <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
+        <button onClick={(e)=> submitFile(e)}>Image alredy</button>
+        {prev ? <img src={formState.imageCloudinary} className="img"/> : null}
 
         <div align="right">
-          <Button
-            id="Postbutton"
-            sx={{
-              mt: 3,
-              bgcolor: "secondary.main",
-              fontFamily: "Nunito",
-              color: "custom.dark",
-            }}
-            onClick={handleSubmit}
-            variant="contained"
-          >
-            Post
-          </Button>
+          <Button 
+          id='Postbutton'
+          sx={{mt:3, bgcolor:'secondary.main', fontFamily: "Nunito",
+          color:'custom.dark'}} onClick={handleSubmit} variant='contained'>Post</Button>
         </div>
       </CardContent>
     </Card>
   );
-  const userStorage = JSON.parse(localStorage.getItem("user"));
-  return userStorage.enabled ? (
-    <div className="container">
+  const userStorage = JSON.parse(localStorage.getItem('user'))
+  return (
+    userStorage.enabled
+  ?<div className="container">
       <IconButton
         onClick={() => opencloseModal()}
         id="buttonPost"
@@ -185,7 +168,6 @@ export default function CreatePost({ profileUser }) {
         {body}
       </Modal>
     </div>
-  ) : (
-    <></>
+    : <></>
   );
 }
