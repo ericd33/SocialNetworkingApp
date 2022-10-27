@@ -53,6 +53,7 @@ export default function EventList() {
                                 image={e.image}
                                 id={e._id}
                                 enabled={e.enabled}
+                                type={e.type}
                             />
                             )
                             case "user":
@@ -67,6 +68,7 @@ export default function EventList() {
                                 image={e.image}
                                 id={e._id}
                                 enabled={e.enabled}
+                                type={e.type}
                             />
                             
                             )

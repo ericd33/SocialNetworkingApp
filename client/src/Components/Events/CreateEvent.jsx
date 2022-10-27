@@ -9,6 +9,8 @@ import {
   Input,
   InputLabel,
   Icon,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 import {DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import CloseIcon from "@mui/icons-material/Close";
@@ -67,6 +69,11 @@ async function search() {
       setResults(data.features.length>0)
   },500)
 }
+  const [alignment, setAlignment] = useState('in-person');
+
+  const handleSelectType = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
 
   const [formState, setFormState] = useState({
     name:"",
@@ -77,7 +84,9 @@ async function search() {
     avatar: "",
     location: location,
     imageCloudinary:'',
-    lat_log: eventoLocation
+    lat_log: eventoLocation,
+    type:  alignment,
+    meet_link:''
   });
 
 useEffect(()=>{
@@ -106,6 +115,7 @@ useEffect(()=>{
       location:location,
       lat_log: eventoLocation,
       avatar: userImage.image,
+      type: alignment
     });
     console.log(formState)
   };
@@ -127,7 +137,7 @@ useEffect(()=>{
     dispatch(postEvent(formState,token));
     // navigate("/events")
     setFormState({
-      name:"",
+    name:"",
     content: "",
     username: userName,
     email:userEmail,
@@ -135,7 +145,9 @@ useEffect(()=>{
     avatar: "",
     location: location,
     imageCloudinary:'',
-    lat_log: eventoLocation
+    lat_log: eventoLocation,
+    meet_link:'',
+    type: alignment
     })
   };
 
@@ -231,27 +243,49 @@ useEffect(()=>{
           value={formState.date}
           renderInput={(params) => <TextField {...params} />}
           />
-          <TextField id="filled-basic" 
-            label="Location" variant="filled" 
-            value={location}
-            name="location"
-            type='search'
-            onKeyUp={search}
-            className="location"
-            onChange={handleSetLocation}
-          />
-            <div>
-                {
-                    locations.length && results
-                    ? locations.map(({place_name,text, center},i)=><Search place_name={place_name} text={text} center={center} i={i}/>)
-                    : location && results &&(
-                        <div>
-                            <p className='parrafo'>No encontrado</p>
-                            <p className='parrafo'>{location}</p>
-                        </div>
-                    )
-                }
-            </div>
+          <ToggleButtonGroup color="primary"
+            value={alignment}
+            exclusive
+            onChange={handleSelectType}
+            aria-label="Platform">
+            <ToggleButton value="in-person">In-person</ToggleButton>
+            <ToggleButton value="online">Online</ToggleButton>
+          </ToggleButtonGroup>
+          {
+            (alignment === 'in-person') ? 
+            (<div>
+              <TextField id="filled-basic" 
+                label="Location" variant="filled" 
+                value={location}
+                name="location"
+                type='search'
+                onKeyUp={search}
+                className="location"
+                onChange={handleSetLocation}
+              />
+                <div>
+                    {
+                        locations.length && results
+                        ? locations.map(({place_name,text, center},i)=><Search place_name={place_name} text={text} center={center} i={i}/>)
+                        : location && results &&(
+                            <div>
+                                <p className='parrafo'>No encontrado</p>
+                                <p className='parrafo'>{location}</p>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>)
+            : (<div>
+              <TextField id="filled-basic" 
+                label="Meet link" variant="filled" 
+                value={formState.meet_link}
+                name="meet_link"
+                type='url'
+                onChange={handleChange}
+              />
+            </div>)
+          }
         </div>
         
         <div align="right">

@@ -56,16 +56,32 @@
   align-items: flex-start;
   margin-left: 30px;
   padding: 10px;
+  width:750px;
 }
+.descriptionDetailOnline {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  margin-left: 30px;
+  padding: 10px;
+  width:450px;
+
+}
+
 .text .descriptionDetail h3 {
   color: #ffd000;
 }
 .text .descriptionDetail h4 {
-  width:750px;
   word-wrap: break-word;
   margin-top: 0px;
 }
-.text .map {
+.text .descriptionDetailOnline p {
+  word-wrap: break-word;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.text .descriptionDetailOnline h3 {
+  color: #ffd000;
 }
 
 .info2 {
