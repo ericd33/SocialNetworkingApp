@@ -27,9 +27,8 @@ import { banPost, deletePost, newComment, putLikes } from "../../Redux/actions";
 import { Link, useParams } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
-import OptionsPopper from "./Modals/OptionsPopper";
+// import OptionsPopper from "./Modals/OptionsPopper";
 import EditPost from "./EditPost";
-import OptionsPopper from "./Options/OptionsPopper";
 
 export default function Post({
   created,
@@ -193,7 +192,7 @@ export default function Post({
           }
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
         />
-        <OptionsPopper payload={payload} />
+        {/* <OptionsPopper payload={payload} /> */}
 
         {profileUser.role === "admin" ? (
           <div>
