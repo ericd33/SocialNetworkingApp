@@ -16,7 +16,8 @@ import {
   ORDER_BY_COMENTS,
   GET_EVENT_PROFILE,
   EVENTS_BY_AUTHOR,
-  FILTER_GLOBAL_EVENTS
+  FILTER_GLOBAL_EVENTS,
+  FILTER_EVE_LOC
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -749,6 +750,13 @@ export function editPost(payload, token) {
 export function filterGlobalEvents(payload) {
   return {
     type: FILTER_GLOBAL_EVENTS,
+    payload,
+  };
+}
+
+export function filterInPersonLoca(payload) {
+  return {
+    type: FILTER_EVE_LOC,
     payload,
   };
 }
