@@ -24,7 +24,7 @@ export default function PostList() {
       }
     };
     axios(Config).then(res=>{
-      console.log(res)
+      // console.log(res)
       setPost(post.concat(res.data))
     })
   

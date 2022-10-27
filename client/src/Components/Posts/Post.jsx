@@ -81,7 +81,7 @@ export default function Post({
       const datenow = new Date();
       
       const hourDifference = Math.floor(Math.abs(datenow - parsedDate) / 36e5);
-      console.log(hourDifference)
+      // console.log(hourDifference)
       if (hourDifference > 730) {
         setTimeDate(Math.floor(hourDifference / 730) + " m");
       } else if (hourDifference > 24) {
