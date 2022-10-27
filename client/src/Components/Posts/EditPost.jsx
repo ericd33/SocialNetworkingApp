@@ -12,8 +12,8 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import "./CreatePost.css";
-import { getMyUser, postPost } from "../../Redux/actions";
+import "./EditPost.css";
+import { getMyUser, putPost } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -22,7 +22,7 @@ import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
 import { width } from "@mui/system";
 
-export default function CreatePost({ profileUser }) {
+export default function EditPost({ idPost }) {
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState(null);
   const [prev, setPrev] = useState(false);
@@ -89,7 +89,7 @@ export default function CreatePost({ profileUser }) {
       email: userEmail,
     };
     setTimeout(() => {
-      dispatch(postPost(token, data));
+      dispatch(putPost(idPost, token, data));
     }, 1000);
     setModal(!modal);
     setFormState({
@@ -111,7 +111,7 @@ export default function CreatePost({ profileUser }) {
     >
       <CardContent>
         <div className="headerModal">
-          <h2>Create a post</h2>
+          <h2>Edit a post</h2>
           <IconButton
             id="closeIcon"
             sx={{
@@ -137,21 +137,10 @@ export default function CreatePost({ profileUser }) {
             className="textField"
             onChange={handleChange}
             inputProps={{
-              maxLength: 200
+              maxLength: 200,
             }}
           />
-          {/* <TextField id="filled-basic" 
-          label="Image link" variant="filled" 
-          value={formState.image}
-          name="image"
-          className="textField"
-          onChange={handleChange}
-          />*/}
         </div>
-
-        <input type="file" name="imageCloudinary" onChange={(e) => submit(e)} />
-        <button onClick={(e) => submitFile(e)}>Image alredy</button>
-        {prev ? <img src={formState.imageCloudinary} className="img" /> : null}
 
         <div align="right">
           <Button
@@ -165,7 +154,7 @@ export default function CreatePost({ profileUser }) {
             onClick={handleSubmit}
             variant="contained"
           >
-            Post
+            Edit
           </Button>
         </div>
       </CardContent>
@@ -174,13 +163,7 @@ export default function CreatePost({ profileUser }) {
   const userStorage = JSON.parse(localStorage.getItem("user"));
   return userStorage.enabled ? (
     <div className="container">
-      <IconButton
-        onClick={() => opencloseModal()}
-        id="buttonPost"
-        sx={{ bgcolor: "secondary.main" }}
-      >
-        <PostAddOutlinedIcon sx={{ color: grey[800] }} />
-      </IconButton>
+      <Button onClick={() => opencloseModal()}>Editar Post</Button>
       <Modal open={modal} onClose={opencloseModal}>
         {body}
       </Modal>

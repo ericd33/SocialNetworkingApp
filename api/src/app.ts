@@ -10,8 +10,8 @@ const mercadopago = require("mercadopago");
 const cors = require("cors");
 const middleware = require("./middleware");
 const bodyParser = require("body-parser");
-const cloudinary = require('cloudinary').v2;
-const multer = require('multer')
+const cloudinary = require("cloudinary").v2;
+const multer = require("multer");
 import path from "path";
 
 dotenv.config();
@@ -41,19 +41,19 @@ server.listen(process.env.PORT, () => {
   connectDB();
 });
 
-app.use(middleware.decodeToken)
+app.use(middleware.decodeToken);
 
 const storage = multer.diskStorage({
-  destination: 'uploads',
-  filename: (res:any,file:any,cb:any) =>{
-    console.log(res,file)
-    cb(null, new Date().getTime() + path.extname(file.originalname))
-  }
-})
-export const upload = multer({storage: storage})
+  destination: "uploads",
+  filename: (res: any, file: any, cb: any) => {
+    console.log(res, file);
+    cb(null, new Date().getTime() + path.extname(file.originalname));
+  },
+});
+export const upload = multer({ storage: storage });
 // app.use(multer({storage}).single('imageCloudinary'))
 
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("port", process.env.PORT || 3000);
 // app.listen(app.get("port"), () => {
@@ -66,15 +66,15 @@ mercadopago.configure({
     "APP_USR-8366918559204641-102119-b46a91ed28fa4f1cca1b56502af532a5-1222629415",
 });
 
-cloudinary.config({ 
-  cloud_name: process.env.CLOUD_NAME, 
-  api_key: process.env.API_KEY, 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
   api_secret: process.env.API_KEY_SECRET,
-  secure: true
+  secure: true,
 });
 
 app.use("/comments", comment);
 app.use("/users", userRoutes);
 app.use("/events", event);
-app.use("/posts",upload.single('imageCloudinary'), post);
+app.use("/posts", upload.single("imageCloudinary"), post);
 app.use("/mercado", mercado);

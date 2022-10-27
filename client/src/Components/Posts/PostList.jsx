@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import "./PostList.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
-import InfiniteScroll from "react-infinite-scroll-component"
+import InfiniteScroll from "react-infinite-scroll-component";
+
 export default function PostList() {
-  const {user} = useUserAuth();
-  const [profileUser, setProfileUser] = useState({})
-  let [page, setPage]= useState(1)
-  const [post, setPost]= useState([])
+  const { user } = useUserAuth();
+  const [profileUser, setProfileUser] = useState({});
+  let [page, setPage] = useState(1);
+  const [post, setPost] = useState([]);
+
   useEffect(() => {
     let token = user.accessToken;
     const Config = {
@@ -19,100 +21,106 @@ export default function PostList() {
       headers: {
         authorization: `Bearer ${token}`,
       },
-      data:{
-        paginate:page
-      }
+      data: {
+        paginate: page,
+      },
     };
-    axios(Config).then(res=>{
-      console.log(res)
-      setPost(post.concat(res.data))
-    })
-  
+    axios(Config).then((res) => {
+      console.log(res);
+      setPost(post.concat(res.data));
+    });
+
     const Config2 = {
-      method: 'get',
+      method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-    }
-    axios(Config2).then(res => setProfileUser(res.data))
-  }, [page])
+    };
+    axios(Config2).then((res) => setProfileUser(res.data));
+  }, [page]);
 
-return (
-  <InfiniteScroll 
-  dataLength={post.length} 
-  hasMore={true} 
-  next={()=>{setPage((prevPage)=>prevPage+1)}}
-  >
-  <div>
-    {post?.length === 0 ? (
-      <div className="List">
-        <div className="wrapper">
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-        </div>
-      </div>
-    ) : (
-      <div className="List">
-        {/* {console.log(all_posts)} */}
-        {post?.map((p) => {
-            if(profileUser.enabled){
-              switch(profileUser.role){
-              case "admin":
-              return (
-                <Post
-                  key={p._id}
-                  author={p.author}
-                  likes={p.likes}
-                  comments={p.comments}
-                  text={p.content}
-                  image={p.image}
-                  id={p._id}
-                  enabled={p.enabled}
-                  disable={p.disable}
-                />
-              )
-            case "user":
-              if(p.enabled && !p.disable.some(e=>e===profileUser.email))
-              return(
-              <Post
-                  key={p._id}
-                  author={p.author}
-                  created={p.createdAt}
-                  likes={p.likes}
-                  comments={p.comments}
-                  text={p.content}
-                  image={p.image}
-                  id={p._id}
-                  enabled={p.enabled}
-                  disable={p.disable}
-                />)
-              
-                default: return <></>
-          }
-            }else{
-              return (
-                <div className="List">
-                  <div className="wrapper">
-                    <div className="circle"></div>
-                    <div className="circle"></div>
-                    <div className="circle"></div>
-                    <div className="shadow"></div>
-                    <div className="shadow"></div>
-                    <div className="shadow"></div>
+  return (
+    <InfiniteScroll
+      dataLength={post.length}
+      hasMore={true}
+      next={() => {
+        setPage((prevPage) => prevPage + 1);
+      }}
+    >
+      <div>
+        {post?.length === 0 ? (
+          <div className="List">
+            <div className="wrapper">
+              <div className="circle"></div>
+              <div className="circle"></div>
+              <div className="circle"></div>
+              <div className="shadow"></div>
+              <div className="shadow"></div>
+              <div className="shadow"></div>
+            </div>
+          </div>
+        ) : (
+          <div className="List">
+            {/* {console.log(all_posts)} */}
+            {post?.map((p) => {
+              if (profileUser.enabled) {
+                switch (profileUser.role) {
+                  case "admin":
+                    return (
+                      <Post
+                        key={p._id}
+                        author={p.author}
+                        likes={p.likes}
+                        comments={p.comments}
+                        text={p.content}
+                        image={p.image}
+                        id={p._id}
+                        enabled={p.enabled}
+                        disable={p.disable}
+                      />
+                    );
+                  case "user":
+                    if (
+                      p.enabled &&
+                      !p.disable.some((e) => e === profileUser.email)
+                    )
+                      return (
+                        <Post
+                          key={p._id}
+                          author={p.author}
+                          created={p.createdAt}
+                          likes={p.likes}
+                          comments={p.comments}
+                          text={p.content}
+                          image={p.image}
+                          id={p._id}
+                          enabled={p.enabled}
+                          disable={p.disable}
+                        />
+                      );
+
+                  default:
+                    return <></>;
+                }
+              } else {
+                return (
+                  <div className="List">
+                    <div className="wrapper">
+                      <div className="circle"></div>
+                      <div className="circle"></div>
+                      <div className="circle"></div>
+                      <div className="shadow"></div>
+                      <div className="shadow"></div>
+                      <div className="shadow"></div>
+                    </div>
                   </div>
-                </div>
-              ) 
-            }
-          })
-          }
+                );
+              }
+            })}
+          </div>
+        )}
       </div>
-    )}
-  </div>
-  </InfiniteScroll>
-);
+    </InfiniteScroll>
+  );
 }
