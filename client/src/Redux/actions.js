@@ -74,7 +74,7 @@ export function postPost(token, data) {
       data: data,
     };
     await axios(Config);
-    dispatch(getPosts(token));
+    dispatch(paginate(token));
   };
 }
 
@@ -291,7 +291,7 @@ export function updateComment(postId, userId, commentData, token) {
       type: "UPDATE_COMMENT",
     });
 
-    dispatch(getPosts(token));
+    dispatch(paginate(token));
   };
 }
 

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
-import { getMyUser, getPostsFollows, getPosts } from "../../../Redux/actions"
+import { getMyUser, getPosts, getPostsFollows, paginate } from "../../../Redux/actions"
 import './FilterPost.css';
 
 const FilterPost = () => {
@@ -15,21 +15,20 @@ const FilterPost = () => {
 
 	useEffect(() => {
 		dispatch(getMyUser(token,email))
-		// console.log(userFP)
-		// console.log(userF)
+		console.log(userFP)
+		console.log(userF)
   },[dispatch]);
 
 	function onClicked(e) {
 		// console.log(e.target.checked);
 		if(e.target.checked === true) {
-			postF.map((f)=>{
+			
+			postF?.map((f)=>{
+				console.log(f)
 				dispatch(getPostsFollows(token, f))
 			})
 		}
-		else {
-			dispatch(getPosts(token))
-		}
-	  }
+	}
 
 
   return (
