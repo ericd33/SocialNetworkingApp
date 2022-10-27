@@ -29,6 +29,7 @@ import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 import OptionsPopper from "./Modals/OptionsPopper";
 import EditPost from "./EditPost";
+import OptionsPopper from "./Options/OptionsPopper";
 
 export default function Post({
   created,
@@ -83,6 +84,7 @@ export default function Post({
 
       const hourDifference = Math.floor(Math.abs(datenow - parsedDate) / 36e5);
       console.log(hourDifference);
+      // console.log(hourDifference)
       if (hourDifference > 730) {
         setTimeDate(Math.floor(hourDifference / 730) + " m");
       } else if (hourDifference > 24) {

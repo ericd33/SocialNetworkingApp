@@ -79,6 +79,16 @@ export const paginate = async (req: Request, res: Response) => {
   }
 };
 
+export const getPostbyID = async (req: Request, res: Response) => {
+  const { idPost } = req.params;
+  try {
+    const post = await postSchema.findOne({ _id: idPost });
+    res.send(post);
+  } catch (err) {
+    res.status(400).send("There aren't any posts yet." + err);
+  }
+};
+
 export const putPostById = async (req: Request, res: Response) => {
   const { id, action } = req.body;
 
@@ -205,6 +215,26 @@ export const putPostLikes = async (req: Request, res: Response) => {
       data: currentPost,
       msg: `User don't exist`,
     });
+  } catch (error) {
+    return res.status(500).json({
+      msg: `An error ocurred 😡`,
+      error,
+    });
+  }
+};
+
+export const putPostContent = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
+    const { content, email } = req.body;
+
+    const user = await userSchema.findOne({ email: email });
+    if (user.posts.includes(postId)) {
+      await postSchema.updateOne({ _id: postId }, { content: content });
+      return res.status(200);
+    } else {
+      return res.status(400).send("This post is not yours.");
+    }
   } catch (error) {
     return res.status(500).json({
       msg: `An error ocurred 😡`,

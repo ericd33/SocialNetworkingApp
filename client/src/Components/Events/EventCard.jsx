@@ -6,8 +6,9 @@ import './EventCard.css';
 import { useDispatch } from "react-redux";
 import { banEvents } from "../../Redux/actions";
 import { useUserAuth } from "../../context/UserAuthContext";
+import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
 
-export default function EventCard({location,name,text,image,date,id,enabled}) {
+export default function EventCard({location,name,text,image,date,id,enabled,type}) {
     date = date.replace('T',' / ').substring(0,date.length-6)
     const dispatch = useDispatch()
     const {user} = useUserAuth();
@@ -37,9 +38,11 @@ export default function EventCard({location,name,text,image,date,id,enabled}) {
             <Card sx={{ width: 600, bgcolor: 'custom.dark', borderRadius:3}}>
             <Typography sx={{fontSize: 14, fontFamily: 'Nunito', mt: '1px', ml:1, color:grey[800], pb:'1px'}} color="text.secondary" gutterBottom>
                 <Icon sx={{pt:'1px'}}>
-                    <LocationOnIcon sx={{color:red[900]}}/>
+                    {
+                        type === 'in-person' ? <LocationOnIcon sx={{color:red[900]}}/> : <CameraIndoorIcon sx={{color:red[900]}}/>
+                    }
                 </Icon>
-                <span id='location'>{location}</span> - <span id='dateHour'>{date} hs.</span>
+                <span id='location'>{type === 'in-person' ? location : 'Online meet'}</span> - <span id='dateHour'>{date} hs.</span>
                 
             </Typography>
             <CardMedia

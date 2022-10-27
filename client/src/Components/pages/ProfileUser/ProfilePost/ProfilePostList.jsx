@@ -29,6 +29,7 @@ const ProfilePostList = ({render, posts}) => {
     }
     axios(Config2).then(res => setProfileUser(res.data))
   }, [dispatch]);
+
     //console.log(posts)
   if (render === 'posts' && posts.length === 0) {
     return (
@@ -45,22 +46,21 @@ const ProfilePostList = ({render, posts}) => {
           switch(profileUser.role){
             case "admin":
               return (
-                <div>
-  
-                  <Post
-                    text={p.content}
-                    author={p.author}
-                    comments={p.comments}
-                    likes={p.likes}
-                    image={p.image}
-                    id={p._id}
-                    enabled={p.enabled}
-                  />
-                </div>
-                );
+                <Post
+                created={p.createdAt}
+                  text={p.content}
+                  author={p.author}
+                  comments={p.comments}
+                  likes={p.likes}
+                  image={p.image}
+                  id={p._id}
+                  enabled={p.enabled}
+                />
+              );
               case "user":
             if(p.enabled)return(
                 <Post
+                created={p.createdAt}
                   text={p.content}
                   author={p.author}
                   comments={p.comments}

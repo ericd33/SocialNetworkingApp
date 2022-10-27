@@ -3,27 +3,46 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, username, date, content, image, location, email,lat_log,avatar} = req.body;
+  const { name, username, date, content, image, location, email,lat_log,avatar, type, meet_link} = req.body;
   try {
   const user = await userSchema.findOne({email:email})
   console.log('creating event')
     let event = await new eventSchema();
-    if (name.length && date.length && content.length && location.length && lat_log.length) {
-      // event.type= type
-      event.author= email
-      event.avatar = avatar
-      event.nameAuthor = username
-      event.name = name;
-      event.date = date;
-      event.content = content;
-      event.image = image;
-      event.location = location;
-      event.enabled = true;
-      event.lat_log=lat_log
-      const newEvent = await event.save();
-      user.events = user.events.concat(newEvent)
-      await user.save()
-      res.status(200).send("new event");
+    if (type === 'in-person') {
+      if (name.length && date.length && content.length && location.length && lat_log.length) {
+        event.author= email
+        event.avatar = avatar
+        event.nameAuthor = username
+        event.name = name;
+        event.type = type;
+        event.date = date;
+        event.content = content;
+        event.image = image;
+        event.location = location;
+        event.enabled = true;
+        event.lat_log=lat_log
+        const newEvent = await event.save();
+        user.events = user.events.concat(newEvent)
+        await user.save()
+        res.status(200).send("new event");
+      }}
+    if (type === 'online') {
+      if (name.length && date.length && content.length && meet_link.length) {
+        event.author= email
+        event.avatar = avatar
+        event.nameAuthor = username
+        event.meet_link = meet_link;
+        event.name = name;
+        event.type = type;
+        event.date = date;
+        event.content = content;
+        event.image = image;
+        event.enabled = true;
+        const newEvent = await event.save();
+        user.events = user.events.concat(newEvent)
+        await user.save()
+        res.status(200).send("new event");
+      }
     }
   } catch (e) {
     res.status(400).send(e);

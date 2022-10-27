@@ -25,8 +25,9 @@ export default function PostList() {
         paginate: page,
       },
     };
+
     axios(Config).then((res) => {
-      console.log(res);
+      // console.log(res)
       setPost(post.concat(res.data));
     });
 

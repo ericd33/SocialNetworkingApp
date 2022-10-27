@@ -43,7 +43,6 @@ export function postUser(payload, token) {
 
 export function getPosts(payload, page) {
   return async function (dispatch) {
-    console.log(page);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
@@ -132,9 +131,11 @@ export function postEvent(payload, token) {
         content: payload.content,
         date: payload.date,
         lat_log: payload.lat_log,
+        type: payload.type,
+        meet_link: payload.meet_link,
       },
     };
-    await axios(Config);
+    await axios(Config).then((res) => console.log(res));
     dispatch(getEvents(token));
   };
 }
@@ -338,6 +339,7 @@ export function getPostId(token, idPost) {
       },
     };
     axios(Config).then((res) => {
+      console.log(res);
       return dispatch({
         type: GET_POSTS_BY_ID,
         payload: res.data,
@@ -472,7 +474,7 @@ export function imageChange(payload, token, email) {
         authorization: `Bearer ${token}`,
       },
       data: {
-        image: payload.image,
+        image: payload.img,
         email: payload.email,
       },
     };
@@ -721,5 +723,24 @@ export function reportPost(payload, token) {
       },
     };
     await axios(Config).then((res) => console.log(res));
+  };
+}
+
+export function editPost(payload, token) {
+  return async function () {
+    const requestConfig = {
+      method: "put",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${payload.id}/content`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        content: payload.content,
+        email: payload.email,
+      },
+    };
+    console.log(payload);
+    await axios(requestConfig).then((res) => console.log(res));
+    // dispatch(getPosts(token));
   };
 }
