@@ -7,18 +7,8 @@ import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { useUserAuth } from "../../context/UserAuthContext";
 
-export default function EventList() {
-    const {user} = useUserAuth();
-    const dispatch = useDispatch()
-    let events = []
-    events = useSelector((state)=>state.events);
+export default function EventList({events}) {
     const userE = JSON.parse(localStorage.getItem('user'));
-
-    let token = user.accessToken
-
-    useEffect(()=>{
-        dispatch(getEvents(token))
-    },[dispatch])
 
     if (events.length === 0) {
         return (
