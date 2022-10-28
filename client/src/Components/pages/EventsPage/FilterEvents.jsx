@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import React, {useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
-import { filterGlobalEvents, getEvents, filterInPersonLoca,filterByAssist } from "../../../Redux/actions"
+import { filterGlobalEvents, getEvents, filterInPersonLoca,filterByAssist, clearF } from "../../../Redux/actions"
 import '../Home/FilterPost.css';
 
 const FilterEvents = () => {
@@ -24,6 +24,10 @@ const FilterEvents = () => {
 			}
 		}
 	})
+
+	useEffect(()=>{
+		dispatch(getEvents(token))
+},[dispatch])
 	//filter Global
 	const filterGlobal = ()=>{
 		dispatch(getEvents(token))
@@ -35,8 +39,10 @@ const FilterEvents = () => {
 	const filterDelete = () =>{
 		if(filtersInPer){
 			dispatch(filterGlobalEvents("in-person"))
+			dispatch(clearF())
 		}else if(filtersOnline){
 			dispatch(filterGlobalEvents("online"))
+			dispatch(clearF())
 		}
 	}
 
@@ -52,15 +58,17 @@ const FilterEvents = () => {
 	const filterPerson = ()=>{
 		dispatch(filterGlobalEvents("in-person"))
 		setFiltersInPer(true)
-		console.log(filterLO)
+		dispatch(clearF())
 	}
 	
 	const fByLoc = (e) =>{
 		dispatch(filterInPersonLoca(e.target.value))
+		dispatch(clearF())
 	}
 
 	const fByAsisstIn = async(e) =>{
 		dispatch(filterByAssist(e.target.value))
+		dispatch(clearF())
 	}
 
   return (

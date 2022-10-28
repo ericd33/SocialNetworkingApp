@@ -18,7 +18,8 @@ import {
   EVENTS_BY_AUTHOR,
   FILTER_GLOBAL_EVENTS,
   FILTER_EVE_LOC,
-  FILTER_EVE_ASSIST
+  FILTER_EVE_ASSIST,
+  CLEAR_EVENTS,
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -765,6 +766,13 @@ export function filterInPersonLoca(payload) {
 export function filterByAssist(payload) {
   return {
     type: FILTER_EVE_ASSIST,
+    payload,
+  };
+}
+
+export function clearF(payload) {
+  return {
+    type: CLEAR_EVENTS,
     payload,
   };
 }

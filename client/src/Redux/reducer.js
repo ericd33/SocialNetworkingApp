@@ -19,7 +19,8 @@ import {
   EVENTS_BY_AUTHOR,
   FILTER_GLOBAL_EVENTS,
   FILTER_EVE_LOC,
-  FILTER_EVE_ASSIST
+  FILTER_EVE_ASSIST,
+  CLEAR_EVENTS,
 
 } from "./action-types";
 
@@ -220,6 +221,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         soluc: sortedAssi
         }
+        case CLEAR_EVENTS:
+          return{
+            ...state,
+            soluc:[],
+          }
     default:
       return state;
   }
