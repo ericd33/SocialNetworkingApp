@@ -18,7 +18,8 @@ import {
   GET_EVENT_PROFILE,
   EVENTS_BY_AUTHOR,
   FILTER_GLOBAL_EVENTS,
-  FILTER_EVE_LOC
+  FILTER_EVE_LOC,
+  FILTER_EVE_ASSIST
 
 } from "./action-types";
 
@@ -27,6 +28,7 @@ const initialState = {
   filtered_posts: [],
   events: [],
   filtered_events: [],
+  soluc : [],
   myUser: {},
   details: [],
   searchByNameUsers: [],
@@ -187,12 +189,37 @@ const rootReducer = (state = initialState, action) => {
           action.payload === "All" ? allEvents : filterEvent
       };
       case FILTER_EVE_LOC:
+        console.log(action.payload)
       const filterEventsLoc = state.events
       const inPersonLoc = filterEventsLoc.filter((e)=> e.location === action.payload)
       return{
         ...state,
         events: inPersonLoc
       }
+      case FILTER_EVE_ASSIST:
+        const filterEventsAssi = state.events
+        let sortedAssi =  action.payload === "less" ?
+            filterEventsAssi.sort((el1, el2) => {
+              if (el1.participants.length > el2.participants.length) {
+                return -1;
+              }
+              if (el1.participants.length < el2.participants.length) {
+                return 1;
+              }
+              return 0;
+            }) :  filterEventsAssi.sort(function (a, b) {
+              if (a.participants.length > b.participants.length) {
+                return 1;
+              }
+              if (b.participants.length > a.participants.length) {
+                return -1;
+              }
+              return 0;
+            })
+        return{
+        ...state,
+        soluc: sortedAssi
+        }
     default:
       return state;
   }
