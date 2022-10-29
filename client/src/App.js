@@ -21,7 +21,7 @@ function App() {
         <UserAuthContextProvider>
           <Routes>
             <Route path="/" element={<LandingBackup />} />
-            <Route path="/signup" element={<LandingRegister />} />
+            <Route path="/signup" element={<LandingBackup />} />
             <Route
               path="/chat"
               element={
