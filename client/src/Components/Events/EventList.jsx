@@ -27,7 +27,6 @@ export default function EventList({events}) {
     else {
         return (
             <div className="List">
-                {console.log(events)}
                 {
                     events?.map(e=>{
                         if(userE.enabled){

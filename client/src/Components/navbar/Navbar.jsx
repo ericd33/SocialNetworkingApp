@@ -90,11 +90,9 @@ const NavBar = () => {
     };
     axios(Config)
       .then((user) => {
-        // console.log(user.data)
         setAvatar(user.data.image);
       })
       .catch(function (err) {
-        console.log(err);
       });
   }, []);
 

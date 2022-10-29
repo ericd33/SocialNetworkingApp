@@ -6,11 +6,14 @@ const postSchema = require("../models/post");
 export const addComment = async (req: Request, res: Response) => {
   const { text, image, authorComment, idPost } = req.body;
   const user = await userSchema.findOne({ email: authorComment });
-  console.log(user)
   const post = await postSchema.findOne({ _id: idPost });
   let comment = await new commentSchema();
   try {
-    if ((text.length || image.length) && authorComment.length && idPost.length) {
+    if (
+      (text.length || image.length) &&
+      authorComment.length &&
+      idPost.length
+    ) {
       comment.author = user.email;
       comment.avatar = user.image;
       comment.name = user.name;
@@ -19,7 +22,6 @@ export const addComment = async (req: Request, res: Response) => {
       comment.image = image;
       comment.enabled = true;
       const newComent = await comment.save();
-      // console.log(newComent)
       post.comments = post.comments.concat(newComent);
       await post.save();
       res.status(200).send(post);
@@ -30,25 +32,23 @@ export const addComment = async (req: Request, res: Response) => {
 };
 
 export const getCommentPost = async (req: Request, res: Response) => {
-  const { idPost } = req.params
-  try{
-    console.log("post",idPost)
-    let comments = await commentSchema.find({IdPost:idPost})
-    let comment = comments?.map((e:any)=>{
-      return({
-      id:e._id,
-      text:e.text,
-      avatar:e.avatar,
-      name:e.name,
-      enabled:e.enabled
-    })
-    })
-    res.status(200).send(comment)
-  }catch(e){
-    res.status(400).send(e)
+  const { idPost } = req.params;
+  try {
+    let comments = await commentSchema.find({ IdPost: idPost });
+    let comment = comments?.map((e: any) => {
+      return {
+        id: e._id,
+        text: e.text,
+        avatar: e.avatar,
+        name: e.name,
+        enabled: e.enabled,
+      };
+    });
+    res.status(200).send(comment);
+  } catch (e) {
+    res.status(400).send(e);
   }
-}
-
+};
 
 export const updateComment = async (req: Request, res: Response) => {
   try {

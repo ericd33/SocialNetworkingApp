@@ -9,7 +9,6 @@ export function useLocalStorage(key, initialValue) {
             const item = window.localStorage.getItem(key)
             return item ? JSON.parse(item) : initialValue
         }catch(e){
-            console.log(e)
             return initialValue
         }
     })
@@ -22,9 +21,7 @@ export function useLocalStorage(key, initialValue) {
             setTimeout(()=>{localStorage.setItem(
                 'user',JSON.stringify(user)
                 )},'500')
-            console.log(user)
         }catch(e){
-          console.log(e)
           }
     }
 

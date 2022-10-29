@@ -12,11 +12,8 @@ import { grey } from '@mui/material/colors';
 
 export default function Maps({latLon}){
     // const detail = useSelector(d=>d.details)
-    // console.log(latLon)
     const mapDiv = useRef(null)
     const {mapa,setMap,marker,myUbication, setMyUbication} = useContext(MapaContext)
-    // console.log(eventoLocation)
-    // console.log(latLon)
     useEffect(() => {
         if(mapDiv.current){
             setMap(
@@ -61,7 +58,6 @@ export default function Maps({latLon}){
             //traza de ruta
             const route=`/${latLon.join(",")};${myUbication.join(",")}`
             const {data} = await searchRoute.get(route)
-            console.log(data)
             const bounds = new LngLatBounds(myUbication,latLon)
             const {coordinates} = data.routes[0].geometry
             for(const coord of coordinates){

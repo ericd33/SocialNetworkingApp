@@ -43,8 +43,6 @@ const ProfilePost = ({ idPost, userInfoRen }) => {
   
   return (
     <div>
-      {console.log(post)}
-      {/* {console.log(post.content)} */}
     <br />
     <Card
       sx={{
@@ -103,7 +101,6 @@ const ProfilePost = ({ idPost, userInfoRen }) => {
     </Card>
   </div>
     // <div>
-    //   {console.log(post.content)}
 		// 	{post.content} 
 		// </div>
   )

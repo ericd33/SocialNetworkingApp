@@ -62,13 +62,11 @@ export default function EditPost({ idPost }) {
     };
     await axios(Config)
       .then((res) => {
-        // console.log(res.data)
         setFormState({
           ...formState,
           imageCloudinary: `${res.data}`,
         });
         setPrev(true);
-        // console.log(formState)
       })
       .catch((err) => {
         console.log(err);

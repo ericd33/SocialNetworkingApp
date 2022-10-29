@@ -19,7 +19,6 @@ export default function Home() {
   const [profileUser, setProfileUser] = useState({})
 
   let token = user.accessToken;
-  console.log(token)
   useEffect(() => {
     const Config2 = {
       method: 'get',
@@ -31,7 +30,6 @@ export default function Home() {
     axios(Config2).then(res => setProfileUser(res.data))
 
     .catch(function (err) {
-      console.log(err);
     });
 }, []);
 localStorage.setItem('user',JSON.stringify(profileUser))

@@ -22,9 +22,7 @@ const ProfileInfo = ({userInfoRen}) => {
   const [myUser, setMyUser]=useState(true)
   useEffect(()=>{
     if(email.email===user.email){setMyUser(false)}
-  },[myUser,email,user])
-  // console.log(myUser)
-  // console.log('user',userInfoRen)
+  },[myUser,email,user]);
   const [profileUser, setProfileUser] = useState({})
 
   const handleBanUser=(e)=>{
@@ -41,6 +39,9 @@ const ProfileInfo = ({userInfoRen}) => {
       action:"enable"
     }
     dispatch(banUsers(data,token))
+
+    console.log('ESTO ME TRAEL EL USERINFO', userInfoRen);
+    console.log('ESTO ME TRAE LOS FOLLOWS', userInfoRen.followeds);
   }
 }
 useEffect(() => {

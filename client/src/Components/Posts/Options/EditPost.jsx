@@ -34,7 +34,6 @@ export default function EditPost({payload}) {
     const Post = useSelector((state) => state.PostID); 
 
     const handleChange = (e) => {
-        // console.log(e.target.value);
         setNewContent(e.target.value);
     }
 
@@ -44,7 +43,6 @@ export default function EditPost({payload}) {
           content: newContent,
           email: sessionUser.user.email
       }
-      console.log(data);
       dispatch(editPost(data,token))
       setModal(false);
     }

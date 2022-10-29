@@ -24,7 +24,6 @@ import {
 
 export function postUser(payload, token) {
   return function () {
-    console.log(payload);
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
@@ -39,7 +38,6 @@ export function postUser(payload, token) {
     };
     axios(Config)
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => console.log(err));
   };
@@ -154,7 +152,6 @@ export function details(id, token) {
       },
     };
     axios(Config).then((res) => {
-      // console.log(res);
       return dispatch({
         type: GET_DETAILS,
         payload: res.data,
@@ -179,7 +176,6 @@ export function getMyUser(token, email) {
       },
     };
     axios(Config).then((res) => {
-      // console.log(res);
       return dispatch({
         type: GET_MY_USER,
         payload: res.data,
@@ -204,7 +200,6 @@ export function searchUsersByName(name, token) {
       },
     };
     axios(Config).then((res) => {
-      // console.log(res)
       return dispatch({
         type: SEARCH_BY_NAME,
         payload: res.data,
@@ -219,13 +214,11 @@ export function login(user) {
       .post(`http://localhost:3001/users/login`, user)
       .then(function (response) {
         if (response.data === true) {
-          // console.log(user.email);
           dispatch(getMyUser(user.email));
           window.location.href = "/home";
         } else {
           alert("This account doesnt exist!");
         }
-        // console.log(response);
       })
       .catch(function (err) {
         console.log(err);
@@ -235,7 +228,6 @@ export function login(user) {
 
 export function getEvents(payload) {
   return function (dispatch) {
-    // console.log(payload);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
@@ -264,7 +256,6 @@ export function putLikes(idPost, email, token) {
         email: email,
       },
     };
-    // console.log(token,Config)
     const { data } = await axios(Config);
 
     dispatch({
@@ -343,7 +334,6 @@ export function getPostId(token, idPost) {
       },
     };
     axios(Config).then((res) => {
-      console.log(res);
       return dispatch({
         type: GET_POSTS_BY_ID,
         payload: res.data,
@@ -371,7 +361,6 @@ export function assitEvent(token, payload) {
 
 export function getEventsByName(token, name) {
   return function (dispatch) {
-    // console.log(payload);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events?name=${name}`,
@@ -380,7 +369,6 @@ export function getEventsByName(token, name) {
       },
     };
     axios(Config).then((res) => {
-      // console.log(res);
       return dispatch({
         type: GET_EVENTS,
         payload: res.data,
@@ -391,7 +379,6 @@ export function getEventsByName(token, name) {
 
 export function getCommentsPost(token, payload) {
   return function (dispatch) {
-    // console.log(payload);
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
@@ -403,7 +390,6 @@ export function getCommentsPost(token, payload) {
       // }
     };
     axios(Config).then((res) => {
-      // console.log(res);
       return dispatch({
         type: GET_COMMENTS_POST,
         payload: res.data,
@@ -482,7 +468,6 @@ export function imageChange(payload, token, email) {
         email: payload.email,
       },
     };
-    console.log(payload);
     await axios(Config);
     dispatch(getMyUser(token, email));
   };
@@ -500,7 +485,6 @@ export function nameChange(payload, token, email) {
         email: payload.email,
       },
     };
-    console.log(payload);
     await axios(Config);
     dispatch(getMyUser(token, email));
   };
@@ -519,7 +503,6 @@ export function presentationChange(payload, token, email) {
         email: payload.email,
       },
     };
-    console.log(payload);
     await axios(Config);
     dispatch(getMyUser(token, email));
   };
@@ -537,7 +520,6 @@ export function webSiteChange(payload, token, email) {
         email: payload.email,
       },
     };
-    console.log(payload);
     await axios(Config);
     dispatch(getMyUser(token, email));
   };
@@ -556,13 +538,11 @@ export function banPost(payload, token) {
         id: payload.idPost,
       },
     };
-    console.log(payload);
     await axios(Config);
   };
 }
 
 export function newComment(token, payload) {
-  // console.log(payload)
   return async function (dispatch) {
     const Config = {
       method: "post",
@@ -617,7 +597,6 @@ export function getEventProfile(token, id) {
 }
 
 export function paginate(token, payload) {
-  console.log(payload);
   return async function (dispatch) {
     const Config = {
       method: "post",
@@ -630,7 +609,6 @@ export function paginate(token, payload) {
       },
     };
     await axios(Config).then((res) => {
-      console.log(res.data);
       return dispatch({
         type: GET_POSTS,
         payload: res.data,
@@ -670,7 +648,6 @@ export function banUsers(payload, token) {
         email: payload.email,
       },
     };
-    console.log(payload);
     await axios(Config);
   };
 }
@@ -688,7 +665,6 @@ export function banComments(payload, token) {
         id: payload.id,
       },
     };
-    console.log(payload);
     await axios(Config);
   };
 }
@@ -706,7 +682,6 @@ export function banEvents(payload, token) {
         id: payload.id,
       },
     };
-    console.log(payload);
     await axios(Config);
   };
 }
@@ -743,7 +718,6 @@ export function editPost(payload, token) {
         email: payload.email,
       },
     };
-    console.log(payload);
     await axios(requestConfig).then((res) => console.log(res));
     // dispatch(getPosts(token));
   };
