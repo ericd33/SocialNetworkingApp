@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { mercado, notification, susrciption } from "../controllers/mercado.controller";
+import { mercado,  notification,  susciption } from "../controllers/mercado.controller";
 const router = Router()
 
 
 
 router.post('/',mercado)
-router.post("/suscripcion",susrciption)
-router.get("/notificacion",notification)
+router.post("/suscripcion",susciption)
+router.post("/notificacion/:id",notification)
 
 export default router;

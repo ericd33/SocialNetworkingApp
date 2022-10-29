@@ -20,6 +20,8 @@ app.use(express.json());
 
 import { Server as socketServer } from "socket.io";
 import http from "http";
+import { notification } from "./controllers/mercado.controller";
+// import { notification } from "./controllers/mercado.controller";
 
 const server = http.createServer(app);
 const io = new socketServer();
@@ -75,3 +77,4 @@ app.use("/users", userRoutes);
 app.use("/events", event);
 app.use("/posts", upload.single("imageCloudinary"), post);
 app.use("/mercado", mercado);
+app.post("/noti/:id",notification)
