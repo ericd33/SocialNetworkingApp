@@ -28,7 +28,6 @@ export default function PostList() {
       }
     };
     axios(Config).then(res=>{
-      console.log(res)
       setPost(post.concat(res.data))
     })
 
@@ -45,7 +44,6 @@ export default function PostList() {
     dispatch(paginate(token,page))
     setPost(post?.concat(all_posts))
   },[page])
-  console.log(all_posts)
 return (
   <InfiniteScroll 
   dataLength={post?.length} 
@@ -66,7 +64,6 @@ return (
       </div>
     ) : (
       <div className="List">
-        {/* {console.log(all_posts)} */}
         {post?.map((p) => {
             if(profileUser?.enabled){
               switch(profileUser.role){

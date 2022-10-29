@@ -27,9 +27,7 @@ const io = new socketServer();
 app.use(cors());
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
   socket.on("message", (message) => {
-    console.log(message);
     socket.broadcast.emit("message", {
       body: message,
       from: socket.id,
@@ -57,7 +55,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("port", process.env.PORT || 3000);
 // app.listen(app.get("port"), () => {
-//   console.log(`Server listening on port ${app.get("port")}`);
 //   connectDB();
 // });
 

@@ -34,8 +34,7 @@ export function UserAuthContextProvider({children}) {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             const tuser = currentUser;
             if (tuser && (tuser.metadata.creationTime == tuser.metadata.lastSignInTime)) {
-                console.log('creating user')
-                console.log(tuser)
+                
                 const userconfig = {
                     email:tuser.email,
                     name:tuser.displayName,

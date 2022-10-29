@@ -11,7 +11,6 @@ const FilterComments = () => {
 
 
   function onClickedComments(e) {
-		console.log(e.target.checked)
 		if(e.target.checked === true) {
 			dispatch(sortByComents(true))}
 	  }

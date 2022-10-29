@@ -44,14 +44,12 @@ export default function CreateEvent() {
   const navigate = useNavigate();
   const {eventoLocation,setResults,location,setLocation,results} = useContext(MapaContext)
   const userImage = JSON.parse(localStorage.getItem('user'));
-  // console.log(location)
   useEffect(()=>{
     dispatch(getMyUser(userEmail))
   },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
-// console.log(eventoLocation)
 const timeOutRef=useRef()
 const [locations,setLocations] = useState([{
     center:"",
@@ -98,7 +96,6 @@ useEffect(()=>{
 },[location])
 
   function handleDateChange(e) {
-    console.log(e._d)
     setFormState({
       ...formState,
       date: e._d
@@ -117,7 +114,6 @@ useEffect(()=>{
       avatar: userImage.image,
       type: alignment
     });
-    console.log(formState)
   };
 
   const handleSetLocation = (e)=>{
@@ -165,16 +161,13 @@ useEffect(()=>{
     };
     await axios(Config)
     .then((res)=> {
-      console.log(res.data)
       setTimeout(() => {
         setFormState({
           ...formState,
           imageCloudinary:`${res.data}`})
       }, 1000);
       setPrev(true)
-      console.log(formState)
     }).catch((err)=>{
-      console.log(err)
     })
   }
 
@@ -182,9 +175,7 @@ useEffect(()=>{
     setFile(e.target.files[0])
 
   }
-  // console.log(eventoLocation)
     
-    // console.log(formState)
   const body = (
     <Card
       className="postCreator"

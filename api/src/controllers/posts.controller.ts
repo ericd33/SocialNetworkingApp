@@ -9,13 +9,11 @@ interface MulterRequest extends Request {
   file: any;
 }
 export const addfile = async (req: Request, res: Response) => {
-  // console.log((req as MulterRequest).file)
   // res.send("sera?")
   try {
     let send = await cloudinary.uploader.upload(
       (req as MulterRequest).file.path
     );
-    // console.log(send.url)
     res.send(send.url);
     await fs.unlink((req as MulterRequest).file.path);
   } catch (error) {
@@ -29,7 +27,6 @@ export const addPost = async (req: Request, res: Response) => {
   // let send = await cloudinary.uploader.upload((req as MulterRequest).file.path)
   // let image = send.url
   // if(imageCloudinary){
-  //   console.log(imageCloudinary)
   // }
   let post = await new postSchema();
   const user = await userSchema.find({ email: email });
@@ -62,7 +59,6 @@ export const getPost = async (_req: Request, res: Response) => {
 
 export const paginate = async (req: Request, res: Response) => {
   const { paginate } = req.body;
-  console.log("paginate", paginate);
   try {
     const post = await postSchema.find({});
     post.reverse();
@@ -159,8 +155,6 @@ export const putPost = async (req: Request, res: Response) => {
           new: true,
         }
       );
-
-      console.log("postUpdated", postUpdated);
 
       return res.status(200).json({
         data: postUpdated,
@@ -286,7 +280,6 @@ export const reports = async (req: Request, res: Response) => {
   try {
     // const userPost = await userSchema.findOne({email:author})
     const post = await postSchema.findOne({ _id: id });
-    // console.log(post.disable);
     if (!post.disable.find((u: any) => u === reporter)) {
       post.disable.push(reporter);
       post.reports.push(report);

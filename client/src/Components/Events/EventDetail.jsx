@@ -17,12 +17,10 @@ import './map/map.css'
 export default function EventDetail() {
     const detail = useSelector(d=>d.details)
     const {user} = useUserAuth();
-    // console.log(user.image)
     let token = user.accessToken;
 
     
     let emailU =user.email
-		// console.log(emailU)
     
     const dispatch = useDispatch()
     const { id }= useParams()

@@ -33,11 +33,9 @@ export default function CommentsModal({idPost}) {
   useEffect(()=>{
     if(modal)
     dispatch(getCommentsPost(token,idPost))
-    // console.log(token,idPost)
   },[getCommentsPost,modal])
   const comments = useSelector(e=>e.comments)
   
-  console.log(comments);
 
   const body = (
     <Card

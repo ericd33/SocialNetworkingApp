@@ -12,7 +12,6 @@ import EditPost from './EditPost';
 export default function OptionsPopper({payload}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {user} = useUserAuth();
-  // console.log(payload);
 
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);

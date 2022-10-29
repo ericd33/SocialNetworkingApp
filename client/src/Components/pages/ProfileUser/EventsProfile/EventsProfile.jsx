@@ -24,7 +24,6 @@ useEffect(()=>{
 if (eventsProfile.length === 0) {
     return (
         <div className='List'>
-					{/* {console.log(eventsProfile)} */}
             <div className="wrapper">
                 <div className="circle"></div>
                 <div className="circle"></div>
@@ -39,7 +38,6 @@ if (eventsProfile.length === 0) {
 else {
     return (
         <div className="List">
-            {/* {console.log(eventsProfile)} */}
             {
                 eventsProfile?.map(e=>{
                     return (

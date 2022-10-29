@@ -56,7 +56,6 @@ const Profile = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    // console.log(Config2)
     axios(Config2).then((res) => {
         setPosts(res.data)});
     

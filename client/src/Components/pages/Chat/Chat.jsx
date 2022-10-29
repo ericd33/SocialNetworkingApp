@@ -61,7 +61,6 @@ function Chat() {
   return (
     <div className="chat-container">
                   <Link to={'/home'}><Button id='buttonEventDetail' sx={{position:'absolute', top:'0px', left:'0px',bgcolor: 'secondary.main', color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
-      {console.log(user)}
       <h1>ConcatUS Chat</h1>
       <p>This is a global chat, meet everyone!</p>
       <form onSubmit={handleSubmit} className='chat-from-container'>

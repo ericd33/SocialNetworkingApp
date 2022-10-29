@@ -47,7 +47,6 @@ export default function Post({
   let token = user.accessToken;
   let payload = { author, id };
 
-  // console.log(token)
 
   const handleBan = (e) => {
     e.preventDefault(e);
@@ -81,7 +80,6 @@ export default function Post({
       const datenow = new Date();
       
       const hourDifference = Math.floor(Math.abs(datenow - parsedDate) / 36e5);
-      console.log(hourDifference)
       if (hourDifference > 730) {
         setTimeDate(Math.floor(hourDifference / 730) + " m");
       } else if (hourDifference > 24) {
@@ -134,7 +132,6 @@ export default function Post({
     text: "",
     image: "",
   });
-  // console.log(comment)
 
   const handleChangeComment = (e) => {
     // e.preventDefault();
@@ -145,7 +142,6 @@ export default function Post({
   };
   const handleSubmmitComment = (e) => {
     e.preventDefault();
-    // console.log(comment)
     dispatch(newComment(token, comment));
     setComment({
       authorComment: user.email,
@@ -162,7 +158,6 @@ export default function Post({
 
   return (
     <div className="card">
-      {/* {console.log(User)} */}
       <br />
       <Card
         sx={{
@@ -264,7 +259,6 @@ export default function Post({
             className="post-comment-input1"
             onChange={handleClick}
           />
-          {console.log(formState, "ESTO ME TRAE EL INPUT")}
           <button onClick={handleSubmit}>Send</button>
         </form> */}
       </Card>

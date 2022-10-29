@@ -16,7 +16,6 @@ const FilterLike = () => {
 
   function onClickedLike(e) {
 		e.preventDefault()
-		console.log(e.target.checked)
 		if(e.target.checked === true) {
 			dispatch(sortByLikes(true))
 			setOption(true)

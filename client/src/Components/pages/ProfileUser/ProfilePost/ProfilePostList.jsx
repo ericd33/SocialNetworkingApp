@@ -30,7 +30,6 @@ const ProfilePostList = ({render, posts}) => {
     axios(Config2).then(res => setProfileUser(res.data))
   }, [dispatch]);
 
-    //console.log(posts)
   if (render === 'posts' && posts.length === 0) {
     return (
       <div>

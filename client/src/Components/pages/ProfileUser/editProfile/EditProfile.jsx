@@ -51,23 +51,15 @@ const submitFile = async(e)=>{
 	};
 	await axios(Config)
 	.then((res)=> {
-		// console.log(res.data)
 		setImg({
 			...img,
 			img:`${res.data}`})
 			setPrev(true)
-			// console.log(formState)
 	}).catch((err)=>{
 		console.log(err)
 	})
 }
-// const handleImage = (e)=>{
-//     setImage(e.target.value);
-// }
-// const images ={
-//     email:user.email,
-//     image:image
-// }
+
 const handleName = (e)=>{
     setName(e.target.value);
 }
@@ -82,7 +74,6 @@ const presentations ={
     email:user.email,
     presentation:presentation
 }
-// console.log(image)
 const handleSubmitImage = (e)=>{
     e.preventDefault()
     dispatch(imageChange(img,token,user.email));

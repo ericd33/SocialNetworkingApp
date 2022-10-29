@@ -26,7 +26,6 @@ const LandingLogin = () => {
         await logIn(input.email, input.password);
         navigate("/home");
       } catch (err) {
-        console.log(err);
       }
     };
   
