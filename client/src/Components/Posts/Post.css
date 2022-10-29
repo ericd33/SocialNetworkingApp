@@ -69,3 +69,14 @@
   color: #a5a5a5;
 }
 
+.optionsPopper {
+    display: flex;
+    justify-content: right;
+    margin-top: -50px;
+    margin-right: 10px;
+}
+
+.userInfo{
+    display: flex;
+    justify-content: left;
+}
