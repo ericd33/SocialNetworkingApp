@@ -33,6 +33,7 @@ export const addUser = async (req: Request, res: Response) => {
     user.name = checkIfPropertyExist(name);
     user.role = "user";
     user.enabled = true;
+    user.premium=false;
     user.email = checkIfPropertyExist(email);
 
     await user.save();
