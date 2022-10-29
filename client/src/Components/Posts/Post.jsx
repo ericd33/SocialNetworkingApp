@@ -168,7 +168,7 @@ export default function Post({
           position: "relative",
         }}
       >
-        <CardHeader
+       <div className="userInfo"> <CardHeader
           subheader={timeDate}
           subheaderTypographyProps={{ color: "white" }}
           sx={{ pt: 0, pb: 0, mt: 2, color: "primary.main" }}
@@ -180,8 +180,8 @@ export default function Post({
             ></Avatar>
           }
           title={<Link to={"/profile/" + author}>{User.name}</Link>}
-        />
-        <OptionsPopper payload={payload} />
+        /></div>
+        <div className="optionsPopper"> <OptionsPopper payload={payload} /></div>
 
         {profileUser.role === "admin" ? (
           <div>
