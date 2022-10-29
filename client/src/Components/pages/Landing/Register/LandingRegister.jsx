@@ -8,9 +8,6 @@ import {useUserAuth} from '../../../../context/UserAuthContext'
 
 
 const LandingRegister = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [username, setUsername] = useState("")
 	const { signUp } = useUserAuth();
 	const navigate = useNavigate();
 	const [input, setInput] = useState({
@@ -36,10 +33,10 @@ const LandingRegister = () => {
 		
 		function validate(input) {
 			let errors = {};
-			if (!username ) {
+			if (!input.username ) {
 				 		errors.username = "The name is required";
 				 	}
-			if (!email || !/^[^@]+@[^@]+\.[a-zA-Z]{3,}$/.test(input.email)) {
+			if (!input.email || !/^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/.test(input.email)) {
 				 		errors.email = "Invalid E-mail. Example: example@example.com";
 				 	}
 			if (!input.password || !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(input.password)){
@@ -75,6 +72,19 @@ const LandingRegister = () => {
 			);
 		  }
 
+		  function handleChangeUsername(e) {
+			setInput({
+			  ...input,
+			  [e.target.name]: e.target.value,
+			});
+			setErrors(
+			  validate({
+				...input,
+				[e.target.name]: e.target.value,
+			  })
+			);
+		  }
+
 
 	return (
 		<Grid className='loginForm' container sx={{fontFamily: 'Nunito'}}>
@@ -88,7 +98,7 @@ const LandingRegister = () => {
 				id='Username'
 				value={input.username}
 				name="username"
-				onChange={(e) => handleChangeEmail(e)}
+				onChange={(e) => handleChangeUsername(e)}
 				aria-describedby='username-helper'/>
 				<FormHelperText sx={{mb:2, color:grey[400]}} id='username-helper'>Username</FormHelperText>
 			  </FormControl>
