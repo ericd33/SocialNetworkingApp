@@ -43,7 +43,7 @@ const LandingRegister = () => {
 				 		errors.email = "Invalid E-mail. Example: example@example.com";
 				 	}
 			if (!input.password || !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(input.password)){
-			  errors.password = "Invalid Password:  Min 8 characters, max. 15. At least one capital letter. At least one lowercase letter. At least one digit. No blancks.";
+			  errors.password = "Invalid Password:  Min 8 characters, max. 15. At least one capital letter. At least one lowercase letter. At least one digit. No blanks.";
 			}
 			return errors;
 		  }
