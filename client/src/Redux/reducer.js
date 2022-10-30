@@ -21,6 +21,7 @@ import {
   FILTER_EVE_LOC,
   FILTER_EVE_ASSIST,
   CLEAR_EVENTS,
+  FAVORITE
 } from "./action-types";
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
   postsUser: [],
   PostID: [],
   comments: [],
+  favorite:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -54,7 +56,11 @@ const rootReducer = (state = initialState, action) => {
         filtered_posts: postsUpdated,
       };
     }
-
+    case FAVORITE:
+      return{
+        ...state,
+        favorite: action.payload
+      }
     case GET_POSTS:
       return {
         ...state,

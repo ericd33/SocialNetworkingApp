@@ -4,6 +4,7 @@ const userSchema = require("../models/user");
 const eventSchema = require("../models/event");
 const commentSchema = require("../models/comment");
 const mailSettings = require('../nodemailer/nodemailer');
+const postSchema = require("../models/post");
 
 
 export const addUser = async (req: Request, res: Response) => {
@@ -297,3 +298,32 @@ export const editWebSite = async (req: Request, res: Response) => {
     res.status(400).send("ouch name invalidated")
   }
 }
+
+
+export const addFavorite = async (req: Request, res: Response) => {
+  const { idPost, emailUser} = req.body
+  try{
+    const user = await userSchema.findOne({email: emailUser})
+    const post =await postSchema.findOne({_id:idPost})
+    // console.log(user.liked[0]._id)
+    // console.log(post._id)
+    // console.log(post._id.toString()==user.liked[0]._id.toString())
+    let posts = user.liked?.some((e:any)=>e._id.toString()==post._id.toString())
+    console.log(posts) 
+    if(posts){
+      // posts =[]
+      // console.log(user.liked[0]._id==post._id)
+      user.liked = user.liked.filter((e:any)=>e._id.toString()!=post._id.toString())
+      // console.log(user.liked)
+      user.save()
+      res.status(200).send("delete")
+    }else{
+      user.liked.push(post)
+      user.save()
+      res.status(200).send("ok")
+    }
+  }catch(e){
+    res.status(400).send(e)
+  }
+}
+
