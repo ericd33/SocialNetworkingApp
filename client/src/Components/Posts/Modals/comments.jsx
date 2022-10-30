@@ -29,14 +29,13 @@ export function Comments({avatar,name,text,id,enabled}){
 
     return(<Card
         sx={{
-          width: 440,
           bgcolor: 'custom.light',
           fontFamily: "Nunito",
           color: 'primary.light',
           borderRadius:'15px',
-          height:'55px',
           mb:'10px'
         }}
+        id='commentCard'
       >
         {
           userE.role==='admin'
@@ -48,12 +47,15 @@ export function Comments({avatar,name,text,id,enabled}){
           avatar={
             <Avatar
         imgProps={{ referrerPolicy: "no-referrer" }}
-        sx={{ bgcolor: "primary.light",mb:'10px'}}
+        sx={{ bgcolor: "primary.light"}}
         src={avatar}
       ></Avatar>
           }
           title={name}
-          subheader={<p className='textComment'>{text}</p>}
+          subheader=' . '
         />
+        <div className="contentComment">
+          <p id='textComment'>{text}</p>
+        </div>
       </Card>)
 }

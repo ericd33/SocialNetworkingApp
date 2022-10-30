@@ -41,12 +41,10 @@ export default function CommentsModal({idPost}) {
     <Card
       className="commentsList"
       sx={{
-        width: 500,
         borderRadius: "15px",
         bgcolor: 'custom.main',
         fontFamily: "Nunito",
         color: 'primary.light',
-        maxHeight: 400
       }}
     >
       <CardContent>
@@ -61,7 +59,7 @@ export default function CommentsModal({idPost}) {
             <CloseIcon sx={{pr:'1px'}}/>
           </IconButton>
         </div>
-        <div className='boxComments'>
+        <div id='boxComments'>
         {comments?.map((c) => {
           switch(userE.role){
             case "admin":
