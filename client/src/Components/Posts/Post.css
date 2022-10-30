@@ -14,7 +14,7 @@
     list-style: none;
     padding: 10px;
     border-radius: 10px;
-    bottom: 110px;
+    bottom: 100px;
     left: 5px;
 }
 .actionsPost ul #LikeTitle {
@@ -23,10 +23,8 @@
 }
 
 .actionsPost {
-  margin-bottom:0px
+    height: 23px;
 }
-
-
 
 .textLikes {
     color:#a5a5a5;
@@ -79,4 +77,38 @@
 .userInfo{
     display: flex;
     justify-content: left;
+}
+
+#postText {
+    padding: 0px;
+    padding-top: 5px;
+    padding-left: 15px;
+}
+
+@media (max-width:600px) {
+    #card {
+        width: 350px;
+    }
+
+    .inputsdeComments #filled-multiline-static{
+        width: 300px;
+        background-color: #3b3b3b;
+        border-radius: 15px;
+        padding-bottom:15px;
+        margin:5px;
+        margin-top: 0px;
+        color: white;
+        height: 7px;
+    }
+    .inputsdeComments label {
+        margin:-2px;
+        margin-left: 5px;
+    }
+    .inputsdeComments button {
+        width: 100px;
+        margin-right: 5px;
+    }
+    .actionsPost {
+        height: 35px;
+    }
 }
