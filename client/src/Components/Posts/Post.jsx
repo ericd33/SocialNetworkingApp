@@ -157,7 +157,7 @@ export default function Post({
   // const openCommentsModal = () => setCommentsmodalState(true);
 
   return (
-    <div className="card">
+    <div>
       <br />
       <Card
         sx={{
@@ -167,11 +167,12 @@ export default function Post({
           borderRadius: 3,
           position: "relative",
         }}
+        id='card'
       >
        <div className="userInfo"> <CardHeader
           subheader={timeDate}
           subheaderTypographyProps={{ color: "white" }}
-          sx={{ pt: 0, pb: 0, mt: 2, color: "primary.main" }}
+          sx={{ pt: 0, pb: 0, mt: 1, color: "primary.main" }}
           avatar={
             <Avatar
               imgProps={{ referrerPolicy: "no-referrer" }}
@@ -191,15 +192,14 @@ export default function Post({
         ) : (
           <></>
         )}
-        <CardContent sx={{ color: "primary.main" }}>{text}</CardContent>
+        <CardContent id='postText' sx={{ color: "primary.main" }}><p>{text}</p></CardContent>
 
         {image ? (
           <CardMedia component="img" alt="image" image={image} />
         ) : (
           <div></div>
         )}
-        <CardActions sx={{ mb: 0 }}>
-          <div className="actionsPost">
+        <CardActions className="actionsPost">
             <div className="actionLikes">
 
               <IconButton onClick={putLike}>
@@ -219,7 +219,6 @@ export default function Post({
                 <p id="OLikes">0 likes</p>
               )}
             </div>
-          </div>
 
           {comments ? <CommentsModal idPost={id} /> : <></>}
           <p className="textCommentarys">
@@ -244,7 +243,7 @@ export default function Post({
             onChange={handleChangeComment}
           />
           <Button
-            sx={{ mb: 1, fontFamily: "Nunito", color: "primary.dark" }}
+            sx={{ mb: '2px', fontFamily: "Nunito", color: "primary.dark", borderRadius:'12px' }}
             variant="outlined"
             onClick={handleSubmmitComment}
           >
