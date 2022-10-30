@@ -92,3 +92,9 @@
     animation-delay: .3s;
   }
   
+  @media (max-width:600px) {
+    .wrapper {
+      margin-top: 30%;
+      margin-left: 20%;
+    }
+  }

@@ -35,7 +35,7 @@ export default function EventCard({location,name,text,image,date,id,enabled,type
     return (
         <div>
             <br/>
-            <Card sx={{ width: 600, bgcolor: 'custom.dark', borderRadius:3}}>
+            <Card sx={{ width: 600, bgcolor: 'custom.dark', borderRadius:3}} id='EventCard'>
             <Typography sx={{fontSize: 14, fontFamily: 'Nunito', mt: '1px', ml:1, color:grey[800], pb:'1px'}} color="text.secondary" gutterBottom>
                 <Icon sx={{pt:'1px'}}>
                     {

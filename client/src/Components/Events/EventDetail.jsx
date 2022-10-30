@@ -48,7 +48,7 @@ export default function EventDetail() {
                 <div className='EventDetailContainer'>
                     <Link to={'/events'}><Button id='buttonEventDetail' sx={{position:'absolute', top:'0px', left:'0px',bgcolor: 'secondary.main', color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
                     <Container sx={{textAlign:'center', bgcolor:'transparent'}} >
-                        <Card sx={{bgcolor:'custom.light'}}>
+                        <Card sx={{bgcolor:'custom.light'}} id='DetailCard'>
                             <CardMedia
                             component="img"
                             alt="image"
@@ -114,7 +114,7 @@ export default function EventDetail() {
                 <div className='EventDetailContainer'>
                     <Link to={'/events'}><Button id='buttonEventDetail' sx={{position:'absolute', top:'0px', left:'0px',bgcolor: 'secondary.main', color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
                     <Container sx={{textAlign:'center', bgcolor:'transparent'}} >
-                        <Card sx={{bgcolor:'custom.light'}}>
+                        <Card sx={{bgcolor:'custom.light'}} id='DetailCard'>
                             <CardMedia
                             component="img"
                             alt="image"

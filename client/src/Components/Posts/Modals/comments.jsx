@@ -28,6 +28,7 @@ export function Comments({ avatar, name, text, id, enabled }) {
     }
   };
 
+
   const handleDeleteComment = () => {
     dispatch(
       banComments(
@@ -41,6 +42,7 @@ export function Comments({ avatar, name, text, id, enabled }) {
   };
 
   return (
+  <div id='commentCard'>
     <Card
       sx={{
         bgcolor: "custom.light",
@@ -49,7 +51,6 @@ export function Comments({ avatar, name, text, id, enabled }) {
         borderRadius: "15px",
         mb: "10px",
       }}
-      id="commentCard"
     >
       {userE.role === "admin" ? (
         <div>
@@ -76,9 +77,8 @@ export function Comments({ avatar, name, text, id, enabled }) {
         title={name}
         subheader=" . "
       />
-      <div className="contentComment">
-        <p id="textComment">{text}</p>
-      </div>
+      <p id='textComment'>{text}</p>
     </Card>
+    </div>
   );
 }
