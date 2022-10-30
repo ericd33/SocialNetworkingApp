@@ -1,0 +1,9 @@
+.navbarMobile {
+    width: 100vw;
+}
+
+.navbarMobile a{
+    text-decoration: none;
+    color: #ffd000;
+}
+

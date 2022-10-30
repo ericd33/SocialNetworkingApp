@@ -72,6 +72,7 @@ const LandingPage = () => {
             backgroundPosition: 'center',
           }}
         />
+        <h1 className='Title'>ConcatUs</h1>
         <Grid className='form' item component={Paper} elevation={6} square>
         {window.location.href === `http://localhost:3000/` ?
         <LandingLogin /> : <LandingRegister/>

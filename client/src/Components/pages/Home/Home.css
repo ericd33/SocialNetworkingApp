@@ -6,6 +6,10 @@
 .navbar {
     height: 67px;
 }
+.navbarMobile {
+    height: 55px;
+    display: none;
+}
 
 .Home .media-part {
     display: flex;
@@ -73,4 +77,31 @@
 .titleName a{
     text-decoration: none;
     color:white;
+}
+
+@media (max-width:600px) {
+    .Home {
+        min-width: 100vw;
+        min-height: 100vh;
+    }
+    .Home .media-part {
+        min-width: 100vw;
+        min-height: 100vh;
+        justify-content: center;
+    }
+    .Home .media-part .leftHome {
+        display: none;
+    }
+    .Home .media-part .rightHome {
+        display: none;
+    }
+    .Home .media-part .centerHome {
+        width: 360px;
+    }
+    .navbar {
+        display: none;
+    }
+    .navbarMobile {
+        display: block;
+    }
 }
