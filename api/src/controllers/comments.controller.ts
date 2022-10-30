@@ -33,17 +33,17 @@ export const addComment = async (req: Request, res: Response) => {
 
 export const getCommentPost = async (req: Request, res: Response) => {
   const { idPost } = req.params;
+
   try {
     let comments = await commentSchema.find({ IdPost: idPost });
-    let comment = comments?.map((e: any) => {
-      return {
-        id: e._id,
-        text: e.text,
-        avatar: e.avatar,
-        name: e.name,
-        enabled: e.enabled,
-      };
-    });
+    let comment = comments?.map((e: any) => ({
+      id: e._id,
+      text: e.text,
+      avatar: e.avatar,
+      name: e.name,
+      enabled: e.enabled,
+    }));
+
     res.status(200).send(comment);
   } catch (e) {
     res.status(400).send(e);
@@ -75,8 +75,9 @@ export const updateComment = async (req: Request, res: Response) => {
 };
 
 export const deleteComment = async (req: Request, res: Response) => {
-  const { id, action } = req.body;
   try {
+    const { id, action } = req.body;
+
     if (id) {
       const comment = await commentSchema.findOne({ _id: id });
       switch (action) {
@@ -101,7 +102,10 @@ export const deleteComment = async (req: Request, res: Response) => {
           break;
       }
     }
-  } catch (err) {
-    res.status(404).send(err);
+  } catch (error) {
+    res.status(500).json({
+      msj: "An error ocurred 😡",
+      error,
+    });
   }
 };

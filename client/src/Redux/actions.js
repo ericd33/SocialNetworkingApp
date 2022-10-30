@@ -37,8 +37,7 @@ export function postUser(payload, token) {
       },
     };
     axios(Config)
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => console.log(err));
   };
 }
@@ -656,7 +655,7 @@ export function banComments(payload, token) {
   return async function () {
     const Config = {
       method: "put",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/delete`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/disable`,
       headers: {
         authorization: `Bearer ${token}`,
       },
