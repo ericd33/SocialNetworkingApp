@@ -20,7 +20,7 @@ app.use(express.json());
 
 import { Server as socketServer } from "socket.io";
 import http from "http";
-import { notification } from "./controllers/mercado.controller";
+// import { notification } from "./controllers/mercado.controller";
 // import { notification } from "./controllers/mercado.controller";
 
 const server = http.createServer(app);
@@ -36,10 +36,17 @@ io.on("connection", (socket) => {
     });
   });
 });
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.set("port", process.env.PORT || 3000);
+mercadopago.configure({
+  access_token:
+    "APP_USR-8366918559204641-102119-b46a91ed28fa4f1cca1b56502af532a5-1222629415",
+});
 server.listen(process.env.PORT, () => {
   connectDB();
 });
+app.use("/mercado", mercado);
 
 app.use(middleware.decodeToken);
 
@@ -53,17 +60,12 @@ const storage = multer.diskStorage({
 export const upload = multer({ storage: storage });
 // app.use(multer({storage}).single('imageCloudinary'))
 
-app.use(bodyParser.urlencoded({ extended: false }));
 
-app.set("port", process.env.PORT || 3000);
 // app.listen(app.get("port"), () => {
 //   connectDB();
 // });
 
-mercadopago.configure({
-  access_token:
-    "APP_USR-8366918559204641-102119-b46a91ed28fa4f1cca1b56502af532a5-1222629415",
-});
+
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -76,5 +78,4 @@ app.use("/comments", comment);
 app.use("/users", userRoutes);
 app.use("/events", event);
 app.use("/posts", upload.single("imageCloudinary"), post);
-app.use("/mercado", mercado);
-app.post("/noti/:id",notification)
+

@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 const mercadopago = require("mercadopago");
 const userSchema = require("../models/user");
-const mailSettings = require("../nodemailer/nodemailer");
 
 
+export const success = (_req: Request, res: Response) => {
+    res.send("todo bien")
+}
 
 export const mercado = (req: Request, res: Response) => {
     const { donacion } = req.body;
@@ -31,22 +33,25 @@ export const mercado = (req: Request, res: Response) => {
 
 export const susciption = async (req: Request, res: Response)=>{
     const {id} = req.body
-    const user = await userSchema.findOne({_id:id})
+
     let preference = {
+        back_urls:{
+            success:"http://localhost:3001/mercado/success"
+        },
         items: [
                 {
-                    id:user.id,
+                    id:id,
                     title: "Estado premium de ConcatUs",
                     unit_price: 1000,
                     quantity: 1,
                     currency_id:"ARS"
                 },
         ],
-        notification_url: `https://b1ba-190-211-90-41.sa.ngrok.io/mercado/notificacion/${id}`
+        notification_url: `https://94e1-190-211-90-41.sa.ngrok.io/mercado/notificacion/${id}`
         };
         mercadopago.preferences.create(preference)
             .then(function (response:any) {
-                res.json(response)
+                res.status(200).json(response)
             })
             .catch(function (error:any) {
                 console.log(error);
@@ -57,8 +62,7 @@ export const susciption = async (req: Request, res: Response)=>{
 export const notification =async (req: Request, res: Response)=>{
     const {query} = req
     const { id }=req.params
-    const user = await userSchema.findOne({_id:id})
-    console.log(user)
+
     try{
     const topic = query.topic || query.type
     switch(topic){
@@ -73,28 +77,13 @@ export const notification =async (req: Request, res: Response)=>{
             var { body } = await mercadopago.merchant_orders.findById(orderId)
             break;
     }
-        let paidAmount = 0;
         body.payments.forEach(async(payment:any) => {
             if(payment.status==="approved"){
-                paidAmount+=payment.transaction_amount
                 await userSchema.findOneAndUpdate({_id:id},{premium:true})
-                const transporter = mailSettings.transporter;
-                const mailReports = mailSettings.mailReports(user.email);
-                transporter.sendMail(mailReports, (err: any) => {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    console.log("Email enviado");
-                  }
-                });
+                res.status(200)
             }
+
         });
-        if(paidAmount >= body.total_amount){
-            console.log("pago")
-        }
-        if(paidAmount< body.total_amount){
-            console.log("no pago")
-        }
     }catch(e){
         res.status(400).send(e)
     }
