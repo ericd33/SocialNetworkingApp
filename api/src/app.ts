@@ -48,6 +48,8 @@ server.listen(process.env.PORT, () => {
 });
 app.use("/mercado", mercado);
 
+
+
 app.use(middleware.decodeToken);
 
 const storage = multer.diskStorage({

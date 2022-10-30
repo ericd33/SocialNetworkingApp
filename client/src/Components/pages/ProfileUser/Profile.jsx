@@ -21,6 +21,7 @@ const Profile = () => {
   const dispatch = useDispatch()
   const {user} = useUserAuth();
   let token = user.accessToken;
+  const myUser = useSelector(e=>e.myUser)
   const [profileUser, setProfileUser] = useState({})
   const [posts, setPosts] = useState([])
   let query = useParams();
@@ -32,8 +33,12 @@ const Profile = () => {
     if(e.target.id === 'posts') {
       setRender('posts');
     }
-    else {
+    if(e.target.id==="events") {
       setRender('events');
+    }
+    if(e.target.id==="favorites"){
+      setRender("favorites")
+      dispatch(getMyUser(token, user.email))
     }
   }
 
@@ -58,7 +63,6 @@ const Profile = () => {
     };
     axios(Config2).then((res) => {
         setPosts(res.data)});
-    
 },[dispatch])
 
 
@@ -77,7 +81,8 @@ return (
         <div className="centerHome">
           <Button variant="outlined" id='posts' onClick={handleClick}>Posts</Button>
           <Button variant="outlined" id='events' onClick={handleClick}>Events</Button>
-          <ProfilePostList render={render} posts={posts}/>
+          <Button variant="outlined" id='favorites' onClick={handleClick}>Favorites</Button>
+          <ProfilePostList render={render} posts={posts} myUser={myUser}/>
         </div>
         <div className="rightHome">
           <ProfileDescription userInfoRen={profileUser}/>
