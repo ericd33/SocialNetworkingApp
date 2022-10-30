@@ -47,7 +47,7 @@ export const susciption = async (req: Request, res: Response)=>{
                     currency_id:"ARS"
                 },
         ],
-        notification_url: `https://94e1-190-211-90-41.sa.ngrok.io/mercado/notificacion/${id}`
+        notification_url: `https://thoughtless-event-production.up.railway.app/mercado/notificacion/${id}`
         };
         mercadopago.preferences.create(preference)
             .then(function (response:any) {
