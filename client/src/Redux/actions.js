@@ -20,6 +20,7 @@ import {
   FILTER_EVE_LOC,
   FILTER_EVE_ASSIST,
   CLEAR_EVENTS,
+  FAVORITE,
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -37,8 +38,7 @@ export function postUser(payload, token) {
       },
     };
     axios(Config)
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => console.log(err));
   };
 }
@@ -656,7 +656,7 @@ export function banComments(payload, token) {
   return async function () {
     const Config = {
       method: "put",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/delete`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/disable`,
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -749,4 +749,27 @@ export function clearF(payload) {
     type: CLEAR_EVENTS,
     payload,
   };
+}
+
+export function favorite (payload,token){
+  return async function (dispatch) {
+    const requestConfig = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/addFavorite`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        idPost: payload.id,
+        emailUser: payload.email,
+      },
+    };
+    await axios(requestConfig).then(res=>{
+      console.log(res.data)
+      return dispatch({
+      payload : res.data,
+      type: FAVORITE
+    })
+    }) 
+}
 }

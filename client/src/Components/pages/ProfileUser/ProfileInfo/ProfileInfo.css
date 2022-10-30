@@ -10,6 +10,19 @@
     flex-direction: column;
 }
 
+.profile-info-list{
+    max-width: 250px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.profile-info-list-li{
+    max-width: 250px;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
 .userCard {
     background-color: #3b3b3b;
     border-radius: 10px;
