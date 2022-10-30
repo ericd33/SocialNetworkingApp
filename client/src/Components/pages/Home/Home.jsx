@@ -13,6 +13,7 @@ import FilterPost from "./FilterPost";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NavBarMobile from "../../navbar/Navbar mobile";
 export default function Home() {
   let users_finded = useSelector((state) => state.searchByNameUsers);
   const {user} = useUserAuth();
@@ -37,10 +38,14 @@ localStorage.setItem('user',JSON.stringify(profileUser))
   return (
     <div className="Home">
       <div className="navbar">
+        <NavBar />
+        <span></span>
+      </div>
+      <div className="navbarMobile">
+        <NavBarMobile />
         <span></span>
       </div>
       <CreatePost />
-      <NavBar />
       <div className="media-part">
         <div className="leftHome">
           <div className="finded-persons">
