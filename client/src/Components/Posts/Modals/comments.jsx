@@ -27,35 +27,35 @@ export function Comments({avatar,name,text,id,enabled}){
       }
     }
 
-    return(<Card
-        sx={{
-          bgcolor: 'custom.light',
-          fontFamily: "Nunito",
-          color: 'primary.light',
-          borderRadius:'15px',
-          mb:'10px'
-        }}
-        id='commentCard'
-      >
-        {
-          userE.role==='admin'
-          ?<div><button onClick={handleBan}>ban</button><span style={{color:"#fff"}}>{enabled? "true":"false"}</span></div>
-          :<></>
-        }
-        <CardHeader
-          sx={{ pt: '8px', color:'secondary.main'}}
-          avatar={
-            <Avatar
-        imgProps={{ referrerPolicy: "no-referrer" }}
-        sx={{ bgcolor: "primary.light"}}
-        src={avatar}
-      ></Avatar>
-          }
-          title={name}
-          subheader=' . '
-        />
-        <div className="contentComment">
-          <p id='textComment'>{text}</p>
-        </div>
-      </Card>)
+    return(
+      <div id='commentCard'>
+        <Card
+            sx={{
+              bgcolor: 'custom.light',
+              fontFamily: "Nunito",
+              color: 'primary.light',
+              borderRadius:'15px',
+            }}
+          >
+            {
+              userE.role==='admin'
+              ?<div><button onClick={handleBan}>ban</button><span style={{color:"#fff"}}>{enabled? "true":"false"}</span></div>
+              :<></>
+            }
+            <CardHeader
+              sx={{ pt: '8px', color:'secondary.main'}}
+              avatar={
+                <Avatar
+            imgProps={{ referrerPolicy: "no-referrer" }}
+            sx={{ bgcolor: "primary.light"}}
+            src={avatar}
+          ></Avatar>
+              }
+              title={name}
+              subheader=' . '
+            />
+            <p id='textComment'>{text}</p>
+        </Card>
+      </div>
+    )
 }

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
 import { getEvents } from "../../../Redux/actions";
+import NavBarMobile from "../../navbar/Navbar mobile";
 
 export default function EventsPage() {
   const {user} = useUserAuth();
@@ -24,11 +25,15 @@ export default function EventsPage() {
   let eventsSoluc = useSelector((state)=>state.soluc);
 
   return (
-    <div className="Home">
-      <div className="navbar">
+    <div className="HomeEvents">
+      <div className="navbarEvents">
+        <NavBar />
         <span></span>
       </div>
-      <NavBar/>
+      <div className="navbarMobileEvents">
+        <NavBarMobile />
+        <span></span>
+      </div>
       <div className="media-part">
         <div className="leftHome">
           <EventsMenu />

@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React, {useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
@@ -72,63 +72,72 @@ const FilterEvents = () => {
 	}
 
   return (
-    <div>
+    <div className='filtersContainer'>
+		<h3>Filters</h3>
 				<div>
-					<Button variant="outlined" onClick={filterPerson}>In-person</Button>
-					<Button variant="outlined" onClick={filterGlobal}>ALL</Button>
-					<Button variant="outlined" onClick={filterLOnline}>Online</Button>
+					<div className='in-online'>
+						<Button variant="outlined" sx={{ml:'5px', mr:'15px', color:'secondary.main', border:'1px solid #ffd000'}} onClick={filterPerson}>In-person</Button>
+						<Button variant="outlined" sx={{color:'secondary.main', border:'1px solid #ffd000'}} onClick={filterLOnline}>Online</Button>
+					</div>
+					<Button variant="outlined" sx={{ml:'10px', mb:'10px', mt:'10px', color:'secondary.main', border:'1px solid #ffd000'}} onClick={filterGlobal}>ALL</Button>
 					<br/>
 					{
 						filtersInPer || filtersOnline ?
-						<Button variant="outlined" onClick={filterDelete}>Delete Filters </Button> : null
+						<Button variant="outlined" color='error' sx={{ml:'10px', mr:'15px'}} onClick={filterDelete}>Delete Filters </Button> : null
 						}
 					<br/>
+					<div className='filtersInPerson'>
+						{
+							filtersInPer ? 
+								<FormControl id='selectIn'>
+								<InputLabel sx={{color:'primary.dark'}} id="demo-simple-select-helper-label">Location</InputLabel>
+								<Select
+								labelId="demo-simple-select-helper-label"
+								id="demo-simple-select-helper"
+								onChange={(e)=> fByLoc(e)}
+								sx={{color:'primary.light'}}
+								>
+									{filterLO.map((i, index) => (
+										<MenuItem key={index} value={i}>{i}</MenuItem>
+									))}
+								</Select>
+							</FormControl> : null
+						}
+						<br/>
+						<div className='filtersOnline'>
+							{
+								filtersInPer  ? 
+								<FormControl id='selectIn'>
+									<InputLabel sx={{color:'primary.dark'}} id="demo-simple-select-helper-label">Assists</InputLabel>
+									<Select
+									labelId="demo-simple-select-helper-label"
+									id="demo-simple-select-helper"
+									onChange={(e)=> fByAsisstIn(e)}
+									sx={{color:'primary.light'}}
+									>
+										<MenuItem  value='more'>More</MenuItem>
+										<MenuItem value='less'>Less</MenuItem>
+									</Select>
+								</FormControl> : null
+							}
+						</div>
+					</div>
 
-					{
-						filtersInPer ? 
-						<select onChange={(e)=> fByLoc(e)} >
-            <option value="" disabled selected>
-            Filter By Location
-            </option>
-            {/* <option value="All">All</option> */}
-            {filterLO.map((i, index) => (
-              <option key={index} value={i}>
-                {i}
-              </option>
-            ))}
-          </select> : null
-					}
-					<br/>
-					{
-						filtersInPer  ? 
-						<select  onChange={(e)=> fByAsisstIn(e)}>
-							<option value="" disabled selected>
-              Filter By Asist
-            </option>
-						<option value="more">
-							more
-						</option>
-						<option value="less">
-							less
-						</option>
-						</select>
-						: null
-					}
 
 					{
 						filtersOnline  ? 
-						<select  onChange={(e)=> fByAsisstIn(e)}>
-							<option value="" disabled selected>
-              Filter By Asist
-            </option>
-						<option value="more">
-							more
-						</option>
-						<option value="less">
-							less
-						</option>
-						</select>
-						: null
+						<FormControl id='selectIn'>
+							<InputLabel sx={{color:'primary.dark'}} id="demo-simple-select-helper-label">Assists</InputLabel>
+							<Select
+							labelId="demo-simple-select-helper-label"
+							id="demo-simple-select-helper"
+							onChange={(e)=> fByAsisstIn(e)}
+							sx={{color:'primary.light'}}
+							>
+								<MenuItem  value='more'>More</MenuItem>
+								<MenuItem value='less'>Less</MenuItem>
+							</Select>
+						</FormControl> : null
 					}
 				</div>
     </div>

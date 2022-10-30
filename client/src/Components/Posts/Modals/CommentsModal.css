@@ -22,52 +22,46 @@
     transform: translate(-50%, -50%);
 }
 
-.contentComment {
-    margin-left: 70px;
-    margin-top: -50px;
-    color:white;
-    /* background-color: red; */
-    max-width: 320px;
-    word-wrap: break-word;
-}
-
-.contentComment p {
-    margin-bottom: 5px;
-    font-size: 15px;
-}
-
 #commentCard {
     width: 420px;
-    min-height: 55px;
+    margin-bottom: 10px;
+}
+
+#textComment {
+    margin-left: 70px;
+    margin-top: -35px;
+    color:white;
+    /* background-color: red; */
+    max-width: 330px;
+    word-wrap: break-word;
+    margin-bottom: 5px;
+    font-size: 15px;
 }
 
 #boxComments {
     display:flex;
     flex-direction: column;
-    overflow-y:scroll;
     max-height: 300px;
+    overflow-y:scroll;
 }
 
 @media (max-width:600px) {
     .commentsList {
         width: 300px;
-        height: max-content;
+        max-height: 400px;
     }
     #commentCard {
         width: 260px;
-        min-height: 55px;
+        height: fit-content;
     }
-    .contentComment {
+    #textComment {
         margin-left: 70px;
-        margin-top: -50px;
+        margin-top: -35px;
         color:white;
         /* background-color: red; */
-        max-width: 180px;
+        max-width: 170px;
         word-wrap: break-word;
-    }
-    
-    .contentComment p {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         font-size: 15px;
     }
 }
