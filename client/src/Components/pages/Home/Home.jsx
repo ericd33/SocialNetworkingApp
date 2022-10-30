@@ -19,6 +19,7 @@ export default function Home() {
   const [profileUser, setProfileUser] = useState({})
 
   let token = user.accessToken;
+  console.log(token)
   useEffect(() => {
     const Config2 = {
       method: 'get',
