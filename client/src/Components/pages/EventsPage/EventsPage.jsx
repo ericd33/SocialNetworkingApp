@@ -13,6 +13,7 @@ import NavBarMobile from "../../navbar/Navbar mobile";
 export default function EventsPage() {
   const {user} = useUserAuth();
     const dispatch = useDispatch()
+    const userP = JSON.parse(window.localStorage.getItem("user"))
     let events = []
     events = useSelector((state)=>state.events);
 
@@ -47,7 +48,11 @@ export default function EventsPage() {
         </div>
         <div className="rightHome"></div>
       </div>
-      <CreateEvent />
+      {
+        userP.premium
+          ? <CreateEvent />
+          : <></>
+      }
     </div>
   );
 }

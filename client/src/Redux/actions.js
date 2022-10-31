@@ -97,23 +97,38 @@ export function putPost(idPost, token, dataToUpdate) {
   };
 }
 
-export function Donate(token, data) {
+export function Donate( data ) {
+  console.log(data)
   return async function () {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/mercado`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
       data: {
         donacion: data,
       },
     };
-    await axios(Config).then((res) =>
-      window.open(res.data, "_blank", "noopener,noreferrer")
+    await axios(Config).then((res) =>{
+      console.log(res.data)
+      window.open(res.data.sandbox_init_point, "_blank", "noopener,noreferrer")}
     );
   };
 }
+
+export function Premium( data ) {
+  return async function () {
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/mercado/suscripcion`,
+      data: {
+        id: data,
+      },
+    };
+    await axios(Config).then((res) =>{
+      window.open(res.data.body.sandbox_init_point, "_blank", "noopener,noreferrer")}
+    );
+  };
+}
+
 
 export function postEvent(payload, token) {
   return async function (dispatch) {

@@ -9,23 +9,22 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import "./Premiun.css";
 import { useDispatch } from "react-redux";
-import {  } from "../../Redux/actions";
+import { Premium } from "../../Redux/actions";
 import PaidIcon from '@mui/icons-material/Paid';
-import { useUserAuth } from "../../context/UserAuthContext";
+
 
 export default function Premiun() {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
-
-  const sessionUser = useUserAuth();
-  let token = sessionUser.user.accessToken;
+  const user = JSON.parse(window.localStorage.getItem("user"))
 
   const opencloseModal = () => {
     setModal(!modal);
   };
+  console.log(user)
 
   const handleSubmit = () => {
-    dispatch();
+    dispatch(Premium(user._id));
   };
 
   const body = (
