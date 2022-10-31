@@ -10,6 +10,8 @@ import { EditProfile } from "../editProfile/EditProfile";
 import { useDispatch } from "react-redux";
 import { banUsers } from "../../../../Redux/actions";
 import axios from "axios";
+import FollowersModal from "../Follows/FollowersModal";
+import FollowedsModal from "../Follows/FollowedsModal";
 
 const ProfileInfo = ({ userInfoRen }) => {
   const { user } = useUserAuth();
@@ -30,26 +32,6 @@ const ProfileInfo = ({ userInfoRen }) => {
     }
   }, [myUser, email, user]);
   const [profileUser, setProfileUser] = useState({});
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log("se hizo click");
-    if (followeds.length > 0) {
-      setShowFolloweds(prevstate => !prevstate);
-    } else {
-      setShowFolloweds(false);
-    }
-  };
-
-  const handleClickFollows = (e) => {
-    e.preventDefault();
-    console.log("se hizo click");
-    if (follows.length > 0) {
-      setShowFollows(prevstate => !prevstate);
-    } else {
-      setShowFollows(false);
-    }
-  };
 
   const handleBanUser = (e) => {
     e.preventDefault(e);
@@ -95,11 +77,11 @@ const ProfileInfo = ({ userInfoRen }) => {
       <div className="userInfo">
         <p>{userInfoRen.name}</p>
         {profileUser.role === "admin" ? (
-          <div>
-            <button onClick={handleBanUser}>ban</button>
-            <span style={{ color: "#fff" }}>
-              {userInfoRen.enabled ? "true" : "false"}
-            </span>
+          <div className="banContainerProfile">
+            <Button id='banButton' onClick={handleBanUser} sx={{ mr:1,fontSize:11}} color='error' variant="outlined">
+                    Ban
+            </Button>
+            <span style={{ color: "#fff" }}>enabled: {userInfoRen.enabled ? "true" : "false"}</span>
           </div>
         ) : (
           <></>
@@ -109,15 +91,13 @@ const ProfileInfo = ({ userInfoRen }) => {
           <div className="followers">
             <div>
               <p>{userInfoRen.followeds?.length}</p>
-              <p className="plusText">Followers</p>
-              <Button onClick={handleClick}>👀</Button>
+              <FollowersModal followers={followeds}/>
               {showFolloweds && <ul className="profile-info-list-ul">{followeds.length > 0 && followeds.map((e, i)=> <li className="profile-info-list-li" key={`${e}_${i}`} >{e}</li>)}</ul>}
             </div>
 
             <div>
-              <p>{userInfoRen.follows?.length}</p>
-              <p className="plusText">Following</p>
-              <Button onClick={handleClickFollows}>👀</Button>
+            <p>{userInfoRen.follows?.length}</p>
+              <FollowedsModal followeds={follows}/>
               {showFollows && <ul className="profile-info-list-ul">{follows.length > 0 && follows.map((e, i)=> <li className="profile-info-list-li" key={`${e}_${i}`} >{e}</li>)}</ul>}
             </div>
           </div>

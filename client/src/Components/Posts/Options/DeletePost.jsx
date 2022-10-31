@@ -33,7 +33,7 @@ export default function DeletePost(payload) {
     
     const handleSubmit = () => {
       let data = {
-        idPost: payload.payload.payload.id,
+        idPost: payload.id,
         action: 'delete'
       }
       dispatch(banPost(data,token))

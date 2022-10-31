@@ -73,7 +73,6 @@ return (
                   key={p._id}
                   author={p.author}
                   likes={p.likes}
-                  comments={p.comments}
                   text={p.content}
                   image={p.image}
                   id={p._id}
@@ -89,7 +88,6 @@ return (
                   author={p.author}
                   created={p.createdAt}
                   likes={p.likes}
-                  comments={p.comments}
                   text={p.content}
                   image={p.image}
                   id={p._id}

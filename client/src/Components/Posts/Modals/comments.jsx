@@ -53,10 +53,12 @@ export function Comments({ avatar, name, text, id, enabled }) {
       }}
     >
       {userE.role === "admin" ? (
-        <div>
-          <button onClick={handleBan}>ban</button>
-          <span style={{ color: "#fff" }}>{enabled ? "true" : "false"}</span>
-        </div>
+        <div className="banButtonComment">
+        <Button id='banButton' onClick={handleBan} sx={{ mr:1,fontSize:11}} color='error' variant="outlined">
+                Ban
+        </Button>
+        <span style={{ color: "#fff" }}>enabled: {enabled ? "true" : "false"}</span>
+      </div>
       ) : (
         <></>
       )}

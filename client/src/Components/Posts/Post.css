@@ -73,6 +73,11 @@
     margin-top: -50px;
     margin-right: 10px;
 }
+.banContainer {
+    right:60px;
+    top: 20px;
+    position: absolute;
+}
 
 .userInfo{
     display: flex;
@@ -111,4 +116,10 @@
     .actionsPost {
         height: 35px;
     }
+    .banContainer {
+       width: 100px;
+       margin-top: 10px;
+       right: 15px;
+    }
 }
+
