@@ -7,7 +7,7 @@ import {
   Button,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import "./Premiun.css";
+import "./Premium.css";
 import { useDispatch } from "react-redux";
 import { Premium } from "../../Redux/actions";
 import PaidIcon from '@mui/icons-material/Paid';
