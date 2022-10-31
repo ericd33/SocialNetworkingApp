@@ -14,6 +14,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import NavBarMobile from "../../navbar/Navbar mobile";
+import AboutUs from "../../AboutUs/AboutUs";
+
+
 export default function Home() {
   const {user} = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
@@ -54,7 +57,7 @@ localStorage.setItem('user',JSON.stringify(profileUser))
           {/* <FilterPost /> */}
           <PostList />
         </div>
-        <div className="rightHome"></div>
+        <div className="rightHome"> <AboutUs/> </div>
       </div>
         <CreatePost  profileUser={profileUser}/>
     </div>

@@ -73,8 +73,8 @@ return (
                   key={p._id}
                   author={p.author}
                   likes={p.likes}
-                  comments={p.comments}
                   text={p.content}
+                  comments={p.comments}
                   image={p.image}
                   id={p._id}
                   enabled={p.enabled}
@@ -88,8 +88,8 @@ return (
                   key={p._id}
                   author={p.author}
                   created={p.createdAt}
-                  likes={p.likes}
                   comments={p.comments}
+                  likes={p.likes}
                   text={p.content}
                   image={p.image}
                   id={p._id}

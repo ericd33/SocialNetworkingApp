@@ -155,7 +155,7 @@ export default function Post({
 
   // const [commentsModalState, setCommentsmodalState] = useState(false);
   // const openCommentsModal = () => setCommentsmodalState(true);
-
+  
   return (
     <div>
       <br />
@@ -185,9 +185,11 @@ export default function Post({
         <div className="optionsPopper"> <OptionsPopper payload={payload} /></div>
 
         {profileUser.role === "admin" ? (
-          <div>
-            <button onClick={handleBan}>ban</button>
-            <span style={{ color: "#fff" }}>{enabled ? "true" : "false"}</span>
+          <div className="banContainer">
+            <Button id='banButton' onClick={handleBan} sx={{ mr:1,fontSize:11}} color='error' variant="outlined">
+                    Ban
+            </Button>
+            <span style={{ color: "#fff" }}>enabled: {enabled ? "true" : "false"}</span>
           </div>
         ) : (
           <></>
@@ -222,7 +224,7 @@ export default function Post({
 
           {comments ? <CommentsModal idPost={id} /> : <></>}
           <p className="textCommentarys">
-            {comments && comments.length} comments
+            {comments && comments?.length} comments
           </p>
 
           {/* --- Shares para FUTURO --- */}

@@ -12,6 +12,10 @@
     display: none;
 }
 
+.banButtonComment {
+    margin-left: 10px;
+}
+
 .commentsList {
     position: absolute;
     width: 480px;

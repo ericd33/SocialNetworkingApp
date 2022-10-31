@@ -57,7 +57,12 @@ export default function EventCard({location,name,text,image,date,id,enabled,type
                 </Typography>
                 {
                     userE.role==="admin"
-                    ? <div><button onClick={handleBanEvent}>ban</button><span style={{color:"#fff"}}>{enabled?"true":"false"}</span></div>
+                    ? <div className="banContainerEvent">
+                        <Button id='banButton' onClick={handleBanEvent} sx={{ mr:1,fontSize:11}} color='error' variant="outlined">
+                                Ban
+                        </Button>
+                        <span style={{ color: "#fff" }}>enabled: {enabled ? "true" : "false"}</span>
+                    </div>
                     :<></>
                 }
                 <Typography sx={{fontFamily: 'Nunito', color:'primary.dark'}} variant="body2" color="text.secondary">

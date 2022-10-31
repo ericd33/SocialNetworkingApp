@@ -64,13 +64,23 @@ export const addFriend = async (req: Request, res: Response) => {
   const { emailFollowed, emailFollow } = req.body
   const followed = await userSchema.findOne({email:emailFollowed})
   const follow = await userSchema.findOne({email:emailFollow})
+  let followInfo = {
+    name: follow.name,
+    email:emailFollow,
+    avatar: follow.image
+  }
+  let followedInfo = {
+    name: followed.name,
+    email:emailFollowed,
+    avatar: followed.image
+  }
   try{
-    if(!followed.followeds.includes(follow.email)){
-      followed.followeds.push(follow.email)
-      follow.follows.push(followed.email)
+    if(!followed.followeds.some((e:any)=>e.email===emailFollow)){
+      followed.followeds.push(followInfo)
+      follow.follows.push(followedInfo)
     }else{
-      followed.followeds = followed.followeds.filter((e:any)=>e!==follow.email)
-      follow.follows = follow.follows.filter((e:any)=>e!==followed.email)
+      followed.followeds = followed.followeds.filter((e:any)=>e.email!==follow.email)
+      follow.follows = follow.follows.filter((e:any)=>e.email!==followed.email)
     }
     followed.save()
     follow.save()
@@ -79,6 +89,7 @@ export const addFriend = async (req: Request, res: Response) => {
     res.status(400).send(e)
   }
 }
+
 export const asistEvents = async (req: Request, res: Response) => {
   const { eventId, userEmail } = req.body
   const event = await eventSchema.findOne({_id:eventId})
