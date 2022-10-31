@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import NavBar from "../../navbar/Navbar";
+import NavBarMobile from "../../navbar/Navbar mobile";
 import { getAuth } from "firebase/auth";
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { useDispatch, useSelector } from "react-redux";
@@ -70,24 +71,44 @@ return (
   <div>
     <div className="Home">
       <div className="navbar">
+        <NavBar />
         <span></span>
       </div>
-      <NavBar />
-      <div className="media-part">
+      <div className="navbarMobile">
+        <NavBarMobile />
+        <span></span>
+      </div>
+      <div className="media-part-pc">
         <div className="leftHome">
           <ProfileInfo userInfoRen={profileUser}/>
           {/* <EventsMenu /> */}
         </div>
         <div className="centerHome">
-          <Button variant="outlined" id='posts' onClick={handleClick}>Posts</Button>
-          <Button variant="outlined" id='events' onClick={handleClick}>Events</Button>
-          <Button variant="outlined" id='favorites' onClick={handleClick}>Favorites</Button>
+          <h3>Filters</h3>
+          <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='posts' onClick={handleClick}>Posts</Button>
+          <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='events' onClick={handleClick}>Events</Button>
+          <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='favorites' onClick={handleClick}>Favorites</Button>
           <ProfilePostList render={render} posts={posts} myUser={myUser}/>
         </div>
         <div className="rightHome">
           <ProfileDescription userInfoRen={profileUser}/>
           {/* <FilterEventsProfile userInfoRen={profileUser} />
           <EventsProfile /> */}
+        </div>
+    </div>
+      
+
+      <div className="media-part-mobile">
+        <div className="centerHome">
+          <ProfileInfo userInfoRen={profileUser}/>
+          <ProfileDescription userInfoRen={profileUser}/>
+          <div className='containerMobileProfile'>
+            <h3>Filters</h3>
+            <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='posts' onClick={handleClick}>Posts</Button>
+            <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='events' onClick={handleClick}>Events</Button>
+            <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='favorites' onClick={handleClick}>Favorites</Button>
+            <ProfilePostList render={render} posts={posts} myUser={myUser}/>
+          </div>
         </div>
       </div>
     </div>

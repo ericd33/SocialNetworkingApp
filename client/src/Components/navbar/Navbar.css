@@ -3,3 +3,19 @@ a{
     color: #ffd000;
 }
 
+#barrabusquedaEvents {
+    color:white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 150px;
+    background-color: #3b3b3b;
+    height: 10px;
+}
+#barrabusquedaEvents:hover {
+    border: 2px solid gray;
+    border-radius: 5px;
+    background-color: #4d4d4d;
+}
+.headerModal label{
+    color:white;
+}

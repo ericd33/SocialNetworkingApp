@@ -1,0 +1,32 @@
+.resultsSearch {
+    display: flex;
+    flex-direction: column;
+}
+
+.resultsSearch h2 {
+    font-size: 18px;
+}
+
+#barrabusqueda {
+    color:white;
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 350px;
+    background-color: #3b3b3b;
+}
+#barrabusqueda:hover {
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: #4d4d4d;
+}
+.headerModal label{
+    color:white;
+}
+
+.finded-persons {
+    display: flex;
+    flex-wrap: wrap;
+    width: 430px;
+    max-height: 250px;
+    overflow-y: scroll;
+}

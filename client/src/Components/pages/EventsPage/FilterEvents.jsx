@@ -17,17 +17,19 @@ const FilterEvents = () => {
 	// const postF = userF.follows
 	let filterLO =[];
 	
-	eventsRedux.map((e)=> {
-		if(e.type==="in-person"){
-			if(!filterLO.includes(e.location)){
-				filterLO.push(e.location)
+	if(eventsRedux.length !== 0) {
+		eventsRedux.map((e)=> {
+			if(e.type==="in-person"){
+				if(!filterLO.includes(e.location)){
+					filterLO.push(e.location)
+				}
 			}
-		}
-	})
+		})
+	}
 
 	useEffect(()=>{
 		dispatch(getEvents(token))
-},[dispatch])
+	},[dispatch])
 	//filter Global
 	const filterGlobal = ()=>{
 		dispatch(getEvents(token))
