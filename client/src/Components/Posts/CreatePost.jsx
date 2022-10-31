@@ -48,6 +48,14 @@ export default function CreatePost({profileUser}) {
     setFile(e.target.files[0])
   }
 
+  const closeImg = (e)=>{
+    setFormState({
+      ...formState,
+      imageCloudinary: "",
+      })
+      setPrev(false)
+  }
+
   const submitFile = async(e)=>{
     let FILE = file
     const formdata = new FormData()
@@ -137,9 +145,19 @@ export default function CreatePost({profileUser}) {
           onChange={handleChange}
           />*/}
         </div> 
-
-        <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
-        <button onClick={(e)=> submitFile(e)}>Image alredy</button>
+        <Input type="file" name="imageCloudinary" onChange={(e)=> submit(e) } ></Input>
+        {/* <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } /> */}
+        <Button variant="outlined" sx={{color:'secondary.main', border:'1px solid #ffd000'}} onClick={(e)=> submitFile(e)}>Image alredy</Button>
+        <br />
+        <br />
+        {prev ? 
+        <IconButton
+        onClick={closeImg}
+        sx={{ bgcolor: "secondary.main" }}
+        >
+        <CloseIcon sx={{pr:'1px'}}/>
+        </IconButton>
+        : null }
         {prev ? <img src={formState.imageCloudinary} className="img"/> : null}
 
         <div align="right">
