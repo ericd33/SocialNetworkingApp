@@ -66,8 +66,8 @@ const ProfileInfo = ({ userInfoRen }) => {
       };
       dispatch(banUsers(data, token));
 
-      console.log("ESTO ME TRAEL EL USERINFO", userInfoRen);
-      console.log("ESTO ME TRAE LOS FOLLOWS", userInfoRen.followeds);
+      // console.log("ESTO ME TRAEL EL USERINFO", userInfoRen);
+      // console.log("ESTO ME TRAE LOS FOLLOWS", userInfoRen.followeds);
     }
   };
   useEffect(() => {

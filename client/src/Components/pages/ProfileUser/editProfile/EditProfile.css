@@ -2,15 +2,22 @@
     position: absolute;
     top: 25%;
     left: 30%;
-    height: 350px;
+    width: 500px;
+    height: 450px;
+    max-height: 400px;
 }
-
+.editProfileCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .inputsdePerfil {
     height: 250px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
+    justify-content: space-between;
 }
 
 .inputsdePerfil #assistButton {
@@ -36,3 +43,23 @@
     width: 150px;
 }
 
+@media (max-width:600px) {
+    .ProfileEdit {
+        width: 350px;
+        top: 15%;
+        left: 4%;
+    }
+    .inputsdePerfil input {
+        color:white;
+        width: 200px;
+        border-radius: 15px;
+        background-color: #3b3b3b;
+        height: 15px;
+    }
+    .inputsdePerfil #assistButton {
+        width: 70px;
+        font-weight: bold;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+}

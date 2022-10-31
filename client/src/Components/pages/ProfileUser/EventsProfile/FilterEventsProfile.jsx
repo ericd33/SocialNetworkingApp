@@ -31,7 +31,7 @@ const FilterEventsProfile = ({userInfoRen}) => {
             <label> My Events </label>
             <input type='checkbox' onClick={onClicked} id='toggle' className="offscreen"></input>
             <label for='toggle' className="switch"></label>
-						<label>Events i`ll attend</label>
+			<label>Events i`ll attend</label>
         </div>
     </div>
 	)

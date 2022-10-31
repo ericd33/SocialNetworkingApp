@@ -99,74 +99,75 @@ const body = (
     <Card
       className="ProfileEdit"
       sx={{
-        width: 500,
         borderRadius: "15px",
         bgcolor: 'custom.main',
         fontFamily: "Nunito",
         color: 'primary.light',
-        maxHeight: 400
       }}
     >
-      <CardContent>
-        <div className="headerModal">
-          <h2>Edit profile</h2>
-          <IconButton
-            id='closeIcon'
-            sx={{ width: "35px", height: "35px", top: "20px",
-            bgcolor:'custom.light' }}
-            onClick={() => opencloseModal()}
-          >
-            <CloseIcon sx={{pr:'1px'}}/>
-          </IconButton>
-        </div>
-        <div className="inputsdePerfil">
-            <div>
-                <TextField
-                    id="filled-multiline-static"
-                    label="Change name"
-                    value={name}
-                    variant="filled"
-                    onChange={handleName}
-                />
-                <Button onClick={handleSubmitName} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
-                    Submit
-                </Button>
-            </div>
-            <div>
-                <TextField
-                    id="filled-multiline-static"
-                    label="Add a presentation"
-                    value={presentation}
-                    variant="filled"
-                    onChange={handlePresentation}
-                />
-                <Button onClick={handleSubmitPresentation} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
-                    Submit
-                </Button>
-            </div>
+        <div className='editProfileCard'>
+            <CardContent>
+                <div className="headerModal">
+                <h2>Edit profile</h2>
+                <IconButton
+                    id='closeIcon'
+                    sx={{ width: "35px", height: "35px", top: "20px",
+                    bgcolor:'custom.light' }}
+                    onClick={() => opencloseModal()}
+                >
+                    <CloseIcon sx={{pr:'1px'}}/>
+                </IconButton>
+                </div>
+                <div className="inputsdePerfil">
+                    <div>
+                        <TextField
+                            id="filled-multiline-static"
+                            label="Change name"
+                            sx={{textUnderlineOffset:0}}
+                            value={name}
+                            variant="filled"
+                            onChange={handleName}
+                        />
+                        <Button onClick={handleSubmitName} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
+                            Submit
+                        </Button>
+                    </div>
+                    <div>
+                        <TextField
+                            id="filled-multiline-static"
+                            label="Add a presentation"
+                            value={presentation}
+                            variant="filled"
+                            onChange={handlePresentation}
+                        />
+                        <Button onClick={handleSubmitPresentation} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
+                            Submit
+                        </Button>
+                    </div>
 
-            <div>
-                <TextField
-                    id="filled-multiline-static"
-                    label="Add a website:"
-                    value={webSite}
-                    variant="filled"
-                    onChange={handleWebSite}
-                />
-                <Button onClick={handleSubmitWebSite} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
-                    Submit
-                </Button>
-            </div>
-						<div>
-							<input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
-        			<button onClick={(e)=> submitFile(e)}>Image alredy</button>
-              <Button onClick={handleSubmitImage} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
-                Submit
-              </Button>
-        			{prev ? <img src={img.imageCloudinary} className="img"/> : null}
-            </div>
+                    <div>
+                        <TextField
+                            id="filled-multiline-static"
+                            label="Add a website:"
+                            value={webSite}
+                            variant="filled"
+                            onChange={handleWebSite}
+                        />
+                        <Button onClick={handleSubmitWebSite} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
+                            Submit
+                        </Button>
+                    </div>
+                    <div>
+                        <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
+                        <button onClick={(e)=> submitFile(e)}>Image alredy</button>
+                        <Button onClick={handleSubmitImage} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
+                            Submit
+                        </Button>
+                        {prev ? <img src={img.imageCloudinary} className="img"/> : null}
+                    </div>
+                </div>
+            </CardContent>
         </div>
-    </CardContent>
   </Card>
   );
 

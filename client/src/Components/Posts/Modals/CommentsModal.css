@@ -47,11 +47,11 @@
 
 @media (max-width:600px) {
     .commentsList {
-        width: 300px;
+        width: 350px;
         max-height: 400px;
     }
     #commentCard {
-        width: 260px;
+        width: 300px;
         height: fit-content;
     }
     #textComment {

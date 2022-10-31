@@ -4,13 +4,13 @@ import { useDispatch } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
 import { banComments } from "../../../Redux/actions";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { red } from "@mui/material/colors";
 
 export function Comments({ avatar, name, text, id, enabled }) {
   const dispatch = useDispatch();
   const sessionUser = useUserAuth();
   let token = sessionUser.user.accessToken;
   const userE = JSON.parse(localStorage.getItem("user"));
-
   const handleBan = (e) => {
     e.preventDefault(e);
     if (enabled) {
@@ -70,9 +70,12 @@ export function Comments({ avatar, name, text, id, enabled }) {
           />
         }
         action={
-          <IconButton aria-label="delete" onClick={() => handleDeleteComment()}>
-            <DeleteIcon />
-          </IconButton>
+            name === userE.name ?
+            <IconButton aria-label="delete" onClick={() => handleDeleteComment()}>
+              <DeleteIcon sx={{color:red[400]}}/>
+            </IconButton>
+            : null
+
         }
         title={name}
         subheader=" . "
