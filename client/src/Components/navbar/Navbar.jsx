@@ -28,6 +28,7 @@ import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
 import Searchbar from "./Searchbar";
 import Prem from "../Premium/Premium";
+import Donations from "../Donations/Donations"
 
 
 const NavBar = () => {
