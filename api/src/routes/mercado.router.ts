@@ -4,7 +4,7 @@ const router = Router()
 
 
 
-router.route('/').get(mercado)
+router.route('/').post(mercado)
 router.route("/suscripcion").post(susciption)
 router.route("/notificacion/:id").post(notification)
 router.route("/success").get(success)

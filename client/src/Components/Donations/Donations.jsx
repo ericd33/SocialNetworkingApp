@@ -34,7 +34,7 @@ export default function Donations() {
   };
 
   const handleSubmit = () => {
-    dispatch(Donate(token, amount));
+    dispatch(Donate(amount));
   };
 
   const body = (
