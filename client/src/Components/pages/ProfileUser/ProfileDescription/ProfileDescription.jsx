@@ -13,11 +13,10 @@ const ProfileDescription = ({userInfoRen}) => {
   useEffect(()=>{
     if(email.email===user.email){setMyUser(false)}
   },[myUser,email,user])
-  // console.log(myUser)
-  // console.log('user',userInfoRen)
+
 
   return (
-    <div className='userCard'>
+    <div className='userCardDescription'>
         {userInfoRen.presentation ? (
           <div className='boxDescription'>
             <h2>Presentation</h2>

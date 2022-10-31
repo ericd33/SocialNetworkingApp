@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useEffect, useState } from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -37,10 +37,12 @@ const theme = createTheme();
 const LandingPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { logIn, googleLogIn } = useUserAuth();
+  const { user, logIn, googleLogIn } = useUserAuth();
   const navigate = useNavigate();
 
-  
+  useEffect(()=> {
+    if (user) navigate('/home')
+  },[])
   const handleGoogleButton = async (e) => {
     e.preventDefault();
     try{
@@ -70,9 +72,19 @@ const LandingPage = () => {
             backgroundPosition: 'center',
           }}
         />
+        <h1 className='Title'>ConcatUs</h1>
         <Grid className='form' item component={Paper} elevation={6} square>
-        <LandingLogin />
-            <Button id='changeForm' onClick={() => navigate('/signup')}>Register</Button>
+        {window.location.href === `http://localhost:3000/` ?
+        <LandingLogin /> : <LandingRegister/>
+        }
+        {window.location.href === `http://localhost:3000/` ?
+            <Button id='changeForm' onClick={() => navigate('/signup')}>
+            
+        Register </Button> : <Button id='changeForm' onClick={() => navigate('/')}>
+            
+            Login </Button>}
+        
+              
             <GoogleButton onClick={handleGoogleButton}/>
         </Grid>
       </Grid>

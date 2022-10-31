@@ -6,11 +6,9 @@ import PersonAddAlt1OutlinedIcon from '@mui/icons-material/PersonAddAlt1Outlined
 import { IconButton } from "@mui/material";
 
 export default function Follow({email}){
-    console.log(email)
     const dispatch = useDispatch()
     const userEmail = getAuth().currentUser.email
     let token = getAuth().currentUser.accessToken
-    console.log(userEmail)
     const info = {
         emailFollowed:email,
         emailFollow: userEmail

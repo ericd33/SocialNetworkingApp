@@ -7,17 +7,8 @@ import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { useUserAuth } from "../../context/UserAuthContext";
 
-export default function EventList() {
-    const {user} = useUserAuth();
-    const dispatch = useDispatch()
-    let events = []
-    events = useSelector((state)=>state.events);
-
-    let token = user.accessToken
-
-    useEffect(()=>{
-        dispatch(getEvents(token))
-    },[dispatch])
+export default function EventList({events}) {
+    const userE = JSON.parse(localStorage.getItem('user'));
 
     if (events.length === 0) {
         return (
@@ -36,11 +27,13 @@ export default function EventList() {
     else {
         return (
             <div className="List">
-                {console.log(events)}
                 {
                     events?.map(e=>{
-                        return (
-                            <EventCard
+                        if(userE.enabled){
+                            switch(userE.role){
+                                case "admin":
+                                    return(
+                                        <EventCard
                                 key={e.author+e.date} 
                                 date={e.date}
                                 location={e.location}
@@ -48,8 +41,30 @@ export default function EventList() {
                                 text={e.content}
                                 image={e.image}
                                 id={e._id}
+                                enabled={e.enabled}
+                                type={e.type}
                             />
-                        )
+                            )
+                            case "user":
+                                if(e.enabled)
+                            return (
+                                <EventCard
+                                key={e.author+e.date} 
+                                date={e.date}
+                                location={e.location}
+                                name={e.name}
+                                text={e.content}
+                                image={e.image}
+                                id={e._id}
+                                enabled={e.enabled}
+                                type={e.type}
+                            />
+                            
+                            )
+                            default: <></>
+                            }
+                        }
+                        
                     }).reverse()
                 }
             </div>

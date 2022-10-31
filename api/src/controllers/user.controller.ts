@@ -4,14 +4,14 @@ const userSchema = require("../models/user");
 const eventSchema = require("../models/event");
 const commentSchema = require("../models/comment");
 const mailSettings = require('../nodemailer/nodemailer');
+const postSchema = require("../models/post");
 
 
 export const addUser = async (req: Request, res: Response) => {
   const { name, email, image } = req.body;
-  console.log(req.body)
+
   var user = await new userSchema();
-  // console.log(name)
-  // console.log(email)
+
   try {
     let checkingUserExist = await userSchema.find({ email: email });
     if (checkingUserExist.length) {
@@ -34,6 +34,7 @@ export const addUser = async (req: Request, res: Response) => {
     user.name = checkIfPropertyExist(name);
     user.role = "user";
     user.enabled = true;
+    user.premium=false;
     user.email = checkIfPropertyExist(email);
 
     await user.save();
@@ -73,7 +74,7 @@ export const addFriend = async (req: Request, res: Response) => {
     }
     followed.save()
     follow.save()
-    res.status(200).send('successfolly')
+    res.status(200).send('successfully')
   }catch(e){
     res.status(400).send(e)
   }
@@ -96,7 +97,7 @@ export const asistEvents = async (req: Request, res: Response) => {
     }
     user.save()
     event.save()
-    res.status(200).send('successfolly')
+    res.status(200).send('successfully')
   }catch(e){
     res.status(400).send(e)
   }
@@ -148,12 +149,10 @@ export const findUserById = async (req: Request, res: Response) => {
 
 export const findUserByEmail = async (req: Request, res: Response) => {
   const { email } = req.params;
-  // console.log(req.params)
-  console.log(email)
+
   try {
     if (email) {
       const user = await userSchema.findOne({ "email": email });
-      console.log(user)
       if (user) {
         res.status(200).send(user)
         return
@@ -172,7 +171,6 @@ export const deleteUser = async (req: Request, res: Response) => {
   try {
     if (email) {
       const user = await userSchema.findOne({ email: email });
-      console.log(user)
       switch (action) {
         case "disable":
           if (user.enabled) {
@@ -300,3 +298,32 @@ export const editWebSite = async (req: Request, res: Response) => {
     res.status(400).send("ouch name invalidated")
   }
 }
+
+
+export const addFavorite = async (req: Request, res: Response) => {
+  const { idPost, emailUser} = req.body
+  try{
+    const user = await userSchema.findOne({email: emailUser})
+    const post =await postSchema.findOne({_id:idPost})
+    // console.log(user.liked[0]._id)
+    // console.log(post._id)
+    // console.log(post._id.toString()==user.liked[0]._id.toString())
+    let posts = user.liked?.some((e:any)=>e._id.toString()==post._id.toString())
+    console.log(posts) 
+    if(posts){
+      // posts =[]
+      // console.log(user.liked[0]._id==post._id)
+      user.liked = user.liked.filter((e:any)=>e._id.toString()!=post._id.toString())
+      // console.log(user.liked)
+      user.save()
+      res.status(200).send("delete")
+    }else{
+      user.liked.push(post)
+      user.save()
+      res.status(200).send("ok")
+    }
+  }catch(e){
+    res.status(400).send(e)
+  }
+}
+

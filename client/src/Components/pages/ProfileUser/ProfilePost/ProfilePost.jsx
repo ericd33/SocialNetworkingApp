@@ -43,15 +43,14 @@ const ProfilePost = ({ idPost, userInfoRen }) => {
   
   return (
     <div>
-      {console.log(post)}
-      {/* {console.log(post.content)} */}
     <br />
     <Card
       sx={{
         width: 600,
         bgcolor: 'custom.dark',
         fontFamily: "Nunito",
-        borderRadius:3
+        borderRadius:3,
+        mb:2
       }}
     >
       <CardHeader
@@ -102,7 +101,6 @@ const ProfilePost = ({ idPost, userInfoRen }) => {
     </Card>
   </div>
     // <div>
-    //   {console.log(post.content)}
 		// 	{post.content} 
 		// </div>
   )

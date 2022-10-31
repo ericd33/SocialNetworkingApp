@@ -26,7 +26,6 @@ const LandingLogin = () => {
         await logIn(input.email, input.password);
         navigate("/home");
       } catch (err) {
-        console.log(err);
       }
     };
   
@@ -35,7 +34,7 @@ const LandingLogin = () => {
       if (!input.email || !/^[^@]+@[^@]+\.[a-zA-Z]{3,}$/.test(input.email)) {
         errors.email = "Invalid E-mail ";
       }
-      if (!input.password ||!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(input.password)){
+      if (!input.password || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$#@$!%*?&])([A-Za-z\d$@$!%*?&]|[^]){8,15}$/.test(input.password)){
         errors.password = "Invalid Password";
       }
       return errors;

@@ -3,28 +3,64 @@ const eventSchema = require("../models/event");
 const userSchema = require("../models/user");
 
 export const addEvent = async (req: Request, res: Response) => {
-  const { name, username, date, content, image, location, email,lat_log} = req.body;
-  
-  console.log(req.body)
+  const {
+    name,
+    username,
+    date,
+    content,
+    image,
+    location,
+    email,
+    lat_log,
+    avatar,
+    type,
+    meet_link,
+  } = req.body;
   try {
-  const user = await userSchema.findOne({email:email})
-  console.log('creating event')
+    const user = await userSchema.findOne({ email: email });
     let event = await new eventSchema();
-    if (name.length && date.length && content.length && location.length && lat_log.length) {
-      event.author= email
-      event.avatar = user.image
-      event.nameAuthor = username
-      event.name = name;
-      event.date = date;
-      event.content = content;
-      event.image = image;
-      event.location = location;
-      event.enabled = true;
-      event.lat_log=lat_log
-      const newEvent = await event.save();
-      user.events = user.events.concat(newEvent)
-      await user.save()
-      res.status(200).send("new event");
+    if (type === "in-person") {
+      if (
+        name.length &&
+        date.length &&
+        content.length &&
+        location.length &&
+        lat_log.length
+      ) {
+        event.author = email;
+        event.avatar = avatar;
+        event.nameAuthor = username;
+        event.name = name;
+        event.type = type;
+        event.date = date;
+        event.content = content;
+        event.image = image;
+        event.location = location;
+        event.enabled = true;
+        event.lat_log = lat_log;
+        const newEvent = await event.save();
+        user.events = user.events.concat(newEvent);
+        await user.save();
+        res.status(200).send("new event");
+      }
+    }
+    if (type === "online") {
+      if (name.length && date.length && content.length && meet_link.length) {
+        event.author = email;
+        event.avatar = avatar;
+        event.nameAuthor = username;
+        event.meet_link = meet_link;
+        event.name = name;
+        event.type = type;
+        event.date = date;
+        event.content = content;
+        event.image = image;
+        event.enabled = true;
+        const newEvent = await event.save();
+        user.events = user.events.concat(newEvent);
+        await user.save();
+        res.status(200).send("new event");
+      }
     }
   } catch (e) {
     res.status(400).send(e);
@@ -58,14 +94,23 @@ export const findEvent = async (req: Request, res: Response) => {
 
 export const findEventById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  try{
-    const event = await eventSchema.findOne({_id:id})
-    console.log(event)
-    res.status(200).send(event)
-  }catch(e){
-    res.status(400).send(e)
+  try {
+    const event = await eventSchema.findOne({ _id: id });
+    res.status(200).send(event);
+  } catch (e) {
+    res.status(400).send(e);
   }
-}
+};
+
+export const findEventByAuthor = async (req: Request, res: Response) => {
+  const { author } = req.params;
+  try {
+    const events = await eventSchema.find({ author: author });
+    res.status(200).send(events);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+};
 
 export const updateEvent = async (req: Request, res: Response) => {
   const { id } = req.query;
@@ -113,37 +158,34 @@ export const updateEvent = async (req: Request, res: Response) => {
 };
 
 export const deleteEvent = async (req: Request, res: Response) => {
-  const { id,action } = req.query;
-  const event = await eventSchema.find({_id: id })
-  console.log(event)
-  try{switch (action) {
-    case "disable":
-      if (event.enabled) {
-        await userSchema.updateOne({ _id: id },{ enabled: false }
-        );
-        res.status(200).send("event deleted successfully.");
-      } else {
-        res.status(400).send("event is already deleted.");
-      }
-      break;
+  const { action, id } = req.body;
+  const event = await eventSchema.findOne({ _id: id });
+  try {
+    switch (action) {
+      case "disable":
+        if (event.enabled) {
+          await eventSchema.updateOne({ _id: id }, { enabled: false });
+          res.status(200).send("Post deleted successfully.");
+        } else {
+          res.status(400).send("Post is already deleted.");
+        }
+        break;
       case "enable":
         if (!event.enabled) {
-          await userSchema.updateOne({ _id: id },{ enabled: true }
-          );
-          res.status(200).send("event re-enabled successfully.");
+          await eventSchema.updateOne({ _id: id }, { enabled: true });
+          res.status(200).send("Post re-enabled successfully.");
         } else {
-          res.status(400).send("event is already deleted.");
+          res.status(400).send("Post is already deleted.");
         }
-      break;
-    default:
-      res.status(400).send('Invalid action request.')
-      break;
-  }
-  }catch (e) {
+        break;
+      default:
+        res.status(400).send("Invalid action request.");
+        break;
+    }
+  } catch (e) {
     res.status(400).send(e);
   }
 };
-
 
 export const addEventParticipant = async (req: Request, res: Response) => {
   try {
@@ -156,7 +198,11 @@ export const addEventParticipant = async (req: Request, res: Response) => {
     if (user) {
       currentEvent.participants.push(user._id);
 
-      const eventUpdated = await eventSchema.findByIdAndUpdate({_id: idEvent}, currentEvent, {new: true});
+      const eventUpdated = await eventSchema.findByIdAndUpdate(
+        { _id: idEvent },
+        currentEvent,
+        { new: true }
+      );
 
       return res.status(200).json({
         data: eventUpdated,
@@ -165,13 +211,12 @@ export const addEventParticipant = async (req: Request, res: Response) => {
 
     return res.status(404).json({
       data: currentEvent,
-      msg: `User don't exist`
+      msg: `User don't exist`,
     });
   } catch (error) {
     return res.status(500).json({
       msg: `An error ocurred (┬┬﹏┬┬)`,
-      error
+      error,
     });
   }
-
-}
+};

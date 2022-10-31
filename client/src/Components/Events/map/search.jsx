@@ -7,7 +7,6 @@ export const Search=({i,place_name,center})=>{
     const handleClick = (e)=>{
         setLocation(e.target.innerHTML)
         setEventoLocation(center)
-        // console.log(center)
     }
     return(
         <div onClick={handleClick} key={i.toString()}>

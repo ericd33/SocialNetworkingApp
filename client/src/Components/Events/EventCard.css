@@ -5,3 +5,9 @@
 #dateHour {
     color:white;
 }
+
+@media (max-width:600px) {
+    #EventCard {
+        width: 350px;
+    }
+}

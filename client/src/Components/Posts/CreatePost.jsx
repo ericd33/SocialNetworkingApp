@@ -19,13 +19,18 @@ import { useNavigate } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useEffect } from "react";
 import { useUserAuth } from "../../context/UserAuthContext";
+import axios from "axios";
+import { width } from "@mui/system";
 
 export default function CreatePost({profileUser}) {
   const [modal, setModal] = useState(false);
+  const [file, setFile]= useState(null)
+  const [prev, setPrev]= useState(false)
   const {user} = useUserAuth();
   let userEmail = user.email;
   const token = user.accessToken;
   const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(getMyUser(userEmail));
   }, []);
@@ -36,8 +41,35 @@ export default function CreatePost({profileUser}) {
   };
   const [formState, setFormState] = useState({
     content: "",
-    image: "",
+    imageCloudinary: "",
   });
+
+  const submit = (e)=>{
+    setFile(e.target.files[0])
+  }
+
+  const submitFile = async(e)=>{
+    let FILE = file
+    const formdata = new FormData()
+    formdata.append("imageCloudinary",FILE)
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/file`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: formdata,
+    };
+    await axios(Config)
+    .then((res)=> {
+      setFormState({
+        ...formState,
+        imageCloudinary:`${res.data}`})
+          setPrev(true)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
 
   const handleChange = (e) => {
     setFormState({
@@ -46,15 +78,20 @@ export default function CreatePost({profileUser}) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
+    // await submitFile()
     const data = {
       ...formState,
       email: userEmail
     };
-
-    dispatch(postPost(token, data));
-    // navigate("/home")
+    setTimeout(() => {
+      dispatch(postPost(token, data));
+    }, 1000);
     setModal(!modal);
+    setFormState({
+      content: "",
+      imageCloudinary: "",
+    })
   };
 
   const body = (
@@ -92,14 +129,18 @@ export default function CreatePost({profileUser}) {
             className="textField"
             onChange={handleChange}
           />
-          <TextField id="filled-basic" 
+          {/* <TextField id="filled-basic" 
           label="Image link" variant="filled" 
           value={formState.image}
           name="image"
           className="textField"
           onChange={handleChange}
-          />
-        </div>
+          />*/}
+        </div> 
+
+        <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
+        <button onClick={(e)=> submitFile(e)}>Image alredy</button>
+        {prev ? <img src={formState.imageCloudinary} className="img"/> : null}
 
         <div align="right">
           <Button 

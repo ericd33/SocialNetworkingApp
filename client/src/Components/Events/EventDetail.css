@@ -1,10 +1,15 @@
 .EventDetailContainer {
-    width: 100vw;
-    height: 100vh;
-    top:0px;
-    left:0px;
+    max-width: 100vw;
+    min-height: 100vh;
     background-color: #2a2a2a;
 }
+
+#DetailCard {
+  position: absolute;
+  top: 4%;
+  left: 9%;
+}
+
 .LoadingDetails {
     background-color: #2a2a2a;
     width: 100vw;
@@ -42,7 +47,7 @@
 
 .text {
     display: flex;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid grey;
     padding-bottom: 20px;
     align-items: flex-start;
     color: white;
@@ -56,16 +61,32 @@
   align-items: flex-start;
   margin-left: 30px;
   padding: 10px;
+  width:750px;
 }
+.descriptionDetailOnline {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  margin-left: 30px;
+  padding: 10px;
+  width:450px;
+
+}
+
 .text .descriptionDetail h3 {
   color: #ffd000;
 }
 .text .descriptionDetail h4 {
-  width:750px;
   word-wrap: break-word;
   margin-top: 0px;
 }
-.text .map {
+.text .descriptionDetailOnline p {
+  word-wrap: break-word;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.text .descriptionDetailOnline h3 {
+  color: #ffd000;
 }
 
 .info2 {
@@ -201,4 +222,96 @@
 
   #buttonEventDetail:hover {
     background-color: #ffec95;
+  }
+
+  @media (max-width:600px) {
+    .wrapperDetail {
+      top: 35%;
+      left: 25%;
+    }
+
+   .EventDetailContainer {
+      min-height: 130vh;
+      background-color: #2a2a2a;
+    }
+
+    #DetailCard {
+      top:7%;
+      left: 4%;
+      width: 360px;
+    }
+
+    .infoEvent {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .infoEvent .left {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .infoEvent .right {
+      margin-bottom: 20px;
+    }
+
+    .text {
+      border-top: 1px solid grey;
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid grey;
+      color: white;
+      font-family: 'Nunito';
+      margin: 0px;
+    }
+
+    .descriptionDetail {
+      margin: 0px;
+      margin-top: 25px;
+      margin-bottom: 50px;
+      padding: 0px;
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .descriptionDetailOnline {
+      margin: 0px;
+      margin-top: 25px;
+      margin-bottom: 50px;
+      padding: 0px;
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .text .descriptionDetailOnline p {
+      word-wrap: break-word;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    .map {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .info2 {
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info2 .date-hour-part {
+      flex-direction: column;
+    }
+
+    .info2 #assistButton {
+      margin-top: 20px;
+    }
   }

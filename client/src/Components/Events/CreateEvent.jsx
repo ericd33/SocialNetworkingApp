@@ -9,6 +9,8 @@ import {
   Input,
   InputLabel,
   Icon,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 import {DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import CloseIcon from "@mui/icons-material/Close";
@@ -27,10 +29,13 @@ import { MapaContext } from './map/contex/MapaContext';
 // import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { searchPlaces } from './map/axios/searchPlaces';
 import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
 // import e from "express";
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
+  const [file, setFile]= useState(null)
+  const [prev, setPrev]= useState(false)
   const {user} = useUserAuth();
   const token = user.accessToken;
   let userEmail = user.email
@@ -38,14 +43,13 @@ export default function CreateEvent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {eventoLocation,setResults,location,setLocation,results} = useContext(MapaContext)
-  // console.log(location)
+  const userImage = JSON.parse(localStorage.getItem('user'));
   useEffect(()=>{
     dispatch(getMyUser(userEmail))
   },[])
   const opencloseModal = () => {
     setModal(!modal);
   };
-// console.log(eventoLocation)
 const timeOutRef=useRef()
 const [locations,setLocations] = useState([{
     center:"",
@@ -63,6 +67,11 @@ async function search() {
       setResults(data.features.length>0)
   },500)
 }
+  const [alignment, setAlignment] = useState('in-person');
+
+  const handleSelectType = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
 
   const [formState, setFormState] = useState({
     name:"",
@@ -70,10 +79,14 @@ async function search() {
     username: userName,
     email:userEmail,
     date : Date.now(),
+    avatar: "",
     location: location,
-    image:'',
-    lat_log: eventoLocation
+    imageCloudinary:'',
+    lat_log: eventoLocation,
+    type:  alignment,
+    meet_link:''
   });
+
 useEffect(()=>{
   setFormState({
     ...formState,
@@ -81,8 +94,8 @@ useEffect(()=>{
     lat_log: eventoLocation
   })
 },[location])
+
   function handleDateChange(e) {
-    console.log(e._d)
     setFormState({
       ...formState,
       date: e._d
@@ -92,14 +105,14 @@ useEffect(()=>{
   const handleChange = (e) => {
     e.preventDefault();
 
-    console.log(e)
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
       email:userEmail,
       location:location,
       lat_log: eventoLocation,
-      image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
+      avatar: userImage.image,
+      type: alignment
     });
   };
 
@@ -112,7 +125,6 @@ useEffect(()=>{
       location: e.target.value ||e.target.innerHTML ,
       lat_log: eventoLocation,
       email:userEmail,
-      image:'https://www.upcnsfe.com.ar/wp-content/uploads/2022/10/fiesta-1.jpg',
     });
   }
   const handleSubmit = (e) => {
@@ -120,11 +132,50 @@ useEffect(()=>{
     setModal(!modal)
     dispatch(postEvent(formState,token));
     // navigate("/events")
+    setFormState({
+    name:"",
+    content: "",
+    username: userName,
+    email:userEmail,
+    date : Date.now(),
+    avatar: "",
+    location: location,
+    imageCloudinary:'',
+    lat_log: eventoLocation,
+    meet_link:'',
+    type: alignment
+    })
   };
 
-  // console.log(eventoLocation)
+  const submitFile = async(e)=>{
+    let FILE = file
+    const formdata = new FormData()
+    formdata.append("imageCloudinary",FILE)
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/file`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: formdata,
+    };
+    await axios(Config)
+    .then((res)=> {
+      setTimeout(() => {
+        setFormState({
+          ...formState,
+          imageCloudinary:`${res.data}`})
+      }, 1000);
+      setPrev(true)
+    }).catch((err)=>{
+    })
+  }
+
+  const submit = (e)=>{
+    setFile(e.target.files[0])
+
+  }
     
-    // console.log(formState)
   const body = (
     <Card
       className="postCreator"
@@ -183,27 +234,49 @@ useEffect(()=>{
           value={formState.date}
           renderInput={(params) => <TextField {...params} />}
           />
-          <TextField id="filled-basic" 
-            label="Location" variant="filled" 
-            value={location}
-            name="location"
-            type='search'
-            onKeyUp={search}
-            className="location"
-            onChange={handleSetLocation}
-          />
-            <div>
-                {
-                    locations.length && results
-                    ? locations.map(({place_name,text, center},i)=><Search place_name={place_name} text={text} center={center} i={i}/>)
-                    : location && results &&(
-                        <div>
-                            <p className='parrafo'>No encontrado</p>
-                            <p className='parrafo'>{location}</p>
-                        </div>
-                    )
-                }
-            </div>
+          <ToggleButtonGroup color="primary"
+            value={alignment}
+            exclusive
+            onChange={handleSelectType}
+            aria-label="Platform">
+            <ToggleButton value="in-person">In-person</ToggleButton>
+            <ToggleButton value="online">Online</ToggleButton>
+          </ToggleButtonGroup>
+          {
+            (alignment === 'in-person') ? 
+            (<div>
+              <TextField id="filled-basic" 
+                label="Location" variant="filled" 
+                value={location}
+                name="location"
+                type='search'
+                onKeyUp={search}
+                className="location"
+                onChange={handleSetLocation}
+              />
+                <div>
+                    {
+                        locations.length && results
+                        ? locations.map(({place_name,text, center},i)=><Search place_name={place_name} text={text} center={center} i={i}/>)
+                        : location && results &&(
+                            <div>
+                                <p className='parrafo'>No encontrado</p>
+                                <p className='parrafo'>{location}</p>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>)
+            : (<div>
+              <TextField id="filled-basic" 
+                label="Meet link" variant="filled" 
+                value={formState.meet_link}
+                name="meet_link"
+                type='url'
+                onChange={handleChange}
+              />
+            </div>)
+          }
         </div>
         
         <div align="right">
@@ -215,6 +288,12 @@ useEffect(()=>{
           <Button id='Postbutton'
           sx={{mt:8, bgcolor:'secondary.main', fontFamily: "Nunito",
           color:'custom.dark'}} onClick={handleSubmit} variant='contained'>Post</Button>
+          <br/ >
+          <br/ >
+          <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
+          <button onClick={(e)=> submitFile(e)}>Image alredy</button>
+          <br/>
+          {prev ? <img src={formState.imageCloudinary} className="img"/> : null}
         </div>
       </CardContent>
     </Card>
