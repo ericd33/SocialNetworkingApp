@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, IconButton, Modal, TextField } from "@mui/material";
+import { Button, Card, CardContent, IconButton, Modal, TextField, Input } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useUserAuth } from "../../../../context/UserAuthContext";
@@ -158,8 +158,10 @@ const body = (
                         </Button>
                     </div>
                     <div>
-                        <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } />
-                        <button onClick={(e)=> submitFile(e)}>Image alredy</button>
+                        <Input type="file" name="imageCloudinary" onChange={(e)=> submit(e) } ></Input>
+                        {/* <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } /> */}
+                        <Button variant="outlined" sx={{color:'secondary.main', border:'1px solid #ffd000'}} onClick={(e)=> submitFile(e)}>Image alredy</Button>
+                        {/* <button onClick={(e)=> submitFile(e)}>Image alredy</button> */}
                         <Button onClick={handleSubmitImage} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
                             Submit
                         </Button>
