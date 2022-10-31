@@ -28,6 +28,7 @@ import Donations from "../Donations/Donations"
 import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
 import Searchbar from "./Searchbar";
+import Premiun from "../Premiun/Premiun";
 
 
 const NavBar = () => {
@@ -92,6 +93,8 @@ const NavBar = () => {
         </Toolbar>
 
         <Toolbar>
+
+          <Premiun/>
 
           <Donations />
 
