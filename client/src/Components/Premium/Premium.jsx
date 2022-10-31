@@ -7,13 +7,13 @@ import {
   Button,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import "./Premiun.css";
+import "./Premium.css";
 import { useDispatch } from "react-redux";
 import { Premium } from "../../Redux/actions";
 import PaidIcon from '@mui/icons-material/Paid';
 
 
-export default function Premiun() {
+export default function Prem() {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const user = JSON.parse(window.localStorage.getItem("user"))
