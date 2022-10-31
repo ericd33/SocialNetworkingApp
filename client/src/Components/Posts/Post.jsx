@@ -224,7 +224,7 @@ export default function Post({
 
           {comments ? <CommentsModal idPost={id} /> : <></>}
           <p className="textCommentarys">
-            {comments && comments.length} comments
+            {comments && comments?.length} comments
           </p>
 
           {/* --- Shares para FUTURO --- */}
