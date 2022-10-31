@@ -24,7 +24,13 @@ import http from "http";
 // import { notification } from "./controllers/mercado.controller";
 
 const server = http.createServer(app);
-const io = new socketServer();
+
+const io = new socketServer(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
 
 app.use(cors());
 
