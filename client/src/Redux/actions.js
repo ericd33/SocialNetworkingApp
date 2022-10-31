@@ -540,7 +540,7 @@ export function webSiteChange(payload, token, email) {
   };
 }
 
-export function banPost(payload, token) {
+export function banPost(payload,token) {
   return async function () {
     const Config = {
       method: "put",

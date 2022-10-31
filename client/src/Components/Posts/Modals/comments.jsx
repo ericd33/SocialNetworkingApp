@@ -3,8 +3,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
 import { banComments } from "../../../Redux/actions";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { red } from "@mui/material/colors";
 
 export function Comments({ avatar, name, text, id, enabled }) {
   const dispatch = useDispatch();
@@ -53,10 +51,12 @@ export function Comments({ avatar, name, text, id, enabled }) {
       }}
     >
       {userE.role === "admin" ? (
-        <div>
-          <button onClick={handleBan}>ban</button>
-          <span style={{ color: "#fff" }}>{enabled ? "true" : "false"}</span>
-        </div>
+        <div className="banButtonComment">
+        <Button id='banButton' onClick={handleBan} sx={{ mr:1,fontSize:11}} color='error' variant="outlined">
+                Ban
+        </Button>
+        <span style={{ color: "#fff" }}>enabled: {enabled ? "true" : "false"}</span>
+      </div>
       ) : (
         <></>
       )}
@@ -68,14 +68,6 @@ export function Comments({ avatar, name, text, id, enabled }) {
             sx={{ bgcolor: "primary.light" }}
             src={avatar}
           />
-        }
-        action={
-            name === userE.name ?
-            <IconButton aria-label="delete" onClick={() => handleDeleteComment()}>
-              <DeleteIcon sx={{color:red[400]}}/>
-            </IconButton>
-            : null
-
         }
         title={name}
         subheader=" . "

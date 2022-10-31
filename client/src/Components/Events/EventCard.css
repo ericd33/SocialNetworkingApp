@@ -6,6 +6,11 @@
     color:white;
 }
 
+.banContainerEvent {
+    font-family: 'Nunito';
+    margin-bottom: 10px;
+}
+
 @media (max-width:600px) {
     #EventCard {
         width: 350px;

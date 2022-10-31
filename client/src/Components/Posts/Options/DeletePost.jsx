@@ -16,12 +16,12 @@ import { red } from "@mui/material/colors";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-export default function DeletePost(payload) {
+export default function DeletePost({payload}) {
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
-
-  const sessionUser = useUserAuth();
-  let token = sessionUser.user.accessToken;
+  // console.log(payload);
+  const {user} = useUserAuth();
+  const token = user.accessToken;
   const dispatch = useDispatch()
 
   const opencloseModal = () => {
@@ -33,9 +33,10 @@ export default function DeletePost(payload) {
     
     const handleSubmit = () => {
       let data = {
-        idPost: payload.payload.payload.id,
-        action: 'delete'
+        idPost: payload.id,
+        action: 'delete',
       }
+      // console.log(data.token);
       dispatch(banPost(data,token))
       setModal(false);
       setModal2(true);
