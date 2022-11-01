@@ -124,10 +124,11 @@ width: 600px;
 
 .results-location {
     position: absolute;
-    bottom: 15%;
-    right: 10%;
+    overflow-y: scroll;
+    bottom: 5%;
+    right: 8%;
     width: 300px;
-    height: 100px;
+    height: 150px;
 }
 
 .results-location .parrafo {
