@@ -195,8 +195,16 @@ export const addEventParticipant = async (req: Request, res: Response) => {
     const user = await userSchema.findOne({ _id: idUser });
     const currentEvent = await eventSchema.findOne({ _id: idEvent });
 
+    
     if (user) {
-      currentEvent.participants.push(user._id);
+      let assistInfo = {
+        name: user.name,
+        email: user.email,
+        avatar: user.image
+      }
+      currentEvent.participants.push(assistInfo);
+      currentEvent.save();
+      console.log(currentEvent);
 
       const eventUpdated = await eventSchema.findByIdAndUpdate(
         { _id: idEvent },
