@@ -234,12 +234,13 @@ useEffect(()=>{
           value={formState.date}
           renderInput={(params) => <TextField {...params} />}
           />
+          <p>Modality</p>
           <ToggleButtonGroup color="primary"
             value={alignment}
             exclusive
             onChange={handleSelectType}
             aria-label="Platform">
-            <ToggleButton value="in-person">In-person</ToggleButton>
+            <ToggleButton value="in-person">Physical location</ToggleButton>
             <ToggleButton value="online">Online</ToggleButton>
           </ToggleButtonGroup>
           {
