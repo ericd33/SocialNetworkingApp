@@ -106,7 +106,8 @@ export default function CreatePost({profileUser}) {
     <Card
       className="postCreator"
       sx={{
-        width: 600,
+        width:'90%',
+        maxWidth: '600px',
         borderRadius: "15px",
         bgcolor: 'custom.main',
         fontFamily: "Nunito",
