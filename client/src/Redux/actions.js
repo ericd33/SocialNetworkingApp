@@ -167,6 +167,7 @@ export function details(id, token) {
       },
     };
     axios(Config).then((res) => {
+      console.log(res.data);
       return dispatch({
         type: GET_DETAILS,
         payload: res.data,
