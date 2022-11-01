@@ -36,43 +36,16 @@ const LandingRegister = () => {
 			if (!input.username ) {
 				 		errors.username = "The name is required";
 				 	}
-			if (!input.email || !/^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/.test(input.email)) {
+			if (!input.email || !/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(input.email)) {
 				 		errors.email = "Invalid E-mail. Example: example@example.com";
 				 	}
-			if (!input.password || !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(input.password)){
+			if (!input.password || !/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/.test(input.password)){
 			  errors.password = "Invalid Password:  Min 8 characters, max. 15. At least one capital letter. At least one lowercase letter. At least one digit. No blanks.";
 			}
 			return errors;
 		  }
 
-		  function handleChangeEmail(e) {
-			setInput({
-			  ...input,
-			  [e.target.name]: e.target.value,
-			});
-			setErrors(
-			  validate({
-				...input,
-				[e.target.name]: e.target.value,
-			  })
-			);
-			setInput(e.target.value)
-		  }
-
-		  function handleChangePassword(e) {
-			setInput({
-			  ...input,
-			  [e.target.name]: e.target.value,
-			});
-			setErrors(
-			  validate({
-				...input,
-				[e.target.name]: e.target.value,
-			  })
-			);
-		  }
-
-		  function handleChangeUsername(e) {
+		  function handleChange(e) {
 			setInput({
 			  ...input,
 			  [e.target.name]: e.target.value,
@@ -92,60 +65,51 @@ const LandingRegister = () => {
 			<br />
 			<Grid item md={12}>
 			  <FormControl>
-				<InputLabel htmlFor='Username'>Username</InputLabel>
 				<Input 
 				type='Username'
 				id='Username'
 				value={input.username}
 				name="username"
-				onChange={(e) => handleChangeUsername(e)}
+				onChange={(e) => handleChange(e)}
 				aria-describedby='username-helper'/>
 				<FormHelperText sx={{mb:2, color:grey[400]}} id='username-helper'>Username</FormHelperText>
 			  </FormControl>
-			  {errors.hasOwnProperty("username") ? (
-				<p className='error'>{errors.usermane}</p>
-			  ) : null}
+			  {errors.username && <p className='error'>{errors.usermane}</p>}
 		  </Grid>
 			<Grid item md={12}>
 			  <FormControl>
-				<InputLabel htmlFor='email'>E-mail</InputLabel>
 				<Input 
 				type='email'
 				id='email'
 				value={input.email}
 				name="email"
-				onChange={(e) => handleChangeEmail(e)}
+				onChange={(e) => handleChange(e)}
 				aria-describedby='email-helper'/>
 				<FormHelperText sx={{mb:2, color:grey[400]}} id='email-helper'>Your email</FormHelperText>
 			  </FormControl>
-			  {errors.hasOwnProperty("email") ? (
-				<p className='error'>{errors.email}</p>
-			  ) : null}
+			  {errors.email && <p className='error'>{errors.email}</p>}
 		  </Grid>
 			  <br/>
 			  <Grid item md={12} >
 				<FormControl>
-					<InputLabel htmlFor='pwd'>Password</InputLabel>
 					<Input 
 					type='password'
 					id='pwd'
 					value={input.password}
 					name="password"
-					onChange={(e) => handleChangePassword(e)}
+					onChange={(e) => handleChange(e)}
 					aria-describedby='password-helper'/>
 					<FormHelperText sx={{mb:2, color:grey[400]}} id='password-helper'>Your password</FormHelperText>
 				  </FormControl>
-				  {errors.hasOwnProperty("password") ? (
-					<p className='error'>{errors.password}</p>
-				  ) : null}
+				  {errors.password && <p className='error'>{errors.password}</p>}
 			  </Grid>
 				<br/>
-				{Object.entries(errors).length > 0 || (input.email === '' && input.password === '') ? (
-				  <Button variant='outlined' disabled={true}>Register</Button>
-				) : (
-				  <Button variant='contained' onClick={(e) => handleSubmit(e)}>
+				{Object.keys(errors).length === 0 ? (
+					<Button variant='contained' onClick={(e) => handleSubmit(e)}>
 					Register
-				  </Button>
+				  	</Button>
+				) : (
+					<Button variant='outlined' disabled={true}>Register</Button>
 				)}
 		  </Grid>
 		  )
