@@ -26,7 +26,7 @@ import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutli
 import { Search } from "./map/search";
 import React, { useContext, useRef } from "react";
 import { MapaContext } from "./map/contex/MapaContext";
-// import FileUploadIcon from '@mui/icons-material/FileUpload';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { searchPlaces } from "./map/axios/searchPlaces";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -70,11 +70,6 @@ export default function CreateEvent() {
       setResults(data.features.length > 0);
     }, 500);
   }
-  const [alignment, setAlignment] = useState("in-person");
-
-  const handleSelectType = (event, newAlignment) => {
-    setAlignment(newAlignment);
-  };
 
   const [formState, setFormState] = useState({
     name: "",
@@ -86,7 +81,7 @@ export default function CreateEvent() {
     location: location,
     imageCloudinary: "",
     lat_log: eventoLocation,
-    type: alignment,
+    type: 'in-person',
     meet_link: "",
   });
 
@@ -107,7 +102,6 @@ export default function CreateEvent() {
 
   const handleChange = (e) => {
     e.preventDefault();
-
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
@@ -115,8 +109,8 @@ export default function CreateEvent() {
       location: location,
       lat_log: eventoLocation,
       avatar: userImage.image,
-      type: alignment,
     });
+    console.log(formState);
   };
 
   const handleSetLocation = (e) => {
@@ -146,12 +140,12 @@ export default function CreateEvent() {
       imageCloudinary: "",
       lat_log: eventoLocation,
       meet_link: "",
-      type: alignment,
+      type: '',
     });
   };
 
   const submitFile = async (e) => {
-    let FILE = file;
+    let FILE = await e.target.files[0];
     const formdata = new FormData();
     formdata.append("imageCloudinary", FILE);
     const Config = {
@@ -175,13 +169,23 @@ export default function CreateEvent() {
       .catch((err) => {});
   };
 
-  const submit = (e) => {
-    setFile(e.target.files[0]);
-  };
+  function onClicked(e) {
+		if(e.target.checked === true) {
+			setFormState({
+        ...formState,
+        type: 'online'
+      })
+		} else{
+			setFormState({
+        ...formState,
+        type: 'in-person'
+      })
+		}
+	  }
 
   const body = (
     <Card
-      className="postCreator"
+      className="eventCreator"
       sx={{
         width: 600,
         height: 550,
@@ -195,13 +199,11 @@ export default function CreateEvent() {
     >
       <CardContent
         sx={{
-          width: "90%",
-          maxWidth: "600px",
           padding: 0,
         }}
       >
-        <div className="headerModal">
-          <div className="TitleCreatePost">
+        <div className="headerModalEvent">
+          <div className="TitleCreateEvent">
             <h2>Create an event</h2>
             <Icon>
               <DriveFileRenameOutlineIcon />
@@ -220,7 +222,7 @@ export default function CreateEvent() {
             <CloseIcon sx={{ pr: "1px" }} />
           </IconButton>
         </div>
-        <div className="inputsdePost">
+        <div className="inputsdeEvents">
           <TextField
             id="filled-basic"
             label="Title"
@@ -242,81 +244,94 @@ export default function CreateEvent() {
             className="textField"
             onChange={handleChange}
           />
-          <InputLabel htmlFor="date">Date</InputLabel>
-          <DateTimePicker
-            minDate={Date.now()}
-            onChange={handleDateChange}
-            name="date"
-            value={formState.date}
-            renderInput={(params) => <TextField {...params} />}
-          />
-          <p>Modality</p>
-          <ToggleButtonGroup
-            color="primary"
-            value={alignment}
-            exclusive
-            onChange={handleSelectType}
-            aria-label="Platform"
-          >
-            <ToggleButton value="in-person">Physical location</ToggleButton>
-            <ToggleButton value="online">Online</ToggleButton>
-          </ToggleButtonGroup>
-          {alignment === "in-person" ? (
-            <div>
-              <TextField
-                id="filled-basic"
-                label="Location"
-                variant="filled"
-                value={location}
-                name="location"
-                type="search"
-                onKeyUp={search}
-                className="location"
-                onChange={handleSetLocation}
-              />
-              <div>
-                {locations.length && results
-                  ? locations.map(({ place_name, text, center }, i) => (
-                      <Search
-                        place_name={place_name}
-                        text={text}
-                        center={center}
-                        i={i}
-                      />
-                    ))
-                  : location &&
-                    results && (
-                      <div>
-                        <p className="parrafo">No encontrado</p>
-                        <p className="parrafo">{location}</p>
-                      </div>
-                    )}
+          <div className="date-modality">
+            <div className='date-img'>
+                <InputLabel htmlFor="date">Date</InputLabel>
+                <DateTimePicker
+                  minDate={Date.now()}
+                  onChange={handleDateChange}
+                  name="date"
+                  value={formState.date}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                <div className="Input-Imagen">
+                  <label id='labelInput' for="inputTag">
+                    Upload image
+                    <FileUploadIcon/>
+                    <input id="inputTag" type="file" name="imageCloudinary" onChange={(e) => submitFile(e)} accept="image/png, image/jpg, image/gif, image/jpeg"/>
+                  </label>
+
+                  {prev ? (
+                    <img src={formState.imageCloudinary} className="img" />
+                  ) : null}
+                </div>
+            </div>
+
+            <div className="modality-location">
+              <p>Modality</p>
+              <div className="switchEvents">
+                <div className="wrap-toggle">
+                  <label>Physical Location</label>
+                  <input type='checkbox' onClick={onClicked} id='toggle' className="offscreen"></input>
+                  <label for='toggle' className="switch"></label>
+                  <label> Online </label>
+                </div>
               </div>
+              {formState.type === "in-person" ? (
+                <div>
+                  <TextField
+                    id="filled-basic"
+                    label="Location"
+                    variant="filled"
+                    value={location}
+                    name="location"
+                    type="search"
+                    onKeyUp={search}
+                    className="textField"
+                    onChange={handleSetLocation}
+                  />
+                  <div className="results-location">
+                    {locations.length && results
+                      ? locations.map(({ place_name, text, center }, i) => (
+                          <Search
+                            place_name={place_name}
+                            text={text}
+                            center={center}
+                            i={i}
+                          />
+                        ))
+                      : location &&
+                        results && (
+                          <div>
+                            <p className="parrafo">No encontrado</p>
+                            <p className="parrafo">{location}</p>
+                          </div>
+                        )}
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <TextField
+                    id="filled-basic"
+                    label="Meet link"
+                    className="textField"
+                    variant="filled"
+                    value={formState.meet_link}
+                    name="meet_link"
+                    type="url"
+                    onChange={handleChange}
+                  />
+                </div>
+              )}
             </div>
-          ) : (
-            <div>
-              <TextField
-                id="filled-basic"
-                label="Meet link"
-                variant="filled"
-                value={formState.meet_link}
-                name="meet_link"
-                type="url"
-                onChange={handleChange}
-              />
-            </div>
-          )}
+
+          </div>
         </div>
 
-        <div align="right">
-          {/* <IconButton>
-          <Input id='inputImage'type="file" accept="image/*" disableUnderline={true}/>
-          <FileUploadIcon/>
-        </IconButton> */}
-          <Button
+        
+        <Button
             id="Postbutton"
             sx={{
-              mt: 8,
               bgcolor: "secondary.main",
               fontFamily: "Nunito",
               color: "custom.dark",
@@ -326,19 +341,6 @@ export default function CreateEvent() {
           >
             Post
           </Button>
-          <br />
-          <br />
-          <input
-            type="file"
-            name="imageCloudinary"
-            onChange={(e) => submit(e)}
-          />
-          <button onClick={(e) => submitFile(e)}>Upload Image</button>
-          <br />
-          {prev ? (
-            <img src={formState.imageCloudinary} className="img" />
-          ) : null}
-        </div>
       </CardContent>
     </Card>
   );

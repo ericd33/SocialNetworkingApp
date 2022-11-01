@@ -1,10 +1,13 @@
-.inputsdePost .location{
+.eventCreator .inputsdePost .location{
     background-color: #3b3b3b;
     border-radius: 15px;
     width: 300px;
 }
-.img{
-    width: 300px;
+
+.eventCreator #Postbutton {
+    position: absolute;
+    left: 7%;
+    bottom: 2%;
 }
 
 .containerParticipants {
@@ -15,4 +18,178 @@
     font-size: 17px;
     cursor: pointer;
     color: white;
+}
+
+
+.eventCreator .textField{
+    width:100%;
+    background-color: #3b3b3b;
+    border-radius: 10px;
+}
+
+.eventCreator #closeIcon:hover {
+    background-color: #5f5f5f;
+    border: 1px solid rgb(121, 121, 121)
+}
+
+.eventCreator {
+    position: absolute;
+    border: 1px solid black;
+    padding: 16px 32px 24px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container {
+    text-align: center;
+}
+
+.eventCreator .headerModalEvent {
+    display: flex;
+    width: 600px;
+    justify-content: space-between;
+}
+
+.eventCreator #Postbutton:hover {
+    background-color: #ffec95;
+    font-weight:bold;
+}
+.eventCreator #Postbutton {
+    font-weight:bold;
+}
+
+.eventCreator #inputTag {
+    display: none;
+}
+.eventCreator #labelInput {
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+    width: 130px;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 1px solid #3b3b3b;
+    background-color: #3b3b3b;
+    justify-content: space-between;
+}
+.eventCreator #labelInput:hover {
+    border: 1px solid gray;
+}
+
+.eventCreator .modality-location {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.modality-location p {
+    margin-bottom: 0px;
+}
+.modality-location .switchEvents {
+    margin-bottom: 5px;
+}
+
+.eventCreator .inputsdeEvents {
+width: 600px;
+}
+
+.eventCreator .inputsdeEvents textarea{
+    color:white;
+}
+.eventCreator .inputsdeEvents input{
+    color:white;
+}
+.eventCreator .inputsdeEvents label{
+    color:#a5a5a5;
+}
+
+.eventCreator .TitleCreateEvent {
+    display: flex;
+    align-items: center;
+}
+
+.eventCreator .TitleCreatePost h2{
+    padding-right: 5px;
+    padding-bottom: 1px;
+}
+
+.eventCreator .img{
+    width: 200px;
+    border-radius: 15px;
+    border: 1px solid black;
+    position: absolute;
+    left: 7%;
+    bottom: 10%;
+}
+
+.results-location {
+    position: absolute;
+    bottom: 15%;
+    right: 10%;
+    width: 300px;
+    height: 100px;
+}
+
+.results-location .parrafo {
+    cursor: pointer;
+}
+
+.date-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.date-modality {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@media (max-width:600px) {
+    .eventCreator {
+        max-width: 75%;
+    }
+    .headerModalEvent {
+        max-width: 100%;
+    }
+    .inputsdeEvents {
+        max-width: 100%;
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+    .date-modality {
+        flex-direction: column;
+        max-width: 90%;
+    }
+    .date-img {
+        justify-content: space-around;
+        height: 150px;
+    }
+    .eventCreator #labelInput {
+        margin-left: 35px;
+    }
+    .modality-location {
+        max-width: 100%;
+    }
+    .switchEvents .wrap-toggle {
+        max-width: 250px;
+    }
+    .results-location {
+        position: relative;
+        margin-left: 40px;
+        max-width: 80%;
+    }
+    .Input-Imagen {
+        display: flex;
+        align-items: flex-end;
+    }
+    .eventCreator .img{
+        width: 50px;
+        height: 30px;
+        position: relative;
+        border-radius: 2px;
+        border: 1px solid black;
+    }
 }
