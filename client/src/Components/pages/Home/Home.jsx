@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NavBarMobile from "../../navbar/Navbar mobile";
 import AboutUs from "../../AboutUs/AboutUs";
+import Payments from "./Payments";
 
 
 export default function Home() {
@@ -57,7 +58,7 @@ localStorage.setItem('user',JSON.stringify(profileUser))
           {/* <FilterPost /> */}
           <PostList />
         </div>
-        <div className="rightHome"> <AboutUs/> </div>
+        <div className="rightHome"> {profileUser.role === "user" ? <AboutUs/> : <Payments/> }</div>
       </div>
         <CreatePost  profileUser={profileUser}/>
     </div>
