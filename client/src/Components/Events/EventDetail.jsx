@@ -176,7 +176,7 @@ export default function EventDetail() {
                                 
                                 <div className="date-hour-part">
                                     <ParticipantsModal participants={detail.participants}/>
-                                    <span>Date: {detail?.date}</span>
+                                    <span>Date: {date} hs.</span>
                                 </div>
                             </div>
                         </CardContent>
