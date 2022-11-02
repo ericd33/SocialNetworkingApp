@@ -21,7 +21,9 @@ import {
   FILTER_EVE_LOC,
   FILTER_EVE_ASSIST,
   CLEAR_EVENTS,
-  FAVORITE
+  FAVORITE,
+  GET_OPINIONS,
+  NEW_OPINION
 } from "./action-types";
 
 const initialState = {
@@ -37,6 +39,7 @@ const initialState = {
   PostID: [],
   comments: [],
   favorite:[],
+  opinions:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -226,6 +229,15 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         soluc: [],
       };
+
+      case GET_OPINIONS:
+      return {
+        ...state,
+        opinions: action.payload,
+      };
+
+
+
     default:
       return state;
   }

@@ -5,6 +5,7 @@ import userRoutes from "./routes/user.routes";
 import comment from "./routes/comment.router";
 import event from "./routes/events.routes";
 import post from "./routes/posts.router";
+import opinion from "./routes/opinions.router"
 import mercado from "./routes/mercado.router";
 const mercadopago = require("mercadopago");
 const cors = require("cors");
@@ -89,4 +90,5 @@ app.use("/comments", comment);
 app.use("/users", userRoutes);
 app.use("/events", event);
 app.use("/posts", upload.single("imageCloudinary"), post);
+app.use("/opinions", opinion);
 

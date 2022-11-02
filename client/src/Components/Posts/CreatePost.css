@@ -16,6 +16,7 @@
     padding: 16px 32px 24px;
     top: 50%;
     left: 50%;
+    width: 600px;
     transform: translate(-50%, -50%);
 }
 
@@ -39,7 +40,7 @@
 .inputsdePost {
     display:flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     height: 190px;
 }
@@ -65,5 +66,62 @@
 }
 
 .img{
-    width: 300px;
+    width: 230px;
+    border-radius: 15px;
+    border: 1px solid black;
+    position: absolute;
+    left: 35%;
+    bottom: 8%;
+}
+
+#deleteIMG {
+    position: absolute;
+    left: 65%;
+    bottom: 32%;
+    z-index: 3;
+}
+#deleteIMG:hover {
+    background-color: #ffec95;
+}
+
+.inputsdePost #inputTag {
+    display: none;
+}
+.inputsdePost #labelInput {
+    cursor: pointer;
+    display: flex;
+    width: 130px;
+    border-radius: 10px;
+    border: 1px solid #3b3b3b;
+    background-color: #3b3b3b;
+    justify-content: space-between;
+}
+.inputsdePost #labelInput:hover {
+    border: 1px solid gray;
+}
+
+@media (max-width:600px) {
+    .postCreator {
+        max-width: 70%;
+    }
+    .img{
+        width: 140px;
+        border-radius: 5px;
+        border: 1px solid black;
+        position: absolute;
+        left: 14%;
+        bottom: 8%;
+    }
+    
+    #deleteIMG {
+        position: absolute;
+        left: 47%;
+        bottom: 22%;
+        z-index: 3;
+        width: 30px;
+        height: 30px;
+    }
+    #deleteIMG:hover {
+        background-color: #ffec95;
+    }
 }
