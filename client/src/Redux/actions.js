@@ -99,13 +99,14 @@ export function putPost(idPost, token, dataToUpdate) {
   };
 }
 
-export function Donate( data ) {
+export function Donate( data , id) {
   return async function () {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/donations`,
       data: {
         mont: data,
+        id:id
       },
     };
     await axios(Config).then((res) =>{
