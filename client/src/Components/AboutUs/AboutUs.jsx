@@ -23,8 +23,7 @@ import { TextField } from "@mui/material";
 
 export default function AboutUs() {
   const [modal, setModal] = useState(false);
-  const user = JSON.parse(window.localStorage.getItem("user"))
-  const { userInf } = useUserAuth();
+  const { user } = useUserAuth();
   let token = user.accessToken;
   const dispatch = useDispatch();
 
@@ -43,12 +42,13 @@ export default function AboutUs() {
   });
 
   const handleChangeOpinion = (e) => {
-    // e.preventDefault();
+     e.preventDefault();
     setOpinion({
       ...opinion,
-      [e.target.name]: e.target.value,
+      "text": e.target.value,
     });
   };
+
   const handleSubmmitOpinion = (e) => {
     e.preventDefault();
     dispatch(newOpinion(token, opinion));
@@ -63,12 +63,11 @@ export default function AboutUs() {
 
 
 
-
-
   const body = (
     <Card
       className="postCreator"
       sx={{
+        maxWidth: '90%',
         width: 600,
         borderRadius: "15px",
         bgcolor: "custom.main",
@@ -87,23 +86,23 @@ export default function AboutUs() {
           </IconButton>
         </div>
         <p>
-        This is our Team. A group of developers that create this WebSite for people who works on IT area.
+        We're a group of Software Developers who love coding. We've been working as a team to bring this project to light and we hope you like it!.
         </p>
         <div className="inputsdeComments">
           <TextField
             id="filled-multiline-static"
-            label="Send us your opinion!"
+            label="Thoughts on our project?"
             value={opinion?.text}
             variant="filled"
             name="text"
             onChange={handleChangeOpinion}
           />
           <Button
-            sx={{ mb: '2px', fontFamily: "Nunito", color: "primary.dark", borderRadius:'12px' }}
+            sx={{ mb: '2px', fontFamily: "Nunito", color: "primary.dark", borderRadius:'12px', height: '47px', width: '90px', marginBottom: '10px' }}
             variant="outlined"
             onClick={handleSubmmitOpinion}
           >
-            Send Opinion
+            Leave Feedback
           </Button>
         </div>
 
@@ -116,7 +115,7 @@ export default function AboutUs() {
                 <GitHubIcon/></Button> </div> </div> 
 
         <div className="devCards"> <img src={ EricDaniele } className="image"  alt="Not found"/>
-        <h4 className="devName"> Eric Alan Daniele </h4>
+        <h4 className="devName"> Eric Daniele </h4>
         <div className="devButtons"><Button href="https://www.linkedin.com/in/danieleeric/">
             <LinkedInIcon/></Button> 
             <Button href="https://github.com/ericd33">

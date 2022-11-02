@@ -808,10 +808,11 @@ export function getOpinions(token) {
 }
 
 export function newOpinion(token, payload) {
-  return async function (dispatch) {
+  return function (dispatch) {
+    
     const Config = {
       method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/opinion/newOpinion`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/newOpinion`,
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -820,11 +821,12 @@ export function newOpinion(token, payload) {
         text: payload.text,
       },
     };
-    await axios(Config).then((res) => {
+
+    axios(Config).then((res) => {
       return dispatch({
         type: NEW_OPINION,
         payload: res.data,
       });
-    });
+    }).catch(err => console.log(err))
   };
 }
