@@ -32,7 +32,7 @@ export default function Donations() {
   };
 
   const handleSubmit = () => {
-    dispatch(Donate(amount,user.id));
+    dispatch(Donate(amount,user.email));
   };
 
 
