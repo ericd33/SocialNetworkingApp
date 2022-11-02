@@ -95,7 +95,7 @@ export const asistEvents = async (req: Request, res: Response) => {
   const event = await eventSchema.findOne({_id:eventId})
   const user = await userSchema.findOne({email:userEmail})
   try{
-    if(!event.participants.includes(user.email)){
+    if(!event.participants.some((u:any)=>u.email===userEmail)) {
       let assistInfo = {
         name: user.name,
         email: user.email,
