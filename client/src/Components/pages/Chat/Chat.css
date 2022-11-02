@@ -9,12 +9,17 @@
     color: white;
 }
 
+.chat-container-message{
+    display: flex;
+    width: fit-content;
+}
+
 .chat-from-container{
     display: flex;
     flex-direction: column;
     justify-content: initial;
     align-items: center;
-    width: 600px;
+    width: 700px;
     min-height: 400px;
     height: 450px;
     opacity: 0.9;
