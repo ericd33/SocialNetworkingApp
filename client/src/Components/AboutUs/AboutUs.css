@@ -17,14 +17,15 @@
 .cards {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 
 .cards2 {
     display: flex;
     justify-content: space-around;
-    margin-bottom: -39px;
+    margin-bottom: -17px;
 }
 
 .devCards {
