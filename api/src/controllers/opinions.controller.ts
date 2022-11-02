@@ -52,3 +52,12 @@ export const getOpinions = async (req: Request, res: Response) => {
       res.status(400).send(e);
     }
   };
+
+  export const getAllOpinions = async (_req: Request, res: Response) => {
+    try {
+      const opinios = await opinionSchema.find({});
+      res.send(opinios);
+    } catch (err) {
+      res.status(400).send([]);
+    }
+  };
