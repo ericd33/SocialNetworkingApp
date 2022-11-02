@@ -47,7 +47,7 @@ export default function AboutUs() {
     }
     axios(Config).then(res => setOpinios(res.data))
 },[dispatch])
-console.log(opinios)
+//console.log(opinios)
 
 
 
