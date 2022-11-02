@@ -343,3 +343,19 @@ export const addFavorite = async (req: Request, res: Response) => {
   }
 }
 
+export const shops = async (_req: Request, res: Response) => {
+  console.log("holas")
+  const users = await userSchema.find({}) 
+  // console.log(users)
+  const shops = users.map((e:any)=>{
+    return (
+      {
+        info:e.shops,
+        user:e.name,
+        avatar:e.image,
+        email:e.email
+    })
+  })
+  console.log(shops)
+  res.status(200).send(shops) 
+}
