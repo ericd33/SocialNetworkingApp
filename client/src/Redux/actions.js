@@ -116,17 +116,14 @@ export function Donate( data ) {
   };
 }
 
-export function Premium( data ) {
+export function Premium() {
   return async function () {
     const Config = {
       method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/mercado/suscripcion`,
-      data: {
-        id: data,
-      },
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/create-order`
     };
     await axios(Config).then((res) =>{
-      window.open(res.data.body.sandbox_init_point, "_blank", "noopener,noreferrer")}
+      window.open(res.data.href, "_blank", "noopener,noreferrer")}
     );
   };
 }
