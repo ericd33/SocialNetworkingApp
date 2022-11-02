@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   Button,
+  CardHeader,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useUserAuth } from "../../../context/UserAuthContext";
@@ -36,6 +37,7 @@ const Payments = () => {
     <Card
       className="postCreator"
       sx={{
+        maxWidth: '90%',
         width: 600,
         borderRadius: "15px",
         bgcolor: "custom.main",
@@ -47,43 +49,56 @@ const Payments = () => {
       <div className="headerModal">
           <h2>ConcatUs <span className="outl"> Payments </span></h2>
           <IconButton
-            sx={{ width: "35px", height: "35px", top: "20px" }}
+            id="closeIcon"
+            sx={{
+              width: "35px",
+              height: "35px",
+              top: "20px",
+              bgcolor: "custom.light",
+            }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon />
+            <CloseIcon sx={{ pr: "1px" }} />
           </IconButton>
         </div>
-        { data.length !==0 ? 
-			 data.map((o)=>{
+        <div className='opinionContainer'>
+       {data?.map((o) => {
         if(typeof o === 'object'){
-				return(
-					<div>
-					<p>Name {`${o.payer.name.given_name}  ${o.payer.name.surname}` }</p>
-					<p>E-mail {o.payer.email_address}</p>
-					<p>Pay {o.infopago.value} {o.infopago.currency_code}</p>
-          <hr />
-					</div>
-				)}
-			 })
-			 : 
-       <div className="List">
-        <div className="wrapper">
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-        </div>
-      </div> }
+          console.log(o);
+					 return (
+						<div id='commentCard'>
+					   		<Card
+							   className="cardOpinion"
+							   sx={{
+								bgcolor: "custom.light",
+								fontFamily: "Nunito",
+								color: "primary.light",
+								borderRadius: "15px",
+								mb: "10px",
+							   }}>
 
+								<CardHeader
+									sx={{ pt: "8px", color: "secondary.main" }}
+									title={o.payer.email_address}
+									subheader={`${o.payer.name.given_name}  ${o.payer.name.surname}` }
+                  subheaderTypographyProps={{ color: "white"}}
+								/>
+                <div className='pays'>
+								  <p id='textComment'>Pay {o.infopago.value} {o.infopago.currency_code}</p>
+                </div>
+						   </Card>
+						</div>
+            )}
+				   }
+			   )}
+      </div>
       </CardContent>
-    </Card>
+      </Card>
   );
 
   return (
     <div className="container">
-      <Button onClick={() => opencloseModal()}>
+      <Button id='banButton' sx={{fontSize:11}} color='error' variant="outlined" onClick={() => opencloseModal()}>
         Payments
       </Button>
       <Modal open={modal} onClose={opencloseModal}>
