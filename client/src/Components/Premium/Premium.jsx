@@ -17,7 +17,7 @@ export default function Prem() {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   const user = JSON.parse(window.localStorage.getItem("user"))
-
+  
   const opencloseModal = () => {
     setModal(!modal);
   };

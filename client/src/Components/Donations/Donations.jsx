@@ -32,7 +32,7 @@ export default function Donations() {
 
   const handleSubmit = () => {
     dispatch(Donate(amount,user._id));
-  };
+  }
 
   const body = (
     <Card

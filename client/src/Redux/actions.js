@@ -108,7 +108,7 @@ export function Donate( data , id) {
         mont: data,
         id:id
       },
-    };
+    }
     await axios(Config).then((res) =>{
       console.log(res.data)
       window.open(res.data.href, "_blank", "noopener,noreferrer")}
@@ -117,7 +117,7 @@ export function Donate( data , id) {
 }
 
 export function Premium(data) {
-  console.log(data)
+  console.log(data);
   return async function () {
     const Config = {
       method: "post",
