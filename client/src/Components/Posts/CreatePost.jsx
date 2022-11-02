@@ -13,7 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreatePost.css";
-import { getMyUser, postPost } from "../../Redux/actions";
+import { getMyUser, paginate, postPost } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
@@ -98,6 +98,7 @@ export default function CreatePost({profileUser}) {
       content: "",
       imageCloudinary: "",
     })
+    window.location.href = window.location.href
   };
 
   const body = (
