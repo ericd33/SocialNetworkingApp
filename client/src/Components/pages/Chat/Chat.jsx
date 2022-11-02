@@ -1,9 +1,9 @@
 import React from "react";
 import io from "socket.io-client";
 import { useState, useEffect } from "react";
-import './Chat.css'
-import { useUserAuth } from '../../../context/UserAuthContext.js';
-import { Link } from 'react-router-dom';
+import "./Chat.css";
+import { useUserAuth } from "../../../context/UserAuthContext.js";
+import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import InputBase from "@mui/material/InputBase";
@@ -35,7 +35,7 @@ const socket = io(`${process.env.REACT_APP_MY_API_URL}`);
 function Chat() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const {user} = useUserAuth();
+  const { user } = useUserAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,45 +61,58 @@ function Chat() {
 
   return (
     <div className="chat-container">
-                  <Link to={'/home'}><Button id='buttonEventDetail' sx={{position:'absolute', top:'0px', left:'0px',bgcolor: 'secondary.main', color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
+      <Link to={"/home"}>
+        <Button
+          id="buttonEventDetail"
+          sx={{
+            position: "absolute",
+            top: "0px",
+            left: "0px",
+            bgcolor: "secondary.main",
+            color: grey[800],
+            fontWeight: "bold",
+            mb: "10px",
+            mt: "10px",
+            ml: "10px",
+          }}
+          variant="contained"
+        >
+          Back
+        </Button>
+      </Link>
       <h1 className="title">ConcatUS Chat</h1>
       <h3 className="descrip">This is a global chat, meet everyone!</h3>
-      <form onSubmit={handleSubmit} className='chat-from-container'>
-
-      <TextField
-                sx={{ marginTop: '20px'}}
-                id="filled-multiline-static"
-                label="Write a message"
-                color="primary"
-                value={message}
-                inputProps={{ "aria-label": "search" }}
-                onChange={(e) => setMessage(e.target.value)}
-              />
-
-
-        {/* <input
-          type="text"
-          onChange={(e) => setMessage(e.target.value)}
+      <form onSubmit={handleSubmit} className="chat-from-container">
+        <TextField
+          sx={{ marginTop: "20px" }}
+          id="filled-multiline-static"
+          label="Write a message"
+          color="primary"
           value={message}
-          placeholder='write your message'
-          className='chat-input'
-        /> */}
-        {/* <button className="chat-send-button">Send</button> */}
-        <ul className="chat-list-ul">
-          {messages.map((message, i) => (
-            <li
-              key={i}
-              className={`message-from ${message.from === user.displayName ? 'message-from-me' : 'message-from-friend' }`}
-            >
-              <p>
-                {message.from}: {message.body}
-              </p>
-            </li>
-          ))}
-        </ul>
+          inputProps={{ "aria-label": "search" }}
+          onChange={(e) => setMessage(e.target.value)}
+          className="chat-input"
+        />
+        <div className="chat-container-message">
+          <ul className="chat-list-ul">
+            {messages.map((message, i) => (
+              <li
+                key={i}
+                className={`message-from ${
+                  message.from === user.displayName
+                    ? "message-from-me"
+                    : "message-from-friend"
+                }`}
+              >
+                <span>
+                  {message.from}: {message.body}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </form>
-      </div>
-
+    </div>
   );
 }
 
