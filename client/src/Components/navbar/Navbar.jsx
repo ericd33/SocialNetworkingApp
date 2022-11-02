@@ -29,6 +29,8 @@ import { useUserAuth } from "../../context/UserAuthContext";
 import Searchbar from "./Searchbar";
 import Prem from "../Premium/Premium";
 import Donations from "../Donations/Donations"
+import logogrande from '../../Logos/logogrande.png'
+import AboutUs from "../AboutUs/AboutUs";
 
 
 const NavBar = () => {
@@ -60,12 +62,12 @@ const NavBar = () => {
   }
 
   const handleInputEvents = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     dispatch(getEventsByName(token, e.target.value));
   };
 
   return (
-    <AppBar sx={{ bgcolor: "custom.dark" }} position="fixed">
+    <AppBar sx={{ bgcolor: "custom.dark" }} id='navbar' position="fixed">
       <Toolbar
         sx={{
           display: "flex",
@@ -76,13 +78,12 @@ const NavBar = () => {
         <Toolbar>
           <div>
             <Link to={"/home"}>
-              <h2>ConcatUs</h2>
+              <img id='logoHome' src={logogrande} alt='logo'/>
             </Link>
           </div>
         
           {window.location.href === `http://localhost:3000/events` ? (
             <TextField
-              sx={{ml:2}}
               placeholder="Search events..."
               id="barrabusquedaEvents"
               onChange={handleInputEvents}
@@ -103,6 +104,8 @@ const NavBar = () => {
               <ChatOutlinedIcon />
             </IconButton>
           </Link>
+            
+          <AboutUs/>
 
           <IconButton color="secondary" onClick={signOut}>
             <LogoutIcon />

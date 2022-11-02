@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
 }
+.containerSearch {
+    margin: 0px;
+    padding: 0px;
+}
 
 .resultsSearch h2 {
     font-size: 18px;

@@ -59,6 +59,10 @@
     background-color: transparent;
 }
 
+.centerHome #barrabusquedaEvents {
+    display: none;
+}
+
 @media (max-width:600px) {
     .HomeEvents {
         min-width: 100vw;
@@ -68,6 +72,12 @@
         min-width: 100vw;
         min-height: 100vh;
         justify-content: center;
+    }
+    .centerHome #barrabusquedaEvents {
+        margin-top: 10px;
+        display: block;
+        height: 30px;
+        padding-top: 5px;
     }
     .HomeEvents .media-part .leftHome {
         display: none;

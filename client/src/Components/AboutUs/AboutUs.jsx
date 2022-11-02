@@ -20,6 +20,7 @@ import EricDaniele from './DevelopersPhotos/EricDaniele.jpg'
 import { useUserAuth } from "../../context/UserAuthContext";
 import { newOpinion } from "../../Redux/actions";
 import { TextField } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
 
 export default function AboutUs() {
   const [modal, setModal] = useState(false);
@@ -161,9 +162,9 @@ export default function AboutUs() {
 
   return (
     <div className="container">
-      <Button onClick={() => opencloseModal()}>
-        About Us
-      </Button>
+      <IconButton sx={{width:'35px'}} onClick={opencloseModal} color="secondary">
+        <InfoIcon />
+      </IconButton>
       <Modal open={modal} onClose={opencloseModal}>
         {body}
       </Modal>
