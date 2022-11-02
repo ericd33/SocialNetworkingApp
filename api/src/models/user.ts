@@ -16,6 +16,7 @@ export interface Iuser extends Document{
     presentation?:string,
     website:string,
     premium?:boolean,
+    shops:string[],
     opinions?: string[],
 }
 const userSchema = new Schema({
@@ -58,7 +59,8 @@ const userSchema = new Schema({
     opinions:[],
     premium:{
         type:Boolean
-    }
+    },
+    shops:[]
 },{
     timestamps:true
   });

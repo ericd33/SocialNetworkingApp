@@ -14,13 +14,14 @@ const bodyParser = require("body-parser");
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
 import path from "path";
-
+const paypal = require("./routes/paypal.route")
 dotenv.config();
 const app = express();
 app.use(express.json());
 
 import { Server as socketServer } from "socket.io";
 import http from "http";
+// import { createPayment } from "./controllers/paypal.controller";
 // import { notification } from "./controllers/mercado.controller";
 // import { notification } from "./controllers/mercado.controller";
 
@@ -34,6 +35,8 @@ const io = new socketServer(server, {
 
 
 app.use(cors());
+
+// app.post("/create-payment",createPayment)
 
 io.on("connection", (socket) => {
   socket.on("message", (message) => {
@@ -54,7 +57,7 @@ server.listen(process.env.PORT, () => {
   connectDB();
 });
 app.use("/mercado", mercado);
-
+app.use("/paypal",paypal)
 
 
 app.use(middleware.decodeToken);
