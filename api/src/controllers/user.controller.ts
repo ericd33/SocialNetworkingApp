@@ -356,6 +356,6 @@ export const shops = async (_req: Request, res: Response) => {
         email:e.email
     })
   })
-  console.log(shops)
+  //console.log(shops)
   res.status(200).send(shops) 
 }
