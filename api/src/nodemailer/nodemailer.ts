@@ -46,4 +46,25 @@ module.exports = {
             `,
         }
     },
+    mailPremium:(email:string)=>{
+        return {
+            from: 'concatuss@gmail.com',
+            to: email,
+            subject: '¡Gracias por cambiar tu estado a premium disfruta de ConcatUs al 100%!',
+            html:`
+            <img width=60% src="https://st4.depositphotos.com/1654249/26479/i/600/depositphotos_264791344-stock-photo-alert-e-mail-message-concept.jpg" />
+            `,
+        }
+    },
+    mailDonation:(email:string)=>{
+        return {
+            from: 'concatuss@gmail.com',
+            to: email,
+            subject: '¡Gracias por tu aporte al epipo de ConcatUs!',
+            html:`
+            <img width=60% src="https://st4.depositphotos.com/1654249/26479/i/600/depositphotos_264791344-stock-photo-alert-e-mail-message-concept.jpg" />
+            `,
+        }
+    },
+
 }
