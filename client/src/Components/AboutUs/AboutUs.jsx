@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import {
   Modal,
   IconButton,
@@ -6,6 +6,7 @@ import {
   CardContent,
   Button,
 } from "@mui/material";
+import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import "./AboutUs.css";
 import { useDispatch } from "react-redux";
@@ -21,9 +22,13 @@ import { useUserAuth } from "../../context/UserAuthContext";
 import { newOpinion } from "../../Redux/actions";
 import { TextField } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
+import Opinios from "./Opinios";
 
 export default function AboutUs() {
   const [modal, setModal] = useState(false);
+  const [change, setChange] = useState(false);
+  console.log(change)
+  const [opinios, setOpinios] = useState([]);
   const { user } = useUserAuth();
   let token = user.accessToken;
   const dispatch = useDispatch();
@@ -31,7 +36,18 @@ export default function AboutUs() {
   const opencloseModal = () => {
     setModal(!modal);
   };
-  console.log( 'userrr',  user)
+
+  useEffect(()=>{
+    const Config = {
+      method: 'get',
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getAllOpinions`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    }
+    axios(Config).then(res => setOpinios(res.data))
+},[dispatch])
+console.log(opinios)
 
 
 
@@ -61,7 +77,9 @@ export default function AboutUs() {
     });
   };
 
-
+  const changeee= ()=>{
+   setChange(!change)
+  };
 
 
   const body = (
@@ -104,6 +122,14 @@ export default function AboutUs() {
             onClick={handleSubmmitOpinion}
           >
             Leave Feedback
+          </Button>
+          <br />
+          <Button
+            sx={{ mb: '2px', fontFamily: "Nunito", color: "primary.dark", borderRadius:'12px', height: '47px', width: '90px', marginBottom: '10px' }}
+            variant="outlined"
+            onClick={changeee}
+          >
+            View all opinios
           </Button>
         </div>
 
@@ -160,13 +186,48 @@ export default function AboutUs() {
     </Card>
   );
 
+  const body2 = (
+    <Card
+      className="postCreator"
+      sx={{
+        maxWidth: '90%',
+        width: 600,
+        borderRadius: "15px",
+        bgcolor: "custom.main",
+        fontFamily: "Nunito",
+        color: "primary.light",
+      }}
+    >
+      <CardContent>
+      <div className="headerModal">
+          <h2>ConcatUs Team:<span className="outl"> About Us</span></h2>
+          <IconButton
+            sx={{ width: "35px", height: "35px", top: "20px" }}
+            onClick={() => opencloseModal()}
+          >
+            <CloseIcon />
+          </IconButton>
+        
+          <Button
+            sx={{ mb: '2px', fontFamily: "Nunito", color: "primary.dark", borderRadius:'12px', height: '47px', width: '90px', marginBottom: '10px' }}
+            variant="outlined"
+            onClick={changeee}
+          >
+            View aboutUs
+          </Button>
+        </div>
+        <Opinios opinios={opinios} />
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div className="container">
       <IconButton sx={{width:'35px'}} onClick={opencloseModal} color="secondary">
         <InfoIcon />
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>
-        {body}
+      {change ? body2 : body }
       </Modal>
     </div>
   );
