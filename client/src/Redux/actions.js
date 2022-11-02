@@ -99,15 +99,16 @@ export function putPost(idPost, token, dataToUpdate) {
   };
 }
 
-export function Donate( data ) {
+export function Donate( data , id) {
   return async function () {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/donations`,
       data: {
         mont: data,
+        id:id
       },
-    };
+    }
     await axios(Config).then((res) =>{
       console.log(res.data)
       window.open(res.data.href, "_blank", "noopener,noreferrer")}
@@ -116,7 +117,7 @@ export function Donate( data ) {
 }
 
 export function Premium(data) {
-  console.log(data)
+  console.log(data);
   return async function () {
     const Config = {
       method: "post",
@@ -473,7 +474,7 @@ export function sortByComents(payload) {
   };
 }
 
-export function imageChange(payload, token, email) {
+export function imageChange(payload, token) {
   return async function (dispatch) {
     const Config = {
       method: "put",
@@ -482,12 +483,12 @@ export function imageChange(payload, token, email) {
         authorization: `Bearer ${token}`,
       },
       data: {
-        image: payload.img,
+        image: payload.image,
         email: payload.email,
       },
     };
-    await axios(Config);
-    dispatch(getMyUser(token, email));
+    await axios(Config).then(res => console.log(res));
+    dispatch(getMyUser(token, payload.email));
   };
 }
 export function nameChange(payload, token, email) {

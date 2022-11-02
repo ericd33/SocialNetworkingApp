@@ -98,6 +98,9 @@ export default function CreatePost({profileUser}) {
       content: "",
       imageCloudinary: "",
     })
+    setTimeout(() => {
+      window.location.href = window.location.href;
+    }, 1000)
   };
 
   const body = (

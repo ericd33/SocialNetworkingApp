@@ -95,7 +95,7 @@ export const asistEvents = async (req: Request, res: Response) => {
   const event = await eventSchema.findOne({_id:eventId})
   const user = await userSchema.findOne({email:userEmail})
   try{
-    if(!event.participants.includes(user.email)){
+    if(!event.participants.some((u:any)=>u.email===userEmail)) {
       let assistInfo = {
         name: user.name,
         email: user.email,
@@ -343,3 +343,19 @@ export const addFavorite = async (req: Request, res: Response) => {
   }
 }
 
+export const shops = async (_req: Request, res: Response) => {
+  console.log("holas")
+  const users = await userSchema.find({}) 
+  // console.log(users)
+  const shops = users.map((e:any)=>{
+    return (
+      {
+        info:e.shops,
+        user:e.name,
+        avatar:e.image,
+        email:e.email
+    })
+  })
+  //console.log(shops)
+  res.status(200).send(shops) 
+}

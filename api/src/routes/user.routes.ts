@@ -1,4 +1,4 @@
-import { addFavorite, asistEvents, editImage, editName, editWebSite, findUserByEmail } from './../controllers/user.controller';
+import { addFavorite, asistEvents, editImage, editName, editWebSite, findUserByEmail, shops } from './../controllers/user.controller';
 import { Router } from "express";
 
 import { addUser, findUserByName, findUserById , deleteUser, addFriend, findUser,editPresentation } from "../controllers/user.controller";
@@ -29,5 +29,6 @@ router.route('/editProfile/website')
     .put(editWebSite)
 router.route("/addFavorite")
     .post(addFavorite)
-
+router.route("/shop")
+    .post(shops)
 export default router;

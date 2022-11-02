@@ -39,7 +39,7 @@ export default function CreateEvent() {
   const { user } = useUserAuth();
   const token = user.accessToken;
   let userEmail = user.email;
-  let userName = user.displayName;
+  const myUser = useSelector(state => state.myUser)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { eventoLocation, setResults, location, setLocation, results } =
@@ -74,12 +74,12 @@ export default function CreateEvent() {
   const [formState, setFormState] = useState({
     name: "",
     content: "",
-    username: userName,
+    username: myUser.name,
     email: userEmail,
     date: Date.now(),
     avatar: "",
     location: location,
-    imageCloudinary: "",
+    imageCloudinary: '',
     lat_log: eventoLocation,
     type: 'in-person',
     meet_link: "",
@@ -132,7 +132,7 @@ export default function CreateEvent() {
     setFormState({
       name: "",
       content: "",
-      username: userName,
+      username: myUser.name,
       email: userEmail,
       date: Date.now(),
       avatar: "",

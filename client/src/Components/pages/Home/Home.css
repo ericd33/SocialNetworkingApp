@@ -55,6 +55,11 @@
     right: 45px;
 }
 
+.pays #textComment {
+    color: greenyellow;
+    margin-left: 150px;
+}
+
 .media-part .centerHome {
     background-color: transparent;
 }

@@ -31,10 +31,12 @@
 .devCards {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     width: 175px;
     border-radius: 5px;
     transition: .3s;
+    padding-right: 5px;
 }
 
 .devCards:hover{
@@ -58,16 +60,25 @@
 
 .inputsdeComments {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
   }
 
-  .inputsdeComments #filled-multiline-static{
-    width: 450px;
+.inputsdeComments .inputOpinion{
+    max-width: 350px;
     background-color: #3b3b3b;
     border-radius: 15px;
-    margin-bottom:10px;
-    padding-bottom:10px;
+    margin-bottom:30px;
     color: white;
     height: 15px;
+  }
+  .opinionContainer {
+    max-height: 500px;
+    padding-left: 12%;
+    margin-top: 10px;
+    overflow-y: scroll;
+  }
+
+  .cardOpinion {
+    height: 80px;
   }
