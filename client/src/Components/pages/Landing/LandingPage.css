@@ -9,7 +9,7 @@
     position: absolute;
     width: 350px;
     height: fit-content;
-    top: 20%;
+    top:30%;
     right: 8%;
     border-radius: 25px;
     padding-left: 80px;
@@ -18,10 +18,12 @@
     border: 1px solid rgb(194, 194, 194);
 }
 
-.landing .Title {
+.landing #logoLanding {
     position: absolute;
-    top: 5%;
-    right: 15%;
+    width: 300px;
+    height: 90px;
+    top: 3%;
+    right: 10%;
 }
 
 #or {
@@ -30,6 +32,11 @@
 
 #changeForm {
     width: 80px;
+}
+
+#logoLanding {
+ width: 250px;
+ height: 250px;
 }
 
 @media (max-width:600px) {

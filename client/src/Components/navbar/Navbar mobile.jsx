@@ -28,6 +28,10 @@ import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
 import HomeIcon from '@mui/icons-material/Home';
 import EventNoteIcon from '@mui/icons-material/EventNote';
+import Searchbar from "./Searchbar";
+import logochico from '../../Logos/logochico.png';
+import Prem from "../Premium/Premium";
+import AboutUs from "../AboutUs/AboutUs";
 
 const NavBarMobile = () => {
   const [AvatarImage, setAvatar] = useState();
@@ -67,61 +71,38 @@ const NavBarMobile = () => {
   };
 
   return (
-    <div className="navbarMobile">
-      <AppBar sx={{ bgcolor: "custom.dark" }} position="fixed">
+    <div>
+      <AppBar sx={{ bgcolor: "custom.dark" }} className="navbarMobile" position="fixed">
         <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
+        sx={{maxWidth:'110%'}}
         >
           <Toolbar>
             <Link to={"/home"}>
-              <Icon><HomeIcon/></Icon>
+              <img id='logoHomeMobile' src={logochico} alt='logo'/>
             </Link>
-            <IconButton>
-                <SearchIcon color="secondary" />
-            </IconButton>
-            {/* <Search sx={{ marginLeft: 5, borderRadius: 5 }}>
-              
-
-              {window.location.href === `http://localhost:3000/events` ? (
-                <StyledInputBase
-                  placeholder="Search events..."
-                  color="primary"
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={handleInputEvents}
-                />
-              ) : (
-                <StyledInputBase
-                  placeholder="Search users..."
-                  color="primary"
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={handleInputPersons}
-                />
-              )}
-            </Search> */}
-          </Toolbar>
-
-          <Toolbar>
-            {/* <IconButton color="secondary" component={Link}>
-              <NotificationsNoneIcon />
-            </IconButton> */}
+            {
+              window.location.href === `http://localhost:3000/events` ? (
+                null ) : (<IconButton>
+                            <Searchbar/>
+                          </IconButton>)
+            }
             <Link to={"/events"}>
-              <IconButton color="secondary">
+              <IconButton sx={{width:'35px'}} color="secondary">
                 <EventNoteIcon/>
               </IconButton>
             </Link>
+            <Prem/>
             <Donations />
 
             <Link to="/chat">
-              <IconButton color="secondary">
+              <IconButton sx={{width:'35px'}} color="secondary">
                 <ChatOutlinedIcon />
               </IconButton>
             </Link>
+            
+            <AboutUs/>
 
-            <IconButton color="secondary" onClick={signOut}>
+            <IconButton sx={{width:'35px'}} color="secondary" onClick={signOut}>
               <LogoutIcon />
             </IconButton>
 

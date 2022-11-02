@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
 }
+.containerSearch {
+    margin: 0px;
+    padding: 0px;
+}
 
 .resultsSearch h2 {
     font-size: 18px;
@@ -29,4 +33,14 @@
     width: 430px;
     max-height: 250px;
     overflow-y: scroll;
+}
+
+@media (max-width:600px) {
+    .commentsList {
+        width: 70%;
+    }
+    .finded-persons {
+        justify-content: center;
+        max-width: 95%;
+    }
 }

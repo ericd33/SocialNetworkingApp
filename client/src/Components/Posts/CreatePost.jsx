@@ -44,10 +44,6 @@ export default function CreatePost({profileUser}) {
     imageCloudinary: "",
   });
 
-  const submit = (e)=>{
-    setFile(e.target.files[0])
-  }
-
   const closeImg = (e)=>{
     setFormState({
       ...formState,
@@ -56,10 +52,10 @@ export default function CreatePost({profileUser}) {
       setPrev(false)
   }
 
-  const submitFile = async(e)=>{
-    let FILE = file
-    const formdata = new FormData()
-    formdata.append("imageCloudinary",FILE)
+  const submitFile = async (e) => {
+    let FILE = await e.target.files[0];
+    const formdata = new FormData();
+    formdata.append("imageCloudinary", FILE);
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/file`,
@@ -69,15 +65,17 @@ export default function CreatePost({profileUser}) {
       data: formdata,
     };
     await axios(Config)
-    .then((res)=> {
-      setFormState({
-        ...formState,
-        imageCloudinary:`${res.data}`})
-          setPrev(true)
-    }).catch((err)=>{
-      console.log(err)
-    })
-  }
+      .then((res) => {
+        setTimeout(() => {
+          setFormState({
+            ...formState,
+            imageCloudinary: `${res.data}`,
+          });
+        }, 1000);
+        setPrev(true);
+      })
+      .catch((err) => {});
+  };
 
   const handleChange = (e) => {
     setFormState({
@@ -106,8 +104,6 @@ export default function CreatePost({profileUser}) {
     <Card
       className="postCreator"
       sx={{
-        width:'90%',
-        maxWidth: '600px',
         borderRadius: "15px",
         bgcolor: 'custom.main',
         fontFamily: "Nunito",
@@ -145,22 +141,24 @@ export default function CreatePost({profileUser}) {
           className="textField"
           onChange={handleChange}
           />*/}
-        </div> 
-        <Input type="file" name="imageCloudinary" onChange={(e)=> submit(e) } ></Input>
-        {/* <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } /> */}
-        <Button variant="outlined" sx={{color:'secondary.main', border:'1px solid #ffd000'}} onClick={(e)=> submitFile(e)}>Image alredy</Button>
-        <br />
-        <br />
-        {prev ? 
-        <IconButton
-        onClick={closeImg}
-        sx={{ bgcolor: "secondary.main" }}
-        >
-        <CloseIcon sx={{pr:'1px'}}/>
-        </IconButton>
-        : null }
-        {prev ? <img src={formState.imageCloudinary} className="img"/> : null}
+          <div className="Input-Imagen">
+            <label id='labelInput' for="inputTag">
+            Upload image
+            <FileUploadIcon/>
+            <input id="inputTag" type="file" name="imageCloudinary" onChange={(e) => submitFile(e)} accept="image/png, image/jpg, image/gif, image/jpeg"/>
+            </label>
 
+          {prev ? 
+            <IconButton id='deleteIMG' onClick={closeImg} sx={{ bgcolor: "secondary.main" }}>
+              <CloseIcon sx={{pr:'1px'}}/>
+            </IconButton>
+            : null }
+          {prev ? 
+          <img src={formState.imageCloudinary} className="img"/> 
+            : null}
+          </div>
+        </div> 
+  
         <div align="right">
           <Button 
           id='Postbutton'

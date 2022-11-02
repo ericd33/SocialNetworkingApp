@@ -15,8 +15,10 @@ import LandingRegister from './Register/LandingRegister';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../Redux/actions';
 import {useNavigate} from 'react-router-dom';
-import {useUserAuth} from '../../../context/UserAuthContext'
-import GoogleButton from 'react-google-button'
+import {useUserAuth} from '../../../context/UserAuthContext';
+import GoogleButton from 'react-google-button';
+import logogrande2 from '../../../Logos/logogrande2.png';
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -72,7 +74,7 @@ const LandingPage = () => {
             backgroundPosition: 'center',
           }}
         />
-        <h1 className='Title'>ConcatUs</h1>
+        <img src={logogrande2} id='logoLanding' alt='logo'/>
         <Grid className='form' item component={Paper} elevation={6} square>
         {window.location.href === `http://localhost:3000/` ?
         <LandingLogin /> : <LandingRegister/>

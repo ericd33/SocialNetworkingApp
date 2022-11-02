@@ -21,6 +21,8 @@ import {
   FILTER_EVE_ASSIST,
   CLEAR_EVENTS,
   FAVORITE,
+  GET_OPINIONS,
+  NEW_OPINION
 } from "./action-types.js";
 
 export function postUser(payload, token) {
@@ -102,29 +104,26 @@ export function Donate( data ) {
   return async function () {
     const Config = {
       method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/mercado`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/donations`,
       data: {
-        donacion: data,
+        mont: data,
       },
     };
     await axios(Config).then((res) =>{
       console.log(res.data)
-      window.open(res.data.sandbox_init_point, "_blank", "noopener,noreferrer")}
+      window.open(res.data.href, "_blank", "noopener,noreferrer")}
     );
   };
 }
 
-export function Premium( data ) {
+export function Premium() {
   return async function () {
     const Config = {
       method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/mercado/suscripcion`,
-      data: {
-        id: data,
-      },
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/create-order`
     };
     await axios(Config).then((res) =>{
-      window.open(res.data.body.sandbox_init_point, "_blank", "noopener,noreferrer")}
+      window.open(res.data.href, "_blank", "noopener,noreferrer")}
     );
   };
 }
@@ -167,6 +166,7 @@ export function details(id, token) {
       },
     };
     axios(Config).then((res) => {
+      console.log(res.data);
       return dispatch({
         type: GET_DETAILS,
         payload: res.data,
@@ -787,4 +787,46 @@ export function favorite (payload,token){
     })
     }) 
 }
+}
+
+export function getOpinions(token) {
+  return function (dispatch) {
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getOpinions`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    axios(Config).then((res) => {
+      return dispatch({
+        type: GET_OPINIONS,
+        payload: res.data,
+      });
+    });
+  };
+}
+
+export function newOpinion(token, payload) {
+  return function (dispatch) {
+    
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/newOpinion`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        authorOpinion: payload.authorOpinion,
+        text: payload.text,
+      },
+    };
+
+    axios(Config).then((res) => {
+      return dispatch({
+        type: NEW_OPINION,
+        payload: res.data,
+      });
+    }).catch(err => console.log(err))
+  };
 }

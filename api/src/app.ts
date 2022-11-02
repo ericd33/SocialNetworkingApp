@@ -5,6 +5,7 @@ import userRoutes from "./routes/user.routes";
 import comment from "./routes/comment.router";
 import event from "./routes/events.routes";
 import post from "./routes/posts.router";
+import opinion from "./routes/opinions.router"
 import mercado from "./routes/mercado.router";
 const mercadopago = require("mercadopago");
 const cors = require("cors");
@@ -13,13 +14,14 @@ const bodyParser = require("body-parser");
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
 import path from "path";
-
+const paypal = require("./routes/paypal.route")
 dotenv.config();
 const app = express();
 app.use(express.json());
 
 import { Server as socketServer } from "socket.io";
 import http from "http";
+// import { createPayment } from "./controllers/paypal.controller";
 // import { notification } from "./controllers/mercado.controller";
 // import { notification } from "./controllers/mercado.controller";
 
@@ -33,6 +35,8 @@ const io = new socketServer(server, {
 
 
 app.use(cors());
+
+// app.post("/create-payment",createPayment)
 
 io.on("connection", (socket) => {
   socket.on("message", (message) => {
@@ -53,7 +57,7 @@ server.listen(process.env.PORT, () => {
   connectDB();
 });
 app.use("/mercado", mercado);
-
+app.use("/paypal",paypal)
 
 
 app.use(middleware.decodeToken);
@@ -86,4 +90,5 @@ app.use("/comments", comment);
 app.use("/users", userRoutes);
 app.use("/events", event);
 app.use("/posts", upload.single("imageCloudinary"), post);
+app.use("/opinions", opinion);
 

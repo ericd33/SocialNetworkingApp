@@ -7,8 +7,10 @@ import FilterEvents from "./FilterEvents";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
-import { getEvents } from "../../../Redux/actions";
+import { getEvents, getEventsByName } from "../../../Redux/actions";
 import NavBarMobile from "../../navbar/Navbar mobile";
+import { TextField } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
 
 export default function EventsPage() {
   const {user} = useUserAuth();
@@ -22,7 +24,12 @@ export default function EventsPage() {
     useEffect(()=>{
         dispatch(getEvents(token))
     },[dispatch])
-  
+
+    const handleInputEvents = (e) => {
+      // console.log(e.target.value);
+      dispatch(getEventsByName(token, e.target.value));
+    };
+
   let eventsSoluc = useSelector((state)=>state.soluc);
 
   return (
@@ -40,6 +47,12 @@ export default function EventsPage() {
           <EventsMenu />
         </div>
         <div className="centerHome">
+            <TextField
+              variant='filled'
+              placeholder="Search events..."
+              id="barrabusquedaEvents"
+              onChange={handleInputEvents}
+            />
           <FilterEvents />
           {
           eventsSoluc.length === 0 ? 

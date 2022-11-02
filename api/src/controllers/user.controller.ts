@@ -96,12 +96,17 @@ export const asistEvents = async (req: Request, res: Response) => {
   const user = await userSchema.findOne({email:userEmail})
   try{
     if(!event.participants.includes(user.email)){
-      event.participants.push(user.email)
-      user.asistEvent.push(eventId)
+      let assistInfo = {
+        name: user.name,
+        email: user.email,
+        avatar: user.image
+      }
+      event.participants.push(assistInfo);
+      user.asistEvent.push(eventId);
     }else{
       let participants = []
       let events = []
-      participants = event.participants.filter((e:any)=>e!==user.email)
+      participants = event.participants.filter((e:any)=>e.email!==userEmail)
       events = user.asistEvent.filter((e:any)=>e!==eventId) 
       user.asistEvent = events;
       event.participants = participants;

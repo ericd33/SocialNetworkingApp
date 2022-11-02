@@ -2,7 +2,7 @@ import { Avatar, Button, Card, Container, CardContent, CardMedia, Typography, Ic
 import { grey, red, yellow } from "@mui/material/colors";
 import './EventDetail.css';
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { details, deleteDetails, assitEvent  } from "../../Redux/actions.js";
 import { Link, useParams } from 'react-router-dom';
 import React from 'react'
@@ -12,13 +12,15 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useUserAuth } from "../../context/UserAuthContext";
 import Maps from "./map/mapDetail";
 import './map/map.css'
+import axios from "axios";
+import ParticipantsModal from "./ParticipantsModal";
 
 
 export default function EventDetail() {
     const detail = useSelector(d=>d.details)
     const {user} = useUserAuth();
+    const [profileUser, setProfileUser] = useState({})
     let token = user.accessToken;
-
     
     let emailU =user.email
     
@@ -31,6 +33,15 @@ export default function EventDetail() {
 		}
     
     useEffect(()=>{
+        const Config = {
+            method: 'get',
+            baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${emailU}`,
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+          }
+        axios(Config).then(res => setProfileUser(res.data))
+
         dispatch(details(id,token))
         return()=>{
             dispatch(deleteDetails())
@@ -43,6 +54,7 @@ export default function EventDetail() {
     // console.log(detail)
     if (detail?.length !== 0) {
         console.log(detail);
+        let date = detail.date.replace('T',' / ').substring(0,detail.date.length-6);
         if(detail?.type === 'in-person') {
             return (
                 <div className='EventDetailContainer'>
@@ -76,7 +88,7 @@ export default function EventDetail() {
                                     <Avatar id='avatar' sx={{ bgcolor: yellow[500] }} src={detail?.avatar}></Avatar>
         
                                     <Typography id="h5" sx={{fontFamily: 'Nunito', fontSize: 16,color:'primary.light'}} gutterBottom variant="h5" component="div">
-                                        {detail?.nameAuthor}
+                                        {profileUser.name}
                                     </Typography>
                                 </div>
                             </div>
@@ -96,10 +108,8 @@ export default function EventDetail() {
                                 <Button id='assistButton' sx={{bgcolor: 'secondary.main', color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>
                                 
                                 <div className="date-hour-part">
-                                    {
-                                        detail ? <span>Participants: {detail.participants}</span> : <></>
-                                    }
-                                    <span>Date: {detail?.date}</span>
+                                    <ParticipantsModal participants={detail.participants}/>
+                                    <span>Date: {date} hs.</span>
                                 </div>
                             </div>
                         </CardContent>
@@ -142,7 +152,7 @@ export default function EventDetail() {
                                     <Avatar id='avatar' sx={{ bgcolor: yellow[500] }} src={detail?.avatar}></Avatar>
         
                                     <Typography id="h5" sx={{fontFamily: 'Nunito', fontSize: 16,color:'primary.light'}} gutterBottom variant="h5" component="div">
-                                        {detail?.nameAuthor}
+                                        {profileUser.name}
                                     </Typography>
                                 </div>
                             </div>
@@ -152,11 +162,11 @@ export default function EventDetail() {
                         <div className="text">
                             <div className="descriptionDetailOnline">
                                 <h3>Meet link:</h3>
-                                <p>{detail?.meet_link}</p>
+                                <h4>{detail?.meet_link}</h4>
                             </div>
                             <div className="descriptionDetailOnline">
                                 <h3>Description:</h3>
-                                <p>{detail?.content}</p>
+                                <h4>{detail?.content}</h4>
                             </div>
                         </div>
         
@@ -165,10 +175,8 @@ export default function EventDetail() {
                                 <Button id='assistButton' sx={{bgcolor: 'secondary.main', color:grey[800]}} variant="contained" onClick={submitEvent}>Assist</Button>
                                 
                                 <div className="date-hour-part">
-                                    {
-                                        detail ? <span>Participants: {detail.participants}</span> : <></>
-                                    }
-                                    <span>Date: {detail?.date}</span>
+                                    <ParticipantsModal participants={detail.participants}/>
+                                    <span>Date: {date} hs.</span>
                                 </div>
                             </div>
                         </CardContent>

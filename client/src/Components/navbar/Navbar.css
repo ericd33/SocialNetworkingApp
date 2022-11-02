@@ -2,7 +2,9 @@ a{
     text-decoration: none;
     color: #ffd000;
 }
-
+#navbar {
+    min-height: 70px;
+}
 #barrabusquedaEvents {
     color:white;
     border: 1px solid gray;
@@ -18,4 +20,9 @@ a{
 }
 .headerModal label{
     color:white;
+}
+
+#logoHome {
+    width: 210px;
+    padding-top: 5px;
 }
