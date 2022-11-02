@@ -22,6 +22,8 @@ export const FILTER_EVE_LOC = "FILTER_EVE_LOC"
 export const FILTER_EVE_ASSIST = "FILTER_EVE_ASSIST"
 export const CLEAR_EVENTS = "CLEAR_EVENTS"
 export const FAVORITE = "FAVORITE"
+export const GET_OPINIONS = "GET_OPINIONS"
+export const NEW_OPINION = "NEW_OPINION"
 
 
 
