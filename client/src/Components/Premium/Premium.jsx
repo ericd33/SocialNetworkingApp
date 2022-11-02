@@ -11,20 +11,21 @@ import "./Premium.css";
 import { useDispatch } from "react-redux";
 import { Premium } from "../../Redux/actions";
 import PaidIcon from '@mui/icons-material/Paid';
+import { useUserAuth } from "../../context/UserAuthContext";
 
 
 export default function Prem() {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
-  const user = JSON.parse(window.localStorage.getItem("user"))
-  
+  // const user = JSON.parse(window.localStorage.getItem("user"))
+  const {user} = useUserAuth();
   const opencloseModal = () => {
     setModal(!modal);
   };
   console.log(user)
 
   const handleSubmit = () => {
-    dispatch(Premium(user._id));
+    dispatch(Premium(user.id));
   };
 
   const body = (
