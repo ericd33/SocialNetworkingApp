@@ -25,7 +25,7 @@ export default function Prem() {
   console.log(user)
 
   const handleSubmit = () => {
-    dispatch(Premium(user.id));
+    dispatch(Premium(user.email));
   };
 
   const body = (

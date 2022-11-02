@@ -9,8 +9,8 @@ const userSchema = require("../models/user");
 const mailSettings = require("../nodemailer/nodemailer");
 
 export const createPayment =async ( req: Request, res: Response)=>{
-    const {id} = req.body 
-    console.log(id)
+    const {email} = req.body 
+    console.log(email)
     const order = {
         intent: 'CAPTURE',
         purchase_units:[
@@ -26,7 +26,7 @@ export const createPayment =async ( req: Request, res: Response)=>{
             landing_page: 'NO_PREFERENCE', // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
             user_action: 'PAY_NOW', // Accion para que en paypal muestre el monto del pago
 
-            return_url: `${process.env.SELF_API_URL}/paypal/capture-order?id=${id}`, // Url despues de realizar el pago
+            return_url: `${process.env.SELF_API_URL}/paypal/capture-order?email=${email}`, // Url despues de realizar el pago
             cancel_url: `${process.env.SELF_API_URL}/paypal/cancel-order` // Url despues de realizar el pago
 
         }
@@ -41,7 +41,9 @@ export const createPayment =async ( req: Request, res: Response)=>{
 }
 
 export const captureOrder =async ( req: Request, res: Response)=>{
-    const {token,id} = req.query
+    const {token,email} = req.query
+    console.log(email)
+
     const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {},{
         auth:{
             username:CLIENT,
@@ -50,7 +52,8 @@ export const captureOrder =async ( req: Request, res: Response)=>{
     })
 
     if(response.data.status==="COMPLETED"){
-        const user =await userSchema.findOne({_id:id})
+        const user =await userSchema.findOne({email:email})
+        console.log(user)
         user.premium=true
         const infoP = {
             payer:response.data.payer,
@@ -74,7 +77,7 @@ export const captureOrder =async ( req: Request, res: Response)=>{
 
 
 export const createDonations =async ( req: Request, res: Response)=>{
-    const { mont,id } = req.body
+    const { mont,email } = req.body
     const order = {
         intent: 'CAPTURE',
         purchase_units:[
@@ -89,7 +92,7 @@ export const createDonations =async ( req: Request, res: Response)=>{
             brand_name: `ConcatUs`,
             landing_page: 'NO_PREFERENCE', // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
             user_action: 'PAY_NOW', // Accion para que en paypal muestre el monto del pago
-            return_url: `${process.env.SELF_API_URL}/paypal/capture-order-donations?id=${id}`, // Url despues de realizar el pago
+            return_url: `${process.env.SELF_API_URL}/paypal/capture-order-donations?email=${email}`, // Url despues de realizar el pago
             cancel_url: `${process.env.SELF_API_URL}/paypal/cancel-order` // Url despues de realizar el pago
         }
     }
@@ -102,7 +105,7 @@ export const createDonations =async ( req: Request, res: Response)=>{
     res.send(response.data.links[1])
 }
 export const captureOrderDonations =async ( req: Request, res: Response)=>{
-    const {token,id} = req.query
+    const {token,email} = req.query
     const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {},{
         auth:{
             username:CLIENT,
@@ -111,7 +114,8 @@ export const captureOrderDonations =async ( req: Request, res: Response)=>{
     })
    // let email = response.data.payment_source.paypal.email_address
     if(response.data.status==="COMPLETED"){
-        const user =await userSchema.findOne({_id:id})
+        const user =await userSchema.findOne({email:email})
+        console.log(user)
         user.premium=true
         const infoP = {
             payer:response.data.payer,
