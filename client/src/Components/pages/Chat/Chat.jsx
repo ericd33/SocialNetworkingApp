@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
+import { TextField } from "@mui/material";
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: grey[200],
@@ -61,12 +62,14 @@ function Chat() {
   return (
     <div className="chat-container">
                   <Link to={'/home'}><Button id='buttonEventDetail' sx={{position:'absolute', top:'0px', left:'0px',bgcolor: 'secondary.main', color:grey[800], fontWeight:'bold', mb:'10px',mt:'10px',ml:'10px'}} variant="contained">Back</Button></Link>
-      <h1>ConcatUS Chat</h1>
-      <p>This is a global chat, meet everyone!</p>
+      <h1 className="title">ConcatUS Chat</h1>
+      <h3 className="descrip">This is a global chat, meet everyone!</h3>
       <form onSubmit={handleSubmit} className='chat-from-container'>
 
-      <StyledInputBase
-                placeholder="Write a message"
+      <TextField
+                sx={{ marginTop: '20px'}}
+                id="filled-multiline-static"
+                label="Write a message"
                 color="primary"
                 value={message}
                 inputProps={{ "aria-label": "search" }}
