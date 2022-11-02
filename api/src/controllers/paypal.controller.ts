@@ -8,7 +8,6 @@ import { Request, Response } from "express";
 const userSchema = require("../models/user");
 const mailSettings = require("../nodemailer/nodemailer");
 
-
 export const createPayment =async ( req: Request, res: Response)=>{
     const {id} = req.body 
     console.log(id)
@@ -26,8 +25,10 @@ export const createPayment =async ( req: Request, res: Response)=>{
             brand_name: `ConcatUs`,
             landing_page: 'NO_PREFERENCE', // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
             user_action: 'PAY_NOW', // Accion para que en paypal muestre el monto del pago
-            return_url: `http://localhost:3001/paypal/capture-order?id=${id}`, // Url despues de realizar el pago
-            cancel_url: `http://localhost:3001/paypal/cancel-order` // Url despues de realizar el pago
+
+            return_url: `${process.env.SELF_API_URL}/paypal/capture-order?id=${id}`, // Url despues de realizar el pago
+            cancel_url: `${process.env.SELF_API_URL}/paypal/cancel-order` // Url despues de realizar el pago
+
         }
     }
     const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders`,order,{
@@ -47,7 +48,7 @@ export const captureOrder =async ( req: Request, res: Response)=>{
             password:SECRET
         }
     })
-    // let email = response.data.payment_source.paypal.email_address
+
     if(response.data.status==="COMPLETED"){
         const user =await userSchema.findOne({_id:id})
         user.premium=true
