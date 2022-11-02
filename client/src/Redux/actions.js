@@ -100,7 +100,6 @@ export function putPost(idPost, token, dataToUpdate) {
 }
 
 export function Donate( data ) {
-  console.log(data)
   return async function () {
     const Config = {
       method: "post",
@@ -116,11 +115,15 @@ export function Donate( data ) {
   };
 }
 
-export function Premium() {
+export function Premium(data) {
+  console.log(data)
   return async function () {
     const Config = {
       method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/create-order`
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/create-order`,
+      data:{
+        id:data
+      }
     };
     await axios(Config).then((res) =>{
       window.open(res.data.href, "_blank", "noopener,noreferrer")}
