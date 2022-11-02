@@ -8,7 +8,6 @@ import { Request, Response } from "express";
 const userSchema = require("../models/user");
 const mailSettings = require("../nodemailer/nodemailer");
 
-
 export const createPayment =async ( req: Request, res: Response)=>{
     const {id} = req.body 
     console.log(id)
@@ -26,8 +25,10 @@ export const createPayment =async ( req: Request, res: Response)=>{
             brand_name: `ConcatUs`,
             landing_page: 'NO_PREFERENCE', // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
             user_action: 'PAY_NOW', // Accion para que en paypal muestre el monto del pago
-            return_url: `http://localhost:3001/paypal/capture-order?id=${id}`, // Url despues de realizar el pago
-            cancel_url: `http://localhost:3001/paypal/cancel-order` // Url despues de realizar el pago
+
+            return_url: `${process.env.SELF_API_URL}/paypal/capture-order?id=${id}`, // Url despues de realizar el pago
+            cancel_url: `${process.env.SELF_API_URL}/paypal/cancel-order` // Url despues de realizar el pago
+
         }
     }
     const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders`,order,{
@@ -47,7 +48,7 @@ export const captureOrder =async ( req: Request, res: Response)=>{
             password:SECRET
         }
     })
-    // let email = response.data.payment_source.paypal.email_address
+
     if(response.data.status==="COMPLETED"){
         const user =await userSchema.findOne({_id:id})
         user.premium=true
@@ -73,7 +74,7 @@ export const captureOrder =async ( req: Request, res: Response)=>{
 
 
 export const createDonations =async ( req: Request, res: Response)=>{
-    const { mont } = req.body
+    const { mont,id } = req.body
     const order = {
         intent: 'CAPTURE',
         purchase_units:[
@@ -88,7 +89,7 @@ export const createDonations =async ( req: Request, res: Response)=>{
             brand_name: `ConcatUs`,
             landing_page: 'NO_PREFERENCE', // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
             user_action: 'PAY_NOW', // Accion para que en paypal muestre el monto del pago
-            return_url: `${process.env.SELF_API_URL}/paypal/capture-order-donations`, // Url despues de realizar el pago
+            return_url: `${process.env.SELF_API_URL}/paypal/capture-order-donations?id=${id}`, // Url despues de realizar el pago
             cancel_url: `${process.env.SELF_API_URL}/paypal/cancel-order` // Url despues de realizar el pago
         }
     }
@@ -101,16 +102,16 @@ export const createDonations =async ( req: Request, res: Response)=>{
     res.send(response.data.links[1])
 }
 export const captureOrderDonations =async ( req: Request, res: Response)=>{
-    const {token} = req.query
+    const {token,id} = req.query
     const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {},{
         auth:{
             username:CLIENT,
             password:SECRET
         }
     })
-    let email = response.data.payment_source.paypal.email_address
+   // let email = response.data.payment_source.paypal.email_address
     if(response.data.status==="COMPLETED"){
-        const user =await userSchema.findOne({email:email})
+        const user =await userSchema.findOne({_id:id})
         user.premium=true
         const infoP = {
             payer:response.data.payer,
@@ -120,7 +121,7 @@ export const captureOrderDonations =async ( req: Request, res: Response)=>{
         user.shops = user.shops.concat(infoP)
         user.save()
         const transporter = mailSettings.transporter;
-        const mailReports = mailSettings.mailDonation(email);
+        const mailReports = mailSettings.mailDonation(user.email);
         transporter.sendMail(mailReports, (err: any) => {
         if (err) {
             console.log(err);
@@ -129,6 +130,10 @@ export const captureOrderDonations =async ( req: Request, res: Response)=>{
         }
         });
     }
+    res.redirect(`${process.env.SELF_FRONT_URL}`)
+}
+
+export const cancel =async ( _req: Request, res: Response)=>{
     res.redirect(`${process.env.SELF_FRONT_URL}`)
 }
 

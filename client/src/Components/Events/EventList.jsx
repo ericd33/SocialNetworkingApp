@@ -39,7 +39,7 @@ export default function EventList({events}) {
                                 location={e.location}
                                 name={e.name}
                                 text={e.content}
-                                image={e.image}
+                                image={e.imageCloudinary}
                                 id={e._id}
                                 enabled={e.enabled}
                                 type={e.type}
@@ -54,7 +54,7 @@ export default function EventList({events}) {
                                 location={e.location}
                                 name={e.name}
                                 text={e.content}
-                                image={e.image}
+                                image={e.imageCloudinary}
                                 id={e._id}
                                 enabled={e.enabled}
                                 type={e.type}

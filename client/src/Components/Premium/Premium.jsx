@@ -19,7 +19,6 @@ export default function Prem() {
   const dispatch = useDispatch();
   // const user = JSON.parse(window.localStorage.getItem("user"))
   const {user} = useUserAuth();
-
   const opencloseModal = () => {
     setModal(!modal);
   };
@@ -44,10 +43,16 @@ export default function Prem() {
         <div className="headerModal">
           <h2>ConcatUs <span className="outl"> Premium</span></h2>
           <IconButton
-            sx={{ width: "35px", height: "35px", top: "20px" }}
+            id="closeIcon"
+            sx={{
+              width: "35px",
+              height: "35px",
+              top: "20px",
+              bgcolor: "custom.light",
+            }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon />
+            <CloseIcon sx={{ pr: "1px" }} />
           </IconButton>
         </div>
         <p>

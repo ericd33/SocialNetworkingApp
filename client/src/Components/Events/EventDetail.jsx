@@ -50,6 +50,9 @@ export default function EventDetail() {
 
 		const submitEvent = ()=>{
 			dispatch(assitEvent(token, payload))
+            setTimeout(() => {
+                window.location.href = window.location.href; 
+            }, 1000)
 		}
     // console.log(detail)
     if (detail?.length !== 0) {
@@ -88,7 +91,7 @@ export default function EventDetail() {
                                     <Avatar id='avatar' sx={{ bgcolor: yellow[500] }} src={detail?.avatar}></Avatar>
         
                                     <Typography id="h5" sx={{fontFamily: 'Nunito', fontSize: 16,color:'primary.light'}} gutterBottom variant="h5" component="div">
-                                        {profileUser.name}
+                                        {detail?.username}
                                     </Typography>
                                 </div>
                             </div>
