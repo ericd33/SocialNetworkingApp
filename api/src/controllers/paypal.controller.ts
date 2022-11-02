@@ -133,3 +133,7 @@ export const captureOrderDonations =async ( req: Request, res: Response)=>{
     res.redirect(`${process.env.SELF_FRONT_URL}`)
 }
 
+export const cancel =async ( _req: Request, res: Response)=>{
+    res.redirect(`${process.env.SELF_FRONT_URL}`)
+}
+
