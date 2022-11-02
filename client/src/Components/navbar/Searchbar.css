@@ -30,3 +30,13 @@
     max-height: 250px;
     overflow-y: scroll;
 }
+
+@media (max-width:600px) {
+    .commentsList {
+        width: 70%;
+    }
+    .finded-persons {
+        justify-content: center;
+        max-width: 95%;
+    }
+}

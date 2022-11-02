@@ -28,6 +28,7 @@ import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
 import HomeIcon from '@mui/icons-material/Home';
 import EventNoteIcon from '@mui/icons-material/EventNote';
+import Searchbar from "./Searchbar";
 
 const NavBarMobile = () => {
   const [AvatarImage, setAvatar] = useState();
@@ -80,34 +81,15 @@ const NavBarMobile = () => {
             <Link to={"/home"}>
               <Icon><HomeIcon/></Icon>
             </Link>
-            <IconButton>
-                <SearchIcon color="secondary" />
-            </IconButton>
-            {/* <Search sx={{ marginLeft: 5, borderRadius: 5 }}>
-              
-
-              {window.location.href === `http://localhost:3000/events` ? (
-                <StyledInputBase
-                  placeholder="Search events..."
-                  color="primary"
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={handleInputEvents}
-                />
-              ) : (
-                <StyledInputBase
-                  placeholder="Search users..."
-                  color="primary"
-                  inputProps={{ "aria-label": "search" }}
-                  onChange={handleInputPersons}
-                />
-              )}
-            </Search> */}
+            {
+              window.location.href === `http://localhost:3000/events` ? (
+                null ) : (<IconButton>
+                            <Searchbar/>
+                          </IconButton>)
+            }
           </Toolbar>
 
           <Toolbar>
-            {/* <IconButton color="secondary" component={Link}>
-              <NotificationsNoneIcon />
-            </IconButton> */}
             <Link to={"/events"}>
               <IconButton color="secondary">
                 <EventNoteIcon/>
