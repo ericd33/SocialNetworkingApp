@@ -27,9 +27,11 @@ const Payments = () => {
         Authorization: `Bearer ${token}`
       },
     }
-    axios(Config).then(res => setData(res.data[0].info))
+    
+    axios(Config).then(res => {setData(res.data)
+    console.log(res.data)})
 },[])
-//console.log(data)
+// console.log(data)
 	const opencloseModal = () => {
     setModal(!modal);
   };
@@ -63,34 +65,37 @@ const Payments = () => {
         </div>
         <div className='opinionContainer'>
        {data?.map((o) => {
-        if(typeof o === 'object'){
-          console.log(o);
-					 return (
-						<div id='commentCard'>
-					   		<Card
-							   className="cardOpinion"
-							   sx={{
-								bgcolor: "custom.light",
-								fontFamily: "Nunito",
-								color: "primary.light",
-								borderRadius: "15px",
-								mb: "10px",
-							   }}>
-
-								<CardHeader
-									sx={{ pt: "8px", color: "secondary.main" }}
-									title={o.payer.email_address}
-									subheader={`${o.payer.name.given_name}  ${o.payer.name.surname}` }
+        console.log(0)
+        return(o?.info?.map((e)=>{
+          // console.log(e)
+          return (
+            <div id='commentCard'>
+                <Card
+                className="cardOpinion"
+                sx={{
+                bgcolor: "custom.light",
+                fontFamily: "Nunito",
+                color: "primary.light",
+                borderRadius: "15px",
+                mb: "10px",
+                }}>
+  
+                <CardHeader
+                  sx={{ pt: "8px", color: "secondary.main" }}
+                  title={e?.payer?.email_address}
+                  subheader={`${e?.payer?.name?.given_name}  ${e?.payer?.name?.surname}` }
                   subheaderTypographyProps={{ color: "white"}}
-								/>
+                />
                 <div className='pays'>
-								  <p id='textComment'>Pay {o.infopago.value} {o.infopago.currency_code}</p>
+                  <p id='textComment'>Pay {e?.infopago?.value} {e?.infopago?.currency_code}</p>
                 </div>
-						   </Card>
-						</div>
-            )}
-				   }
-			   )}
+              </Card>
+            </div>
+            )
+        }))
+        // if(typeof o.info === 'object'){
+				  //  }
+			    })}
       </div>
       </CardContent>
       </Card>
