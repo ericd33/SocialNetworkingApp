@@ -102,14 +102,14 @@ export function Donate( data ) {
   return async function () {
     const Config = {
       method: "post",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/mercado`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/donations`,
       data: {
-        donacion: data,
+        mont: data,
       },
     };
     await axios(Config).then((res) =>{
       console.log(res.data)
-      window.open(res.data.sandbox_init_point, "_blank", "noopener,noreferrer")}
+      window.open(res.data.href, "_blank", "noopener,noreferrer")}
     );
   };
 }
