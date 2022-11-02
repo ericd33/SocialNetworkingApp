@@ -1,9 +1,9 @@
-// const request = require('request');
+
 import axios from "axios"
 const CLIENT = "AXhZzmHVzLk7pOaQE7jcmk_49ppCo4-4UW-s-EmQ_A7UhIlgZVPnmE7OKzcWN3eu_osFTHCQUBSMO2eW"
 const SECRET = "EBh1JTq_NbKTrV9PO_blsnraRe24QeUVlhKqIADjt-03npRszlbOOZC_9nEhSSLMo6KrT_WJIoF5-xWM"
 const PAYPAL_API = "https://api-m.sandbox.paypal.com"
-// const auth = {user:CLIENT,pass:SECRET} 
+
 import { Request, Response } from "express";
 const userSchema = require("../models/user");
 const mailSettings = require("../nodemailer/nodemailer");
@@ -68,7 +68,7 @@ export const captureOrder =async ( req: Request, res: Response)=>{
         }
         });
     }
-    res.redirect("http://localhost:3000/home")
+    res.redirect(`${process.env.SELF_FRONT_URL}/home`)
 }
 
 
@@ -88,8 +88,8 @@ export const createDonations =async ( req: Request, res: Response)=>{
             brand_name: `ConcatUs`,
             landing_page: 'NO_PREFERENCE', // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
             user_action: 'PAY_NOW', // Accion para que en paypal muestre el monto del pago
-            return_url: `http://localhost:3001/paypal/capture-order-donations`, // Url despues de realizar el pago
-            cancel_url: `http://localhost:3001/paypal/cancel-order` // Url despues de realizar el pago
+            return_url: `${process.env.SELF_API_URL}/paypal/capture-order-donations`, // Url despues de realizar el pago
+            cancel_url: `${process.env.SELF_API_URL}/paypal/cancel-order` // Url despues de realizar el pago
         }
     }
     const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders`,order,{
@@ -129,6 +129,6 @@ export const captureOrderDonations =async ( req: Request, res: Response)=>{
         }
         });
     }
-    res.redirect("http://localhost:3000/home")
+    res.redirect(`${process.env.SELF_FRONT_URL}`)
 }
 
