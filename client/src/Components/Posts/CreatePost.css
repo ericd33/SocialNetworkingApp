@@ -12,8 +12,8 @@
 
 .postCreator {
     position: absolute;
+    padding: 0px 10px 0px 10px;
     border: 1px solid black;
-    padding: 16px 32px 24px;
     top: 50%;
     left: 50%;
     width: 600px;
@@ -40,7 +40,7 @@
 .inputsdePost {
     display:flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: flex-start;
     height: 190px;
 }
@@ -66,7 +66,7 @@
 }
 
 .img{
-    width: 230px;
+    width: 180px;
     border-radius: 15px;
     border: 1px solid black;
     position: absolute;
@@ -76,9 +76,11 @@
 
 #deleteIMG {
     position: absolute;
-    left: 65%;
-    bottom: 32%;
+    left: 60%;
+    bottom: 28%;
     z-index: 3;
+    width: 35px;
+    height: 35px;
 }
 #deleteIMG:hover {
     background-color: #ffec95;
@@ -91,6 +93,7 @@
     cursor: pointer;
     display: flex;
     width: 130px;
+    padding:5px;
     border-radius: 10px;
     border: 1px solid #3b3b3b;
     background-color: #3b3b3b;
@@ -105,18 +108,18 @@
         max-width: 70%;
     }
     .img{
-        width: 140px;
+        width: 120px;
         border-radius: 5px;
         border: 1px solid black;
         position: absolute;
-        left: 14%;
-        bottom: 8%;
+        left: 12%;
+        bottom: 3%;
     }
     
     #deleteIMG {
         position: absolute;
-        left: 47%;
-        bottom: 22%;
+        left: 44%;
+        bottom: 15%;
         z-index: 3;
         width: 30px;
         height: 30px;
