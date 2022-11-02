@@ -6,11 +6,16 @@ import { getMyUser, imageChange, nameChange, presentationChange, webSiteChange }
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import './EditProfile.css';
+import FileUploadIcon from "@mui/icons-material/FileUpload";
 
 
 export function EditProfile (){
 const [modal, setModal] = useState(false);
 const opencloseModal = () => {
+    if(modal === true) {
+        setModal(!modal);
+        window.location.href = window.location.href;
+    }
     setModal(!modal);
   };
 const dispatch = useDispatch();
@@ -26,6 +31,14 @@ const [img, setImg] = useState({
     image:"",
 });
 
+const closeImg = (e)=>{
+    setImg({
+      ...img,
+      image: "",
+      })
+      setPrev(false)
+  }
+
 const handleWebSite = (e)=>{
     setWebSite(e.target.value);
 }
@@ -33,12 +46,9 @@ const webSites ={
     email:user.email,
     website:webSite
 }
-const submit = (e)=>{
-	setFile(e.target.files[0])
-}
 
 const submitFile = async(e)=>{
-	let FILE = file
+	let FILE = await e.target.files[0];
 	const formdata = new FormData()
 	formdata.append("imageCloudinary",FILE)
 	const Config = {
@@ -53,7 +63,7 @@ const submitFile = async(e)=>{
 	.then((res)=> {
 		setImg({
 			...img,
-			img:`${res.data}`})
+			image:`${res.data}`})
 			setPrev(true)
 	}).catch((err)=>{
 		console.log(err)
@@ -76,23 +86,19 @@ const presentations ={
 }
 const handleSubmitImage = (e)=>{
     e.preventDefault()
-    dispatch(imageChange(img,token,user.email));
-    setModal(false);
+    dispatch(imageChange(img,token));
 }
 const handleSubmitWebSite = (e)=>{
     e.preventDefault()
     dispatch(webSiteChange(webSites,token,user.email));
-    setModal(false);
 }
 const handleSubmitName = (e)=>{
     e.preventDefault()
     dispatch(nameChange(names,token,user.email));
-    setModal(false);
 }
 const handleSubmitPresentation=(e)=>{
     e.preventDefault()
     dispatch(presentationChange(presentations,token,user.email));
-    setModal(false);
 }
 
 const body = (
@@ -157,15 +163,23 @@ const body = (
                             Submit
                         </Button>
                     </div>
-                    <div>
-                        <Input type="file" name="imageCloudinary" onChange={(e)=> submit(e) } ></Input>
-                        {/* <input type='file' name="imageCloudinary" onChange={(e)=> submit(e) } /> */}
-                        <Button variant="outlined" sx={{color:'secondary.main', border:'1px solid #ffd000'}} onClick={(e)=> submitFile(e)}>Image alredy</Button>
-                        {/* <button onClick={(e)=> submitFile(e)}>Image alredy</button> */}
-                        <Button onClick={handleSubmitImage} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
-                            Submit
-                        </Button>
-                        {prev ? <img src={img.imageCloudinary} className="img"/> : null}
+                    <div className="InputIMG">
+                    <label id='labelInput' for="inputTag">
+                        Upload image
+                        <FileUploadIcon/>
+                        <input id="inputTag" type="file" name="imageCloudinary" onChange={(e) => submitFile(e)} accept="image/png, image/jpg, image/gif, image/jpeg"/>
+                    </label>
+                    {prev ? 
+                        <IconButton id='deleteIMG' onClick={closeImg} sx={{ bgcolor: "secondary.main" }}>
+                        <CloseIcon sx={{pr:'1px'}}/>
+                        </IconButton>
+                        : null }
+                    {prev ? 
+                    <img src={img.image} className="img"/> 
+                        : null}
+                    <Button onClick={handleSubmitImage} id='assistButton' sx={{bgcolor: 'secondary.main', color:'custom.dark', fontSize:11}} variant="contained">
+                        Submit
+                    </Button>
                     </div>
                 </div>
             </CardContent>
