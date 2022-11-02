@@ -16,6 +16,7 @@ export interface Iuser extends Document{
     presentation?:string,
     website:string,
     premium?:boolean,
+    opinions?: string[],
 }
 const userSchema = new Schema({
     name: {
@@ -54,6 +55,7 @@ const userSchema = new Schema({
     asistEvent:[],
     liked:[],
     events:[],
+    opinions:[],
     premium:{
         type:Boolean
     }

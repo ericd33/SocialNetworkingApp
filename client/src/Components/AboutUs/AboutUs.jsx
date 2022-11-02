@@ -16,15 +16,54 @@ import AlejoAvendaño from './DevelopersPhotos/AlejoAvendaño.jpg'
 import CarolinaForner from './DevelopersPhotos/CarolinaForner.jpg'
 import DanielMolina from './DevelopersPhotos/DanielMolina.jpg'
 import PatricioPereyra from './DevelopersPhotos/PatricioPereyra.jpg'
+import EricDaniele from './DevelopersPhotos/EricDaniele.jpg'
+import { useUserAuth } from "../../context/UserAuthContext";
+import { newOpinion } from "../../Redux/actions";
+import { TextField } from "@mui/material";
 
 export default function AboutUs() {
   const [modal, setModal] = useState(false);
   const user = JSON.parse(window.localStorage.getItem("user"))
+  const { userInf } = useUserAuth();
+  let token = user.accessToken;
+  const dispatch = useDispatch();
 
   const opencloseModal = () => {
     setModal(!modal);
   };
-  console.log(user)
+  console.log( 'userrr',  user)
+
+
+
+  const [opinion, setOpinion] = useState({
+    authorOpinion: user.email,
+    avatar: user.image,
+    name: user.name,
+    text: "",
+  });
+
+  const handleChangeOpinion = (e) => {
+    // e.preventDefault();
+    setOpinion({
+      ...opinion,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubmmitOpinion = (e) => {
+    e.preventDefault();
+    dispatch(newOpinion(token, opinion));
+    setOpinion({
+      authorOpinion: user.email,
+      avatar: user.image,
+      name: user.name,
+      text: "",
+    });
+  };
+
+
+
+
+
 
   const body = (
     <Card
@@ -50,16 +89,33 @@ export default function AboutUs() {
         <p>
         This is our Team. A group of developers that create this WebSite for people who works on IT area.
         </p>
+        <div className="inputsdeComments">
+          <TextField
+            id="filled-multiline-static"
+            label="Send us your opinion!"
+            value={opinion?.text}
+            variant="filled"
+            name="text"
+            onChange={handleChangeOpinion}
+          />
+          <Button
+            sx={{ mb: '2px', fontFamily: "Nunito", color: "primary.dark", borderRadius:'12px' }}
+            variant="outlined"
+            onClick={handleSubmmitOpinion}
+          >
+            Send Opinion
+          </Button>
+        </div>
 
 <div className="cards">
       <div className="devCards"> <img src={ FedeRosales } className="image"  alt="Not found"/>
-        <h4 className="devName"> Federico Salvador Rosales </h4>
+        <h4 className="devName"> Federico Rosales </h4>
        <div className="devButtons"><Button href="https://www.linkedin.com/in/federico-salvador-rosales-183824245/" >
             <LinkedInIcon/></Button> 
             <Button href="https://github.com/FedeRosaless">
                 <GitHubIcon/></Button> </div> </div> 
 
-        <div className="devCards"> 
+        <div className="devCards"> <img src={ EricDaniele } className="image"  alt="Not found"/>
         <h4 className="devName"> Eric Alan Daniele </h4>
         <div className="devButtons"><Button href="https://www.linkedin.com/in/danieleeric/">
             <LinkedInIcon/></Button> 
