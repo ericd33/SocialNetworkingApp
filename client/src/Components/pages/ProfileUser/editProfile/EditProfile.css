@@ -23,12 +23,35 @@
 .inputsdePerfil #assistButton {
     width: 70px;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-left: 10px;
 }
 
 .inputsdePerfil label {
     color:#a5a5a5;
+}
+
+.inputsdePerfil #inputTag {
+    display: none;
+}
+.inputsdePerfil #labelInput {
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+    width: 130px;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 1px solid #3b3b3b;
+    background-color: #3b3b3b;
+    justify-content: space-between;
+}
+.inputsdePerfil #labelInput:hover {
+    border: 1px solid gray;
+}
+.inputsdePerfil .InputIMG {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
 }
 
 .inputsdePerfil input {
@@ -39,8 +62,18 @@
     height: 15px;
 }
 
-.img{
-    width: 150px;
+.inputsdePerfil .img{
+    max-width: 100px;
+    position: absolute;
+    height: 80px;
+    left: 70%;
+    bottom: 5%;
+}
+
+.inputsdePerfil #deleteIMG {
+    position: absolute;
+    left: 85%;
+    bottom: 20%;
 }
 
 @media (max-width:600px) {
