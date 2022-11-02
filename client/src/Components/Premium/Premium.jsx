@@ -71,7 +71,7 @@ export default function Prem() {
 
   return (
     <div className="container">
-      <IconButton onClick={() => opencloseModal()}>
+      <IconButton sx={{width:'35px'}} onClick={() => opencloseModal()}>
         <PaidIcon sx={{ color: "secondary.main" }} />
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>

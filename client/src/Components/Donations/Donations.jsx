@@ -86,7 +86,7 @@ export default function Donations() {
 
   return (
     <div className="container">
-      <IconButton onClick={() => opencloseModal()}>
+      <IconButton sx={{width:'35px'}} onClick={() => opencloseModal()}>
         <VolunteerActivismIcon sx={{ color: "secondary.main" }} />
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>

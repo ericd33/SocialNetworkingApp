@@ -58,7 +58,7 @@ localStorage.setItem('user',JSON.stringify(profileUser))
           {/* <FilterPost /> */}
           <PostList />
         </div>
-        <div className="rightHome"> {profileUser.role === "user" ? <AboutUs/> : <Payments/> }</div>
+        <div className="rightHome"> {profileUser.role === "user" ? <></> : <Payments/> }</div>
       </div>
         <CreatePost  profileUser={profileUser}/>
     </div>

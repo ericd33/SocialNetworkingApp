@@ -108,11 +108,11 @@ export default function Searchbar({idPost}) {
   );
 
   return (
-    <div className="container">
-        <IconButton onClick={() => opencloseModal()}>
-            <SearchIcon color="secondary" />
+    <div className="containerSearch">
+        <IconButton sx={{width:'35px'}} onClick={() => opencloseModal()}>
+            <SearchIcon sx={{m:0}} color="secondary" />
         </IconButton>
-      <Modal open={modal} onClose={opencloseModal}>
+      <Modal sx={{m:0}} open={modal} onClose={opencloseModal}>
         {body}
       </Modal>
     </div>

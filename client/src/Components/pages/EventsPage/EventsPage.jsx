@@ -10,6 +10,7 @@ import { useUserAuth } from "../../../context/UserAuthContext";
 import { getEvents, getEventsByName } from "../../../Redux/actions";
 import NavBarMobile from "../../navbar/Navbar mobile";
 import { TextField } from "@mui/material";
+import InfoIcon from '@mui/icons-material/Info';
 
 export default function EventsPage() {
   const {user} = useUserAuth();
@@ -47,7 +48,7 @@ export default function EventsPage() {
         </div>
         <div className="centerHome">
             <TextField
-              sx={{ml:1, mt:1}}
+              variant='filled'
               placeholder="Search events..."
               id="barrabusquedaEvents"
               onChange={handleInputEvents}
