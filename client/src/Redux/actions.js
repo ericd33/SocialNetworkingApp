@@ -793,14 +793,11 @@ export function favorite (payload,token){
 }
 }
 
-export function getOpinions(token) {
+export function getOpinions() {
   return function (dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getOpinions`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
     };
     axios(Config).then((res) => {
       return dispatch({
@@ -811,15 +808,12 @@ export function getOpinions(token) {
   };
 }
 
-export function newOpinion(token, payload) {
+export function newOpinion( payload) {
   return function (dispatch) {
     
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/newOpinion`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
       data: {
         authorOpinion: payload.authorOpinion,
         text: payload.text,
