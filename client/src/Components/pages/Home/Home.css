@@ -55,8 +55,45 @@
     right: 45px;
 }
 
+.pays #textComment {
+    color: greenyellow;
+    margin-left: 150px;
+}
+
 .media-part .centerHome {
     background-color: transparent;
+}
+
+.banMessage {
+    border: 1px solid red;
+    background-color: pink;
+    color: rgb(164, 0, 0);
+    font-family: 'Nunito';
+    width: 500px;
+    text-align: center;
+    padding: 15px;
+    height: 200px;
+    border-radius: 25px;
+    position: absolute;
+    top: 30%;
+    left: 30%;
+}
+
+.banMessage #logoutBanned {
+    position: absolute;
+    bottom: 4%;
+    right: 2%;
+    border-radius: 25px;
+}
+
+.HomeBanned {
+    width: 100vw;
+    height: 100vh;
+    background-color:#3b3b3b;
+}
+
+.banMessage h3 {
+    color: rgb(114, 0, 0);
 }
 
 .leftHome .finded-persons {
@@ -103,5 +140,16 @@
     }
     .navbarMobile {
         display: block;
+    }
+    .HomeBanned {
+        min-width: 100vw;
+        min-height: 100vw;
+    }
+    .banMessage {
+        width: 70%;
+        height: 35%;
+        font-size: 15px;
+        top: 20%;
+        left: 12%;
     }
 }

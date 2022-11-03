@@ -11,20 +11,21 @@ import "./Premium.css";
 import { useDispatch } from "react-redux";
 import { Premium } from "../../Redux/actions";
 import PaidIcon from '@mui/icons-material/Paid';
+import { useUserAuth } from "../../context/UserAuthContext";
 
 
 export default function Prem() {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
-  const user = JSON.parse(window.localStorage.getItem("user"))
-  
+  // const user = JSON.parse(window.localStorage.getItem("user"))
+  const {user} = useUserAuth();
   const opencloseModal = () => {
     setModal(!modal);
   };
   console.log(user)
 
   const handleSubmit = () => {
-    dispatch(Premium(user._id));
+    dispatch(Premium(user.email));
   };
 
   const body = (
@@ -42,10 +43,16 @@ export default function Prem() {
         <div className="headerModal">
           <h2>ConcatUs <span className="outl"> Premium</span></h2>
           <IconButton
-            sx={{ width: "35px", height: "35px", top: "20px" }}
+            id="closeIcon"
+            sx={{
+              width: "35px",
+              height: "35px",
+              top: "20px",
+              bgcolor: "custom.light",
+            }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon />
+            <CloseIcon sx={{ pr: "1px" }} />
           </IconButton>
         </div>
         <p>
