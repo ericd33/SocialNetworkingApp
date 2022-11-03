@@ -15,14 +15,18 @@ import EricDaniele from "./DevelopersPhotos/EricDaniele.jpg";
 import { useUserAuth } from "../../context/UserAuthContext";
 import { newOpinion } from "../../Redux/actions";
 import { TextField } from "@mui/material";
-import InfoIcon from "@mui/icons-material/Info";
+
+import InfoIcon from '@mui/icons-material/Info';
+
 import Opinions from "./Opinions";
 
 export default function AboutUs() {
   const [modal, setModal] = useState(false);
   const [modal2, setModal2] = useState(false);
   const [change, setChange] = useState(false);
-  console.log(change);
+
+  console.log(change)
+
   const [opinions, setOpinions] = useState([]);
   const { user } = useUserAuth();
   let token = user.accessToken;
@@ -36,17 +40,21 @@ export default function AboutUs() {
     setModal2(!modal2);
   };
 
-  useEffect(() => {
+
+  useEffect(()=>{
+
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getAllOpinions`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
+
     };
     axios(Config).then((res) => setOpinions(res.data));
   }, [dispatch]);
   //console.log(opinios)
+
 
   const [opinion, setOpinion] = useState({
     authorOpinion: user.email,
@@ -65,7 +73,9 @@ export default function AboutUs() {
 
   const handleSubmmitOpinion = (e) => {
     e.preventDefault();
-    if (opinion.text !== "") {
+
+    if (opinion.text !== '') {
+
       dispatch(newOpinion(token, opinion));
       setOpinion({
         authorOpinion: user.email,
@@ -75,8 +85,10 @@ export default function AboutUs() {
       });
       setModal2(true);
       setTimeout(() => {
-        window.location.href = window.location.href;
-      }, 1000);
+
+        window.location.href = window.location.href; 
+      },1000)
+
     }
   };
 
@@ -129,6 +141,7 @@ export default function AboutUs() {
             name="text"
             onChange={handleChangeOpinion}
           />
+
           {opinion?.text.length !== 0 && opinion?.text[0] !== " " ? (
             <Button
               sx={{
@@ -170,12 +183,14 @@ export default function AboutUs() {
               width: "90px",
               ml: "5px",
             }}
+
             variant="outlined"
             onClick={changeee}
           >
             View opinions
           </Button>
         </div>
+
 
         <div className="cards">
           <div className="devCards">
@@ -214,6 +229,7 @@ export default function AboutUs() {
                 </Button>{" "}
               </a>
               <a href="https://github.com/ericd33" target="_blank">
+
                 
                 <Button>
                   <GitHubIcon />
@@ -301,6 +317,7 @@ export default function AboutUs() {
       }}
     >
       <CardContent>
+
         <div className="headerModal">
           <h2>
             ConcatUs Team:<span className="outl"> Opinions</span>
@@ -314,6 +331,7 @@ export default function AboutUs() {
               width: "110px",
               mt: 2,
             }}
+
             variant="outlined"
             onClick={changeee}
           >
@@ -331,6 +349,7 @@ export default function AboutUs() {
           >
             <CloseIcon sx={{ pr: "1px" }} />
           </IconButton>
+
         </div>
         <Opinions opinions={opinions} />
       </CardContent>
@@ -366,9 +385,42 @@ export default function AboutUs() {
             <CloseIcon sx={{ pr: "1px" }} />
           </IconButton>
         </div>
+
+        
+        
+        <Opinions opinions={opinions} />
+
       </CardContent>
     </Card>
   );
+
+  const body3 = (
+    <Card
+    className="commentsList"
+    sx={{
+        width: 500,
+        borderRadius: "15px",
+        bgcolor: 'custom.main',
+        fontFamily: "Nunito",
+        color: 'primary.light',
+        maxHeight: 500
+    }}
+    >
+    <CardContent sx={{fontSize:'13px'}}>
+        <div className="headerModal">
+        <h2>Thank you for your opinion!</h2>
+        <IconButton
+            id='closeIcon'
+            sx={{ width: "35px", height: "35px", top: "20px",
+            bgcolor:'custom.light' }}
+            onClick={() => opencloseModal2()}s
+        >
+            <CloseIcon sx={{pr:'1px'}}/>
+        </IconButton>
+        </div>
+    </CardContent>
+    </Card>
+);
 
   return (
     <div className="container">
@@ -381,6 +433,9 @@ export default function AboutUs() {
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>
         {change ? body2 : body}
+      </Modal>
+      <Modal open={modal2} onClose={opencloseModal2}>
+        {body3}
       </Modal>
       <Modal open={modal2} onClose={opencloseModal2}>
         {body3}
