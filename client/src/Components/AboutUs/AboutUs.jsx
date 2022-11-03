@@ -356,43 +356,6 @@ export default function AboutUs() {
     </Card>
   );
 
-  const body3 = (
-    <Card
-      className="commentsList"
-      sx={{
-        width: 500,
-        borderRadius: "15px",
-        bgcolor: "custom.main",
-        fontFamily: "Nunito",
-        color: "primary.light",
-        maxHeight: 500,
-      }}
-    >
-      <CardContent sx={{ fontSize: "13px" }}>
-        <div className="headerModal">
-          <h2>Thank you for your opinion!</h2>
-          <IconButton
-            id="closeIcon"
-            sx={{
-              width: "35px",
-              height: "35px",
-              top: "20px",
-              bgcolor: "custom.light",
-            }}
-            onClick={() => opencloseModal2()}
-            s
-          >
-            <CloseIcon sx={{ pr: "1px" }} />
-          </IconButton>
-        </div>
-
-        
-        
-        <Opinions opinions={opinions} />
-
-      </CardContent>
-    </Card>
-  );
 
   const body3 = (
     <Card
