@@ -19,7 +19,8 @@ import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function Donations() {
   const [modal, setModal] = useState(false);
-  const user = JSON.parse(window.localStorage.getItem("user"))
+  // const user = JSON.parse(window.localStorage.getItem("user"))
+  const {user} = useUserAuth();
   const dispatch = useDispatch();
   const opencloseModal = () => {
     setModal(!modal);
@@ -31,8 +32,9 @@ export default function Donations() {
   };
 
   const handleSubmit = () => {
-    dispatch(Donate(amount,user._id));
-  }
+    dispatch(Donate(amount,user.email));
+  };
+
 
   const body = (
     <Card
@@ -49,10 +51,16 @@ export default function Donations() {
         <div className="headerModal">
           <h2>Donations</h2>
           <IconButton
-            sx={{ width: "35px", height: "35px", top: "20px" }}
+            id="closeIcon"
+            sx={{
+              width: "35px",
+              height: "35px",
+              top: "20px",
+              bgcolor: "custom.light",
+            }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon />
+            <CloseIcon sx={{ pr: "1px" }} />
           </IconButton>
         </div>
         <p>

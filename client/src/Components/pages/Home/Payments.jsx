@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   Button,
+  CardHeader,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useUserAuth } from "../../../context/UserAuthContext";
@@ -26,9 +27,11 @@ const Payments = () => {
         Authorization: `Bearer ${token}`
       },
     }
-    axios(Config).then(res => setData(res.data[0].info))
+    
+    axios(Config).then(res => {setData(res.data)
+    console.log(res.data)})
 },[])
-//console.log(data)
+// console.log(data)
 	const opencloseModal = () => {
     setModal(!modal);
   };
@@ -36,6 +39,7 @@ const Payments = () => {
     <Card
       className="postCreator"
       sx={{
+        maxWidth: '90%',
         width: 600,
         borderRadius: "15px",
         bgcolor: "custom.main",
@@ -47,43 +51,59 @@ const Payments = () => {
       <div className="headerModal">
           <h2>ConcatUs <span className="outl"> Payments </span></h2>
           <IconButton
-            sx={{ width: "35px", height: "35px", top: "20px" }}
+            id="closeIcon"
+            sx={{
+              width: "35px",
+              height: "35px",
+              top: "20px",
+              bgcolor: "custom.light",
+            }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon />
+            <CloseIcon sx={{ pr: "1px" }} />
           </IconButton>
         </div>
-        { data.length !==0 ? 
-			 data.map((o)=>{
-        if(typeof o === 'object'){
-				return(
-					<div>
-					<p>Name {`${o.payer.name.given_name}  ${o.payer.name.surname}` }</p>
-					<p>E-mail {o.payer.email_address}</p>
-					<p>Pay {o.infopago.value} {o.infopago.currency_code}</p>
-          <hr />
-					</div>
-				)}
-			 })
-			 : 
-       <div className="List">
-        <div className="wrapper">
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-        </div>
-      </div> }
-
+        <div className='opinionContainer'>
+       {data?.map((o) => {
+        console.log(0)
+        return(o?.info?.map((e)=>{
+          // console.log(e)
+          return (
+            <div id='commentCard'>
+                <Card
+                className="cardOpinion"
+                sx={{
+                bgcolor: "custom.light",
+                fontFamily: "Nunito",
+                color: "primary.light",
+                borderRadius: "15px",
+                mb: "10px",
+                }}>
+  
+                <CardHeader
+                  sx={{ pt: "8px", color: "secondary.main" }}
+                  title={e?.payer?.email_address}
+                  subheader={`${e?.payer?.name?.given_name}  ${e?.payer?.name?.surname}` }
+                  subheaderTypographyProps={{ color: "white"}}
+                />
+                <div className='pays'>
+                  <p id='textComment'>Pay {e?.infopago?.value} {e?.infopago?.currency_code}</p>
+                </div>
+              </Card>
+            </div>
+            )
+        }))
+        // if(typeof o.info === 'object'){
+				  //  }
+			    })}
+      </div>
       </CardContent>
-    </Card>
+      </Card>
   );
 
   return (
     <div className="container">
-      <Button onClick={() => opencloseModal()}>
+      <Button id='banButton' sx={{fontSize:11}} color='error' variant="outlined" onClick={() => opencloseModal()}>
         Payments
       </Button>
       <Modal open={modal} onClose={opencloseModal}>
