@@ -52,6 +52,8 @@
 
 .message-from{
     list-style: none;
+    box-shadow: 0 0 5px 0 rgb(0, 0, 0.1);
+    margin-bottom: 15px;
 }
 
 .message-from-me{
@@ -61,19 +63,19 @@
     margin-left: -240px;
     text-shadow: 1px 1px 2px black;
     margin-left: 10px;
-    background-color: lightblue;
+    background-color: #a5a5a5;
     border-radius: 5px;
-    opacity: 0.7;
+    /* opacity: 0.7; */
     margin-bottom: 3px;
     padding: 3px;
 }
 .message-from-friend{
-    color: black;
-    text-shadow: 1px 1px 2px white;
-    background-color: lightslategray;
+    color: lightblue;
+    /* text-shadow: 1px 1px 2px white; */
+    background-color: #2a2a2a;
     padding: 3px;
     border-radius: 5px;
-    opacity: 0.7;
+    /* opacity: 0.7; */
     margin-bottom: 3px;
 }
 
