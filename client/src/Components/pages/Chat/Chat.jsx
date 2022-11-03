@@ -9,7 +9,11 @@ import { grey } from "@mui/material/colors";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 import { TextField } from "@mui/material";
+
 import axios from "axios";
+
+import logoGrande from '../../../Logos/logogrande.png';
+
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: grey[200],
@@ -92,7 +96,8 @@ function Chat() {
           Back
         </Button>
       </Link>
-      <h1 className="title">ConcatUS Chat</h1>
+      {/* <h1 className="title">ConcatUS Chat</h1> */}
+      <img src={logoGrande} alt="" className="chat-logo" />
       <h3 className="descrip">This is a global chat, meet everyone!</h3>
       <form onSubmit={handleSubmit} className="chat-from-container">
         <TextField

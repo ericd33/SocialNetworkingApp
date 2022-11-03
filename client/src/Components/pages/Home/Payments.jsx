@@ -65,37 +65,36 @@ const Payments = () => {
         </div>
         <div className='opinionContainer'>
        {data?.map((o) => {
-        console.log(0)
-        return(o?.info?.map((e)=>{
-          // console.log(e)
-          return (
-            <div id='commentCard'>
-                <Card
-                className="cardOpinion"
-                sx={{
-                bgcolor: "custom.light",
-                fontFamily: "Nunito",
-                color: "primary.light",
-                borderRadius: "15px",
-                mb: "10px",
-                }}>
-  
-                <CardHeader
-                  sx={{ pt: "8px", color: "secondary.main" }}
-                  title={e?.payer?.email_address}
-                  subheader={`${e?.payer?.name?.given_name}  ${e?.payer?.name?.surname}` }
+
+        if(typeof o === 'object'){
+          console.log(o);
+					 return (
+						<div id='commentCard'>
+					   		<Card
+							   className="cardOpinion"
+							   sx={{
+								bgcolor: "custom.light",
+								fontFamily: "Nunito",
+								color: "primary.light",
+								borderRadius: "15px",
+								mb: "10px",
+							   }}>
+
+								<CardHeader
+									sx={{ pt: "8px", color: "secondary.main" }}
+									title={o.payer.email_address}
+									subheader={`${o.payer.name.given_name}  ${o.payer.name.surname}` }
                   subheaderTypographyProps={{ color: "white"}}
-                />
+								/>
                 <div className='pays'>
-                  <p id='textComment'>Pay {e?.infopago?.value} {e?.infopago?.currency_code}</p>
+								  <p id='textComment'>Pay {o.infopago.value} {o.infopago.currency_code}</p>
                 </div>
-              </Card>
-            </div>
-            )
-        }))
-        // if(typeof o.info === 'object'){
-				  //  }
-			    })}
+						   </Card>
+						</div>
+            )}
+				   }
+			   )}
+
       </div>
       </CardContent>
       </Card>
