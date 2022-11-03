@@ -50,11 +50,6 @@ export default function AboutUs() {
     axios(Config).then(res => setOpinions(res.data))
 },[dispatch])
 
-    };
-    axios(Config).then((res) => setOpinions(res.data));
-  }, [dispatch]);
-  //console.log(opinios)
-
 
   const [opinion, setOpinion] = useState({
     authorOpinion: user.email,
@@ -76,7 +71,7 @@ export default function AboutUs() {
 
     if (opinion.text !== '') {
 
-      dispatch(newOpinion(token, opinion));
+      dispatch(newOpinion(opinion));
       setOpinion({
         authorOpinion: user.email,
         avatar: user.image,
