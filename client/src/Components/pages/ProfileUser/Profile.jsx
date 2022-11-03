@@ -20,13 +20,13 @@ import { Button } from '@mui/material';
 
 const Profile = () => {
   const dispatch = useDispatch()
-  const {user} = useUserAuth();
+  const {user, logOut} = useUserAuth();
   let token = user.accessToken;
   const myUser = useSelector(e=>e.myUser)
   const [profileUser, setProfileUser] = useState({})
   const [posts, setPosts] = useState([])
   let query = useParams();
-
+  const userP = JSON.parse(window.localStorage.getItem("user"))
   const [render, setRender] = useState('posts');
 
 
@@ -66,54 +66,71 @@ const Profile = () => {
         setPosts(res.data)});
 },[dispatch])
 
-
-return (
-  <div>
-    <div className="Home">
-      <div className="navbar">
-        <NavBar />
-        <span></span>
-      </div>
-      <div className="navbarMobile">
-        <NavBarMobile />
-        <span></span>
-      </div>
-      <div className="media-part-pc">
-        <div className="leftHome">
-          <ProfileInfo userInfoRen={profileUser}/>
-          {/* <EventsMenu /> */}
+function signOut() {
+  logOut();
+  localStorage.clear();
+}
+if(userP.enabled !== false) {
+  return (
+    <div>
+      <div className="Home">
+        <div className="navbar">
+          <NavBar />
+          <span></span>
         </div>
-        <div className="centerHome">
-          <h3>Filters</h3>
-          <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='posts' onClick={handleClick}>Posts</Button>
-          <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='events' onClick={handleClick}>Events</Button>
-          <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='favorites' onClick={handleClick}>Favorites</Button>
-          <ProfilePostList render={render} posts={posts} myUser={myUser}/>
+        <div className="navbarMobile">
+          <NavBarMobile />
+          <span></span>
         </div>
-        <div className="rightHome">
-          <ProfileDescription userInfoRen={profileUser}/>
-          {/* <FilterEventsProfile userInfoRen={profileUser} />
-          <EventsProfile /> */}
-        </div>
-    </div>
-      
-
-      <div className="media-part-mobile">
-        <div className="centerHome">
-          <ProfileInfo userInfoRen={profileUser}/>
-          <ProfileDescription userInfoRen={profileUser}/>
-          <div className='containerMobileProfile'>
+        <div className="media-part-pc">
+          <div className="leftHome">
+            <ProfileInfo userInfoRen={profileUser}/>
+            {/* <EventsMenu /> */}
+          </div>
+          <div className="centerHome">
             <h3>Filters</h3>
             <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='posts' onClick={handleClick}>Posts</Button>
             <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='events' onClick={handleClick}>Events</Button>
             <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='favorites' onClick={handleClick}>Favorites</Button>
             <ProfilePostList render={render} posts={posts} myUser={myUser}/>
           </div>
+          <div className="rightHome">
+            <ProfileDescription userInfoRen={profileUser}/>
+            {/* <FilterEventsProfile userInfoRen={profileUser} />
+            <EventsProfile /> */}
+          </div>
+      </div>
+        
+
+        <div className="media-part-mobile">
+          <div className="centerHome">
+            <ProfileInfo userInfoRen={profileUser}/>
+            <ProfileDescription userInfoRen={profileUser}/>
+            <div className='containerMobileProfile'>
+              <h3>Filters</h3>
+              <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='posts' onClick={handleClick}>Posts</Button>
+              <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='events' onClick={handleClick}>Events</Button>
+              <Button variant="outlined"  sx={{ml:'5px', mr:'15px', mb:'15px', color:'secondary.main', border:'1px solid #ffd000'}} id='favorites' onClick={handleClick}>Favorites</Button>
+              <ProfilePostList render={render} posts={posts} myUser={myUser}/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  )
+    )}
+    else {
+      return (
+        <div className='HomeBanned'>
+        <div className="banMessage">
+          <h1>Your account was banned. Contact with the staff</h1>
+          <h3>concatuss@gmail.com</h3>
+          <Button id='logoutBanned' variant='outlined' color="error" onClick={signOut}>
+            Back
+          </Button>
+        </div>
+      </div>
+      )
+    }
 }
 
 export default Profile

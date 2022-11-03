@@ -9,11 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useUserAuth } from "../../../context/UserAuthContext";
 import { getEvents, getEventsByName } from "../../../Redux/actions";
 import NavBarMobile from "../../navbar/Navbar mobile";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 
 export default function EventsPage() {
-  const {user} = useUserAuth();
+  const {user, logOut} = useUserAuth();
     const dispatch = useDispatch()
     const userP = JSON.parse(window.localStorage.getItem("user"))
     let events = []
@@ -32,6 +32,12 @@ export default function EventsPage() {
 
   let eventsSoluc = useSelector((state)=>state.soluc);
 
+  function signOut() {
+    logOut();
+    localStorage.clear();
+  }
+
+  if(userP.enabled !== false) {
   return (
     <div className="HomeEvents">
       <div className="navbarEvents">
@@ -67,5 +73,18 @@ export default function EventsPage() {
           : <></>
       }
     </div>
-  );
+  )}
+  else {
+    return (
+      <div className='HomeBanned'>
+        <div className="banMessage">
+          <h1>Your account was banned. Contact with the staff</h1>
+          <h3>concatuss@gmail.com</h3>
+          <Button id='logoutBanned' variant='outlined' color="error" onClick={signOut}>
+            Back
+          </Button>
+        </div>
+      </div>
+    )
+  }
 }
