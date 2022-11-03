@@ -62,6 +62,7 @@ app.use("/opinions", opinion);
 
 
 
+
 app.use(middleware.decodeToken);
 
 const storage = multer.diskStorage({
@@ -89,6 +90,5 @@ app.use("/comments", comment);
 app.use("/users", userRoutes);
 app.use("/events", event);
 app.use("/posts", upload.single("imageCloudinary"), post);
-
 
 
