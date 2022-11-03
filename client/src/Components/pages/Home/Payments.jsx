@@ -27,9 +27,11 @@ const Payments = () => {
         Authorization: `Bearer ${token}`
       },
     }
-    axios(Config).then(res => setData(res.data[0].info))
+    
+    axios(Config).then(res => {setData(res.data)
+    console.log(res.data)})
 },[])
-//console.log(data)
+// console.log(data)
 	const opencloseModal = () => {
     setModal(!modal);
   };
@@ -63,6 +65,7 @@ const Payments = () => {
         </div>
         <div className='opinionContainer'>
        {data?.map((o) => {
+
         if(typeof o === 'object'){
           console.log(o);
 					 return (
@@ -91,6 +94,7 @@ const Payments = () => {
             )}
 				   }
 			   )}
+
       </div>
       </CardContent>
       </Card>

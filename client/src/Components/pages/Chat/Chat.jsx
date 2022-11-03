@@ -10,6 +10,11 @@ import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 
+import axios from "axios";
+
+import logoGrande from '../../../Logos/logogrande.png';
+
+
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: grey[200],
   backgroundColor: grey[800],
@@ -35,7 +40,12 @@ const socket = io(`${process.env.REACT_APP_MY_API_URL}`);
 function Chat() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const { user } = useUserAuth();
+
+  const {user, logOut} = useUserAuth();
+
+  const userP = JSON.parse(window.localStorage.getItem("user"))
+  let token = user.accessToken;
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,9 +66,15 @@ function Chat() {
 
     return () => {
       socket.off("message", reciveMessage);
-    };
+    }
   }, [messages]);
 
+  function signOut() {
+    logOut();
+    localStorage.clear();
+  }
+
+  if(userP.enabled !== false) {
   return (
     <div className="chat-container">
       <Link to={"/home"}>
@@ -80,7 +96,8 @@ function Chat() {
           Back
         </Button>
       </Link>
-      <h1 className="title">ConcatUS Chat</h1>
+      {/* <h1 className="title">ConcatUS Chat</h1> */}
+      <img src={logoGrande} alt="" className="chat-logo" />
       <h3 className="descrip">This is a global chat, meet everyone!</h3>
       <form onSubmit={handleSubmit} className="chat-from-container">
         <TextField
@@ -112,8 +129,24 @@ function Chat() {
           </ul>
         </div>
       </form>
-    </div>
-  );
+
+      </div>
+
+  )}
+  else {
+    return (
+      <div className='HomeBanned'>
+        <div className="banMessage">
+          <h1>Your account was banned. Contact with the staff</h1>
+          <h3>concatuss@gmail.com</h3>
+          <Button id='logoutBanned' variant='outlined' color="error" onClick={signOut}>
+            Back
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
 }
 
 export default Chat;
