@@ -39,6 +39,47 @@
  height: 250px;
 }
 
+.ReviewContainer {
+    position: absolute;
+    font-family: 'Nunito';
+    width: 600px;
+    height: 550px;
+    top: 7%;
+    left: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.ReviewContainer #ReviewCard0 {
+    width: fit-content;
+    word-wrap: break-word;
+}
+.ReviewContainer #ReviewCard1 {
+    width: fit-content;
+    margin-left: 300px;
+    word-wrap: break-word;
+}
+.ReviewContainer #ReviewCard2 {
+    width: fit-content;
+    word-wrap: break-word;
+}
+
+#TitleReviews {
+    position: absolute;
+    left: 31%;
+    top: -10%;
+    font-family: 'Nunito';
+    font-size: 19px;
+    font-weight: bold;
+    padding-left: 25px;
+    padding-right: 25px;
+    color: #ffd000;
+    background-color:#3b3b3b;
+    height: 25px;
+    border-radius: 15px;
+}
+
 @media (max-width:600px) {
     .landing .carousel {
         display: none;
