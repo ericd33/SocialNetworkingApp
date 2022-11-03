@@ -65,6 +65,7 @@ const Payments = () => {
         </div>
         <div className='opinionContainer'>
        {data?.map((o) => {
+
         console.log(0)
         return(o?.info?.map((e)=>{
           // console.log(e)
@@ -96,6 +97,7 @@ const Payments = () => {
         // if(typeof o.info === 'object'){
 				  //  }
 			    })}
+
       </div>
       </CardContent>
       </Card>
