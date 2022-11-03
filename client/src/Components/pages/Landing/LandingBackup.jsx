@@ -18,6 +18,8 @@ import {useNavigate} from 'react-router-dom';
 import {useUserAuth} from '../../../context/UserAuthContext';
 import GoogleButton from 'react-google-button';
 import logogrande2 from '../../../Logos/logogrande2.png';
+import axios from 'axios';
+import { Avatar, Card, CardHeader } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -40,10 +42,27 @@ const LandingPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { user, logIn, googleLogIn } = useUserAuth();
+  const [opinions, setOpinions] = useState([]);
   const navigate = useNavigate();
+  console.log(opinions);
+
+  if(opinions.length !== 0) {
+    var Three_opinions = [];
+    for (let i = 0; i < 3; i++) {
+      const random = opinions[Math.floor(Math.random() * opinions.length)];
+      Three_opinions.push(random);
+    }
+  }
 
   useEffect(()=> {
     if (user) navigate('/home')
+
+    const Config = {
+      method: 'get',
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getAllOpinions`,
+    }
+    axios(Config).then(res => setOpinions(res.data))
+
   },[])
   const handleGoogleButton = async (e) => {
     e.preventDefault();
@@ -89,6 +108,58 @@ const LandingPage = () => {
               
             <GoogleButton onClick={handleGoogleButton}/>
         </Grid>
+
+        {
+          Three_opinions?.length ?
+          <div className='ReviewContainer'>
+              <p id='TitleReviews'>User's Reviews</p>
+              <div id='ReviewCard0'>
+                  <Card sx={{bgcolor:'#dcdcdc'}}>
+                  <CardHeader
+                    sx={{ pt: "8px", color: "#000000" }}
+                    avatar={
+                      <Avatar src={Three_opinions[0].avatar}>
+                      </Avatar>
+                    }
+                    title={Three_opinions[0].name}
+                    subheader={Three_opinions[0].text}
+                    subheaderTypographyProps={{wordWrap: 'break-word', color:'#2a2a2a', maxWidth:'200px'}}
+                  />
+                </Card>
+              </div>
+
+              <div id='ReviewCard1'>
+                  <Card sx={{bgcolor:'#dcdcdc'}}>
+                  <CardHeader
+                    sx={{ pt: "8px", color: "#000000" }}
+                    avatar={
+                      <Avatar src={Three_opinions[1].avatar}>
+                      </Avatar>
+                    }
+                    title={Three_opinions[1].name}
+                    subheader={Three_opinions[1].text}
+                    subheaderTypographyProps={{wordWrap: 'break-word', maxWidth:'200px', color:'#2a2a2a'}}
+                  />
+                </Card>
+              </div>
+
+              <div id='ReviewCard2'>
+                  <Card sx={{bgcolor:'#dcdcdc'}}>
+                  <CardHeader
+                    sx={{ pt: "8px", color: "#000000" }}
+                    avatar={
+                      <Avatar src={Three_opinions[2].avatar}>
+                      </Avatar>
+                    }
+                    title={Three_opinions[2].name}
+                    subheader={Three_opinions[2].text}
+                    subheaderTypographyProps={{wordWrap: 'break-word', maxWidth:'200px', color:'#2a2a2a'}}
+                  />
+                </Card>
+              </div>
+          </div> : <></>
+        }
+
       </Grid>
     </ThemeProvider>
   );

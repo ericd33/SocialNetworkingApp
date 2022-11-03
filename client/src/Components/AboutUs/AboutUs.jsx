@@ -46,9 +46,6 @@ export default function AboutUs() {
     const Config = {
       method: 'get',
       baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getAllOpinions`,
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
     }
     axios(Config).then(res => setOpinions(res.data))
 },[dispatch])
