@@ -26,10 +26,14 @@ export default function Reports({payload}) {
     setModal(!modal);
   };
   const opencloseModal2 = () => {
+    if(modal2) { 
+    window.location.href = window.location.href;
     setModal2(!modal2);
+  }else{
+    setModal2(!modal2)
+  }
   };
 
-  
   const reports = [
       'Spam',
       'Inappropriate',
@@ -49,6 +53,7 @@ export default function Reports({payload}) {
       dispatch(reportPost(data,token))
       setModal(false);
       setModal2(true);
+     
     }
 
   const body = (

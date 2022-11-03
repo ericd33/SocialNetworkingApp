@@ -19,7 +19,8 @@ import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function Donations() {
   const [modal, setModal] = useState(false);
-  const user = JSON.parse(window.localStorage.getItem("user"))
+  // const user = JSON.parse(window.localStorage.getItem("user"))
+  const {user} = useUserAuth();
   const dispatch = useDispatch();
   const opencloseModal = () => {
     setModal(!modal);
@@ -31,8 +32,9 @@ export default function Donations() {
   };
 
   const handleSubmit = () => {
-    dispatch(Donate(amount,user._id));
-  }
+    dispatch(Donate(amount,user.email));
+  };
+
 
   const body = (
     <Card
