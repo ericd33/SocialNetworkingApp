@@ -67,17 +67,14 @@
 
 #TitleReviews {
     position: absolute;
-    left: 31%;
+    left: 35%;
     top: -10%;
     font-family: 'Nunito';
     font-size: 19px;
     font-weight: bold;
-    padding-left: 25px;
-    padding-right: 25px;
-    color: #ffd000;
-    background-color:#3b3b3b;
+    border-bottom: 1px solid #2a2a2a;
+    color: #2a2a2a;
     height: 25px;
-    border-radius: 15px;
 }
 
 @media (max-width:600px) {
