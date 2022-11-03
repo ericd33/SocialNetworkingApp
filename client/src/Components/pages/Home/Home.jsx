@@ -3,7 +3,7 @@ import EventsMenu from "../../Home-Components/EventsMenu";
 import PostList from "../../Posts/PostList";
 import "./Home.css";
 import { useSelector } from "react-redux";
-import { Avatar, Card, CardHeader } from "@mui/material";
+import { Avatar, Button, Card, CardHeader, IconButton } from "@mui/material";
 import { grey, yellow } from "@mui/material/colors";
 import Follow from "./follow";
 import CreatePost from '../../Posts/CreatePost'
@@ -19,11 +19,11 @@ import Payments from "./Payments";
 
 
 export default function Home() {
-  const {user} = useUserAuth();
+  const {user, logOut } = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
-
+  localStorage.setItem('user',JSON.stringify(profileUser))
   let token = user.accessToken;
-  console.log(token)
+
   useEffect(() => {
     const Config2 = {
       method: 'get',
@@ -36,31 +36,49 @@ export default function Home() {
 
     .catch(function (err) {
     });
-}, []);
-localStorage.setItem('user',JSON.stringify(profileUser))
+  }, []);
 
-  return (
-    <div className="Home">
-      <div className="navbar">
-        <NavBar />
-        <span></span>
-      </div>
-      <div className="navbarMobile">
-        <NavBarMobile />
-        <span></span>
-      </div>
-      <CreatePost />
-      <div className="media-part">
-        <div className="leftHome">
-          <EventsMenu />
-          </div>
-        <div className="centerHome">
-          {/* <FilterPost /> */}
-          <PostList />
+  function signOut() {
+    logOut();
+    localStorage.clear();
+  }
+
+  if(profileUser.enabled !== false) {
+    return (
+      <div className="Home">
+        <div className="navbar">
+          <NavBar />
+          <span></span>
         </div>
-        <div className="rightHome"> {profileUser.role === "user" ? <></> : <Payments/> }</div>
+        <div className="navbarMobile">
+          <NavBarMobile />
+          <span></span>
+        </div>
+        <CreatePost />
+        <div className="media-part">
+          <div className="leftHome">
+            <EventsMenu />
+            </div>
+          <div className="centerHome">
+            <PostList />
+          </div>
+          <div className="rightHome"> {profileUser.role === "user" ? <></> : <Payments/> }</div>
+        </div>
+          <CreatePost  profileUser={profileUser}/>
       </div>
-        <CreatePost  profileUser={profileUser}/>
-    </div>
-  );
+    );
+  }
+  else {
+    return (
+      <div className='HomeBanned'>
+        <div className="banMessage">
+          <h1>Your account was banned. Contact with the staff</h1>
+          <h3>concatuss@gmail.com</h3>
+          <Button id='logoutBanned' variant='outlined' color="error" onClick={signOut}>
+            Back
+          </Button>
+        </div>
+      </div>
+    )
+  }
 }
