@@ -16,7 +16,7 @@ module.exports = {
         return {
             from: 'concatuss@gmail.com',
             to: email,
-            subject: '¡Bienvenido a ConcatUs!',
+            subject: 'Welcome to ConcatUs!',
             html: `
                     <p>Start adding your friends. Or make new ones!<p/>
             <img width=70% src="https://st2.depositphotos.com/3591429/5245/i/600/depositphotos_52453715-stock-photo-hands-holding-word-welcome.jpg"></img>
@@ -28,7 +28,7 @@ module.exports = {
         return {
             from: 'concatuss@gmail.com',
             to: email,
-            subject: '¡Dejamos nuestras puertas abiertas!',
+            subject: 'We leave our doors open!',
             html:
                 `<p>Come back when you want!<p/>
             <img width=70% src="https://email.uplers.com/blog/wp-content/uploads/2021/12/Winning-Email-Marketing-Strategies-That-SaaS-Brands-Must-Add-To-Their-Armor-1024x411.png" />
