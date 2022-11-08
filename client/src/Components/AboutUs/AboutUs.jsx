@@ -263,7 +263,7 @@ export default function AboutUs() {
             <a href="https://www.linkedin.com/in/daniel-molina-a61b85236" target="_blank"> <Button >
                 <LinkedInIcon />
               </Button> </a>
-              <a href="https://github.com/masterchip14" target="_blank"><Button >
+              <a href="hhttps://github.com/DanielMolinaP" target="_blank"><Button >
                 <GitHubIcon />
               </Button> </a>
               <br />{" "}
