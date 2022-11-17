@@ -11,40 +11,44 @@ const mailSettings = require("../nodemailer/nodemailer");
 export const createPayment =async ( req: Request, res: Response)=>{
     const {email} = req.body 
     console.log(email)
-    const order = {
-        intent: 'CAPTURE',
-        purchase_units:[
-            {
-                amount:{
-                    currency_code:"USD",
-                    value:"6"
+    try{
+        const order = {
+            intent: 'CAPTURE',
+            purchase_units:[
+                {
+                    amount:{
+                        currency_code:"USD",
+                        value:"6"
+                    }
                 }
+            ],
+            application_context: {
+                brand_name: `ConcatUs`,
+                landing_page: 'NO_PREFERENCE', // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
+                user_action: 'PAY_NOW', // Accion para que en paypal muestre el monto del pago
+    
+                return_url: `${process.env.SELF_API_URL}/paypal/capture-order?email=${email}`, // Url despues de realizar el pago
+                cancel_url: `${process.env.SELF_API_URL}/paypal/cancel-order` // Url despues de realizar el pago
+    
             }
-        ],
-        application_context: {
-            brand_name: `ConcatUs`,
-            landing_page: 'NO_PREFERENCE', // Default, para mas informacion https://developer.paypal.com/docs/api/orders/v2/#definition-order_application_context
-            user_action: 'PAY_NOW', // Accion para que en paypal muestre el monto del pago
-
-            return_url: `${process.env.SELF_API_URL}/paypal/capture-order?email=${email}`, // Url despues de realizar el pago
-            cancel_url: `${process.env.SELF_API_URL}/paypal/cancel-order` // Url despues de realizar el pago
-
         }
+        const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders`,order,{
+            auth:{
+                username:CLIENT,
+                password:SECRET
+            }
+        })
+        res.send(response.data.links[1])
+    }catch(e){
+        res.send(e)
     }
-    const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders`,order,{
-        auth:{
-            username:CLIENT,
-            password:SECRET
-        }
-    })
-    res.send(response.data.links[1])
 }
 
 export const captureOrder =async ( req: Request, res: Response)=>{
     const {token,email} = req.query
     console.log(email)
-
-    const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {},{
+    try{
+const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {},{
         auth:{
             username:CLIENT,
             password:SECRET
@@ -73,12 +77,17 @@ export const captureOrder =async ( req: Request, res: Response)=>{
         });
     }
     res.redirect(`${process.env.SELF_FRONT_URL}/home`)
+    }catch(e){
+        res.send(e)
+    }
+    
 }
 
 
 export const createDonations =async ( req: Request, res: Response)=>{
     const { mont,email } = req.body
-    const order = {
+    try{
+const order = {
         intent: 'CAPTURE',
         purchase_units:[
             {
@@ -103,10 +112,15 @@ export const createDonations =async ( req: Request, res: Response)=>{
         }
     })
     res.send(response.data.links[1])
+    }catch(e){
+        res.send(e)
+    }
+    
 }
 export const captureOrderDonations =async ( req: Request, res: Response)=>{
     const {token,email} = req.query
-    const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {},{
+    try{
+const response = await axios.post(`${PAYPAL_API}/v2/checkout/orders/${token}/capture`, {},{
         auth:{
             username:CLIENT,
             password:SECRET
@@ -135,6 +149,10 @@ export const captureOrderDonations =async ( req: Request, res: Response)=>{
         });
     }
     res.redirect(`${process.env.SELF_FRONT_URL}`)
+    }catch(e){
+        res.send(e)
+    }
+    
 }
 
 export const cancel =async ( _req: Request, res: Response)=>{
