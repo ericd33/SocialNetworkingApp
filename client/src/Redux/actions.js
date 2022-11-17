@@ -91,8 +91,7 @@ export function putPost(idPost, token, dataToUpdate) {
       },
       data: dataToUpdate,
     };
-    const { data } = await axios(Config);
-
+    await axios(Config);
     dispatch({
       type: "UPDATE_POST",
     });
@@ -230,7 +229,7 @@ export function searchUsersByName(name, token) {
 export function login(user) {
   return async function (dispatch) {
     axios
-      .post(`http://localhost:3001/users/login`, user)
+      .post(`${process.env.REACT_APP_MY_API_URL}/users/login`, user)
       .then(function (response) {
         if (response.data === true) {
           dispatch(getMyUser(user.email));
