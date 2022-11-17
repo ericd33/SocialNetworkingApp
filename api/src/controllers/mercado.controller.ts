@@ -9,23 +9,26 @@ export const success = (_req: Request, res: Response) => {
 
 export const mercado = (req: Request, res: Response) => {
     const { donacion } = req.body;
-
-    let preference = {
-        items: [
-                {
-                    title: "Gracias por tu donación!",
-                    unit_price: parseInt(donacion),
-                    quantity: 1,
-                },
-        ],
-        };
-        mercadopago.preferences.create(preference)
-            .then(function (response:any) {
-                res.json(response.body)
-            })
-            .catch(function (error:any) {
-                console.log(error);
-            });
+    try{
+        let preference = {
+            items: [
+                    {
+                        title: "Gracias por tu donación!",
+                        unit_price: parseInt(donacion),
+                        quantity: 1,
+                    },
+            ],
+            };
+            mercadopago.preferences.create(preference)
+                .then(function (response:any) {
+                    res.json(response.body)
+                })
+                .catch(function (error:any) {
+                    console.log(error);
+                });
+    }catch(e){  
+        console.log(e)
+    }
 }
 
 
@@ -34,8 +37,8 @@ export const mercado = (req: Request, res: Response) => {
 export const susciption = async (req: Request, res: Response)=>{
     const {id} = req.body
     // console.log(id)
-
-    let preference = {
+try{
+let preference = {
         back_urls:{
             success:"http://localhost:3001/mercado/success"
         },
@@ -57,6 +60,10 @@ export const susciption = async (req: Request, res: Response)=>{
             .catch(function (error:any) {
                 console.log(error);
             });
+}catch(e){
+    console.log(e)
+}
+    
 }
 
 
