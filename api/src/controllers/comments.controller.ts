@@ -9,6 +9,7 @@ export const addComment = async (req: Request, res: Response) => {
   const post = await postSchema.findOne({ _id: idPost });
   let comment = await new commentSchema();
   try {
+    
     if (
       (text.length || image.length) &&
       authorComment.length &&
