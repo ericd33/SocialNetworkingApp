@@ -68,6 +68,7 @@ export default function PostList() {
       }
     >
       {post?.map((p) => {
+
         return <Post
           key={p._id || v4()}
           author={p.author}

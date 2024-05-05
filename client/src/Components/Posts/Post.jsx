@@ -9,7 +9,7 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-import { v4 } from 'uuid';
+import { v4 } from "uuid";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { useEffect, useRef, useState } from "react";
 import CommentsModal from "./Modals/CommentsModal";
@@ -30,42 +30,14 @@ export default function Post({
   id,
   enabled,
 }) {
-  const [User, setUser] = useState({ name: "", avatar: "" });
   const dispatch = useDispatch();
   const { user } = useUserAuth();
-  const [profileUser, setProfileUser] = useState({});
   const [timeDate, setTimeDate] = useState("0");
   let token = user.accessToken;
   let payload = { author, id };
-  const usr = useSelector(state => state.myUser)
-
-  const commentInputRef = useRef()
-
+  const commentInputRef = useRef();
 
   useEffect(() => {
-    setUser(usr)
-  }, [usr])
-
-
-  const handleBan = (e) => {
-    e.preventDefault(e);
-    if (enabled) {
-      let data = {
-        idPost: id,
-        action: "disable",
-      };
-      dispatch(banPost(data, token));
-    } else {
-      let data = {
-        idPost: id,
-        action: "enable",
-      };
-      dispatch(banPost(data, token));
-    }
-  };
-
-  useEffect(() => {
-
     if (created) {
       const parsedDate = new Date(Date.parse(created.toString()));
 
@@ -77,12 +49,11 @@ export default function Post({
       } else if (hourDifference > 24) {
         setTimeDate(Math.floor(hourDifference / 24) + " d");
       } else if (hourDifference <= 0) {
-        setTimeDate('Now')
+        setTimeDate("Now");
       } else {
         setTimeDate(hourDifference + " h");
       }
     }
-
   }, [created]);
 
   const putLike = () => {
@@ -98,7 +69,7 @@ export default function Post({
   });
 
   const handleChangeComment = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     commentInputRef.value = e.target.value;
   };
   const handleSubmmitComment = (e) => {
@@ -114,56 +85,50 @@ export default function Post({
     });
   };
 
-
   return (
     <Card
       key={v4()}
       sx={{
         width: 600,
-        margin: '2rem',
-        padding: '5px',
+        margin: "2rem",
+        padding: "5px",
         bgcolor: "custom.dark",
         fontFamily: "Nunito",
         borderRadius: 3,
         position: "relative",
       }}
-      id='card'
+      id="card"
     >
-      <div className="userInfo"> <CardHeader
-        subheader={timeDate}
-        subheaderTypographyProps={{ color: "white" }}
-        sx={{ pt: 0, pb: 0, mt: 1, color: "primary.main" }}
-        avatar={
-          <Avatar
-            imgProps={{ referrerPolicy: "no-referrer" }}
-            sx={{ bgcolor: "primary.light" }}
-            src={User.image}
-          ></Avatar>
-        }
-        title={<Link to={"/profile/" + author}>{User.name}</Link>}
-      /></div>
-      <div className="optionsPopper"> <OptionsPopper payload={payload} /></div>
+      <div className="userInfo">
+        <CardHeader
+          subheader={timeDate}
+          subheaderTypographyProps={{ color: "white" }}
+          sx={{ pt: 0, pb: 0, mt: 1, color: "primary.main" }}
+          avatar={
+            <Avatar
+              imgProps={{ referrerPolicy: "no-referrer" }}
+              sx={{ bgcolor: "primary.light" }}
+              src={author.image}
+            ></Avatar>
+          }
+          title={<Link to={"/profile/" + author.email}>{author.name}</Link>}
+        />
+      </div>
+      <div className="optionsPopper">
+        <OptionsPopper payload={payload} />
+      </div>
 
-      {profileUser.role === "admin" ? (
-        <div className="banContainer">
-          <Button id='banButton' onClick={handleBan} sx={{ mr: 1, fontSize: 11 }} color='error' variant="outlined">
-            Ban
-          </Button>
-          <span style={{ color: "#fff" }}>enabled: {enabled ? "true" : "false"}</span>
-        </div>
-      ) : (
-        <></>
-      )}
-      <CardContent id='postText' sx={{ color: "primary.main" }}><p>{text}</p></CardContent>
+      <CardContent id="postText" sx={{ color: "primary.main" }}>
+        <p>{text}</p>
+      </CardContent>
 
       {image ? (
         <CardMedia component="img" alt="image" image={image} />
       ) : (
-        <div></div>
+        null
       )}
       <CardActions className="actionsPost">
         <div className="actionLikes">
-
           <IconButton onClick={putLike}>
             <ThumbUpOffAltIcon className="ButtonActionPost" />
           </IconButton>
@@ -173,7 +138,7 @@ export default function Post({
               <ul>
                 <li id="LikeTitle">Likes</li>
                 {likes?.map((l) => {
-                  return <li key={'l' + l.name}>{l.name}</li>;
+                  return <li key={"l" + l.name}>{l.name}</li>;
                 })}
               </ul>
             </div>
@@ -186,7 +151,6 @@ export default function Post({
         <p className="textCommentarys">
           {comments && comments?.length} comments
         </p>
-
       </CardActions>
 
       <div className="inputsdeComments">
@@ -200,7 +164,12 @@ export default function Post({
           onChange={handleChangeComment}
         />
         <Button
-          sx={{ mb: '2px', fontFamily: "Nunito", color: "primary.dark", borderRadius: '12px' }}
+          sx={{
+            mb: "2px",
+            fontFamily: "Nunito",
+            color: "primary.dark",
+            borderRadius: "12px",
+          }}
           variant="outlined"
           onClick={handleSubmmitComment}
         >
