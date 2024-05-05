@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 // import Home from "./Components/pages/Home/Home.jsx";
 import "./App.css";
 import EventDetail from "./Components/Events/EventDetail.jsx";
@@ -11,8 +11,6 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext.js";
 import Home from "./Components/pages/Home/Home.jsx";
 import LandingBackup from "./Components/pages/Landing/LandingBackup";
-import Chat from "./Components/pages/Chat/Chat.jsx";
-import LandingRegister from "./Components/pages/Landing/Register/LandingRegister";
 
 function App() {
   return (
@@ -22,14 +20,6 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingBackup />} />
             <Route path="/signup" element={<LandingBackup />} />
-            <Route
-              path="/chat"
-              element={
-                <ProtectedRoute>
-                  <Chat />
-                </ProtectedRoute>
-              }
-            />
             <Route
               path="/home"
               element={

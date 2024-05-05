@@ -10,8 +10,6 @@ import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 
-import axios from "axios";
-
 import logoGrande from '../../../Logos/logogrande.png';
 
 
@@ -36,12 +34,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const socket = io(`${process.env.REACT_APP_MY_API_URL}`);
 function Chat() {
+
+
+  const socket = io(`${process.env.REACT_APP_MY_API_URL}`);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const {user, logOut} = useUserAuth();
+  const { user, logOut } = useUserAuth();
 
   const userP = JSON.parse(window.localStorage.getItem("user"))
   let token = user.accessToken;
@@ -74,65 +74,65 @@ function Chat() {
     localStorage.clear();
   }
 
-  if(userP.enabled !== false) {
-  return (
-    <div className="chat-container">
-      <Link to={"/home"}>
-        <Button
-          id="buttonEventDetail"
-          sx={{
-            position: "absolute",
-            top: "0px",
-            left: "0px",
-            bgcolor: "secondary.main",
-            color: grey[800],
-            fontWeight: "bold",
-            mb: "10px",
-            mt: "10px",
-            ml: "10px",
-          }}
-          variant="contained"
-        >
-          Back
-        </Button>
-      </Link>
-      {/* <h1 className="title">ConcatUS Chat</h1> */}
-      <img src={logoGrande} alt="" className="chat-logo" />
-      <h3 className="descrip">This is a global chat, meet everyone!</h3>
-      <form onSubmit={handleSubmit} className="chat-from-container">
-        <TextField
-          sx={{ marginTop: "20px" }}
-          id="filled-multiline-static"
-          label="Write a message"
-          color="primary"
-          value={message}
-          inputProps={{ "aria-label": "search" }}
-          onChange={(e) => setMessage(e.target.value)}
-          className="chat-input"
-        />
-        <div className="chat-container-message">
-          <ul className="chat-list-ul">
-            {messages.map((message, i) => (
-              <li
-                key={i}
-                className={`message-from ${
-                  message.from === user.displayName
+  if (userP.enabled !== false) {
+    return (
+      <div className="chat-container">
+        <Link to={"/home"}>
+          <Button
+            id="buttonEventDetail"
+            sx={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              bgcolor: "secondary.main",
+              color: grey[800],
+              fontWeight: "bold",
+              mb: "10px",
+              mt: "10px",
+              ml: "10px",
+            }}
+            variant="contained"
+          >
+            Back
+          </Button>
+        </Link>
+        {/* <h1 className="title">ConcatUS Chat</h1> */}
+        <img src={logoGrande} alt="" className="chat-logo" />
+        <h3 className="descrip">This is a global chat, meet everyone!</h3>
+        <form onSubmit={handleSubmit} className="chat-from-container">
+          <TextField
+            sx={{ marginTop: "20px" }}
+            id="filled-multiline-static"
+            label="Write a message"
+            color="primary"
+            value={message}
+            inputProps={{ "aria-label": "search" }}
+            onChange={(e) => setMessage(e.target.value)}
+            className="chat-input"
+          />
+          <div className="chat-container-message">
+            <ul className="chat-list-ul">
+              {messages.map((message, i) => (
+                <li
+                  key={i}
+                  className={`message-from ${message.from === user.displayName
                     ? "message-from-me"
                     : "message-from-friend"
-                }`}
-              >
-                <span>
-                  {message.from}: {message.body}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </form>
+                    }`}
+                >
+                  <span>
+                    {message.from}: {message.body}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </form>
 
       </div>
 
-  )}
+    )
+  }
   else {
     return (
       <div className='HomeBanned'>

@@ -18,11 +18,10 @@ export default function Prem() {
   const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
   // const user = JSON.parse(window.localStorage.getItem("user"))
-  const {user} = useUserAuth();
+  const { user } = useUserAuth();
   const opencloseModal = () => {
     setModal(!modal);
   };
-  console.log(user)
 
   const handleSubmit = () => {
     dispatch(Premium(user.email));
@@ -56,9 +55,9 @@ export default function Prem() {
           </IconButton>
         </div>
         <p>
-          Are you ready for the next step? <br/>
-          Just for $5,99 😎<br/>
-          You will be able to create your <span className="outl">own Events!</span>  <br/>
+          Are you ready for the next step? <br />
+          Just for $5,99 😎<br />
+          You will be able to create your <span className="outl">own Events!</span>  <br />
           Invite you friends yo the best party or organize a Online meeting!
         </p>
         <div className="premiumButton">
@@ -78,7 +77,7 @@ export default function Prem() {
 
   return (
     <div className="container">
-      <IconButton sx={{width:'35px'}} onClick={() => opencloseModal()}>
+      <IconButton sx={{ width: '35px' }} onClick={() => opencloseModal()}>
         <PaidIcon sx={{ color: "secondary.main" }} />
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>

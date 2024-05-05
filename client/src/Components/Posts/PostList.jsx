@@ -1,7 +1,6 @@
 import Post from "./Post";
-// import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-// import { getPosts, paginate } from "../../Redux/actions";
+import { v4 } from 'uuid';
 import "./PostList.css";
 import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
@@ -9,12 +8,12 @@ import InfiniteScroll from "react-infinite-scroll-component"
 import { useDispatch, useSelector } from "react-redux";
 import { paginate } from "../../Redux/actions";
 export default function PostList() {
-  const dispatch =  useDispatch()
-  const {user} = useUserAuth();
+  const dispatch = useDispatch()
+  const { user } = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
-  let [page, setPage]= useState(2)
-  const all_posts = useSelector(e=>e.posts)
-  const [post, setPost]= useState([])
+  let [page, setPage] = useState(2)
+  const all_posts = useSelector(e => e.posts)
+  const [post, setPost] = useState([])
   let token = user.accessToken;
   useEffect(() => {
     const Config = {
@@ -23,11 +22,11 @@ export default function PostList() {
       headers: {
         authorization: `Bearer ${token}`,
       },
-      data:{
-        paginate:1
+      data: {
+        paginate: 1
       }
     };
-    axios(Config).then(res=>{
+    axios(Config).then(res => {
       setPost(post.concat(res.data))
     })
 
@@ -38,39 +37,29 @@ export default function PostList() {
         Authorization: `Bearer ${token}`
       },
     }
-    axios(Config2).then(res => setProfileUser(res.data))
+    axios(Config2).then(res => {
+      console.log(res.data)
+      setProfileUser(res.data)
+    })
   }, [])
-  useEffect(()=>{
-    dispatch(paginate(token,page))
+  useEffect(() => {
+    dispatch(paginate(token, page))
     setPost(post?.concat(all_posts))
-  },[page])
-return (
-  <InfiniteScroll 
-  dataLength={post?.length} 
-  hasMore={true} 
-  next={()=>{setPage((prevPage)=>prevPage+1)}}
-  >
-  <div>
-    {post?.length === 0 ? (
-      <div className="List">
-        <div className="wrapper">
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-        </div>
-      </div>
-    ) : (
-      <div className="List">
-        {post?.map((p) => {
-            if(profileUser?.enabled){
-              switch(profileUser.role){
-              case "admin":
+  }, [page])
+  return (
+    <InfiniteScroll
+      key={v4()}
+      dataLength={post?.length}
+      hasMore={true}
+      next={() => { setPage((prevPage) => prevPage + 1) }}
+    >
+      {post?.map((p) => {
+        if (profileUser?.enabled) {
+          switch (profileUser.role) {
+            case "admin":
               return (
                 <Post
-                  key={p._id}
+                  key={p._id || v4()}
                   author={p.author}
                   likes={p.likes}
                   text={p.content}
@@ -82,42 +71,40 @@ return (
                 />
               )
             case "user":
-              if(p?.enabled && !p.disable.some(e=>e===profileUser.email))
-              return(
-              <Post
-                  key={p._id}
-                  author={p.author}
-                  created={p.createdAt}
-                  comments={p.comments}
-                  likes={p.likes}
-                  text={p.content}
-                  image={p.image}
-                  id={p._id}
-                  enabled={p.enabled}
-                  disable={p.disable}
-                />)
-                {console.log(profileUser)}
-                default: return <></>
+              if (p?.enabled && !p.disable.some(e => e === profileUser.email))
+                return (
+                  <Post
+                    key={p._id || v4()}
+                    author={p.author}
+                    created={p.createdAt}
+                    comments={p.comments}
+                    likes={p.likes}
+                    text={p.content}
+                    image={p.image}
+                    id={p._id}
+                    enabled={p.enabled}
+                    disable={p.disable}
+                  />)
+              break;
+            default: return <></>;
           }
-            }else{
-              return (
-                <div className="List">
-                  <div className="wrapper">
-                    <div className="circle"></div>
-                    <div className="circle"></div>
-                    <div className="circle"></div>
-                    <div className="shadow"></div>
-                    <div className="shadow"></div>
-                    <div className="shadow"></div>
-                  </div>
-                </div>
-              ) 
-            }
-          })
-          }
-      </div>
-    )}
-  </div>
-  </InfiniteScroll>
-);
+          return <></>
+        } else {
+          return (
+            <div className="List">
+              <div className="wrapper">
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="circle"></div>
+                <div className="shadow"></div>
+                <div className="shadow"></div>
+                <div className="shadow"></div>
+              </div>
+            </div>
+          )
+        }
+      })
+      }
+    </InfiniteScroll>
+  );
 }

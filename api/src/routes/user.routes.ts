@@ -1,7 +1,7 @@
-import { addFavorite, asistEvents, editImage, editName, editWebSite, findUserByEmail, shops } from './../controllers/user.controller';
+
 import { Router } from "express";
 
-import { addUser, findUserByName, findUserById , deleteUser, addFriend, findUser,editPresentation } from "../controllers/user.controller";
+import { addUser, findUserByName, findUserById, deleteUser, addFriend, findUser, editPresentation, addFavorite, asistEvents, editImage, editName, editWebSite, findUserByEmail, myUser, shops } from "../controllers/user.controller";
 
 const router = Router()
 
@@ -9,10 +9,11 @@ router.route('')
     .post(addUser)
     .put(deleteUser)
     .get(findUserByName)
-router.route('/:id')
-    .get(findUserById)
+router.route("/myUser")
+    .get(myUser)
+
 router.route('/email/:email')
-  .get(findUserByEmail)
+    .get(findUserByEmail)
 router.route('/follow')
     .post(addFriend)
 router.route('/login')
@@ -31,4 +32,8 @@ router.route("/addFavorite")
     .post(addFavorite)
 router.route("/shop")
     .post(shops)
+
+    router.route('/:id')
+    .get(findUserById)
+
 export default router;

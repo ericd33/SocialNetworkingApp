@@ -14,28 +14,27 @@ import axios from "axios";
 
 const Payments = () => {
 
-	const [modal, setModal] = useState(false);
-	const [data, setData] = useState([]);
-  const {user} = useUserAuth();
+  const [modal, setModal] = useState(false);
+  const [data, setData] = useState([]);
+  const { user } = useUserAuth();
   let token = user.accessToken;
 
-  useEffect(()=>{
-    const Config = {
-      method: 'post',
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/shop`,
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    }
-    
-    axios(Config).then(res => {setData(res.data)
-    console.log(res.data)})
-},[])
-// console.log(data)
-	const opencloseModal = () => {
+  useEffect(() => {
+    // const Config = {
+    //   method: 'post',
+    //   baseURL: `${process.env.REACT_APP_MY_API_URL}/users/shop`,
+    //   headers: {
+    //     Authorization: `Bearer ${token}`
+    //   },
+    // }
+    // 
+    // axios(Config).then(res => {setData(res.data)
+  }, [])
+  // console.log(data)
+  const opencloseModal = () => {
     setModal(!modal);
   };
-	const body = (
+  const body = (
     <Card
       className="postCreator"
       sx={{
@@ -48,7 +47,7 @@ const Payments = () => {
       }}
     >
       <CardContent>
-      <div className="headerModal">
+        <div className="headerModal">
           <h2>ConcatUs <span className="outl"> Payments </span></h2>
           <IconButton
             id="closeIcon"
@@ -64,43 +63,43 @@ const Payments = () => {
           </IconButton>
         </div>
         <div className='opinionContainer'>
-        {data?.map((o) => {
-        return(o?.info?.map((e)=>{
-          // console.log(e)
-          return (
-            <div id='commentCard'>
-                <Card
-                className="cardOpinion"
-                sx={{
-                bgcolor: "custom.light",
-                fontFamily: "Nunito",
-                color: "primary.light",
-                borderRadius: "15px",
-                mb: "10px",
-                }}>
+          {data?.map((o) => {
+            return (o?.info?.map((e) => {
+              // console.log(e)
+              return (
+                <div id='commentCard'>
+                  <Card
+                    className="cardOpinion"
+                    sx={{
+                      bgcolor: "custom.light",
+                      fontFamily: "Nunito",
+                      color: "primary.light",
+                      borderRadius: "15px",
+                      mb: "10px",
+                    }}>
 
-                <CardHeader
-                  sx={{ pt: "8px", color: "secondary.main" }}
-                  title={e?.payer?.email_address}
-                  subheader={`${e?.payer?.name?.given_name}  ${e?.payer?.name?.surname}` }
-                  subheaderTypographyProps={{ color: "white"}}
-                />
-                <div className='pays'>
-                  <p id='textComment'>Pay {e?.infopago?.value} {e?.infopago?.currency_code}</p>
+                    <CardHeader
+                      sx={{ pt: "8px", color: "secondary.main" }}
+                      title={e?.payer?.email_address}
+                      subheader={`${e?.payer?.name?.given_name}  ${e?.payer?.name?.surname}`}
+                      subheaderTypographyProps={{ color: "white" }}
+                    />
+                    <div className='pays'>
+                      <p id='textComment'>Pay {e?.infopago?.value} {e?.infopago?.currency_code}</p>
+                    </div>
+                  </Card>
                 </div>
-              </Card>
-            </div>
-            )
-        }))
-      })}
-      </div>
+              )
+            }))
+          })}
+        </div>
       </CardContent>
-      </Card>
+    </Card>
   );
 
   return (
     <div className="container">
-      <Button id='banButton' sx={{fontSize:11}} color='error' variant="outlined" onClick={() => opencloseModal()}>
+      <Button id='banButton' sx={{ fontSize: 11 }} color='error' variant="outlined" onClick={() => opencloseModal()}>
         Payments
       </Button>
       <Modal open={modal} onClose={opencloseModal}>

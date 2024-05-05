@@ -26,7 +26,7 @@ import {
 } from "./action-types.js";
 
 export function postUser(payload, token) {
-  return function () {
+  return function() {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
@@ -40,13 +40,13 @@ export function postUser(payload, token) {
       },
     };
     axios(Config)
-      .then((res) => {})
+      .then((res) => { })
       .catch((err) => console.log(err));
   };
 }
 
 export function getPosts(payload, page) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
@@ -67,7 +67,7 @@ export function getPosts(payload, page) {
 }
 
 export function postPost(token, data) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
@@ -82,7 +82,7 @@ export function postPost(token, data) {
 }
 
 export function putPost(idPost, token, dataToUpdate) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/edit/${idPost}`,
@@ -98,42 +98,44 @@ export function putPost(idPost, token, dataToUpdate) {
   };
 }
 
-export function Donate( data , email) {
-  return async function () {
+export function Donate(data, email) {
+  return async function() {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/donations`,
       data: {
         mont: data,
-        email:email
+        email: email
       },
     }
-    await axios(Config).then((res) =>{
+    await axios(Config).then((res) => {
       console.log(res.data)
-      window.open(res.data.href, "_blank", "noopener,noreferrer")}
+      window.open(res.data.href, "_blank", "noopener,noreferrer")
+    }
     );
   };
 }
 
 export function Premium(data) {
   console.log(data);
-  return async function () {
+  return async function() {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/paypal/create-order`,
-      data:{
-        email:data
+      data: {
+        email: data
       }
     };
-    await axios(Config).then((res) =>{
-      window.open(res.data.href, "_blank", "noopener,noreferrer")}
+    await axios(Config).then((res) => {
+      window.open(res.data.href, "_blank", "noopener,noreferrer")
+    }
     );
   };
 }
 
 
 export function postEvent(payload, token) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
@@ -160,7 +162,7 @@ export function postEvent(payload, token) {
 }
 
 export function details(id, token) {
-  return function (dispatch) {
+  return function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events/${id}`,
@@ -169,7 +171,6 @@ export function details(id, token) {
       },
     };
     axios(Config).then((res) => {
-      console.log(res.data);
       return dispatch({
         type: GET_DETAILS,
         payload: res.data,
@@ -184,11 +185,11 @@ export function deleteDetails() {
   };
 }
 
-export function getMyUser(token, email) {
-  return async function (dispatch) {
+export function getMyUser(token) {
+  return async function(dispatch) {
     const Config = {
       method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${email}`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/myUser`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -203,7 +204,7 @@ export function getMyUser(token, email) {
 }
 
 export function searchUsersByName(name, token) {
-  return function (dispatch) {
+  return function(dispatch) {
     if (name === "") {
       return dispatch({
         type: SEARCH_BY_NAME,
@@ -227,10 +228,11 @@ export function searchUsersByName(name, token) {
 }
 
 export function login(user) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     axios
       .post(`${process.env.REACT_APP_MY_API_URL}/users/login`, user)
-      .then(function (response) {
+      .then(function(response) {
+        console.log(response)
         if (response.data === true) {
           dispatch(getMyUser(user.email));
           window.location.href = "/home";
@@ -238,14 +240,14 @@ export function login(user) {
           alert("This account doesnt exist!");
         }
       })
-      .catch(function (err) {
+      .catch(function(err) {
         console.log(err);
       });
   };
 }
 
 export function getEvents(payload) {
-  return function (dispatch) {
+  return function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
@@ -263,7 +265,7 @@ export function getEvents(payload) {
 }
 
 export function putLikes(idPost, email, token) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${idPost}`,
@@ -284,7 +286,7 @@ export function putLikes(idPost, email, token) {
 }
 
 export function updateComment(postId, userId, commentData, token) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const requestConfig = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${postId}/comment`,
@@ -308,7 +310,7 @@ export function updateComment(postId, userId, commentData, token) {
 }
 
 export function getPostsByName(token, id) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/post/${id}`,
@@ -326,7 +328,7 @@ export function getPostsByName(token, id) {
 }
 
 export function follows(payload, token) {
-  return function () {
+  return function() {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/follow`,
@@ -343,7 +345,7 @@ export function follows(payload, token) {
 }
 
 export function getPostId(token, idPost) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${idPost}`,
@@ -361,7 +363,7 @@ export function getPostId(token, idPost) {
 }
 
 export function assitEvent(token, payload) {
-  return function () {
+  return function() {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/event`,
@@ -378,7 +380,7 @@ export function assitEvent(token, payload) {
 }
 
 export function getEventsByName(token, name) {
-  return function (dispatch) {
+  return function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events?name=${name}`,
@@ -396,7 +398,7 @@ export function getEventsByName(token, name) {
 }
 
 export function getCommentsPost(token, payload) {
-  return function (dispatch) {
+  return function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/${payload}`,
@@ -438,7 +440,7 @@ let x = [];
 
 export function getPostsFollows(token, email) {
   // let x = []
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/email/${email}`,
@@ -474,7 +476,7 @@ export function sortByComents(payload) {
 }
 
 export function imageChange(payload, token) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/image`,
@@ -491,7 +493,7 @@ export function imageChange(payload, token) {
   };
 }
 export function nameChange(payload, token, email) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/name`,
@@ -509,7 +511,7 @@ export function nameChange(payload, token, email) {
 }
 
 export function presentationChange(payload, token, email) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/presentation`,
@@ -526,7 +528,7 @@ export function presentationChange(payload, token, email) {
   };
 }
 export function webSiteChange(payload, token, email) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/editProfile/website`,
@@ -543,8 +545,8 @@ export function webSiteChange(payload, token, email) {
   };
 }
 
-export function banPost(payload,token) {
-  return async function () {
+export function banPost(payload, token) {
+  return async function() {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
@@ -561,7 +563,7 @@ export function banPost(payload,token) {
 }
 
 export function newComment(token, payload) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/new`,
@@ -593,7 +595,7 @@ const clearE = () => {
 let y = [];
 
 export function getEventProfile(token, id) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events/${id}`,
@@ -615,7 +617,7 @@ export function getEventProfile(token, id) {
 }
 
 export function paginate(token, payload) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/paginate`,
@@ -636,7 +638,7 @@ export function paginate(token, payload) {
 }
 
 export function getEventsByAuthor(token, author) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events/author/${author}`,
@@ -654,7 +656,7 @@ export function getEventsByAuthor(token, author) {
 }
 
 export function banUsers(payload, token) {
-  return async function () {
+  return async function() {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users`,
@@ -671,7 +673,7 @@ export function banUsers(payload, token) {
 }
 
 export function banComments(payload, token) {
-  return async function () {
+  return async function() {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/comments/disable`,
@@ -688,7 +690,7 @@ export function banComments(payload, token) {
 }
 
 export function banEvents(payload, token) {
-  return async function () {
+  return async function() {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
@@ -705,7 +707,7 @@ export function banEvents(payload, token) {
 }
 
 export function reportPost(payload, token) {
-  return async function () {
+  return async function() {
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/report/post`,
@@ -724,7 +726,7 @@ export function reportPost(payload, token) {
 }
 
 export function editPost(payload, token) {
-  return async function () {
+  return async function() {
     const requestConfig = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${payload.id}/content`,
@@ -769,8 +771,8 @@ export function clearF(payload) {
   };
 }
 
-export function favorite (payload,token){
-  return async function (dispatch) {
+export function favorite(payload, token) {
+  return async function(dispatch) {
     const requestConfig = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/users/addFavorite`,
@@ -782,18 +784,18 @@ export function favorite (payload,token){
         emailUser: payload.email,
       },
     };
-    await axios(requestConfig).then(res=>{
+    await axios(requestConfig).then(res => {
       console.log(res.data)
       return dispatch({
-      payload : res.data,
-      type: FAVORITE
+        payload: res.data,
+        type: FAVORITE
+      })
     })
-    }) 
-}
+  }
 }
 
 export function getOpinions() {
-  return function (dispatch) {
+  return function(dispatch) {
     const Config = {
       method: "get",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getOpinions`,
@@ -807,9 +809,9 @@ export function getOpinions() {
   };
 }
 
-export function newOpinion( payload) {
-  return function (dispatch) {
-    
+export function newOpinion(payload) {
+  return function(dispatch) {
+
     const Config = {
       method: "post",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/newOpinion`,

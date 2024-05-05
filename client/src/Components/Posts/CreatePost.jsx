@@ -6,33 +6,29 @@ import {
   IconButton,
   Card,
   CardContent,
-  Input,
-  InputLabel,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreatePost.css";
 import { getMyUser, paginate, postPost } from "../../Redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useEffect } from "react";
 import { useUserAuth } from "../../context/UserAuthContext";
 import axios from "axios";
-import { width } from "@mui/system";
 
-export default function CreatePost({profileUser}) {
+export default function CreatePost({ profileUser }) {
   const [modal, setModal] = useState(false);
-  const [file, setFile]= useState(null)
-  const [prev, setPrev]= useState(false)
-  const {user} = useUserAuth();
+  const [prev, setPrev] = useState(false)
+  const { user } = useUserAuth();
   let userEmail = user.email;
   const token = user.accessToken;
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getMyUser(userEmail));
+    // dispatch(getMyUser(userEmail));
   }, []);
 
   const dispatch = useDispatch();
@@ -44,12 +40,12 @@ export default function CreatePost({profileUser}) {
     imageCloudinary: "",
   });
 
-  const closeImg = (e)=>{
+  const closeImg = (e) => {
     setFormState({
       ...formState,
       imageCloudinary: "",
-      })
-      setPrev(false)
+    })
+    setPrev(false)
   }
 
   const submitFile = async (e) => {
@@ -74,7 +70,7 @@ export default function CreatePost({profileUser}) {
         }, 1000);
         setPrev(true);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const handleChange = (e) => {
@@ -84,7 +80,7 @@ export default function CreatePost({profileUser}) {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     // await submitFile()
     const data = {
       ...formState,
@@ -118,11 +114,13 @@ export default function CreatePost({profileUser}) {
           <h2>Create a post</h2>
           <IconButton
             id='closeIcon'
-            sx={{ width: "35px", height: "35px", top: "20px",
-            bgcolor:'custom.light' }}
+            sx={{
+              width: "35px", height: "35px", top: "20px",
+              bgcolor: 'custom.light'
+            }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon sx={{pr:'1px'}}/>
+            <CloseIcon sx={{ pr: '1px' }} />
           </IconButton>
         </div>
         <div className="inputsdePost">
@@ -146,27 +144,29 @@ export default function CreatePost({profileUser}) {
           />*/}
           <div className="Input-Imagen">
             <label id='labelInput' for="inputTag">
-            Upload image
-            <FileUploadIcon/>
-            <input id="inputTag" type="file" name="imageCloudinary" onChange={(e) => submitFile(e)} accept="image/png, image/jpg, image/gif, image/jpeg"/>
+              Upload image
+              <FileUploadIcon />
+              <input id="inputTag" type="file" name="imageCloudinary" onChange={(e) => submitFile(e)} accept="image/png, image/jpg, image/gif, image/jpeg" />
             </label>
 
-          {prev ? 
-            <IconButton id='deleteIMG' onClick={closeImg} sx={{ bgcolor: "secondary.main" }}>
-              <CloseIcon sx={{pr:'1px'}}/>
-            </IconButton>
-            : null }
-          {prev ? 
-          <img src={formState.imageCloudinary} className="img"/> 
-            : null}
+            {prev ?
+              <IconButton id='deleteIMG' onClick={closeImg} sx={{ bgcolor: "secondary.main" }}>
+                <CloseIcon sx={{ pr: '1px' }} />
+              </IconButton>
+              : null}
+            {prev ?
+              <img src={formState.imageCloudinary} className="img" />
+              : null}
           </div>
-        </div> 
-  
+        </div>
+
         <div align="right">
-          <Button 
-          id='Postbutton'
-          sx={{mt:3, bgcolor:'secondary.main', fontFamily: "Nunito",
-          color:'custom.dark'}} onClick={handleSubmit} variant='contained'>Post</Button>
+          <Button
+            id='Postbutton'
+            sx={{
+              mt: 3, bgcolor: 'secondary.main', fontFamily: "Nunito",
+              color: 'custom.dark'
+            }} onClick={handleSubmit} variant='contained'>Post</Button>
         </div>
       </CardContent>
     </Card>
@@ -174,18 +174,18 @@ export default function CreatePost({profileUser}) {
   const userStorage = JSON.parse(localStorage.getItem('user'))
   return (
     userStorage.enabled
-  ?<div className="container">
-      <IconButton
-        onClick={() => opencloseModal()}
-        id="buttonPost"
-        sx={{ bgcolor: "secondary.main" }}
-      >
-        <PostAddOutlinedIcon sx={{ color: grey[800] }} />
-      </IconButton>
-      <Modal open={modal} onClose={opencloseModal}>
-        {body}
-      </Modal>
-    </div>
-    : <></>
+      ? <div className="container">
+        <IconButton
+          onClick={() => opencloseModal()}
+          id="buttonPost"
+          sx={{ bgcolor: "secondary.main" }}
+        >
+          <PostAddOutlinedIcon sx={{ color: grey[800] }} />
+        </IconButton>
+        <Modal open={modal} onClose={opencloseModal}>
+          {body}
+        </Modal>
+      </div>
+      : <></>
   );
 }

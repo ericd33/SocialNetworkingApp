@@ -6,11 +6,8 @@ import {
   IconButton,
   Card,
   CardContent,
-  Input,
   InputLabel,
   Icon,
-  ToggleButtonGroup,
-  ToggleButton,
 } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import CloseIcon from "@mui/icons-material/Close";
@@ -19,8 +16,6 @@ import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreateEvent.css";
 import { postEvent } from "../../Redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuth } from "firebase/auth";
-import { getMyUser } from "../../Redux/actions";
 import { useUserAuth } from "../../context/UserAuthContext";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import { Search } from "./map/search";
@@ -28,25 +23,20 @@ import React, { useContext, useRef } from "react";
 import { MapaContext } from "./map/contex/MapaContext";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { searchPlaces } from "./map/axios/searchPlaces";
-import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import e from "express";
 
 export default function CreateEvent() {
   const [modal, setModal] = useState(false);
-  const [file, setFile] = useState(null);
   const [prev, setPrev] = useState(false);
   const { user } = useUserAuth();
   const token = user.accessToken;
   let userEmail = user.email;
   const myUser = useSelector(state => state.myUser)
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { eventoLocation, setResults, location, setLocation, results } =
     useContext(MapaContext);
   const userImage = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
-    dispatch(getMyUser(userEmail));
   }, []);
   const opencloseModal = () => {
     setModal(!modal);
@@ -166,22 +156,22 @@ export default function CreateEvent() {
         }, 1000);
         setPrev(true);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   function onClicked(e) {
-		if(e.target.checked === true) {
-			setFormState({
+    if (e.target.checked === true) {
+      setFormState({
         ...formState,
         type: 'online'
       })
-		} else{
-			setFormState({
+    } else {
+      setFormState({
         ...formState,
         type: 'in-person'
       })
-		}
-	  }
+    }
+  }
 
   const body = (
     <Card
@@ -246,25 +236,25 @@ export default function CreateEvent() {
           />
           <div className="date-modality">
             <div className='date-img'>
-                <InputLabel htmlFor="date">Date</InputLabel>
-                <DateTimePicker
-                  minDate={Date.now()}
-                  onChange={handleDateChange}
-                  name="date"
-                  value={formState.date}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                <div className="Input-Imagen">
-                  <label id='labelInput' for="inputTag">
-                    Upload image
-                    <FileUploadIcon/>
-                    <input id="inputTag" type="file" name="imageCloudinary" onChange={(e) => submitFile(e)} accept="image/png, image/jpg, image/gif, image/jpeg"/>
-                  </label>
+              <InputLabel htmlFor="date">Date</InputLabel>
+              <DateTimePicker
+                minDate={Date.now()}
+                onChange={handleDateChange}
+                name="date"
+                value={formState.date}
+                renderInput={(params) => <TextField {...params} />}
+              />
+              <div className="Input-Imagen">
+                <label id='labelInput' HTMLFor="inputTag">
+                  Upload image
+                  <FileUploadIcon />
+                  <input id="inputTag" type="file" name="imageCloudinary" onChange={(e) => submitFile(e)} accept="image/png, image/jpg, image/gif, image/jpeg" />
+                </label>
 
-                  {prev ? (
-                    <img src={formState.imageCloudinary} className="img" />
-                  ) : null}
-                </div>
+                {prev ? (
+                  <img src={formState.imageCloudinary} className="img" />
+                ) : null}
+              </div>
             </div>
 
             <div className="modality-location">
@@ -293,20 +283,20 @@ export default function CreateEvent() {
                   <div className="results-location">
                     {locations.length && results
                       ? locations.map(({ place_name, text, center }, i) => (
-                          <Search
-                            place_name={place_name}
-                            text={text}
-                            center={center}
-                            i={i}
-                          />
-                        ))
+                        <Search
+                          place_name={place_name}
+                          text={text}
+                          center={center}
+                          i={i}
+                        />
+                      ))
                       : location &&
-                        results && (
-                          <div>
-                            <p className="parrafo">No encontrado</p>
-                            <p className="parrafo">{location}</p>
-                          </div>
-                        )}
+                      results && (
+                        <div>
+                          <p className="parrafo">No encontrado</p>
+                          <p className="parrafo">{location}</p>
+                        </div>
+                      )}
                   </div>
                 </div>
               ) : (
@@ -328,19 +318,19 @@ export default function CreateEvent() {
           </div>
         </div>
 
-        
+
         <Button
-            id="Postbutton"
-            sx={{
-              bgcolor: "secondary.main",
-              fontFamily: "Nunito",
-              color: "custom.dark",
-            }}
-            onClick={handleSubmit}
-            variant="contained"
-          >
-            Post
-          </Button>
+          id="Postbutton"
+          sx={{
+            bgcolor: "secondary.main",
+            fontFamily: "Nunito",
+            color: "custom.dark",
+          }}
+          onClick={handleSubmit}
+          variant="contained"
+        >
+          Post
+        </Button>
       </CardContent>
     </Card>
   );

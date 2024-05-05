@@ -1,5 +1,4 @@
 import React from "react";
-import { auth } from './firebase/config'; //NO ELIMINAR (IMPORTANTE ROMPE TODO);
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -19,31 +18,29 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const theme = createTheme({
   palette: {
     primary: {
-      light:'#fefbfe',
+      light: '#fefbfe',
       main: '#fff',
-      dark:'#a5a5a5'
+      dark: '#a5a5a5'
     },
     secondary: {
       main: '#ffd000',
     },
     custom: {
-      light:'#3b3b3b',
-      main:'#2a2a2a',
+      light: '#3b3b3b',
+      main: '#2a2a2a',
       dark: '#101010'
     }
   }
 });
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <MapaProvider>
-          <ThemeProvider theme={theme}>        
-            <App />
-          </ThemeProvider>
-        </MapaProvider> 
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <BrowserRouter>
+      <MapaProvider>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </MapaProvider>
+    </BrowserRouter>
+  </Provider>
 );

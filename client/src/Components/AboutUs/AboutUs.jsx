@@ -25,8 +25,6 @@ export default function AboutUs() {
   const [modal2, setModal2] = useState(false);
   const [change, setChange] = useState(false);
 
-  console.log(change)
-
   const [opinions, setOpinions] = useState([]);
   const { user } = useUserAuth();
   let token = user.accessToken;
@@ -41,14 +39,12 @@ export default function AboutUs() {
   };
 
 
-  useEffect(()=>{
 
-    const Config = {
-      method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getAllOpinions`,
-    }
-    axios(Config).then(res => setOpinions(res.data))
-},[dispatch])
+  // use effect? const Config = {
+  //   method: "get",
+  //   baseURL: `${process.env.REACT_APP_MY_API_URL}/opinions/getAllOpinions`,
+  // }
+  // axios(Config).then(res => setOpinions(res.data))
 
 
   const [opinion, setOpinion] = useState({
@@ -81,8 +77,8 @@ export default function AboutUs() {
       setModal2(true);
       setTimeout(() => {
 
-        window.location.href = window.location.href; 
-      },1000)
+        window.location.href = window.location.href;
+      }, 1000)
 
     }
   };
@@ -225,7 +221,7 @@ export default function AboutUs() {
               </a>
               <a href="https://github.com/ericd33" target="_blank">
 
-                
+
                 <Button>
                   <GitHubIcon />
                 </Button>
@@ -239,7 +235,7 @@ export default function AboutUs() {
             <img src={CarolinaForner} className="image" alt="Not found" />
             <h4 className="devName"> Carolina Forner </h4>
             <div className="devButtons">
-            <a href="https://www.linkedin.com/in/carolina-forner/" target="_blank"> <Button >
+              <a href="https://www.linkedin.com/in/carolina-forner/" target="_blank"> <Button >
                 <LinkedInIcon />
               </Button> </a>
               <a href="hhttps://github.com/caroo334" target="_blank"> <Button >
@@ -255,7 +251,7 @@ export default function AboutUs() {
             <img src={DanielMolina} className="image" alt="Not found" />
             <h4 className="devName"> Daniel Molina </h4>
             <div className="devButtons">
-            <a href="https://www.linkedin.com/in/daniel-molina-a61b85236" target="_blank"> <Button >
+              <a href="https://www.linkedin.com/in/daniel-molina-a61b85236" target="_blank"> <Button >
                 <LinkedInIcon />
               </Button> </a>
               <a href="hhttps://github.com/DanielMolinaP" target="_blank"><Button >
@@ -270,7 +266,7 @@ export default function AboutUs() {
             <img src={PatricioPereyra} className="image" alt="Not found" />
             <h4 className="devName">Patricio Pereyra </h4>
             <div className="devButtons">
-            <a href="https://www.linkedin.com/in/patricio-pereyra-gargiulo-701617245/" target="_blank"> <Button >
+              <a href="https://www.linkedin.com/in/patricio-pereyra-gargiulo-701617245/" target="_blank"> <Button >
                 <LinkedInIcon />
               </Button></a>
               <a href="https://github.com/Patriciopg02" target="_blank">  <Button >
@@ -285,7 +281,7 @@ export default function AboutUs() {
             <img src={AlejoAvendaño} className="image" alt="Not found" />
             <h4 className="devName">Alejo Avendaño </h4>
             <div className="devButtons">
-            <a href="https://www.linkedin.com/in/alejo-avenda%C3%B1o-full-stack-web-developer-5420a620a/" target="_blank"> <Button >
+              <a href="https://www.linkedin.com/in/alejo-avenda%C3%B1o-full-stack-web-developer-5420a620a/" target="_blank"> <Button >
                 <LinkedInIcon />
               </Button> </a>
               <a href="https://github.com/AlejoAvendanio" target="_blank"> <Button >
@@ -354,31 +350,33 @@ export default function AboutUs() {
 
   const body3 = (
     <Card
-    className="commentsList"
-    sx={{
+      className="commentsList"
+      sx={{
         width: 500,
         borderRadius: "15px",
         bgcolor: 'custom.main',
         fontFamily: "Nunito",
         color: 'primary.light',
         maxHeight: 500
-    }}
+      }}
     >
-    <CardContent sx={{fontSize:'13px'}}>
+      <CardContent sx={{ fontSize: '13px' }}>
         <div className="headerModal">
-        <h2>Thank you for your opinion!</h2>
-        <IconButton
+          <h2>Thank you for your opinion!</h2>
+          <IconButton
             id='closeIcon'
-            sx={{ width: "35px", height: "35px", top: "20px",
-            bgcolor:'custom.light' }}
-            onClick={() => opencloseModal2()}s
-        >
-            <CloseIcon sx={{pr:'1px'}}/>
-        </IconButton>
+            sx={{
+              width: "35px", height: "35px", top: "20px",
+              bgcolor: 'custom.light'
+            }}
+            onClick={() => opencloseModal2()} s
+          >
+            <CloseIcon sx={{ pr: '1px' }} />
+          </IconButton>
         </div>
-    </CardContent>
+      </CardContent>
     </Card>
-);
+  );
 
   return (
     <div className="container">

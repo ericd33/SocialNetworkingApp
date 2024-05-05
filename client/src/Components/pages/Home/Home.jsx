@@ -2,26 +2,19 @@ import NavBar from "../../navbar/Navbar";
 import EventsMenu from "../../Home-Components/EventsMenu";
 import PostList from "../../Posts/PostList";
 import "./Home.css";
-import { useSelector } from "react-redux";
-import { Avatar, Button, Card, CardHeader, IconButton } from "@mui/material";
-import { grey, yellow } from "@mui/material/colors";
-import Follow from "./follow";
+import { Button } from "@mui/material";
 import CreatePost from '../../Posts/CreatePost'
-import CreateEvent from "../../Events/CreateEvent";
 import { useUserAuth } from "../../../context/UserAuthContext";
-import FilterPost from "./FilterPost";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import NavBarMobile from "../../navbar/Navbar mobile";
-import AboutUs from "../../AboutUs/AboutUs";
 import Payments from "./Payments";
 
 
 export default function Home() {
-  const {user, logOut } = useUserAuth();
+  const { user, logOut } = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
-  localStorage.setItem('user',JSON.stringify(profileUser))
+  localStorage.setItem('user', JSON.stringify(profileUser))
   let token = user.accessToken;
 
   useEffect(() => {
@@ -34,8 +27,8 @@ export default function Home() {
     }
     axios(Config2).then(res => setProfileUser(res.data))
 
-    .catch(function (err) {
-    });
+      .catch(function(err) {
+      });
   }, []);
 
   function signOut() {
@@ -43,7 +36,7 @@ export default function Home() {
     localStorage.clear();
   }
 
-  if(profileUser.enabled !== false) {
+  if (profileUser.enabled !== false) {
     return (
       <div className="Home">
         <div className="navbar">
@@ -58,13 +51,13 @@ export default function Home() {
         <div className="media-part">
           <div className="leftHome">
             <EventsMenu />
-            </div>
+          </div>
           <div className="centerHome">
             <PostList />
           </div>
-          <div className="rightHome"> {profileUser.role === "user" ? <></> : <Payments/> }</div>
+          <div className="rightHome"> {profileUser.role === "user" ? <></> : <Payments />}</div>
         </div>
-          <CreatePost  profileUser={profileUser}/>
+        <CreatePost profileUser={profileUser} />
       </div>
     );
   }

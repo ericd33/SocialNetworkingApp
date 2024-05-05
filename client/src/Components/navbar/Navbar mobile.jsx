@@ -36,25 +36,27 @@ import AboutUs from "../AboutUs/AboutUs";
 const NavBarMobile = () => {
   const [AvatarImage, setAvatar] = useState();
   const dispatch = useDispatch();
-  const { user, logOut } = useUserAuth();
+  const { user, logOut, image } = useUserAuth();
   const token = user.accessToken;
 
   useEffect(() => {
-    const Config = {
-      method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    };
-    axios(Config)
-      .then((user) => {
-        setAvatar(user.data.image);
-        // console.log('imagen cargada')
-      })
-      .catch(function (err) {
-      });
-  }, []);
+    setAvatar(image)
+    //TODO: SYNC IMAGE WITH AVATAR 
+    // const Config = {
+    //   method: "get",
+    //   baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
+    //   headers: {
+    //     authorization: `Bearer ${token}`,
+    //   },
+    // };
+    // axios(Config)
+    //   .then((user) => {
+    //     setAvatar(user.data.image);
+    //     // console.log('imagen cargada')
+    //   })
+    //   .catch(function (err) {
+    //   });
+  }, [image]);
 
   ///LOGOUT
   function signOut() {
@@ -74,35 +76,35 @@ const NavBarMobile = () => {
     <div>
       <AppBar sx={{ bgcolor: "custom.dark" }} className="navbarMobile" position="fixed">
         <Toolbar
-        sx={{maxWidth:'110%'}}
+          sx={{ maxWidth: '110%' }}
         >
           <Toolbar>
             <Link to={"/home"}>
-              <img id='logoHomeMobile' src={logochico} alt='logo'/>
+              <img id='logoHomeMobile' src={logochico} alt='logo' />
             </Link>
             {
               window.location.href === `http://localhost:3000/events` ? (
-                null ) : (<IconButton>
-                            <Searchbar/>
-                          </IconButton>)
+                null) : (<IconButton>
+                  <Searchbar />
+                </IconButton>)
             }
             <Link to={"/events"}>
-              <IconButton sx={{width:'35px'}} color="secondary">
-                <EventNoteIcon/>
+              <IconButton sx={{ width: '35px' }} color="secondary">
+                <EventNoteIcon />
               </IconButton>
             </Link>
-            <Prem/>
+            <Prem />
             <Donations />
 
             <Link to="/chat">
-              <IconButton sx={{width:'35px'}} color="secondary">
+              <IconButton sx={{ width: '35px' }} color="secondary">
                 <ChatOutlinedIcon />
               </IconButton>
             </Link>
-            
-            <AboutUs/>
 
-            <IconButton sx={{width:'35px'}} color="secondary" onClick={signOut}>
+            <AboutUs />
+
+            <IconButton sx={{ width: '35px' }} color="secondary" onClick={signOut}>
               <LogoutIcon />
             </IconButton>
 
