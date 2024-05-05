@@ -30,4 +30,6 @@ class Middleware {
     }
 }
 
+export type AppRequest = Request & { currentUserEmail: string };
+
 module.exports = new Middleware();

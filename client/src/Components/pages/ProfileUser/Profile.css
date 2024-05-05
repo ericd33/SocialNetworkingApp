@@ -9,6 +9,7 @@
 
 .media-part-pc {
     display: flex;
+    min-height: 100vh;
     justify-content: space-between;
     background-color:#3b3b3b;
 }

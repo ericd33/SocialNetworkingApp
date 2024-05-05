@@ -3,11 +3,10 @@ import NavBar from "../../navbar/Navbar";
 import NavBarMobile from "../../navbar/Navbar mobile";
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import { useDispatch, useSelector } from "react-redux";
-import { getMyUser } from "../../../Redux/actions"
+import { getMyUser, getUserProfileInfo } from "../../../Redux/actions"
 import ProfilePostList from './ProfilePost/ProfilePostList';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
 import { useUserAuth } from '../../../context/UserAuthContext';
 import './Profile.css';
 import ProfileDescription from './ProfileDescription/ProfileDescription';
@@ -19,7 +18,7 @@ const Profile = () => {
   const { user, logOut } = useUserAuth();
   let token = user.accessToken;
   const myUser = useSelector(e => e.myUser)
-  const [profileUser, setProfileUser] = useState({})
+  const profileUser = useSelector(state => state.profileInfo)
   const [posts, setPosts] = useState([])
   let query = useParams();
   const [render, setRender] = useState('posts');
@@ -40,26 +39,7 @@ const Profile = () => {
 
 
   useEffect(() => {
-    //token,query.email
-    const Config = {
-      method: 'get',
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${query.email}`,
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    }
-    axios(Config).then(res => setProfileUser(res.data))
-
-    // const Config2 = {
-    //   method: "get",
-    //   baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/email/${query.email}`,
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // };
-    // axios(Config2).then((res) => {
-    //   setPosts(res.data)
-    // });
+    dispatch(getUserProfileInfo(token, query.email, { includePosts: true }))
   }, [])
 
   return (
@@ -87,8 +67,6 @@ const Profile = () => {
           </div>
           <div className="rightHome">
             <ProfileDescription userInfoRen={profileUser} />
-            {/* <FilterEventsProfile userInfoRen={profileUser} />
-            <EventsProfile /> */}
           </div>
         </div>
 

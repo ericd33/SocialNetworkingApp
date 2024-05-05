@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import Post from "../../../Posts/Post";
-import { useUserAuth } from "../../../../context/UserAuthContext";
-import { useDispatch } from "react-redux";
-import { getPosts } from "../../../../Redux/actions";
 import EventsProfile from "../EventsProfile/EventsProfile";
 import FilterEventsProfile from "../EventsProfile/FilterEventsProfile";
 import './ProfilePostList.css';
 
 const ProfilePostList = ({ render, posts, myUser }) => {
-  const dispatch = useDispatch();
-  const { user } = useUserAuth();
   const [profileUser, setProfileUser] = useState({})
-
-  useEffect(() => {
-    let token = user.accessToken;
-    dispatch(getPosts(token));
-    const Config2 = {
-      method: 'get',
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    }
-    axios(Config2).then(res => setProfileUser(res.data))
-  }, [dispatch]);
 
   if (render === 'posts' && posts?.length === 0) {
     return (

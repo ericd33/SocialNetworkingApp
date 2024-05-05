@@ -4,6 +4,7 @@ import {
   GET_MY_USER_CACHED,
   GET_DETAILS,
   GET_EVENTS,
+  GET_PROFILE_INFO,
   GET_POSTS,
   SEARCH_BY_NAME,
   GET_MY_USER,
@@ -24,6 +25,15 @@ import {
   GET_OPINIONS,
   NEW_OPINION
 } from "./action-types.js";
+
+const serialize = function(obj) {
+  var str = [];
+  for (var p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
+}
 
 export function postUser(payload, token) {
   return function() {
@@ -275,16 +285,13 @@ export function getEvents(payload) {
   };
 }
 
-export function putLikes(idPost, email, token) {
+export function putLikes(idPost, token) {
   return async function(dispatch) {
     const Config = {
       method: "put",
       baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/${idPost}`,
       headers: {
         Authorization: `Bearer ${token}`,
-      },
-      data: {
-        email: email,
       },
     };
     const { data } = await axios(Config);
@@ -448,7 +455,6 @@ const clear = () => {
 };
 
 let x = [];
-
 export function getPostsFollows(token, email) {
   // let x = []
   return async function(dispatch) {
@@ -471,6 +477,33 @@ export function getPostsFollows(token, email) {
     });
   };
 }
+
+export function getUserProfileInfo(token, email, options) {
+  return async function(dispatch) {
+
+    const opts = serialize(options)
+
+    const Config = {
+      method: "get",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${email}?${opts}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    axios(Config).then((res) => {
+      validate(res.data);
+      setTimeout(() => {
+        clear();
+        return dispatch({
+          type: GET_PROFILE_INFO,
+          payload: res.data,
+        });
+      }, 1000);
+    });
+  };
+}
+
+
 
 export function sortByLikes(payload) {
   return {

@@ -176,10 +176,17 @@ export const myUser = async (req: ReqWemail, res: Response) => {
 
 export const findUserByEmail = async (req: Request, res: Response) => {
   const { email } = req.params;
+  const query = req.query;
 
   try {
+
+    let population: any[] = []
+    if (query.includePosts === 'true') {
+      population.push('posts')
+    }
+
     if (email) {
-      const user = await userSchema.findOne({ "email": email });
+      const user = await userSchema.findOne({ "email": email }).populate(population).exec();
       if (user) {
         res.status(200).send(user)
         return

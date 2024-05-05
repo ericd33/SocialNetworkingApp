@@ -2,6 +2,7 @@
 
 import {
   GET_EVENTS,
+  GET_PROFILE_INFO,
   GET_POSTS,
   GET_MY_USER,
   DETAILS_EVENT,
@@ -38,6 +39,7 @@ const initialState = {
   searchByNameUsers: [],
   postsUser: [],
   PostID: [],
+  profileInfo: [],
   comments: [],
   favorite: [],
   opinions: [],
@@ -64,6 +66,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         favorite: action.payload
+      }
+    case GET_PROFILE_INFO:
+      return {
+        ...state,
+        profileInfo: action.payload
       }
     case GET_POSTS:
       return {

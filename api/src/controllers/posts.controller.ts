@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { AppRequest } from "../middleware";
 const mailSettings = require("../nodemailer/nodemailer");
 const fs = require("fs-extra");
 const cloudinary = require("cloudinary").v2;
@@ -172,10 +173,10 @@ export const putPost = async (req: Request, res: Response) => {
   }
 };
 
-export const putPostLikes = async (req: Request, res: Response) => {
+export const putPostLikes = async (req: AppRequest, res: Response) => {
   try {
     const { idPost } = req.params;
-    const { email } = req.body;
+    const email = req.currentUserEmail;
 
     const user = await userSchema.findOne({ email: email });
     const currentPost = await postSchema.findOne({ _id: idPost });

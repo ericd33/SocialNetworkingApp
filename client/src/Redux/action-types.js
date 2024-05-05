@@ -3,6 +3,7 @@ export const GET_POSTS = 'GET_POSTS';
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME"
 export const GET_EVENTS = 'GET_EVENTS'
 export const GET_DETAILS = 'GET_DETAILS'
+export const GET_PROFILE_INFO = 'GET_PROFILE_INFO'
 export const DETAILS_EVENT = 'DETAILS_EVENT'
 export const GET_USER_FOR_ID = "GET_USER_FOR_ID"
 export const GET_MY_USER = "GET_MY_USER"
@@ -25,21 +26,3 @@ export const CLEAR_EVENTS = "CLEAR_EVENTS"
 export const FAVORITE = "FAVORITE"
 export const GET_OPINIONS = "GET_OPINIONS"
 export const NEW_OPINION = "NEW_OPINION"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
