@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 import { v4 } from 'uuid';
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CommentsModal from "./Modals/CommentsModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { banPost, newComment, putLikes } from "../../Redux/actions";
 import { Link } from "react-router-dom";
 import "./Post.css";
@@ -37,6 +37,14 @@ export default function Post({
   const [timeDate, setTimeDate] = useState("0");
   let token = user.accessToken;
   let payload = { author, id };
+  const usr = useSelector(state => state.myUser)
+
+  const commentInputRef = useRef()
+
+
+  useEffect(() => {
+    setUser(usr)
+  }, [usr])
 
 
   const handleBan = (e) => {
@@ -75,7 +83,7 @@ export default function Post({
       }
     }
 
-  }, []);
+  }, [created]);
 
   const putLike = () => {
     dispatch(putLikes(id, user.email, token));
@@ -86,19 +94,16 @@ export default function Post({
     avatar: user.photoURL,
     name: user.displayName,
     idPost: id,
-    text: "",
     image: "",
   });
 
   const handleChangeComment = (e) => {
-    setComment({
-      ...comment,
-      [e.target.name]: e.target.value,
-    });
+    e.preventDefault()
+    commentInputRef.value = e.target.value;
   };
   const handleSubmmitComment = (e) => {
     e.preventDefault();
-    dispatch(newComment(token, comment));
+    dispatch(newComment(token, { ...comment, text: commentInputRef.value }));
     setComment({
       authorComment: user.email,
       avatar: user.photoURL,
@@ -132,7 +137,7 @@ export default function Post({
           <Avatar
             imgProps={{ referrerPolicy: "no-referrer" }}
             sx={{ bgcolor: "primary.light" }}
-            src={User.avatar}
+            src={User.image}
           ></Avatar>
         }
         title={<Link to={"/profile/" + author}>{User.name}</Link>}
@@ -186,10 +191,11 @@ export default function Post({
 
       <div className="inputsdeComments">
         <TextField
+          ref={commentInputRef}
           id="filled-multiline-static"
           label="What are you thinking? 👀"
-          value={comment?.text}
           variant="filled"
+          value={commentInputRef.value}
           name="text"
           onChange={handleChangeComment}
         />

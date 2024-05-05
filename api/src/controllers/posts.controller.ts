@@ -33,7 +33,8 @@ export const addPost = async (req: Request, res: Response) => {
 
   try {
     if (content.length || imageCloudinary.length) {
-      post.author = email;
+      //@ts-ignore
+      post.author = await userSchema.findOne({ email: req.currentUserEmail });
       post.image = imageCloudinary;
       post.content = content;
       post.enabled = true;
@@ -58,18 +59,16 @@ export const getPost = async (_req: Request, res: Response) => {
 };
 
 export const paginate = async (req: Request, res: Response) => {
-  const { paginate } = req.body;
+  const { page } = req.body;
   try {
-    const post = await postSchema.find({});
-    post.reverse();
-    const itemPerPage = 10;
-    const lastItem = paginate * itemPerPage;
-    const firstItem = lastItem - itemPerPage;
-    const currentItem = post.slice(firstItem, lastItem);
-    currentItem.push({ page: paginate });
-    // const post =await postSchema.find({});
+    const limit = 5;
+    const skip = page;
+    const [posts, total] = await Promise.all([
+      postSchema.find().skip(skip * limit).limit(limit).populate('author'),
+      postSchema.countDocuments()
+    ]);
 
-    res.send(currentItem);
+    res.send({ posts, page: paginate, total });
   } catch (err) {
     res.status(400).send("There aren't any posts yet." + err);
   }

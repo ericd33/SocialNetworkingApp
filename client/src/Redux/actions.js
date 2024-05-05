@@ -1,7 +1,7 @@
-import { async } from "@firebase/util";
 import axios from "axios";
 import {
   DETAILS_EVENT,
+  GET_MY_USER_CACHED,
   GET_DETAILS,
   GET_EVENTS,
   GET_POSTS,
@@ -48,8 +48,8 @@ export function postUser(payload, token) {
 export function getPosts(payload, page) {
   return async function(dispatch) {
     const Config = {
-      method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts`,
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/paginate`,
       headers: {
         authorization: `Bearer ${payload}`,
       },
@@ -201,6 +201,17 @@ export function getMyUser(token) {
       });
     });
   };
+}
+
+export function myUserCached() {
+  return async function(dispatch) {
+
+    return dispatch({
+      type: GET_MY_USER_CACHED,
+    })
+  }
+
+
 }
 
 export function searchUsersByName(name, token) {

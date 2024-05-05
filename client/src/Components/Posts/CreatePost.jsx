@@ -12,7 +12,7 @@ import { grey, yellow } from "@mui/material/colors";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import "./CreatePost.css";
 import { getMyUser, paginate, postPost } from "../../Redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useEffect } from "react";
@@ -23,13 +23,14 @@ export default function CreatePost({ profileUser }) {
   const [modal, setModal] = useState(false);
   const [prev, setPrev] = useState(false)
   const { user } = useUserAuth();
-  let userEmail = user.email;
   const token = user.accessToken;
   const navigate = useNavigate();
+  const userEmail = useSelector(state => state.myUser.email);
 
   useEffect(() => {
     // dispatch(getMyUser(userEmail));
-  }, []);
+
+  }, [userEmail]);
 
   const dispatch = useDispatch();
   const opencloseModal = () => {
@@ -171,21 +172,18 @@ export default function CreatePost({ profileUser }) {
       </CardContent>
     </Card>
   );
-  const userStorage = JSON.parse(localStorage.getItem('user'))
   return (
-    userStorage.enabled
-      ? <div className="container">
-        <IconButton
-          onClick={() => opencloseModal()}
-          id="buttonPost"
-          sx={{ bgcolor: "secondary.main" }}
-        >
-          <PostAddOutlinedIcon sx={{ color: grey[800] }} />
-        </IconButton>
-        <Modal open={modal} onClose={opencloseModal}>
-          {body}
-        </Modal>
-      </div>
-      : <></>
+    <div className="container">
+      <IconButton
+        onClick={() => opencloseModal()}
+        id="buttonPost"
+        sx={{ bgcolor: "secondary.main" }}
+      >
+        <PostAddOutlinedIcon sx={{ color: grey[800] }} />
+      </IconButton>
+      <Modal open={modal} onClose={opencloseModal}>
+        {body}
+      </Modal>
+    </div>
   );
 }

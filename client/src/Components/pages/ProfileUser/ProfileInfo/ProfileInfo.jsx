@@ -19,19 +19,19 @@ const ProfileInfo = ({ userInfoRen }) => {
   let token = user.accessToken;
   const [showFolloweds, setShowFolloweds] = useState(false);
   const [showFollows, setShowFollows] = useState(false);
-
+  const [myUser, setMyUser] = useState(true);
+  const [profileUser, setProfileUser] = useState({});
 
   const follows = userInfoRen.follows;
   const followeds = userInfoRen.followeds;
 
   let email = useParams();
-  const [myUser, setMyUser] = useState(true);
+
   useEffect(() => {
     if (email.email === user.email) {
       setMyUser(false);
     }
   }, [myUser, email, user]);
-  const [profileUser, setProfileUser] = useState({});
 
   const handleBanUser = (e) => {
     e.preventDefault(e);
@@ -48,20 +48,8 @@ const ProfileInfo = ({ userInfoRen }) => {
       };
       dispatch(banUsers(data, token));
 
-      // console.log("ESTO ME TRAEL EL USERINFO", userInfoRen);
-      // console.log("ESTO ME TRAE LOS FOLLOWS", userInfoRen.followeds);
     }
   };
-  useEffect(() => {
-    const Config2 = {
-      method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios(Config2).then((res) => setProfileUser(res.data));
-  }, [dispatch]);
   return (
     <div className="userCard">
       {userInfoRen.image ? (
@@ -78,8 +66,8 @@ const ProfileInfo = ({ userInfoRen }) => {
         <p>{userInfoRen.name}</p>
         {profileUser.role === "admin" ? (
           <div className="banContainerProfile">
-            <Button id='banButton' onClick={handleBanUser} sx={{ mr:1,fontSize:11}} color='error' variant="outlined">
-                    Ban
+            <Button id='banButton' onClick={handleBanUser} sx={{ mr: 1, fontSize: 11 }} color='error' variant="outlined">
+              Ban
             </Button>
             <span style={{ color: "#fff" }}>enabled: {userInfoRen.enabled ? "true" : "false"}</span>
           </div>
@@ -91,14 +79,14 @@ const ProfileInfo = ({ userInfoRen }) => {
           <div className="followers">
             <div>
               <p>{userInfoRen.followeds?.length}</p>
-              <FollowersModal followers={followeds}/>
-              {showFolloweds && <ul className="profile-info-list-ul">{followeds.length > 0 && followeds.map((e, i)=> <li className="profile-info-list-li" key={`${e}_${i}`} >{e}</li>)}</ul>}
+              <FollowersModal followers={followeds} />
+              {showFolloweds && <ul className="profile-info-list-ul">{followeds.length > 0 && followeds.map((e, i) => <li className="profile-info-list-li" key={`${e}_${i}`} >{e}</li>)}</ul>}
             </div>
 
             <div>
-            <p>{userInfoRen.follows?.length}</p>
-              <FollowedsModal followeds={follows}/>
-              {showFollows && <ul className="profile-info-list-ul">{follows.length > 0 && follows.map((e, i)=> <li className="profile-info-list-li" key={`${e}_${i}`} >{e}</li>)}</ul>}
+              <p>{userInfoRen.follows?.length}</p>
+              <FollowedsModal followeds={follows} />
+              {showFollows && <ul className="profile-info-list-ul">{follows.length > 0 && follows.map((e, i) => <li className="profile-info-list-li" key={`${e}_${i}`} >{e}</li>)}</ul>}
             </div>
           </div>
 

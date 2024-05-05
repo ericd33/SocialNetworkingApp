@@ -1,19 +1,21 @@
 .List {
-    min-height: 94vh;
-}
+  height:100px;
 
+}
 .wrapper {
+  position:relative;
+  display:flex;
     width: 200px;
     height: 60px;
-    position: relative;
+    margin-left: auto;
+    margin-right: auto;
     z-index: 2;
-    margin-top:100%;
   }
   
   .circle {
+  position:absolute;
     width: 20px;
     height: 20px;
-    position: absolute;
     border-radius: 50%;
     background-color: #ffd000;
     left: 15%;

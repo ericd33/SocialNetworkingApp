@@ -8,7 +8,9 @@ import { useUserAuth } from "../../../context/UserAuthContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import NavBarMobile from "../../navbar/Navbar mobile";
-import Payments from "./Payments";
+import { myUserCached } from "../../../Redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+
 
 
 export default function Home() {
@@ -16,19 +18,11 @@ export default function Home() {
   const [profileUser, setProfileUser] = useState({})
   localStorage.setItem('user', JSON.stringify(profileUser))
   let token = user.accessToken;
+  const dispatch = useDispatch()
+  const usr = useSelector((store) => store.myUser)
 
   useEffect(() => {
-    const Config2 = {
-      method: 'get',
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-    }
-    axios(Config2).then(res => setProfileUser(res.data))
-
-      .catch(function(err) {
-      });
+    setProfileUser(usr)
   }, []);
 
   function signOut() {
@@ -55,7 +49,7 @@ export default function Home() {
           <div className="centerHome">
             <PostList />
           </div>
-          <div className="rightHome"> {profileUser.role === "user" ? <></> : <Payments />}</div>
+          <div className="rightHome"> {profileUser.role === "user" ? <></> : <></>}</div>
         </div>
         <CreatePost profileUser={profileUser} />
       </div>

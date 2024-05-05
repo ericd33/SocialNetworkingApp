@@ -19,10 +19,8 @@ import { useUserAuth } from "../../../context/UserAuthContext";
 import "./CommentsModal.css";
 import { Comments } from "./comments";
 
-export default function CommentsModal({idPost}) {
+export default function CommentsModal({ idPost }) {
   const [modal, setModal] = useState(false);
-  const userE = JSON.parse(localStorage.getItem('user'));
-
   const sessionUser = useUserAuth();
   let token = sessionUser.user.accessToken;
   const dispatch = useDispatch()
@@ -30,12 +28,12 @@ export default function CommentsModal({idPost}) {
   const opencloseModal = () => {
     setModal(!modal);
   };
-  useEffect(()=>{
-    if(modal)
-    dispatch(getCommentsPost(token,idPost))
-  },[getCommentsPost,modal])
-  const comments = useSelector(e=>e.comments)
-  
+  useEffect(() => {
+    if (modal)
+      dispatch(getCommentsPost(token, idPost))
+  }, [getCommentsPost, modal])
+  const comments = useSelector(e => e.comments)
+
 
   const body = (
     <Card
@@ -52,35 +50,30 @@ export default function CommentsModal({idPost}) {
           <h2>Comments</h2>
           <IconButton
             id='closeIcon'
-            sx={{ width: "35px", height: "35px", top: "20px",
-            bgcolor:'custom.light' }}
+            sx={{
+              width: "35px", height: "35px", top: "20px",
+              bgcolor: 'custom.light'
+            }}
             onClick={() => opencloseModal()}
           >
-            <CloseIcon sx={{pr:'1px'}}/>
+            <CloseIcon sx={{ pr: '1px' }} />
           </IconButton>
         </div>
         <div id='boxComments'>
-        {comments?.map((c) => {
-          switch(userE.role){
-            case "admin":
-              return(<Comments enabled={c.enabled} avatar={c.avatar} name={c.name} text={c.text} id={c.id} />)
-            case 'user':
-            if(c.enabled){
-              return(<Comments enabled={c.enabled} avatar={c.avatar} name={c.name} text={c.text} id={c.id} />)
-            }
-            default : return <></>
-            }
-        }
-      )}
-      </div>
-    </CardContent>
-  </Card>
+          {comments?.map((c) => {
+            return (<Comments enabled={c.enabled} avatar={c.avatar} name={c.name} text={c.text} id={c.id} />)
+
+          }
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 
   return (
     <div className="container">
       <IconButton onClick={() => opencloseModal()}>
-        <ChatBubbleOutlineRoundedIcon id='ButtonActionPost' sx={{color:'primary.dark'}}/>
+        <ChatBubbleOutlineRoundedIcon id='ButtonActionPost' sx={{ color: 'primary.dark' }} />
       </IconButton>
       <Modal open={modal} onClose={opencloseModal}>
         {body}

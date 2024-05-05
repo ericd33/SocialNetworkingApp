@@ -10,6 +10,7 @@ import {
   UPDATE_POSTS,
   GET_POSTS_BY_NAME,
   GET_POSTS_BY_ID,
+  GET_MY_USER_CACHED,
   GET_COMMENTS_POST,
   UPDATE_COMMENT,
   GET_POSTS_FOLLOW,
@@ -38,8 +39,8 @@ const initialState = {
   postsUser: [],
   PostID: [],
   comments: [],
-  favorite:[],
-  opinions:[],
+  favorite: [],
+  opinions: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -60,7 +61,7 @@ const rootReducer = (state = initialState, action) => {
       };
     }
     case FAVORITE:
-      return{
+      return {
         ...state,
         favorite: action.payload
       }
@@ -104,6 +105,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         myUser: action.payload,
       };
+
+    case GET_MY_USER_CACHED:
+      return {
+        ...state.myUser
+      };
     case GET_DETAILS:
       return {
         ...state,
@@ -144,14 +150,14 @@ const rootReducer = (state = initialState, action) => {
       let sorted =
         action.payload === true
           ? postLikes.sort((el1, el2) => {
-              if (el1.likes.length > el2.likes.length) {
-                return -1;
-              }
-              if (el1.likes.length < el2.likes.length) {
-                return 1;
-              }
-              return 0;
-            })
+            if (el1.likes.length > el2.likes.length) {
+              return -1;
+            }
+            if (el1.likes.length < el2.likes.length) {
+              return 1;
+            }
+            return 0;
+          })
           : [];
       return {
         ...state,
@@ -162,14 +168,14 @@ const rootReducer = (state = initialState, action) => {
       let sortedC =
         action.payload === true
           ? postComents.sort((el1, el2) => {
-              if (el1.comments.length > el2.comments.length) {
-                return -1;
-              }
-              if (el1.comments.length < el2.comments.length) {
-                return 1;
-              }
-              return 0;
-            })
+            if (el1.comments.length > el2.comments.length) {
+              return -1;
+            }
+            if (el1.comments.length < el2.comments.length) {
+              return 1;
+            }
+            return 0;
+          })
           : [];
       return {
         posts: sortedC,
@@ -203,23 +209,23 @@ const rootReducer = (state = initialState, action) => {
       let sortedAssi =
         action.payload === "less"
           ? filterEventsAssi.sort((el1, el2) => {
-              if (el1.participants.length > el2.participants.length) {
-                return -1;
-              }
-              if (el1.participants.length < el2.participants.length) {
-                return 1;
-              }
-              return 0;
-            })
-          : filterEventsAssi.sort(function (a, b) {
-              if (a.participants.length > b.participants.length) {
-                return 1;
-              }
-              if (b.participants.length > a.participants.length) {
-                return -1;
-              }
-              return 0;
-            });
+            if (el1.participants.length > el2.participants.length) {
+              return -1;
+            }
+            if (el1.participants.length < el2.participants.length) {
+              return 1;
+            }
+            return 0;
+          })
+          : filterEventsAssi.sort(function(a, b) {
+            if (a.participants.length > b.participants.length) {
+              return 1;
+            }
+            if (b.participants.length > a.participants.length) {
+              return -1;
+            }
+            return 0;
+          });
       return {
         ...state,
         soluc: sortedAssi,
@@ -230,7 +236,7 @@ const rootReducer = (state = initialState, action) => {
         soluc: [],
       };
 
-      case GET_OPINIONS:
+    case GET_OPINIONS:
       return {
         ...state,
         opinions: action.payload,

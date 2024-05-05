@@ -9,8 +9,8 @@ export interface Ipost extends Document {
   image?: string,
   comments?: string[],
   reports?: string[],
-  disable?:string[],
-  type:string
+  disable?: string[],
+  type: string
 }
 
 const postSchema = new Schema({
@@ -18,7 +18,9 @@ const postSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  author: {},
+  author: {
+    type: Schema.Types.ObjectId, ref: 'users'
+  },
   likes: [],
   content: {
     type: String,
@@ -26,12 +28,12 @@ const postSchema = new Schema({
   image: {
     type: String,
   },
-  type:String,
+  type: String,
   comments: [],
-  reports:[],
-  disable:[],
-},{
-  timestamps:true
+  reports: [],
+  disable: [],
+}, {
+  timestamps: true
 });
 
 postSchema.plugin(mongoosePaginate)

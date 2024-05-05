@@ -8,41 +8,26 @@ import {
   IconButton,
   TextField,
 } from "@mui/material";
-import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { getEventsByName } from "../../Redux/actions";
 import LogoutIcon from "@mui/icons-material/Logout";
 import './Navbar.css';
-import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
 import Searchbar from "./Searchbar";
 import Prem from "../Premium/Premium";
-
 import Donations from "../Donations/Donations"
 import logogrande from '../../Logos/logogrande.png'
-import AboutUs from "../AboutUs/AboutUs";
 const NavBar = () => {
   const [AvatarImage, setAvatar] = useState();
   const dispatch = useDispatch();
   const { user, logOut } = useUserAuth();
   const token = user.accessToken;
+  const usr = useSelector((store) => store.myUser);
 
   useEffect(() => {
-    const Config = {
-      method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/users/email/${user.email}`,
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    };
-    axios(Config)
-      .then((user) => {
-        setAvatar(user.data.image);
-      })
-      .catch(function(err) {
-      });
-  }, []);
+    setAvatar(usr.image);
+  }, [usr]);
 
   ///LOGOUT
   function signOut() {
