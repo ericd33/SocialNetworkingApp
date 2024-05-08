@@ -64,12 +64,8 @@ export const paginate = async (req: Request, res: Response) => {
   try {
     const limit = 5;
     const skip = page;
-    const [posts, total] = await Promise.all([
-      postSchema.find().skip(skip * limit).limit(limit).populate('author'),
-      postSchema.countDocuments()
-    ]);
-
-    res.send({ posts, page: paginate, total });
+    const posts = await postSchema.find().skip(skip * limit).limit(limit).populate('author')
+    res.send({ posts })
   } catch (err) {
     res.status(400).send("There aren't any posts yet." + err);
   }

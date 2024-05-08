@@ -13,8 +13,8 @@ import { v4 } from "uuid";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { useEffect, useRef, useState } from "react";
 import CommentsModal from "./Modals/CommentsModal";
-import { useDispatch, useSelector } from "react-redux";
-import { banPost, newComment, putLikes } from "../../Redux/actions";
+import { useDispatch } from "react-redux";
+import { newComment, putLikes } from "../../Redux/actions";
 import { Link } from "react-router-dom";
 import "./Post.css";
 import { useUserAuth } from "../../context/UserAuthContext";
@@ -28,7 +28,6 @@ export default function Post({
   likes,
   image,
   id,
-  enabled,
 }) {
   const dispatch = useDispatch();
   const { user } = useUserAuth();

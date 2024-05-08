@@ -1,6 +1,5 @@
 import React from "react";
-import { Routes, Route, HashRouter } from "react-router-dom";
-// import Home from "./Components/pages/Home/Home.jsx";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import EventDetail from "./Components/Events/EventDetail.jsx";
 import EventsPage from "./Components/pages/EventsPage/EventsPage.jsx";
@@ -11,50 +10,57 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext.js";
 import Home from "./Components/pages/Home/Home.jsx";
 import LandingBackup from "./Components/pages/Landing/LandingBackup";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <>
-      <LocalizationProvider dateAdapter={AdapterMoment}>
-        <UserAuthContextProvider>
-          <Routes>
-            <Route path="/" element={<LandingBackup />} />
-            <Route path="/signup" element={<LandingBackup />} />
-            <Route
-              path="/home"
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile/:email"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/events"
-              element={
-                <ProtectedRoute>
-                  <EventsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/events/:id"
-              element={
-                <ProtectedRoute>
-                  <EventDetail />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </UserAuthContextProvider>
-      </LocalizationProvider>
+      <QueryClientProvider client={queryClient}>
+
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <UserAuthContextProvider>
+            <Routes>
+              <Route path="/" element={<LandingBackup />} />
+              <Route path="/signup" element={<LandingBackup />} />
+              <Route
+                path="/home"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile/:email"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/events"
+                element={
+                  <ProtectedRoute>
+                    <EventsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/events/:id"
+                element={
+                  <ProtectedRoute>
+                    <EventDetail />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </UserAuthContextProvider>
+        </LocalizationProvider>
+
+      </QueryClientProvider>
     </>
   );
 }

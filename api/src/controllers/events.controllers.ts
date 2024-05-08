@@ -84,7 +84,7 @@ export const findEvent = async (req: Request, res: Response) => {
       const events = await eventSchema.find({});
       events.length
         ? res.status(200).send(events)
-        : res.status(400).send(undefined);
+        : res.status(200).send([]);
     }
   } catch (e) {
     res.status(400).send(e);
@@ -195,7 +195,7 @@ export const addEventParticipant = async (req: Request, res: Response) => {
     const user = await userSchema.findOne({ _id: idUser });
     const currentEvent = await eventSchema.findOne({ _id: idEvent });
 
-    
+
     if (user) {
       let assistInfo = {
         name: user.name,

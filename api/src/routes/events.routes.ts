@@ -2,12 +2,12 @@ import { Router } from "express";
 import { addEvent, deleteEvent, findEvent, findEventById, addEventParticipant, findEventByAuthor } from "../controllers/events.controllers";
 const router = Router()
 
-router.route('')
+router.route('/all')
     .post(addEvent)
     .get(findEvent)
     // .put(updateEvent)
     .put(deleteEvent)
-    
+
 
 router.route('/:id')
     .get(findEventById)
@@ -16,6 +16,6 @@ router.route('/:id')
 
 router.route('/author/:author')
     .get(findEventByAuthor)
-    
+
 
 export default router;

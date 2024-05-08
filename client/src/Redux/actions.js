@@ -267,13 +267,13 @@ export function login(user) {
   };
 }
 
-export function getEvents(payload) {
+export function getEvents(token) {
   return function(dispatch) {
     const Config = {
       method: "get",
-      baseURL: `${process.env.REACT_APP_MY_API_URL}/events`,
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/events/all`,
       headers: {
-        authorization: `Bearer ${payload}`,
+        authorization: `Bearer ${token}`,
       },
     };
     axios(Config).then((res) => {

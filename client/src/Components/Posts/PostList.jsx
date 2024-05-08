@@ -1,88 +1,96 @@
 import Post from "./Post";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { v4 } from 'uuid';
 import "./PostList.css";
 import { useUserAuth } from "../../context/UserAuthContext";
-import InfiniteScroll from "react-infinite-scroll-component"
-import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../../Redux/actions";
+import axios from 'axios';
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
 export default function PostList() {
-  const dispatch = useDispatch()
   const { user } = useUserAuth();
-  const [profileUser, setProfileUser] = useState({})
-  let [page, setPage] = useState(0)
-  const all_posts = useSelector(e => e.posts.posts)
-  const [post, setPost] = useState([])
   let token = user.accessToken;
-  const usr = useSelector((store) => store.myUser);
-  const posts = useSelector(state => state.posts);
+  const { ref, inView } = useInView();
 
-  function fetchMoreData() {
-    setTimeout(() => {
-      setPage(prevCount => {
-        dispatch(getPosts(token, prevCount + 1))
-        return prevCount + 1
-      })
-    }, 4500)
+  const fetchMoreData = async ({ pageParam = 0 }) => {
+    const Config = {
+      method: "post",
+      baseURL: `${process.env.REACT_APP_MY_API_URL}/posts/paginate`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        page: pageParam,
+      },
+    };
+    return axios(Config).then((res) => {
+      return res.data.posts;
+    });
   }
-  function appendNewPosts() {
-    if (all_posts) {
-      setPost(post?.concat(all_posts))
+
+  const { data, status, error, isFetchingNextPage, isFetching, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: fetchMoreData,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = lastPage.length ? allPages.length : undefined;
+      return nextPage;
     }
+  })
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchMoreData, hasNextPage])
+
+  if (error) {
+    return <div>Error Loading posts</div>
+
   }
-
-  useEffect(() => {
-    dispatch(getPosts(token, page))
-  }, [])
-
-  useEffect(() => {
-    appendNewPosts()
-  }, [posts])
-
-  useEffect(() => {
-    setProfileUser(usr)
-  }, [usr])
-
 
 
   return (
-    <InfiniteScroll
-      dataLength={post.length}
-      hasMore={post.length < posts.total}
-      next={fetchMoreData}
-      endMessage={
-        <p style={{ textAlign: 'center', color: 'white' }}>
-          <b>Yay! You have seen it all</b>
-        </p>
-      }
-      loader={<div className="List">
-        <div className="wrapper">
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="circle"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-          <div className="shadow"></div>
-        </div>
-      </div>
-      }
-    >
-      {post?.map((p) => {
+    <>
+      <div id="post-container">
+        {data?.pages.map((page) => {
+          return page.map((p, index) => {
+            return <div ref={((index + 1) === page.length) ? ref : undefined}><Post
+              key={p._id || v4()}
+              author={p.author}
+              likes={p.likes}
+              text={p.content}
+              created={p.createdAt}
+              comments={p.comments}
+              image={p.image}
+              id={p._id}
+              enabled={p.enabled}
+              disable={p.disable}
+            />
+            </div>
+          })
+        })}
 
-        return <Post
-          key={p._id || v4()}
-          author={p.author}
-          likes={p.likes}
-          text={p.content}
-          created={p.createdAt}
-          comments={p.comments}
-          image={p.image}
-          id={p._id}
-          enabled={p.enabled}
-          disable={p.disable}
-        />
-      })
-      }
-    </InfiniteScroll>
+        {(isFetching && !data) ? <br /> : null}
+
+        {(isFetchingNextPage
+          || (status === 'loading')
+          || (isFetching && !data)
+          || (isFetching && hasNextPage)
+          || (isFetchingNextPage))
+          && <div className="List">
+            <div className="wrapper">
+              <div className="circle"></div>
+              <div className="circle"></div>
+              <div className="circle"></div>
+              <div className="shadow"></div>
+              <div className="shadow"></div>
+              <div className="shadow"></div>
+            </div>
+          </div>
+        }
+
+
+      </div>
+    </>
   );
 }

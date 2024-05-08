@@ -10,70 +10,72 @@ import { useUserAuth } from "../../../context/UserAuthContext";
 import { getEvents, getEventsByName } from "../../../Redux/actions";
 import NavBarMobile from "../../navbar/Navbar mobile";
 import { Button, TextField } from "@mui/material";
-import InfoIcon from '@mui/icons-material/Info';
 
 export default function EventsPage() {
-  const {user, logOut} = useUserAuth();
-    const dispatch = useDispatch()
-    const userP = JSON.parse(window.localStorage.getItem("user"))
-    let events = []
-    events = useSelector((state)=>state.events);
+  const { user, logOut } = useUserAuth();
+  const dispatch = useDispatch()
+  const userP = JSON.parse(window.localStorage.getItem("user"))
+  let events = []
+  events = useSelector((state) => state.events);
 
-    let token = user.accessToken
+  let token = user.accessToken
 
-    useEffect(()=>{
-        dispatch(getEvents(token))
-    },[dispatch])
+  useEffect(() => {
+    if (user) {
+      dispatch(getEvents(token))
+    }
+  }, [])
 
-    const handleInputEvents = (e) => {
-      // console.log(e.target.value);
-      dispatch(getEventsByName(token, e.target.value));
-    };
+  const handleInputEvents = (e) => {
+    // console.log(e.target.value);
+    dispatch(getEventsByName(token, e.target.value));
+  };
 
-  let eventsSoluc = useSelector((state)=>state.soluc);
+  let eventsSoluc = useSelector((state) => state.soluc);
 
   function signOut() {
     logOut();
     localStorage.clear();
   }
 
-  if(userP.enabled !== false) {
-  return (
-    <div className="HomeEvents">
-      <div className="navbarEvents">
-        <NavBar />
-        <span></span>
-      </div>
-      <div className="navbarMobileEvents">
-        <NavBarMobile />
-        <span></span>
-      </div>
-      <div className="media-part">
-        <div className="leftHome">
-          <EventsMenu />
+  if (userP.enabled !== false) {
+    return (
+      <div className="HomeEvents">
+        <div className="navbarEvents">
+          <NavBar />
+          <span></span>
         </div>
-        <div className="centerHome">
+        <div className="navbarMobileEvents">
+          <NavBarMobile />
+          <span></span>
+        </div>
+        <div className="media-part">
+          <div className="leftHome">
+            <EventsMenu />
+          </div>
+          <div className="centerHome">
             <TextField
               variant='filled'
               placeholder="Search events..."
               id="barrabusquedaEvents"
               onChange={handleInputEvents}
             />
-          <FilterEvents />
-          {
-          eventsSoluc.length === 0 ? 
-          <EventList events={events}/> : <EventList events={eventsSoluc}/>
-          }
+            <FilterEvents />
+            {
+              eventsSoluc.length === 0 ?
+                <EventList events={events} /> : <EventList events={eventsSoluc} />
+            }
+          </div>
+          <div className="rightHome"></div>
         </div>
-        <div className="rightHome"></div>
+        {
+          userP.premium
+            ? <CreateEvent />
+            : <></>
+        }
       </div>
-      {
-        userP.premium
-          ? <CreateEvent />
-          : <></>
-      }
-    </div>
-  )}
+    )
+  }
   else {
     return (
       <div className='HomeBanned'>

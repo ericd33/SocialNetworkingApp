@@ -9,7 +9,8 @@ class Middleware {
             if (!req.headers.authorization) {
                 throw new Error('sin autorizacion');
             }
-            const token = req.headers.authorization.split(' ')[1];
+
+            var token = req.headers.authorization.split(' ')[1];
 
             const decodeValue = await conf.auth().verifyIdToken(token)
 
