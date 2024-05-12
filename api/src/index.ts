@@ -17,7 +17,13 @@ const paypal = require("./routes/paypal.route")
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  allowedHeaders: ["authorization", "Content-Type"], // you can change the headers
+  exposedHeaders: ["authorization"], // you can change the headers
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false
+}));
 
 // app.post("/create-payment",createPayment)
 

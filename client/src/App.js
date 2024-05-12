@@ -11,6 +11,7 @@ import { UserAuthContextProvider } from "./context/UserAuthContext.js";
 import Home from "./Components/pages/Home/Home.jsx";
 import LandingBackup from "./Components/pages/Landing/LandingBackup";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-
+        <Toaster />
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <UserAuthContextProvider>
             <Routes>

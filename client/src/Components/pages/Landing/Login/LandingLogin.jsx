@@ -2,7 +2,6 @@ import { Button, FormControl, FormHelperText, Grid, Input, InputLabel } from '@m
 import { grey } from '@mui/material/colors';
 import React, { useState } from 'react'
 import './LandingLogin.css';
-import { useLocalStorage } from './useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../../../context/UserAuthContext'
 
@@ -13,15 +12,20 @@ const LandingLogin = () => {
     email: "",
     password: "",
   });
-  // const [inputEmail, setInputEmail] = useLocalStorage('input', "")
   const [errors, setErrors] = useState({});
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await logIn(input.email, input.password);
-      navigate("/home");
+      logIn(input.email, input.password).then((res) => {
+        if (!res || !res.user) return
+        if (res.user.emailVerified) {
+          window.location.reload()
+        }
+        navigate("/home");
+      }
+      )
     } catch (err) {
     }
   };
@@ -48,6 +52,7 @@ const LandingLogin = () => {
       })
     );
   }
+
   function handleChange(e) {
     setInput({
       ...input,

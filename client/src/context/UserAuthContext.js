@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { auth } from '../firebase/config';
 import { getMyUser } from "../Redux/actions";
+import { toast } from "react-hot-toast";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged, GoogleAuthProvider, signInWithPopup
+    onAuthStateChanged, GoogleAuthProvider, signInWithPopup,
+    sendEmailVerification,
 } from 'firebase/auth'
 import { useDispatch } from "react-redux";
 import { postUser } from '../Redux/actions'
@@ -16,16 +18,29 @@ export function UserAuthContextProvider({ children }) {
     const dispatch = useDispatch();
     const [user, setUser] = useState();
     const [pending, setPending] = useState(true);
-    function signUp(email, password) {
-        return createUserWithEmailAndPassword(auth, email, password)
+    async function signUp(email, password) {
+        return createUserWithEmailAndPassword(auth, email, password).then(credential => {
+            sendEmailVerification(credential.user)
+            return credential
+        })
     }
 
     function googleLogIn() {
         const googleAuthProvider = new GoogleAuthProvider();
         return signInWithPopup(auth, googleAuthProvider)
     }
-    function logIn(email, password) {
-        return signInWithEmailAndPassword(auth, email, password)
+    async function logIn(email, password) {
+        return signInWithEmailAndPassword(auth, email, password).then(credential => {
+            if (!credential.user.emailVerified) {
+                toast('Please check your email to verify your account.', {
+                    icon: "⚠️"
+                })
+            }
+            return credential
+        }).catch(() => {
+            toast.error('Invalid user or email')
+
+        })
     }
 
     function logOut() {
@@ -35,6 +50,11 @@ export function UserAuthContextProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             let tuser = currentUser;
+            if (currentUser && !currentUser.emailVerified) {
+                setUser(undefined);
+                setPending(false)
+                return
+            }
             if (tuser && (tuser.metadata.creationTime == tuser.metadata.lastSignInTime)) {
 
                 const userconfig = {
