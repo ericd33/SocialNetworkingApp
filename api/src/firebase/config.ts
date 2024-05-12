@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 dotenv.config()
 
 
-const { private_key } = JSON.parse(process.env.FIREBASE_PCONF)
+const { private_key } = JSON.parse(process.env.FIREBASE_PCONF.replace(/\\n/g, '\n'))
 const serviceAccount = {
   "type": "service_account",
   "project_id": process.env.FBASE_PT,
