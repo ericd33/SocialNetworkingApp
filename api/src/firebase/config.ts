@@ -8,7 +8,7 @@ const serviceAccount = {
   "type": "service_account",
   "project_id": process.env.FBASE_PT,
   "private_key_id": process.env.FBASE_PID,
-  "private_key": process.env.FIREBASE_PFONF,
+  "private_key": process.env.FIREBASE_PCONF,
   "client_email": process.env.FCEMAIL,
   "client_id": process.env.FCID,
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
