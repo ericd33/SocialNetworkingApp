@@ -73,8 +73,8 @@ typings/
 
 .env.test
 **/.env
-**/config.ts
 **/config.js
+**/firebase
 **/out
 
 # parcel-bundler cache (https://parceljs.org/)
