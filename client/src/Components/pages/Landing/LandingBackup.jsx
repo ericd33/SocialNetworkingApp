@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
@@ -17,16 +18,14 @@ import logogrande2 from '../../../Logos/logogrande2.png';
 const theme = createTheme();
 
 const LandingPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { user, logIn, googleLogIn } = useUserAuth();
+  const { user } = useUserAuth();
   const navigate = useNavigate();
+  let location = useLocation()
 
   useEffect(() => {
     if (user) navigate('/home');
   }, [])
 
-  console.log(window.location)
 
   return (
     <ThemeProvider theme={theme}>
@@ -49,13 +48,14 @@ const LandingPage = () => {
         />
         <img src={logogrande2} id='logoLanding' alt='logo' />
         <Grid className='form' item component={Paper} elevation={6} square>
-          {window.location.pathname === `/` ?
-            <LandingLogin /> : <LandingRegister />
-          }
-          {window.location.pathname === `/` ?
-            <Button id='changeForm' onClick={() => navigate('/signup')}>Register </Button> : <Button id='changeForm' onClick={() => navigate('/')}>
-
-              Login </Button>}
+          {location.pathname === `/` ?
+            <>
+              <LandingLogin />
+              <Button id='changeForm' onClick={() => navigate('/signup')}>Register </Button>
+            </>
+            : <><LandingRegister />
+              <Button id='changeForm' onClick={() => navigate('/')}>Login </Button>
+            </>}
 
 
         </Grid>
