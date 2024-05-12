@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import './LandingRegister.css';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../../../context/UserAuthContext'
+import { toast } from 'react-hot-toast';
 
 
 
@@ -13,7 +14,7 @@ const LandingRegister = () => {
 	const [input, setInput] = useState({
 		email: "",
 		password: "",
-		username: "",
+		repassword: "",
 	});
 
 	const [errors, setErrors] = useState({});
@@ -23,8 +24,14 @@ const LandingRegister = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (input.password !== input.repassword) {
+			toast.error("Passwords don't match!")
+			return
+		}
+
 		try {
-			await signUp(input.username, input.email, input.password);
+			await signUp(input.email, input.password);
+			toast.success("Account created, check your email to verify it!")
 			navigate("/")
 		} catch (err) {
 			console.log(err);
@@ -33,15 +40,13 @@ const LandingRegister = () => {
 
 	function validate(input) {
 		let errors = {};
-		if (!input.username) {
-			errors.username = "The name is required";
-		}
 		if (!input.email || !/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(input.email)) {
 			errors.email = "Invalid E-mail. Example: example@example.com";
 		}
 		if (!input.password || !/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/.test(input.password)) {
 			errors.password = "Invalid Password:  Min 8 characters, max. 15. At least one capital letter. At least one lowercase letter. At least one digit. No blanks.";
 		}
+
 		return errors;
 	}
 
@@ -66,19 +71,6 @@ const LandingRegister = () => {
 			<Grid item md={12}>
 				<FormControl>
 					<Input
-						type='Username'
-						id='Username'
-						value={input.username}
-						name="username"
-						onChange={(e) => handleChange(e)}
-						aria-describedby='username-helper' />
-					<FormHelperText sx={{ mb: 2, color: grey[400] }} id='username-helper'>Username</FormHelperText>
-				</FormControl>
-				{errors.username && <p className='error'>{errors.usermane}</p>}
-			</Grid>
-			<Grid item md={12}>
-				<FormControl>
-					<Input
 						type='email'
 						id='email'
 						value={input.email}
@@ -100,6 +92,19 @@ const LandingRegister = () => {
 						onChange={(e) => handleChange(e)}
 						aria-describedby='password-helper' />
 					<FormHelperText sx={{ mb: 2, color: grey[400] }} id='password-helper'>Your password</FormHelperText>
+				</FormControl>
+				{errors.password && <p className='error'>{errors.password}</p>}
+			</Grid>
+			<Grid item md={12} >
+				<FormControl>
+					<Input
+						type='password'
+						id='repwd'
+						value={input.repassword}
+						name="repassword"
+						onChange={(e) => handleChange(e)}
+						aria-describedby='repassword-helper' />
+					<FormHelperText sx={{ mb: 2, color: grey[400] }} id='repassword-helper'>Your password</FormHelperText>
 				</FormControl>
 				{errors.password && <p className='error'>{errors.password}</p>}
 			</Grid>
