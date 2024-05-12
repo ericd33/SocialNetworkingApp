@@ -26,6 +26,8 @@ const LandingPage = () => {
     if (user) navigate('/home');
   }, [])
 
+  console.log(window.location)
+
   return (
     <ThemeProvider theme={theme}>
       <Grid className='landing' container component="main" sx={{ height: '100vh' }}>
@@ -47,13 +49,11 @@ const LandingPage = () => {
         />
         <img src={logogrande2} id='logoLanding' alt='logo' />
         <Grid className='form' item component={Paper} elevation={6} square>
-          {window.location.href === `http://localhost:3000/` ?
+          {window.location.pathname === `/` ?
             <LandingLogin /> : <LandingRegister />
           }
-          {window.location.href === `http://localhost:3000/` ?
-            <Button id='changeForm' onClick={() => navigate('/signup')}>
-
-              Register </Button> : <Button id='changeForm' onClick={() => navigate('/')}>
+          {window.location.pathname === `/` ?
+            <Button id='changeForm' onClick={() => navigate('/signup')}>Register </Button> : <Button id='changeForm' onClick={() => navigate('/')}>
 
               Login </Button>}
 
