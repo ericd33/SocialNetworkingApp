@@ -4,11 +4,13 @@ import * as dotenv from 'dotenv';
 
 dotenv.config()
 
+
+const { private_key } = JSON.parse(process.env.FIREBASE_PCONF)
 const serviceAccount = {
   "type": "service_account",
   "project_id": process.env.FBASE_PT,
   "private_key_id": process.env.FBASE_PID,
-  "private_key": process.env.FIREBASE_PCONF,
+  private_key,
   "client_email": process.env.FCEMAIL,
   "client_id": process.env.FCID,
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
