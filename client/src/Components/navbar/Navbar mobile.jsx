@@ -1,32 +1,20 @@
 import React, { useEffect } from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
 import Avatar from "@mui/material/Avatar";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  Icon,
   IconButton,
-  Modal,
 } from "@mui/material";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
-import { grey, yellow } from "@mui/material/colors";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { getEventsByName, searchUsersByName } from "../../Redux/actions";
+import { getEventsByName } from "../../Redux/actions";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { getAuth } from "firebase/auth";
 import './NavbarMobile.css';
 import Donations from "../Donations/Donations"
-import axios from "axios";
 import { useUserAuth } from "../../context/UserAuthContext";
-import HomeIcon from '@mui/icons-material/Home';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import Searchbar from "./Searchbar";
 import logochico from '../../Logos/logochico.png';
@@ -68,9 +56,9 @@ const NavBarMobile = () => {
   //   dispatch(searchUsersByName(e.target.value, token));
   // };
 
-  const handleInputEvents = (e) => {
-    dispatch(getEventsByName(token, e.target.value));
-  };
+  // const handleInputEvents = (e) => {
+  //   dispatch(getEventsByName(token, e.target.value));
+  // };
 
   return (
     <div>

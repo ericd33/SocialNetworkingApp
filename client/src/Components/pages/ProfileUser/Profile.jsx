@@ -15,11 +15,10 @@ import { Button } from '@mui/material';
 
 const Profile = () => {
   const dispatch = useDispatch()
-  const { user, logOut } = useUserAuth();
+  const { user } = useUserAuth();
   let token = user.accessToken;
   const myUser = useSelector(e => e.myUser)
   const profileUser = useSelector(state => state.profileInfo)
-  const [posts, setPosts] = useState([])
   let query = useParams();
   const [render, setRender] = useState('posts');
 
@@ -40,7 +39,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getUserProfileInfo(token, query.email, { includePosts: true }))
-  }, [])
+  }, [dispatch, query.email, token])
 
   return (
     <div>
@@ -63,7 +62,7 @@ const Profile = () => {
             <Button variant="outlined" sx={{ ml: '5px', mr: '15px', mb: '15px', color: 'secondary.main', border: '1px solid #ffd000' }} id='posts' onClick={handleClick}>Posts</Button>
             <Button variant="outlined" sx={{ ml: '5px', mr: '15px', mb: '15px', color: 'secondary.main', border: '1px solid #ffd000' }} id='events' onClick={handleClick}>Events</Button>
             <Button variant="outlined" sx={{ ml: '5px', mr: '15px', mb: '15px', color: 'secondary.main', border: '1px solid #ffd000' }} id='favorites' onClick={handleClick}>Favorites</Button>
-            <ProfilePostList render={render} posts={posts} myUser={myUser} />
+            <ProfilePostList render={render} posts={profileUser.posts} myUser={myUser} />
           </div>
           <div className="rightHome">
             <ProfileDescription userInfoRen={profileUser} />
@@ -80,7 +79,7 @@ const Profile = () => {
               <Button variant="outlined" sx={{ ml: '5px', mr: '15px', mb: '15px', color: 'secondary.main', border: '1px solid #ffd000' }} id='posts' onClick={handleClick}>Posts</Button>
               <Button variant="outlined" sx={{ ml: '5px', mr: '15px', mb: '15px', color: 'secondary.main', border: '1px solid #ffd000' }} id='events' onClick={handleClick}>Events</Button>
               <Button variant="outlined" sx={{ ml: '5px', mr: '15px', mb: '15px', color: 'secondary.main', border: '1px solid #ffd000' }} id='favorites' onClick={handleClick}>Favorites</Button>
-              <ProfilePostList render={render} posts={posts} myUser={myUser} />
+              <ProfilePostList render={render} posts={profileUser.posts} myUser={myUser} />
             </div>
           </div>
         </div>

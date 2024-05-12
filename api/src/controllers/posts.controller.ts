@@ -52,8 +52,11 @@ export const addPost = async (req: Request, res: Response) => {
 
 export const getPost = async (_req: Request, res: Response) => {
   try {
-    const post = await postSchema.find({});
-    res.send(post);
+    const posts = await postSchema
+      .find({})
+      .sort({ createdAt: -1 })
+      .exec();
+    res.send(posts);
   } catch (err) {
     res.status(400).send("There aren't any posts yet." + err);
   }
@@ -64,7 +67,11 @@ export const paginate = async (req: Request, res: Response) => {
   try {
     const limit = 5;
     const skip = page;
-    const posts = await postSchema.find().skip(skip * limit).limit(limit).populate('author')
+    const posts = await postSchema.find()
+      .sort({ createdAt: -1 })
+      .skip(skip * limit)
+      .limit(limit)
+      .populate('author')
     res.send({ posts })
   } catch (err) {
     res.status(400).send("There aren't any posts yet." + err);

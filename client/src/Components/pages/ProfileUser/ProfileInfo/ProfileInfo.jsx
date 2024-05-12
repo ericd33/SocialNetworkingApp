@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, CardMedia } from "@mui/material";
 import "./ProfileInfo.css";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useUserAuth } from "../../../../context/UserAuthContext";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -9,7 +9,6 @@ import Follow from "../../Home/follow";
 import { EditProfile } from "../editProfile/EditProfile";
 import { useDispatch } from "react-redux";
 import { banUsers } from "../../../../Redux/actions";
-import axios from "axios";
 import FollowersModal from "../Follows/FollowersModal";
 import FollowedsModal from "../Follows/FollowedsModal";
 
@@ -17,10 +16,10 @@ const ProfileInfo = ({ userInfoRen }) => {
   const { user } = useUserAuth();
   const dispatch = useDispatch();
   let token = user.accessToken;
-  const [showFolloweds, setShowFolloweds] = useState(false);
-  const [showFollows, setShowFollows] = useState(false);
+  const [showFolloweds] = useState(false);
+  const [showFollows] = useState(false);
   const [myUser, setMyUser] = useState(true);
-  const [profileUser, setProfileUser] = useState({});
+  const [profileUser] = useState({});
 
   const follows = userInfoRen.follows;
   const followeds = userInfoRen.followeds;

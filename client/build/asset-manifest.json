@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.5f776172.css",
+    "main.js": "/static/js/main.9c025a4c.js",
+    "static/media/logogrande.png": "/static/media/logogrande.3c8e1e353102f063e306.png",
+    "static/media/logogrande2.png": "/static/media/logogrande2.f4b52f64b707dbda4335.png",
+    "static/media/DanielMolina.jpg": "/static/media/DanielMolina.6b242b1db8a21b96c267.jpg",
+    "static/media/PatricioPereyra.jpg": "/static/media/PatricioPereyra.e6cbd9420a9d22a01041.jpg",
+    "static/media/FedeRosaless.jpg": "/static/media/FedeRosaless.ec9f986ce19f300a3140.jpg",
+    "static/media/logochico.png": "/static/media/logochico.3c5d660253692d6ebf84.png",
+    "static/media/AlejoAvendaño.jpg": "/static/media/AlejoAvendaño.9000447e5998c62cf783.jpg",
+    "static/media/CarolinaForner.jpg": "/static/media/CarolinaForner.0b668c53a0e25f35c598.jpg",
+    "static/media/EricDaniele.jpg": "/static/media/EricDaniele.7a56bc87776a81ff8443.jpg",
+    "index.html": "/index.html",
+    "main.5f776172.css.map": "/static/css/main.5f776172.css.map",
+    "main.9c025a4c.js.map": "/static/js/main.9c025a4c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5f776172.css",
+    "static/js/main.9c025a4c.js"
+  ]
+}

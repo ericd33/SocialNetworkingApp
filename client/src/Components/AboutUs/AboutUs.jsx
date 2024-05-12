@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Modal, IconButton, Card, CardContent, Button } from "@mui/material";
-import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import "./AboutUs.css";
 import { useDispatch } from "react-redux";
@@ -25,7 +24,7 @@ export default function AboutUs() {
   const [modal2, setModal2] = useState(false);
   const [change, setChange] = useState(false);
 
-  const [opinions, setOpinions] = useState([]);
+  const [opinions, _] = useState([]);
   const { user } = useUserAuth();
   let token = user.accessToken;
   const dispatch = useDispatch();

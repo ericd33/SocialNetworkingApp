@@ -4,7 +4,6 @@ const eventSchema = require("../models/event");
 const commentSchema = require("../models/comment");
 const mailSettings = require('../nodemailer/nodemailer');
 const postSchema = require("../models/post");
-const { getAppCheck } = require('firebase-admin/app-check');
 
 
 export const addUser = async (req: Request, res: Response) => {
@@ -177,23 +176,30 @@ export const myUser = async (req: ReqWemail, res: Response) => {
 export const findUserByEmail = async (req: Request, res: Response) => {
   const { email } = req.params;
   const query = req.query;
-
   try {
-
-    let population: any[] = []
-    if (query.includePosts === 'true') {
-      population.push('posts')
+    if (query.includePosts !== 'true') {
+      var user = await userSchema
+        .findOne({ "email": email })
     }
 
     if (email) {
-      const user = await userSchema.findOne({ "email": email }).populate(population).exec();
-      if (user) {
-        res.status(200).send(user)
-        return
-      }
-      res.status(404).send('User id not found.')
+      var user = await userSchema
+        .findOne({ "email": email })
+        .populate({
+          path: "posts",
+          populate: {
+            path: "author"
+          }
+        })
+        .exec();
     }
+    if (user) {
+      res.status(200).send(user)
+      return
+    }
+    res.status(404).send('User id not found.')
   } catch (e) {
+    console.log(e)
     res.status(400).send(e);
     return;
   }

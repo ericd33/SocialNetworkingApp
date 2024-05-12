@@ -33,6 +33,12 @@ app.use("/mercado", mercado);
 app.use("/paypal", paypal)
 app.use("/opinions", opinion);
 
+app.use("/heartbeat", function(req, res) {
+
+  res.status(200).send("good")
+
+})
+
 
 
 app.use(middleware.decodeToken);
@@ -46,11 +52,6 @@ const storage = multer.diskStorage({
 });
 export const upload = multer({ storage: storage });
 // app.use(multer({storage}).single('imageCloudinary'))
-
-
-// app.listen(app.get("port"), () => {
-//   connectDB();
-// });
 
 
 
